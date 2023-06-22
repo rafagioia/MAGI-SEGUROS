@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SISTEMA DE SINIESTROS - GESTION</title>
+  <base target="_top">
+  <?!= include('CSS_GestionSIN'); ?>
+</head>
+
+<body style="background-color: #8673A1">
+ 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
+    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE SINIESTROS - GESTIONAR CASOS</a>
+    <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Menú principal -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cobranzas
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
+              id="dropdown-item">Pagos Marcos Paz</a>
+              <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
+              id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Comisiones (en construccion)</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Deudores (en construccion)</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Avisos Pagos (en construccion)</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Emisión
+          </a>
+          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Siniestros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
+              id="dropdown-item" >Ingresar Denuncia</a>
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
+              id="dropdown-item">Gestion Siniestros</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Menú flotante en el lado derecho -->
+    <div class="collapse navbar-collapse" id="navbarNavRight">
+      <div id="tiempo-restante"></div>
+<div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
+<ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-weight: 600;" role="button" data-toggle="dropdown"
+            aria-haspopup="true" id="usuario_sp" aria-expanded="false">
+            Desconocido
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item" href="#" id="close_session">Cerrar sesión</a>
+            <a class="dropdown-item" href="#" id="cambiar_clave">Cambiar contraseña</a>
+            <a class="dropdown-item">
+              <div class="row">
+              <div class="col-7 pt-1">
+              
+              Color fondo: 
+              </div>
+              <div class="col-5">
+              
+              <input type="color" id="colorPicker" class="form-control form-control-sm" onchange="changeColor()" style="border-radius: 5%;">
+</div>
+              </div>
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Fin Menú flotante en el lado derecho -->
+  <div>&nbsp;&nbsp;</div>
+  <div class="navbar-text" id="magi-item">MAGI v1.2&nbsp;&nbsp;&nbsp;&nbsp;</div>
+  </nav>
+
+<div id="myModal" class="modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Usuario:</label>
+            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Contraseña:</label>
+            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+          </div>
+          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal2" style="display: none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
+          </div>
+  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+
+  <div class="row">
+
+    <div class="col-6 container" style="width: 700px">
+      <form id="visorGeneral">
+        <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+          <div class="row p-0 m-0" style="border-bottom: 2px solid #000000">
+            <div class="col-2 p-0 text-sm" style="width: 60px; height: 60px; margin-right: 12px;" >
+<img src="https://drive.google.com/uc?id=1_VD-SQ8M_dzoAwKF7lepJut7zNqyzI9z" alt="Imagen" style="width: 60px;">
+                </div>
+            <div class="col-6 m-0 p-0 text-sm" >
+            <input type="text" class="upname form-control-xs p-0 bg-transparent border-0 text-dark"
+          style="font-weight: 500;margin-top: 4px;" id="nombre" name="nombre" placeholder="" readonly><br>
+        
+          <div class="row upname2" style='font-weight: 500;'>
+            <div class='col-2 m-0 p-0'>DNI:</div>
+          <div class='col-10 m-0 p-0'>
+              <input type="text" class="upname2 form-control-xs bg-transparent border-0 text-dark"
+                style='font-weight: 500;' id="dni" name="dni" placeholder="" readonly></div></div>
+
+            </div>
+
+            <div class="col-4  m-0  p-0 text-sm" style="text-align: center;">
+              <input type="text" class="upname uppat form-control-xs  m-0 p-0 pt-1 bg-transparent border-0 text-dark"
+                style='text-align: center; border: 2px solid black;border-radius:5px; box-shadow: 0px 0px 2px 0px #000000;padding: 1px; background-image: url("https://drive.google.com/uc?id=19QdP6YcZkkXV0ogbAb8XwqQdITPWwIuf"); background-size: contain; background-repeat: no-repeat;' id="patente" name="patente" placeholder="" readonly>
+              <input type="text" class="upname2 form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
+                style="font-weight: 500;text-align: center;" id="marca" name="marca" placeholder="" readonly>
+            </div>
+          </div>
+
+
+
+          <div class="row  m-0 p-0 bg-light">
+
+            <div class="col-2  m-0 p-0" style="font-weight: 500;"> Riesgo:<br>
+              <select id="riesgo" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
+               name="riesgo" placeholder="">
+                <option value=""></option>
+                <option value="RECLAMO 3ROS">RECLAMO 3ROS</option>
+                <option value="CLEAS">CLEAS</option>
+                <option value="COMERCIO">COMERCIO</option>
+                <option value="DEST. TOTAL">DEST. TOTAL</option>
+                <option value="DAÑO POR ROBO TOTAL">DAÑO POR ROBO TOTAL</option>
+                <option value="HOGAR">HOGAR</option>
+                <option value="INCENDIO PARCIAL">INCENDIO PARCIAL</option>
+                <option value="INCENDIO TOTAL">INCENDIO TOTAL</option>
+                <option value="INTERASEGURADOS">INTERASEGURADOS</option>
+                <option value="RESP. CIVIL">RESP. CIVIL</option>
+                <option value="ROBO PARCIAL">ROBO PARCIAL</option>
+                <option value="ROBO TOTAL">ROBO TOTAL</option>
+                <option value="TODO RIESGO">TODO RIESGO</option>
+                <option value="GRANIZO">GRANIZO</option>
+                <option value="CRISTALES">CRISTALES</option>
+                <option value="CERRADURA">CERRADURA</option>
+                <option value="ACC. PERS.">ACC. PERS.</option>
+                <option value="GRUA">GRUA</option>
+                <option value="RILLA">RILLA</option>
+              </select>
+
+            </div>
+            <div class="col-2  m-0 p-0 text-sm text-truncate" style="font-weight: 500;"> Cñia:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
+                 id="cnia" name="cnia" placeholder="" readonly>
+            </div>
+            <div class="col-2  m-0 p-0 text-truncate" style="font-weight: 500;">N° Stro:            <button style='width: 17px;height:13px;background-image: url("https://drive.google.com/uc?id=1gx2-28N0e8R5m95gOthbdiz61rBnLu8x"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 20%;' id="bt-mail" onclick="enviarMail()"></button><br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
+                id="numSin" name="numSin" placeholder="" readonly>
+
+            </div>
+            <div class="col-2  m-0 p-0 text-sm text-truncate" style="font-weight: 500;">F.Declara:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
+               id="fechaDec" name="fechaDec" placeholder="" readonly>
+            </div>
+
+            <div class="col-2  m-0 p-0" style="font-weight: 500;"> F. Stro:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
+                 id="fechaSin" name="fechaSin" placeholder="" readonly>
+            </div>
+            <div class="col-2  m-0 p-0 text-truncate" style="text-align: center; font-weight: 500;">N°Tramite:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
+                style="text-align: center;" id="numTramite" name="numTramite" placeholder=""
+                readonly>
+            </div>
+
+          </div>
+          <div class="row m-0 py-1" style="font-weight: 500;">Relato:</div>
+           <div class="row m-0 py-1">
+              <textarea class="input_tx form-control  bg-transparent border-0"
+                style="border: 1px solid black;" id="relato" name="relato"
+                placeholder="" readonly></textarea>
+                </div>
+          <hr style="margin-bottom: 0px;">
+          <div class="row m-0 p-0">
+            <div class="col-2 m-0 p-0" style="font-weight: 500;"> Estado:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
+                 id="estado" name="estado" placeholder="" readonly>
+            </div>
+            <div class="col-4  m-0 p-0" style="font-weight: 500;"> Tramite:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
+                 id="tramite" name="tramite" placeholder="">
+            </div>
+            <div class="col-2  m-0 p-0" style="font-weight: 500;"> Taller:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
+                 id="taller" name="taller" placeholder="" readonly>
+            </div>
+            <div class="col-2 m-0 p-0 text-sm text-truncate" style="font-weight: 500;"> Gestion:<br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
+                 id="gestion" name="gestion" placeholder="" readonly>
+            </div>
+            <div class="col-2  m-0 p-0 text-truncate" style="font-weight: 500;">Whatsapp:              <button style='width: 22px;height:22px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button><br>
+              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
+               id="wpp" name="wpp" placeholder="" readonly>
+
+            </div>
+            <div class="row m-0 p-0" style="font-weight: 500;">Novedades / Seguimiento de Tareas:
+              <textarea class="input_tx form-control"  id="notas" name="notas" placeholder=""
+                readonly></textarea>
+
+            </div>
+          </div>
+      </form>
+            <br>
+      <!------------ MODIFICAR DATOS --------------->
+      <div class="visor bg-light shadow p-4" style="border-radius: 10px;">
+
+        <div class="row  m-0 p-3 bg-light py-1">MODIFICAR DATOS:</div>
+          
+        <form id="mod_datos_form">
+          <div class="row"><div class="col-1"></div>
+            <div class="col-4  m-0 p-0"> Valor a modificar:<br>
+              <select class="form-select mt-1" id="mod_datos"
+                placeholder="">
+  <option value=""></option>
+  <option value="dni">DNI</option>
+  <option value="nombre">NOMBRE</option>
+  <option value="patente">PATENTE</option>
+  <option value="marca">MARCA</option>
+  <option value="riesgo">RIESGO</option>
+  <option value="compania">COMPAÑIA</option>
+  <option value="numSin">N° SINIESTRO</option>
+  <option value="fechaDec">F. DECLARACIÓN</option>
+  <option value="fechaSin">F. SINIESTRO</option>
+  <option value="hora">HORA</option>
+  <option value="relato">DETALLE DEL HECHO</option>
+  <option value="taller">TALLER</option>
+  <option value="wpp">WHATSAPP</option>
+              </select>
+            </div>
+
+            <div class="col-3  m-0 p-0"> Nuevo Valor:<br>
+            <input type="text" class="form-control mt-1" id="valor_mod"  placeholder="">
+            </div>
+          <div class="col-1"></div>
+        
+            <div class="col-3  m-0 p-0"><br>
+              <button id="bt-modificar-datos" class="btn btn-success mt-1" type="submit">Modificar</button>
+            </div>
+            </div>
+</form>
+      </div>
+      <!------------ FIN MODIFICAR SINIESTRO --------------->
+      <br>
+      <!------------ NUEVO ESTADO AL SINIESTRO --------------->
+      <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+
+        <div class="row  m-0 p-0 bg-light py-2">INGRESAR NUEVO ESTADO AL SINIESTRO:</div>
+        <form id="nuevo_estado_form">
+          <div class="row">
+            <div class="col-8  m-0 p-0"> Novedad:<br>
+              <select class="form-select form-select-sm mt-1" style='border-radius: 30px' id="novedad_sn"
+                name="novedad_sn" placeholder="">
+                <option value=""> </option>
+                <option value="RECEPCION DE DOCUMENTACION">RECEPCION DE DOCUMENTACION</option>
+                <option value="NUEVA INSPECCION">NUEVA INSPECCION</option>
+                <option value="OTROS">OTROS</option>
+              </select>
+            </div>
+            <div class="col-2  m-0 p-0" id="tallerf_sn" style="display: none;">Taller:<br>
+              <input type="text" class="form-control  mt-1 fs-6" style="border-radius: 30px;width: 110px;height:31px;"
+                id="taller_sn" name="taller_sn" placeholder="NOMBRE TALLER">
+            </div>
+            <div class="col-2  m-0 p-0" id="fechaipf_sn" style="display: none;">Fecha Insp:<br>
+              <input type="text" class="form-control  mt-1 fs-6" style="border-radius: 30px;width: 110px;height:31px;"
+                id="fechaip_sn" name="fechaip_sn" placeholder="DD/MM/AA">
+            </div>
+          </div>
+          <div class="row m-0">
+            <label for="estado">Novedades / Seguimiento de Tareas:</label>
+            <input type="text" class="form-control" style="height:80px" id="notas_sn" name="notas_sn" placeholder="">
+          </div>
+
+          <div class="row  m-0 p-0 bg-light py-2">
+
+            <div class="col-2  m-0 p-0"> Estado:<br>
+              <select class="form-select form-select mt-1" id="estado_sn" name="estado_sn" placeholder="">
+                <option value=""></option>
+                <option value="PENDIENTE">PENDIENTE</option>
+                <option value="TERMINADO">TERMINADO</option>
+              </select>
+            </div>
+            <div class="col-4  m-0 p-0"> Tramite:<br>
+              <select class="form-select form-select mt-1" id="tipoTramite_sn" name="tipoTramite_sn" placeholder="">
+                <option value="">Seleccionar</option>
+              </select>
+            </div>
+
+            <div class="col-3 m-0 p-0">Prox Gestion:<br>
+              <input type="text" class="form-control  mt-1" id="gestion_sn"
+                name="gestion_sn" placeholder="DD/MM/AA">
+            </div>
+            <div class="col-3"><br>
+
+              <button id="bt-actualizar_nota" class="est_not btn btn-success  mt-1" type="submit"></button>
+            </div>
+          </div>
+    </form>
+      </div>
+  <!------------ FIN NUEVO ESTADO AL SINIESTRO --------------->
+
+            <!------------ MAILS DEL CASO --------------->
+      <div class="visor bg-light shadow p-3" style="border-radius: 10px;">    
+        <form id="ver_mails_form">
+<div class="row">
+        <div class="col-8 m-0 p-0">MAILS REFERIDOS AL CASO:</div>
+        <div class="col-4 m-0 p-0">
+           <button id="bt-ver-mails" class="btn btn-success" style="border-radius: 30px;" type="submit">Ver Emails</button>
+            </div>
+            </div>
+</form>
+
+<div id="emails"></div>
+      </div>
+      <!------------ FIN MAILS DEL CASO --------------->
+
+
+    </div>
+  </div>
+  <!---------- AGENDA DE SINIESTROS ------------>
+
+  <div class="col-6 container" id="miDiv" style="width: 700px">
+    FILTRAR SINIESTROS:
+    <div class="row">
+      <div class="col-3  m-0"> Patente:<br>
+        <input type="text" class="form-control form-control-sm" id="patenteSelect" name="patenteSelect"
+          placeholder="Ingrese patente" oninput="this.value=this.value.toUpperCase()">
+      </div>
+      <div class="col-3  m-0"> DNI:<br>
+        <input type="text" class="form-control form-control-sm" id="dniSelect" name="dniSelect"
+          placeholder="Ingrese DNI">
+      </div>
+      <div class="col-3  m-0"> Cliente:<br>
+        <input type="text" class="form-control form-control-sm" id="nombreSelect" name="nombreSelect"
+          placeholder="Apellido y Nombre" oninput="this.value=this.value.toUpperCase()">
+      </div>
+      <div class="col-3  m-0"> N° Siniestro:<br>
+        <input type="text" class="form-control form-control-sm" id="sinSelect" name="sinSelect"
+          placeholder="N° Siniestro">
+      </div>
+    </div>
+    <div class="row pt-0 mt-0 mb-2">
+      <div class="col-3  m-0"> Fecha Gestion:<br>
+        <input type="text" class="form-control form-control-sm" id="gestionSelect" name="gestionSelect"
+          placeholder="D/M (ej: 3/4)">
+      </div>
+      <div class="col-3  m-0"> Compañía:<br>
+        <select class="form-select form-select-sm" id="companiaSelect" name="companiaSelect" placeholder="">
+          <option value="">Todas</option>
+          <option value="AGROSALTA">AGROSALTA</option>
+          <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
+          <option value="RIVADAVIA">RIVADAVIA</option>
+          <option value="FED PAT">FED PAT</option>
+          <option value="PROVIDENCIA">PROVIDENCIA</option>
+          <option value="RIO URUGUAY">RIO URUGUAY</option>
+          <option value="ATM">ATM</option>
+          <option value="LA CAJA">LA CAJA</option>
+          <option value="NIVEL">NIVEL</option>
+          <option value="MAPFRE">MAPFRE</option>
+          <option value="BENEFICIO">BENEFICIO</option>
+          <option value="MERCANTIL">MERCANTIL</option>
+          <option value="LIBRA">LIBRA</option>
+          <option value="GRUA">GRUA</option>
+          <option value="AGRO (V)">AGRO (V)</option>
+          <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
+        </select>
+      </div>
+      <div class="col-3  m-0"> Riesgos:<br>
+        <select class="form-select form-select-sm" id="riesgoSelect" name="riesgoSelect" placeholder="">
+          <option value="">Todas</option>
+          <option value="TOTALES">Solo Totales</option>
+          <option value="PARCIALES">Solo Parciales</option>
+          <option value="RECLAMO 3ROS">RECLAMO 3ROS</option>
+          <option value="CLEAS">CLEAS</option>
+          <option value="COMERCIO">COMERCIO</option>
+          <option value="DEST. TOTAL">DEST. TOTAL</option>
+          <option value="DAÑO POR ROBO TOTAL">DAÑO POR ROBO TOTAL</option>
+          <option value="HOGAR">HOGAR</option>
+          <option value="INCENDIO PARCIAL">INCENDIO PARCIAL</option>
+          <option value="INCENDIO TOTAL">INCENDIO TOTAL</option>
+          <option value="INTERASEGURADOS">INTERASEGURADOS</option>
+          <option value="RESP. CIVIL">RESP. CIVIL</option>
+          <option value="ROBO PARCIAL">ROBO PARCIAL</option>
+          <option value="ROBO TOTAL">ROBO TOTAL</option>
+          <option value="TODO RIESGO">TODO RIESGO</option>
+          <option value="GRANIZO">GRANIZO</option>
+          <option value="CRISTALES">CRISTALES</option>
+          <option value="CERRADURA">CERRADURA</option>
+          <option value="ACC. PERS.">ACC. PERS.</option>
+          <option value="GRUA">GRUA</option>
+          <option value="RILLA">RILLA</option>
+        </select>
+      </div>
+      <div class="col-3 m-0"> Estado:<br>
+        <select class="form-select form-select-sm" id="estadoSelect" name="estadoSelect" placeholder="">
+          <option value="PENDIENTE">PENDIENTE</option>
+          <option value="TERMINADO">TERMINADOS</option>
+          <option value="">TODOS</option>
+        </select>
+
+      </div>
+
+      <div class="row pt-0 m-0">
+        <div class="col-7  m-0 p-2">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="gestiones-activas">
+            <label class="form-check-label" for="gestiones-activas">
+              Gestiones activas
+              <span class="form-check-input-indicator"></span>
+            </label>
+          </div>
+        </div>
+        <div class="col-2  m-0 p-2">
+          <button class="btn btn-danger btn-sm" id="bt-reset">Reset</button>
+        </div>
+        <div class="col-3  m-0 p-2">
+          <button id="bt-buscar" class="btn btn-primary btn-sm">Filtrar Siniestro<span id="spinner_filtrar" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="p-2" style="height: 700px; overflow-y: scroll;">
+      <div id="sinPendientes"></div>
+    </div>
+  </div>
+  <!---------- FIN AGENDA DE SINIESTROS ------------>
+
+  </div>
+
+  <?!= include('JS_GestionSIN'); ?>
+</body>
+
+</html>

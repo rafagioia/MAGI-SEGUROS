@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SISTEMA DE COBRANZAS - CIERRE DE CAJA</title>
+ 
+  <style>
+  </style>
+  <base target="_top">
+  <?!= include('CSS_cajadiaria'); ?>
+</head>
+
+<body style="background-color: #03BB85">
+ <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
+    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE COBRANZAS - CAJA DIARIA</a>
+    <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Menú principal -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cobranzas
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
+              id="dropdown-item">Pagos Marcos Paz</a>
+              <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
+              id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Comisiones (en construccion)</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Deudores (en construccion)</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Avisos Pagos (en construccion)</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Emisión
+          </a>
+          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Siniestros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
+              id="dropdown-item" >Ingresar Denuncia</a>
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
+              id="dropdown-item">Gestion Siniestros</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Menú flotante en el lado derecho -->
+    <div class="collapse navbar-collapse" id="navbarNavRight">
+      <div id="tiempo-restante"></div>
+<div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
+<ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-weight: 600;" role="button" data-toggle="dropdown"
+            aria-haspopup="true" id="usuario_sp" aria-expanded="false">
+            Desconocido
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item" href="#" id="close_session">Cerrar sesión</a>
+            <a class="dropdown-item" href="#" id="cambiar_clave">Cambiar contraseña</a>
+            <a class="dropdown-item">
+              <div class="row">
+              <div class="col-7 pt-1">
+              
+              Color fondo: 
+              </div>
+              <div class="col-5">
+              
+              <input type="color" id="colorPicker" class="form-control form-control-sm" onchange="changeColor()" style="border-radius: 5%;">
+</div>
+              </div>
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Fin Menú flotante en el lado derecho -->
+  <div>&nbsp;&nbsp;</div>
+  <div class="navbar-text" id="magi-item">MAGI v1.2&nbsp;&nbsp;&nbsp;&nbsp;</div>
+  </nav>
+
+
+<br>
+
+<div id="myModal" class="modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Usuario:</label>
+            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Contraseña:</label>
+            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+          </div>
+          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal2" style="display: none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
+          </div>
+  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+
+
+  <!---------- AREA CAJA  MARCOS PAZ ------------>
+
+  <div class="col-4 container shadow" id="miDiv" style="padding: 20px">
+
+<div class='titulos'>SUCURSAL MARCOS PAZ:</div>
+<div class='row'>
+<div class='col-6'>   <div class="visor bg-light shadow p-3" >
+  
+<center><b><u>CAJA MAÑANA:</u></b></center>
+
+          <div class="row m-1 p-0">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">CAJA:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_inicio_mp_m" name="t_inicio_mp_m" value="500" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_mp_m" name="t_pagos_mp_m" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_mp_m" name="t_gastos_mp_m" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_mp_m" name="t_recibis_mp_m" readonly>
+            </div>
+          </div>
+
+                    <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_mp_m" name="t_total_mp_m" readonly>
+          </div>
+          </div>
+
+</div><br><div class="visor bg-light shadow p-3" >
+<center><b><u>PAGOS DIGITALES:</u></b></center>
+
+
+ 
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_mp_m_d" name="t_pagos_mp_m_d" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_mp_m_d" name="t_gastos_mp_m_d" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_mp_m_d" name="t_recibis_mp_m_d" readonly>
+            </div>
+          </div>
+
+                    <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_mp_m_d" name="t_total_mp_m_d" readonly>
+          </div>
+          </div>
+
+</div></div>
+<div class='col-6'>   <div class="visor bg-light shadow p-3" >
+  
+<center><b><u>CAJA TARDE:</u></b></center>
+
+          <div class="row m-1 p-0">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">CAJA:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_inicio_mp_t" name="t_inicio_mp_t" value="500" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_mp_t" name="t_pagos_mp_t" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_mp_t" name="t_gastos_mp_t" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_mp_t" name="t_recibis_mp_t" readonly>
+            </div>
+          </div>
+
+                    <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_mp_t" name="t_total_mp_t" readonly>
+          </div>
+          </div>
+
+
+</div><br><div class="visor bg-light shadow p-3" >
+<center><b><u>PAGOS DIGITALES:</u></b></center>
+
+
+ 
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_mp_t_d" name="t_pagos_mp_t_d" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_mp_t_d" name="t_gastos_mp_t_d" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_mp_t_d" name="t_recibis_mp_t_d" readonly>
+            </div>
+          </div>
+
+                    <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_mp_t_d" name="t_total_mp_t_d" readonly>
+          </div>
+          </div>
+
+</div></div>
+</div>
+
+
+  </div>
+  <!---------- FIN AREA CAJA MARCOS PAZ------------>
+
+  <!---------- AREA CAJA MARIANO ACOSTA  ------------>
+  <div class="col-4 container shadow" id="miDiv" style="padding: 20px">
+<div class='titulos'>SUCURSAL MARIANO ACOSTA:</div>
+<div class='row'>
+<div class='col-6'>   <div class="visor bg-light shadow p-3" >
+  
+<center><b><u>CAJA MAÑANA:</u></b></center>
+
+          <div class="row m-1 p-0">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">CAJA:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_inicio_ma_a" name="t_inicio_ma_a" value="500" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_ma_m" name="t_pagos_ma_m" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_ma_m" name="t_gastos_ma_m" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_ma_m" name="t_recibis_ma_m" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_ma_m" name="t_total_ma_m" readonly>
+          </div>
+          </div>
+
+</div><br><div class="visor bg-light shadow p-3" >
+<center><b><u>PAGOS DIGITALES:</u></b></center>
+
+
+ 
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_ma_m_d" name="t_pagos_ma_m_d" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_ma_m_d" name="t_gastos_ma_m_d" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_ma_m_d" name="t_recibis_ma_m_d" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_ma_m_d" name="t_total_ma_m_d" readonly>
+          </div>
+          </div>
+
+</div></div>
+<div class='col-6'>   <div class="visor bg-light shadow p-3" >
+  
+<center><b><u>CAJA TARDE:</u></b></center>
+
+          <div class="row m-1 p-0">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">CAJA:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_inicio_ma_t" name="t_inicio_ma_t" value="500" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_ma_t" name="t_pagos_ma_t" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_ma_t" name="t_gastos_ma_t" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_ma_t" name="t_recibis_ma_t" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_ma_t" name="t_total_ma_t" readonly>
+          </div>
+          </div>
+
+</div><br><div class="visor bg-light shadow p-3" >
+<center><b><u>PAGOS DIGITALES:</u></b></center>
+
+
+ 
+          <div class="row m-1 p-0" style="background-color: #E1FDD9;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">PAGOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_pagos_ma_t_d" name="t_pagos_ma_t_d" readonly>
+            </div>
+          </div>
+
+
+          <div class="row m-1 p-0" style="background-color: #FFCDD2;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">GASTOS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_gastos_ma_t_d" name="t_gastos_ma_t_d" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #EBEEFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">OTROS:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_recibis_ma_t_d" name="t_recibis_ma_t_d" readonly>
+            </div>
+          </div>
+
+          <div class="row m-1 p-0" style="background-color: #FFFFFF;">
+          <div class="col-4 m-0">
+          <div style="font-weight: 500;margin-top: 1px; border: none;">TOTAL:</div>
+          </div>
+          <div class="col-2 m-0 ">
+          <div for="dni" style="font-weight: 500;margin-top: 1px;" >&nbsp;&nbsp;&nbsp;&nbsp;$</div>
+          </div>
+          <div class="col-6 m-0 " style="padding-right: 15px;" >
+          <input type="number" style="font-weight: 500; border: none; background-color: transparent; margin-right: 15px; margin-top: 0px;" id="t_total_ma_t_d" name="t_total_ma_t_d" readonly>
+          </div>
+          </div>
+
+</div></div>
+</div>
+
+
+  </div>
+  <!---------- FIN AREA CAJA MARIANO ACOSTA------------>
+
+  <!---------- AREA X  ------------>
+
+  <div class="col-4 container shadow" id="miDiv" style="padding: 20px">
+          <div class="row m-0">
+          <div class="col-7 m-0">
+          <div style="font-weight: 500;margin-top: 1px;">SUMAR VALORES:</div>
+          </div>
+          <div class="col-5 m-0 ">
+<button onclick="calcularTotal()" style="background-color: #007BFF; color: #FFFFFF; border: none; border-radius: 5px; padding: 5px 10px; font-weight: 500;">TOTAL</button>
+
+            </div>
+          </div>
+<hr>
+          <div class="row m-0">
+          <div class="col-7 m-0">
+          <div style="font-weight: 500;margin-top: 1px;">ACTUALIZAR VALORES:</div>
+          </div>
+          <div class="col-5 m-0 ">
+<button class="btn btn-success" id="refresh" style="background-color: #007BFF; color: #FFFFFF; border: none; border-radius: 5px; padding: 5px 10px; font-weight: 500;">ACTUALIZAR<span id="spinner_refresh" class="spinner-border spinner-border-sm" style="display:none;"></span></button>
+
+            </div>
+          </div>
+<hr>
+          <div class="row m-0">
+          <div class="col-7 m-0">
+          <div style="font-weight: 500;margin-top: 1px;">CERRAR CAJA DIARIA:</div>
+          </div>
+          <div class="col-5 m-0 ">
+<button class="btn btn-success" id="cierreCaja" style="background-color: #007BFF; color: #FFFFFF; border: none; border-radius: 5px; padding: 5px 10px; font-weight: 500;">CERRAR CAJA<span id="spinner_send_caja" class="spinner-border spinner-border-sm" style="display:none;"></span></button>
+            </div>
+          </div>
+  <hr>
+          <div class="row mb-2"> 
+<center><b><u>VER UNA CAJA ANTIGUA:</u></b></center></div>
+          <div class="row m-0">
+          <div class="col-6 m-0">
+          <div style="font-weight: 500;margin-top: 1px;">FECHA DE CAJA:</div>
+          </div>
+          <div class="col-6 m-0 ">
+          <input type="text" style="font-weight: 500; border: 1px solid black; border-radius: 5px; background-color: #FFFFFF; margin-top: 0px;" id="fecha_caja" name="fecha_caja" placeholder="Ej: 9/6/2023">
+            </div></div>
+                      <div class="row mt-2">
+          <div class="col-6 m-0 ">
+                                 <button class="btn btn-success" id="abrir_caja_old" style="background-color: #007BFF; color: #FFFFFF; border: none; border-radius: 5px; padding: 5px 10px; font-weight: 500;">VER CAJA VIEJA<span id="spinner_open_caja_old" class="spinner-border spinner-border-sm" style="display:none;"></span></button>
+            </div>
+          <div class="col-6 m-0 ">
+
+                     <button class="btn btn-success" id="enviarCajaOld" style="background-color: #007BFF; color: #FFFFFF; border: none; border-radius: 5px; padding: 5px 10px; font-weight: 500;">CERRAR CAJA VIEJA<span id="spinner_send_caja_old" class="spinner-border spinner-border-sm" style="display:none;"></span></button>
+
+            </div>
+          </div>
+
+  </div>
+  
+  
+
+  <!---------- FIN AREA X------------>
+
+</div>
+  <div class="row">
+
+
+  <!---------- AREA DE CAJA DIARIA ------------>
+
+  <div class="col-9" id="miDiv" style="padding: 20px;">
+
+   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+<div style="font-size: 20px; margin-top: 2px;"><b>CAJA DIARIA:</b></div>
+ <div class="p-2" style="height: 500px; overflow-y: scroll;">
+      <div id="sinPendientes"></div>
+    </div>
+
+</div>
+
+  </div>
+  <!---------- FIN AREA DE CAJA DIARIA ------------>
+
+  <!---------- AREA DE GASTOS Y RECIBIS ------------>
+
+    <div class="col-3" style="padding: 20px">
+
+   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+<div style="font-size: 20px; margin-top: 2px;"><b>GASTOS:</b></div>
+ <div class="p-2" style="height: 210px; overflow-y: scroll;">
+      <div id="lista_gastos"></div>
+    </div>
+
+  </div>
+  <br>
+   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+<div style="font-size: 20px; margin-top: 2px;"><b>RECIBIS:</b></div>
+ <div class="p-2" style="height: 210px; overflow-y: scroll;">
+      <div id="lista_recibis"></div>
+    </div>
+
+</div>
+
+  <!---------- FIN AREA DE GASTOS Y RECIBIS------------>
+
+
+  </div>
+
+
+  </div>
+
+  <?!= include('JS_cajadiaria'); ?>
+</body>
+
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <?!= include('CSS'); ?>
+    
+    <title>SISTEMA DE SINIESTROS</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
+    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE SINIESTROS - INGRESAR</a>
+    <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Menú principal -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cobranzas
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
+              id="dropdown-item">Pagos Marcos Paz</a>
+              <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
+              id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Comisiones (en construccion)</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Deudores (en construccion)</a>
+            <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Avisos Pagos (en construccion)</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Emisión
+          </a>
+          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Siniestros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
+              id="dropdown-item" >Ingresar Denuncia</a>
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
+              id="dropdown-item">Gestion Siniestros</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Menú flotante en el lado derecho -->
+    <div class="collapse navbar-collapse" id="navbarNavRight">
+      <div id="tiempo-restante"></div>
+<div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
+<ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="font-weight: 600;" role="button" data-toggle="dropdown"
+            aria-haspopup="true" id="usuario_sp" aria-expanded="false">
+            Desconocido
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item" href="#" id="close_session">Cerrar sesión</a>
+            <a class="dropdown-item" href="#" id="cambiar_clave">Cambiar contraseña</a>
+            <a class="dropdown-item">
+              <div class="row">
+              <div class="col-7 pt-1">
+              
+              Color fondo: 
+              </div>
+              <div class="col-5">
+              
+              <input type="color" id="colorPicker" class="form-control form-control-sm" onchange="changeColor()" style="border-radius: 5%;">
+</div>
+              </div>
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Fin Menú flotante en el lado derecho -->
+  <div>&nbsp;&nbsp;</div>
+  <div class="navbar-text" id="magi-item">MAGI v1.2&nbsp;&nbsp;&nbsp;&nbsp;</div>
+  </nav>
+
+<div id="myModal" class="modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Usuario:</label>
+            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Contraseña:</label>
+            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+          </div>
+          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="modal2" style="display: none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
+          </div>
+  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="row">
+<!----------------------- INGRESO DE DATOS ----------------->
+
+                  <div class="col-4 container">
+
+      INGRESAR SINIESTRO<hr>
+
+
+                <div class="row">
+                            <div class="col-6  text-center">
+                   <label for="buscar" class="form-label">BUSCAR PATENTE:</label>
+                   
+                   </div>
+                            <div class="col-6 text-center">
+                    <label for="buscar_dni" class="form-label">BUSCAR DNI:</label>
+            </div>
+          </div>
+
+
+                <div class="row">
+          <div class="col-6">
+            <div class="mb-1">
+              <input type="text" class="form-control form-control-sm ml-1 mr-1" id="text-box-buscarPatente" oninput="this.value=this.value.toUpperCase()" name="buscar" placeholder="Buscar por patente">
+            </div>
+            <div class="mb-1 ml-1">
+<button type="button"  id="buscarRegistrosBtn1" class="btn btn-success btn-sm ml-1 mr-1" onclick="buscarRegistros()">BD COB
+<span id="spinner1" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+<button id="buscarRegistrosBtn2" type="button" class="btn btn-success btn-sm ml-1 mr-1" onclick="buscarRegistros_emision()">BD EMI
+<span id="spinner2" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+            </div>
+            </div>
+           <div class="col-6">
+            <div class="mb-1">
+             <input type="number" class="form-control form-control-sm ml-1 mr-1" id="text-box-numeroInventario_dni" name="buscar_dni" placeholder="Buscar por DNI">
+            </div>
+            <div >
+              <button type="button"  id="buscarRegistrosBtn3" class="btn btn-success btn-sm ml-1 mr-1" onclick="buscarRegistros_dni()">BD COB
+<span id="spinner3" class="spinner-border spinner-border-sm" style="display:none"></span></button> 
+              <button type="button"  id="buscarRegistrosBtn4" class="btn btn-success btn-sm ml-1 mr-1" onclick="buscarRegistros_dni_emision()">BD EMI
+<span id="spinner4" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+
+            </div>
+            </div>
+          </div>
+
+<hr>
+    DATOS DEL CLIENTE:
+      <!-- <form id="formularioRegistro" name="formularioRegistro" class="needs-validation" method="post" action="<?= pubUrl ?>"> -->
+      <form id="formularioRegistro" name="formularioRegistro" class="needs-validation">
+        
+          <div class="row mt-2">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="dni" class="form-label mt-1">DNI:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="number" class="form-control form-control-sm" id="dni" name="dni" placeholder="Ingrese el DNI" required>
+            </div>
+            </div>
+          </div>
+          
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="nombreCompleto" class="form-label mt-1">Cliente:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="nombreCompleto" oninput="this.value=this.value.toUpperCase()" name="nombreCompleto" placeholder="Nombre completo" required>
+            </div>
+            </div>
+          </div>
+<div style="display: none">
+            <input type="text" id="userName_hide"  name="userName_hide">
+  </div>
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="wpp" class="form-label mt-1">Whatsapp</label>
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="mb-1">
+          <input type="number" class="form-control form-control-sm" id="wpp" name="wpp" placeholder="10 digitos" pattern="\d{10}" required>
+          
+            </div>
+            </div>
+          
+          <div class="col-2">
+            <div class="mb-1">
+          <label for="wpp" class="form-label mt-1">Enviar:</label>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="mb-1">
+          <button style='width: 32px;height:32px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button>
+            </div>
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="patente" class="form-label mt-1">Patente:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="patente" oninput="this.value=this.value.toUpperCase()" name="patente" placeholder="Ingrese patente" required>
+            </div>
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="marca" class="form-label mt-1">MarcaVeh:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="marca" oninput="this.value=this.value.toUpperCase()" name="marca" placeholder="Marca y Modelo + Año" required>
+            </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+                <label for="cnia" class="form-label mt-1">Compañia:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+                <select class="form-select form-select-sm" id="cnia" name="cnia" placeholder="" required>
+                  <option value="AGROSALTA">AGROSALTA</option>
+                  <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
+                  <option value="RIVADAVIA">RIVADAVIA</option>
+                  <option value="FED PAT">FED PAT</option>
+                  <option value="PROVIDENCIA">PROVIDENCIA</option>
+                  <option value="RIO URUGUAY">RIO URUGUAY</option>
+                  <option value="ATM">ATM</option>
+                  <option value="LA CAJA">LA CAJA</option>
+                  <option value="NIVEL">NIVEL</option>
+                  <option value="MAPFRE">MAPFRE</option>
+                  <option value="BENEFICIO">BENEFICIO</option>
+                  <option value="MERCANTIL">MERCANTIL</option>
+                  <option value="LIBRA">LIBRA</option>
+                  <option value="GRUA">GRUA</option>
+                  <option value="AGRO (V)">AGRO (V)</option>
+                  <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
+                </select>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="danos" class="form-label mt-1">Daños:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="texto" class="form-control form-control-sm" id="danos" oninput="this.value=this.value.toUpperCase()" name="danos" placeholder="Daños" required>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+                <label for="riesgo" class="form-label mt-1">Riesgo:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+<select class="form-select form-select-sm" id="riesgo" name="riesgo" placeholder="" onchange="cambiarVisibilidad()" required>
+                <option value=""></option>
+                <option value="RECLAMO 3ROS">RECLAMO 3ROS</option>
+                <option value="CLEAS">CLEAS</option>
+                <option value="COMERCIO">COMERCIO</option>
+                <option value="DEST. TOTAL">DEST. TOTAL</option>
+                <option value="DAÑO POR ROBO TOTAL">DAÑO POR ROBO TOTAL</option>
+                <option value="HOGAR">HOGAR</option>
+                <option value="INCENDIO PARCIAL">INCENDIO PARCIAL</option>
+                <option value="INCENDIO TOTAL">INCENDIO TOTAL</option>
+                <option value="INTERASEGURADOS">INTERASEGURADOS</option>
+                <option value="RESP. CIVIL">RESP. CIVIL</option>
+                <option value="ROBO PARCIAL">ROBO PARCIAL</option>
+                <option value="ROBO TOTAL">ROBO TOTAL</option>
+                <option value="TODO RIESGO">TODO RIESGO</option>
+                <option value="GRANIZO">GRANIZO</option>
+                <option value="CRISTALES">CRISTALES</option>
+                <option value="CERRADURA">CERRADURA</option>
+                <option value="ACC. PERS.">ACC. PERS.</option>
+                <option value="GRUA">GRUA</option>
+                <option value="RILLA">RILLA</option>
+              </select>
+            </div>
+            </div>
+          </div>
+
+</div>
+
+<!---------- FIN DE DATOS DEL CLIENTE ------------>
+<!---------- DATOS DEL TERCERO ------------>
+
+<div class="col-4 container" id="miDiv">
+   <div class="row mt-2">
+          <div class="col-7">
+            <div class="mb-1">
+              <button id="agregar-tercero" class="btn btn-primary btn-sm ml-1 mr-1">Agregar Tercero</button>
+              <button id="eliminar-ultimo" class="btn btn-danger btn-sm ml-1 mr-1">Quitar</button>
+
+            </div>
+          </div>
+                    <div class="col-3">
+            <div class="mb-1">
+          <label for="agre" class="form-label mt-1">Agregados:</label>
+            </div>
+            </div>
+
+          <div class="col-2">
+            <div class="mb-1">
+              <input type="text" class="form-control form-control-sm" id="contador" name="contador" readonly>
+            </div>
+            </div>
+          </div>
+<div id="contenedorDivs"></div>
+</div>
+<!---------- FIN DATOS DEL TERCERO ------------>
+<!---------- DATOS DEL RIESGO ------------>
+
+                  <div class="col-4 container">
+DATOS DEL SINIESTRO:
+          
+          <div class="row mt-2">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="fechasin" class="form-label mt-1">Fecha:</label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="fechasin" name="fechasin" placeholder="DD/MM/AA" required>
+            </div>
+            </div>
+                      <div class="col-2">
+            <div class="mb-1">
+          <label for="horasin" class="form-label mt-1">Hora:</label>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="horasin" name="horasin" placeholder="00:00" required>
+          
+            </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="localidad" class="form-label mt-1">Localidad:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="localidad" oninput="this.value=this.value.toUpperCase()" name="localidad" placeholder="Localidad del hecho">
+            </div>
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="calles" class="form-label mt-1">Calles:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="calles" oninput="this.value=this.value.toUpperCase()" name="calles" placeholder="Calle y entrecalles">
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="relato" class="form-label mt-1">Relato:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="texto" class="form-control form-control-sm" oninput="this.value=this.value.toUpperCase()" style="height: 90px; text-align: top;" id="relato" name="relato" placeholder="Relato de los hechos" required>
+            </div>
+            </div>
+          </div>
+
+
+
+  <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+                <label for="estado" class="form-label mt-1">Estado:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+                <select class="form-select form-select-sm mt-1" id="estado" name="estado" placeholder="">
+<option value="PENDIENTE">PENDIENTE</option>
+<option value="TERMINADO">TERMINADO</option>
+                </select>
+            </div>
+            </div>
+          </div>
+
+  <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+                <label for="tramite" class="form-label mt-1">Tramite:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+                <select class="form-select form-select-sm mt-1" id="tramite" name="tramite" placeholder="">
+<option value="ESPERANDO DOCUMENTACION">ESPERANDO DOCUMENTACION</option>
+<option value="EN COTIZACION">EN COTIZACION</option>
+<option value="EN RESOLUCION">EN RESOLUCION</option>
+<option value="RESUELTO">RESUELTO</option>
+<option value="CON PROBLEMA">CON PROBLEMA</option>
+<option value="NO RECLAMA">NO RECLAMA</option>
+<option value="TRAMITANDO ALFREDO">TRAMITANDO ALFREDO</option>
+<option value="SIN COBERTURA">SIN COBERTURA</option>
+                </select>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="taller" class="form-label mt-1">Taller:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="texto" class="form-control form-control-sm" id="taller" name="taller" placeholder="Nombre del Taller">
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="fechages" class="form-label mt-1">FechaGestion:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input tlype="date" class="form-control form-control-sm" id="fechages" name="fechages" placeholder="DD/MM/AA">
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="notas" class="form-label mt-1">Notas:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="texto" class="form-control form-control-sm" id="notas" name="notas" placeholder="Notas sobre el siniestro">
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="numSin" class="form-label mt-1">N°Siniestro:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="texto" class="form-control form-control-sm" id="numSin" name="numSin" placeholder="N° Siniestro">
+            </div>
+            </div>
+          </div>
+
+
+
+          <!---------- FIN DATOS DEL SINIESTRO --------->
+
+          <div class="row">
+          <div class="col-6">
+            <div class="mb-1">
+
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-1">
+        <!-- <input type="submit" class="btn btn-success text-right mt-1" value="Ingresar Siniestro"><br> -->
+
+         <button class="btn btn-success text-right mt-1" id="bt-ingreso" >Ingresar Siniestro</button>
+
+
+            </div>
+            </div>
+          </div>
+          </div>
+          </div>
+</form>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+
+    <?!= include('JS'); ?>
+  </body>
+</html>
+
