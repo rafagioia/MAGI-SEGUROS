@@ -6,7 +6,7 @@
 
 <script>
 
-  // Obtén una referencia al boton
+  // Obtén una referencia al botón
 const navbarToggler = document.getElementById('navbar-toggler');
 
 // Agrega un evento de clic al botón
@@ -14,7 +14,7 @@ navbarToggler.addEventListener('click', function() {
   // Obtén una referencia al elemento de destino
   const navbarNav = document.getElementById('navbarNav');
 
-  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegaci�n
+  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegación
   navbarNav.classList.toggle('show');
 });
 
@@ -83,7 +83,7 @@ function ingresarPoliza(event) {
 
   google.script.run.seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasFull, infoMotor, infoChasis, infoUsuario);
   event.target.reset();
-alert('P�liza ingresada correctamente');
+alert('Póliza ingresada correctamente');
   
 infoDNI =  "";
 infoCliente =  "";
@@ -326,11 +326,11 @@ infoNotascte.value =  "";
 
 function enviarMensajeWPP() {
   event.preventDefault();
-  // Obtener el n�mero de tel�fono ingresado
+  // Obtener el número de teléfono ingresado
   var telefono = document.getElementById("wpp").value;
 
-  // Abrir WhatsApp Web con el n�mero de tel�fono y enviar un mensaje
-  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agend�%20nuestro%20n�mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
+  // Abrir WhatsApp Web con el número de teléfono y enviar un mensaje
+  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendá%20nuestro%20número%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
 }
 
 
@@ -432,7 +432,7 @@ function filtrar(event) {
    var dni_filter = infoDNI.value;
    console.log(dni_filter)
   google.script.run.withSuccessHandler(function(result) {
-  // Actualizar HTML de la p�gina con los nuevos resultados
+  // Actualizar HTML de la página con los nuevos resultados
   var sinPendientesDiv = document.getElementById("sinPendientes");
 
  var pendientesHtml = "";
@@ -452,11 +452,11 @@ pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-
     }
     sinPendientesDiv.innerHTML = pendientesHtml;
 
-      // Agregar evento de click a los divs din�micos
+      // Agregar evento de click a los divs dinámicos
   var divs = document.querySelectorAll("[id^='div']");
   divs.forEach(function(div) {
     div.addEventListener("click", function() {
-      var id = div.id.slice(3); // Obtener el �ndice del div
+      var id = div.id.slice(3); // Obtener el índice del div
       document.getElementsByName("patente_sn")[0].value = document.getElementById("patente_sn_" + id).textContent;
       document.getElementsByName("marca")[0].value = document.getElementById("marca_" + id).textContent;
       document.getElementsByName("cnia")[0].value = document.getElementById("cnia_" + id).textContent;
@@ -499,7 +499,7 @@ function filtrar2(event) {
   let infoPatente =  document.getElementById("patente");
    var patente_filter = infoPatente.value;
   google.script.run.withSuccessHandler(function(result) {
-  // Actualizar HTML de la p�gina con los nuevos resultados
+  // Actualizar HTML de la página con los nuevos resultados
   var sinPendientesDiv = document.getElementById("sinPendientes2");
 
  var pendientesHtml = "";
@@ -515,11 +515,11 @@ pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-
     }
     sinPendientesDiv.innerHTML = pendientesHtml;
 
-      // Agregar evento de click a los divs din�micos
+      // Agregar evento de click a los divs dinámicos
   var divs = document.querySelectorAll("[id^='div']");
   divs.forEach(function(div) {
     div.addEventListener("click", function() {
-      var id = div.id.slice(3); // Obtener el �ndice del div
+      var id = div.id.slice(3); // Obtener el índice del div
       document.getElementsByName("dni")[0].value = document.getElementById("dni_" + id).textContent;
       document.getElementsByName("nombreCompleto")[0].value = document.getElementById("cliente_" + id).textContent;
       document.getElementsByName("wpp")[0].value = document.getElementById("whatsapp_" + id).textContent;
@@ -580,7 +580,7 @@ valoresContainer_veh.addEventListener('click', () => {
     formContainer_veh.style.display = 'block';
 });
 
-////////////// VALIDADOR DE A�O DE PATENTE /////////////////
+////////////// VALIDADOR DE AÑO DE PATENTE /////////////////
 
 function buscarModelo() {
   const patente = document.getElementById("patente_sn").value;
@@ -588,126 +588,126 @@ function buscarModelo() {
   
   if (patente.length == 6) {
     if (patente.slice(0, 3) >= "RAA" && patente.slice(0, 3) <= "XZZ") {
-      ano = "VEH A�O < 1995 / MODELO+A�O";
+      ano = "VEH AÑO < 1995 / MODELO+AÑO";
     } else if (patente.slice(0, 3) >= "AAA" && patente.slice(0, 3) <= "ACM") {
-      ano = "VEH A�O: 1994";
+      ano = "VEH AÑO: 1994";
     } else if (patente.slice(0, 3) >= "ACN" && patente.slice(0, 3) <= "APZ") {
-      ano = "VEH A�O: 1995";
+      ano = "VEH AÑO: 1995";
     } else if (patente.slice(0, 3) >= "AQA" && patente.slice(0, 3) <= "BCQ") {
-      ano = "VEH A�O: 1996";
+      ano = "VEH AÑO: 1996";
     } else if (patente.slice(0, 3) >= "BCR" && patente.slice(0, 3) <= "BSZ") {
-      ano = "VEH A�O: 1997";
+      ano = "VEH AÑO: 1997";
     } else if (patente.slice(0, 3) >= "BTA" && patente.slice(0, 3) <= "CKZ") {
-      ano = "VEH A�O: 1998";
+      ano = "VEH AÑO: 1998";
     } else if (patente.slice(0, 3) >= "CLA" && patente.slice(0, 3) <= "DAT") {
-      ano = "VEH A�O: 1999";
+      ano = "VEH AÑO: 1999";
     } else if (patente.slice(0, 3) >= "DAU" && patente.slice(0, 3) <= "DNZ") {
-      ano = "VEH A�O: 2000";
+      ano = "VEH AÑO: 2000";
     } else if (patente.slice(0, 3) >= "DOA" && patente.slice(0, 3) <= "DXZ") {
-      ano = "VEH A�O: 2001";
+      ano = "VEH AÑO: 2001";
     } else if (patente.slice(0, 3) >= "DYA" && patente.slice(0, 3) <= "EBK") {
-      ano = "VEH A�O: 2002";
+      ano = "VEH AÑO: 2002";
     } else if (patente.slice(0, 3) >= "EBL" && patente.slice(0, 3) <= "EGT") {
-      ano = "VEH A�O: 2003";
+      ano = "VEH AÑO: 2003";
     } else if (patente.slice(0, 3) >= "EGU" && patente.slice(0, 3) <= "ETA") {
-      ano = "VEH A�O: 2004";
+      ano = "VEH AÑO: 2004";
     } else if (patente.slice(0, 3) >= "EUA" && patente.slice(0, 3) <= "FHP") {
-      ano = "VEH A�O: 2005";
+      ano = "VEH AÑO: 2005";
     } else if (patente.slice(0, 3) >= "FHQ" && patente.slice(0, 3) <= "FXB") {
-      ano = "VEH A�O: 2006";
+      ano = "VEH AÑO: 2006";
     } else if (patente.slice(0, 3) >= "FXC" && patente.slice(0, 3) <= "GVZ") {
-      ano = "VEH A�O: 2007";
+      ano = "VEH AÑO: 2007";
     } else if (patente.slice(0, 3) >= "GWA" && patente.slice(0, 3) <= "HSK") {
-      ano = "VEH A�O: 2008";
+      ano = "VEH AÑO: 2008";
     } else if (patente.slice(0, 3) >= "HSL" && patente.slice(0, 3) <= "IMZ") {
-      ano = "VEH A�O: 2009";
+      ano = "VEH AÑO: 2009";
     } else if (patente.slice(0, 3) >= "INA" && patente.slice(0, 3) <= "JMZ") {
-      ano = "VEH A�O: 2010";
+      ano = "VEH AÑO: 2010";
     } else if (patente.slice(0, 3) >= "JNA" && patente.slice(0, 3) <= "KTQ") {
-      ano = "VEH A�O: 2011";
+      ano = "VEH AÑO: 2011";
     } else if (patente.slice(0, 3) >= "KTR" && patente.slice(0, 3) <= "LLZ") {
-      ano = "VEH A�O: 2012";
+      ano = "VEH AÑO: 2012";
     } else if (patente.slice(0, 3) >= "LMA" && patente.slice(0, 3) <= "NJZ") {
-      ano = "VEH A�O: 2013";
+      ano = "VEH AÑO: 2013";
     } else if (patente.slice(0, 3) >= "NKA" && patente.slice(0, 3) <= "OMZ") {
-      ano = "VEH A�O: 2014";
+      ano = "VEH AÑO: 2014";
     } else if (patente.slice(0, 3) >= "ONA" && patente.slice(0, 3) <= "PMZ") {
-      ano = "VEH A�O: 2015";
+      ano = "VEH AÑO: 2015";
     } else if (patente.slice(0, 3) >= "PNA" && patente.slice(0, 3) <= "QQZ") {
-      ano = "VEH A�O: 2016";
+      ano = "VEH AÑO: 2016";
     } else if (patente.slice(3, 6) >= "AAA" && patente.slice(3, 6) <= "CZZ") {
-      ano = "MOTO A�O < 2007 / MODELO+A�O";
+      ano = "MOTO AÑO < 2007 / MODELO+AÑO";
     } else if (patente.slice(3, 6) >= "DAA" && patente.slice(3, 6) <= "DMP") {
-      ano = "MOTO A�O: 2007";
+      ano = "MOTO AÑO: 2007";
     } else if (patente.slice(3, 6) >= "DMQ" && patente.slice(3, 6) <= "DZA") {
-      ano = "MOTO A�O: 2008";
+      ano = "MOTO AÑO: 2008";
     } else if (patente.slice(3, 6) >= "EAA" && patente.slice(3, 6) <= "EZZ") {
-      ano = "MOTO A�O: 2009";
+      ano = "MOTO AÑO: 2009";
     } else if (patente.slice(3, 6) >= "FAA" && patente.slice(3, 6) <= "GZZ") {
-      ano = "MOTO A�O: 2010";
+      ano = "MOTO AÑO: 2010";
     } else if (patente.slice(3, 6) >= "HAA" && patente.slice(3, 6) <= "HZD") {
-      ano = "MOTO A�O: 2011";
+      ano = "MOTO AÑO: 2011";
     } else if (patente.slice(3, 6) >= "HZE" && patente.slice(3, 6) <= "IZZ") {
-      ano = "MOTO A�O: 2012";
+      ano = "MOTO AÑO: 2012";
     } else if (patente.slice(3, 6) >= "JAA" && patente.slice(3, 6) <= "JZZ") {
-      ano = "MOTO A�O: 2013";
+      ano = "MOTO AÑO: 2013";
     } else if (patente.slice(3, 6) >= "KAA" && patente.slice(3, 6) <= "KWQ") {
-      ano = "MOTO A�O: 2014";
+      ano = "MOTO AÑO: 2014";
     } else if (patente.slice(3, 6) >= "KWR" && patente.slice(3, 6) <= "LKZ") {
-      ano = "MOTO A�O: 2015";
+      ano = "MOTO AÑO: 2015";
     } else if (patente.slice(3, 6) >= "LLA" && patente.slice(3, 6) <= "LZZ") {
-      ano = "MOTO A�O: 2016";
+      ano = "MOTO AÑO: 2016";
     } else {
-      ano = "A�O VEH NO ENCONTRADO.";
+      ano = "AÑO VEH NO ENCONTRADO.";
     }
   } else if (patente.length == 7) {
     if (patente.slice(0, 2) == "AA" && patente.slice(2, 4) <= "830") {
-      ano = "VEH A�O: 2016";
+      ano = "VEH AÑO: 2016";
     } else if (patente.slice(0, 2) == "AA" && patente.slice(2, 4) >= "831") {
-      ano = "VEH A�O: 2017";
+      ano = "VEH AÑO: 2017";
     } else if (patente.slice(0, 2) == "AB") {
-      ano = "A�O: 2017";
+      ano = "AÑO: 2017";
     } else if (patente.slice(0, 2) == "AC" && patente.slice(2, 4) <= "178") {
-      ano = "VEH A�O: 2017";
+      ano = "VEH AÑO: 2017";
     } else if (patente.slice(0, 2) == "AC" && patente.slice(2, 4) >= "179") {
-      ano = "VEH A�O: 2018";
+      ano = "VEH AÑO: 2018";
     } else if (patente.slice(0, 2) == "AD" && patente.slice(2, 4) <= "537") {
-      ano = "VEH A�O: 2018";
+      ano = "VEH AÑO: 2018";
     } else if (patente.slice(0, 2) == "AD" && patente.slice(2, 5) >= "538") {
-      ano = "VEH A�O: 2019";
+      ano = "VEH AÑO: 2019";
     } else if (patente.slice(0, 2) == "AE" && patente.slice(2, 5) <= "070") {
-      ano = "VEH A�O: 2019";
+      ano = "VEH AÑO: 2019";
     } else if (patente.slice(0, 2) == "AE" && patente.slice(2, 5) <= "551") {
-      ano = "VEH A�O: 2020";
+      ano = "VEH AÑO: 2020";
     } else if (patente.slice(0, 2) == "AE" && patente.slice(2, 5) >= "552") {
-      ano = "VEH A�O: 2021";
+      ano = "VEH AÑO: 2021";
     } else if (patente.slice(0, 2) == "AF" && patente.slice(2, 5) <= "075") {
-      ano = "VEH A�O: 2021";
+      ano = "VEH AÑO: 2021";
     } else if (patente.slice(0, 2) == "AF" && patente.slice(2, 5) <= "699") {
-      ano = "VEH A�O: 2022";
+      ano = "VEH AÑO: 2022";
     } else if (patente.slice(0, 2) == "AF" && patente.slice(2, 5) >= "699") {
-      ano = "VEH A�O: 2023 O MAS";
+      ano = "VEH AÑO: 2023 O MAS";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) <= "018") {
-      ano = "MOTO A�O: 2016";
+      ano = "MOTO AÑO: 2016";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) >= "019" && patente.slice(1, 4) <= "067") {
-      ano = "MOTO A�O: 2017";
+      ano = "MOTO AÑO: 2017";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) >= "068" && patente.slice(1, 4) <= "094") {
-      ano = "MOTO A�O: 2018";
+      ano = "MOTO AÑO: 2018";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) >= "095" && patente.slice(1, 4) <= "112") {
-      ano = "MOTO A�O: 2019";
+      ano = "MOTO AÑO: 2019";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) >= "113" && patente.slice(1, 4) <= "128") {
-      ano = "MOTO A�O: 2020";
+      ano = "MOTO AÑO: 2020";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) >= "129" && patente.slice(1, 4) <= "151") {
-      ano = "MOTO A�O: 2021";
+      ano = "MOTO AÑO: 2021";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) >= "152" && patente.slice(1, 4) <= "174") {
-      ano = "MOTO A�O: 2022";
+      ano = "MOTO AÑO: 2022";
     } else if (patente.slice(0, 1) == "A" && patente.slice(1, 4) >= "175") {
-      ano = "MOTO A�O: 2023 O MAS";
+      ano = "MOTO AÑO: 2023 O MAS";
     } else {
-      ano = "A�O VEH NO ENCONTRADO.";
+      ano = "AÑO VEH NO ENCONTRADO.";
     }
   } else {
-    ano = "PATENTE INV�LIDA.";
+    ano = "PATENTE INVÁLIDA.";
   }
 
   document.getElementById("modelo").value = ano;
@@ -796,7 +796,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode } })
     video.srcObject = stream;
   })
   .catch(function(error) {
-    console.error('Error al acceder a la c�mara:', error);
+    console.error('Error al acceder a la cámara:', error);
   });
 
 function capturePhoto(event) {
@@ -807,7 +807,7 @@ function capturePhoto(event) {
 
   // Agregar fecha y hora actual en el lienzo
   var fechaHoraActual = new Date().toLocaleString();
-  context.font = 'bold 35px arial black'; // Fuente m�s gruesa
+  context.font = 'bold 35px arial black'; // Fuente más gruesa
   context.fillStyle = 'white';
   context.strokeStyle = 'black'; // Color del borde
   context.lineWidth = 2; // Grosor del borde
@@ -861,24 +861,24 @@ function switchCamera(event) {
               video.srcObject = stream;
             })
             .catch(function(error) {
-              console.error('Error al cambiar de c�mara:', error);
+              console.error('Error al cambiar de cámara:', error);
             });
         } else {
-          console.log('No se encontraron c�maras adicionales.');
+          console.log('No se encontraron cámaras adicionales.');
         }
       })
       .catch(function(error) {
         console.error('Error al enumerar los dispositivos:', error);
       });
   } else {
-    console.log('La funci�n enumerateDevices no est� disponible en este navegador.');
+    console.log('La función enumerateDevices no está disponible en este navegador.');
   }
 }
 
 
         var canvas2 = document.getElementById('canvas2');
       var resultado = document.getElementById('resultado');
-        var currentCamera = 'environment'; // Valor inicial de la c�mara trasera
+        var currentCamera = 'environment'; // Valor inicial de la cámara trasera
 
         function tomarFoto() {
     event.preventDefault();
@@ -899,27 +899,27 @@ function extraerTexto() {
         var tempCanvas = document.createElement('canvas');
         var context = tempCanvas.getContext('2d');
 
-        // Ajustar el tama�o del lienzo temporal para obtener una imagen de mayor calidad
-        var scaleFactor = 4; // Ajusta este valor para obtener el tama�o deseado
+        // Ajustar el tamaño del lienzo temporal para obtener una imagen de mayor calidad
+        var scaleFactor = 4; // Ajusta este valor para obtener el tamaño deseado
         tempCanvas.width = img.width * scaleFactor;
         tempCanvas.height = img.height * scaleFactor;
 
-        // Dibujar la imagen en el nuevo canvas utilizando la interpolaci�n adecuada
+        // Dibujar la imagen en el nuevo canvas utilizando la interpolación adecuada
         context.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
 
-        // Obtener los p�xeles de la imagen
+        // Obtener los píxeles de la imagen
         var imageData = context.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
         var data = imageData.data;
 
-        // Recorrer los p�xeles y modificar el fondo a blanco
+        // Recorrer los píxeles y modificar el fondo a blanco
         for (var i = 0; i < data.length; i += 4) {
-            // Verificar si el p�xel es parte del fondo
+            // Verificar si el píxel es parte del fondo
             var r = data[i];
             var g = data[i + 1];
             var b = data[i + 2];
             var alpha = data[i + 3];
 
-            // Si el p�xel no es parte del fondo, establecerlo como blanco
+            // Si el píxel no es parte del fondo, establecerlo como blanco
             if (r > 100 && g > 100 && b > 100 && alpha > 100) {
                 data[i] = 255;     // Rojo
                 data[i + 1] = 255; // Verde
@@ -928,7 +928,7 @@ function extraerTexto() {
             }
         }
 
-        // Establecer los p�xeles modificados en el canvas original
+        // Establecer los píxeles modificados en el canvas original
         context.putImageData(imageData, 0, 0);
 
         // Obtener la imagen resultante en formato base64
@@ -960,7 +960,7 @@ function extraerTexto() {
   var chasis = getTextAfterKeyword2(texto, chasisIndex, 'CHASIS:');
   var cuadro = getTextAfterKeyword2(texto, cuadroIndex, 'CUADRO:');
 
-  // Verificar si se encontr� la palabra "chasis" o "cuadro"
+  // Verificar si se encontró la palabra "chasis" o "cuadro"
   if (chasis === '') {
     chasis = cuadro;
   }
@@ -972,7 +972,7 @@ function extraerTexto() {
 })
             .catch(function (error) {
                 console.error(error);
-                alert('Ocurri� un error al extraer el texto de la imagen.');
+                alert('Ocurrió un error al extraer el texto de la imagen.');
             });
     };
 
@@ -982,21 +982,21 @@ function extraerTexto() {
 
 function getTextAfterKeyword(texto, keywordIndex, keyword) {
     event.preventDefault();
-    // Verificar si se encontr� la palabra clave
+    // Verificar si se encontró la palabra clave
     if (keywordIndex !== -1) {
-        // Obtener el �ndice despu�s de la palabra clave
+        // Obtener el índice después de la palabra clave
         var startIndex = keywordIndex + keyword.length;
 
-        // Obtener el texto despu�s de la palabra clave
+        // Obtener el texto después de la palabra clave
         var value = texto.substring(startIndex).trim();
 
-        // Verificar si hay un salto de l�nea o espacio
+        // Verificar si hay un salto de línea o espacio
         var nextLineIndex = value.indexOf('\n');
 
-        // Obtener el �ndice del siguiente espacio o salto de l�nea
+        // Obtener el índice del siguiente espacio o salto de línea
         var endIndex = Math.min(nextLineIndex);
 
-        // Si se encuentra el siguiente espacio o salto de l�nea, truncar el texto
+        // Si se encuentra el siguiente espacio o salto de línea, truncar el texto
         if (endIndex !== -1) {
             value = value.substring(0, endIndex);
         }
@@ -1012,22 +1012,22 @@ function getTextAfterKeyword(texto, keywordIndex, keyword) {
 
 function getTextAfterKeyword2(texto, keywordIndex, keyword) {
     event.preventDefault();
-    // Verificar si se encontr� la palabra clave
+    // Verificar si se encontró la palabra clave
     if (keywordIndex !== -1) {
-        // Obtener el �ndice despu�s de la palabra clave
+        // Obtener el índice después de la palabra clave
         var startIndex = keywordIndex + keyword.length;
 
-        // Obtener el texto despu�s de la palabra clave
+        // Obtener el texto después de la palabra clave
         var value = texto.substring(startIndex).trim();
 
-        // Verificar si hay un salto de l�nea o espacio
+        // Verificar si hay un salto de línea o espacio
         var nextLineIndex = value.indexOf('\n');
         var nextSpaceIndex = value.indexOf(' ');
 
-        // Obtener el �ndice del siguiente espacio o salto de l�nea
+        // Obtener el índice del siguiente espacio o salto de línea
         var endIndex = Math.min(nextLineIndex, nextSpaceIndex);
 
-        // Si se encuentra el siguiente espacio o salto de l�nea, truncar el texto
+        // Si se encuentra el siguiente espacio o salto de línea, truncar el texto
         if (endIndex !== -1) {
             value = value.substring(0, endIndex);
         }
@@ -1055,6 +1055,9 @@ function mostrarImagenModificada(modifiedImageData) {
 function cleanservice() {
   event.preventDefault();
 
+
+
+
   const boton = document.getElementById('bt-ingreso');
     const spinner = document.getElementById('spinner_clean');
     spinner.style.display = 'inline-block';
@@ -1068,6 +1071,7 @@ function cleanservice() {
     let infoFpago =  document.getElementById("fpago").value;
     let infoSucursal =  document.getElementById("sucursal").value;
     let infoNotascte =  document.getElementById("notascte").value;
+    let infoPatente1 =  document.getElementById("patente").value;
     let infoPatente =  document.getElementById("patente_sn").value;
     let infoMarca =  document.getElementById("marca").value;
     let infoCnia =  document.getElementById("cnia").value;
@@ -1086,6 +1090,19 @@ function cleanservice() {
     let info_input_nombre =  sessionStorage.getItem("text-box-numeroInventario_nombre");
     let info_input_dni =  document.getElementById("text-box-numeroInventario_dni").value;
     let info_input_patente =  document.getElementById("patente").value;
+    let infodniValorid =  document.getElementById("dniValorid").value;
+    let infonombreCompletoValor =  document.getElementById("nombreCompletoValor").value;
+    let infoLogoValor =  document.getElementById("LogoValor").value;
+    let infoWhatsappValor =  document.getElementById("WhatsappValor").value;
+    let infoStatCte =  document.getElementById("StatCte").value;
+    let infosinPendientes =  document.getElementById("sinPendientes").value;
+    let infopatenteValor =  document.getElementById("patenteValor").value;
+    let infomarcaValor =  document.getElementById("marcaValor").value;
+    let infocniaValor =  document.getElementById("cniaValor").value;
+    let infoStatVeh =  document.getElementById("StatVeh").value;
+    let infosinPendientes2 =  document.getElementById("sinPendientes2").value;
+
+
 
 infoDNI =  "";
 infoCliente =  "";
@@ -1116,6 +1133,18 @@ infoChasis =  "";
 info_input_nombre =  "";
 info_input_dni =  "";
 info_input_patente =  "";
+infodniValorid =  "";
+infonombreCompletoValor =  "";
+infoLogoValor =  "";
+infoWhatsappValor =  "";
+infoStatCte =  "";
+infosinPendientes = "";
+infopatenteValor = "";
+infomarcaValor = "";
+infocniaValor = "";
+infoStatVeh = "";
+infosinPendientes2 = "";
+infoPatente1= "";
 
 document.getElementById('valoresContainer').style.display = 'none';
 document.getElementById('valoresContainer_veh').style.display = 'none';
@@ -1146,7 +1175,7 @@ alert('Limpieza completa de sistema');
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Funci�n para realizar el inicio de sesi�n
+// Función para realizar el inicio de sesión
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -1178,19 +1207,19 @@ if (usuarioAlmacenado) {
   iniciarContadorTiempo(tiempoRestante);
 } else {
   
-  // Funci�n para abrir el modal
+  // Función para abrir el modal
   modal.style.display = "block";
 
-  // Funci�n para cerrar el modal
+  // Función para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot�n de inicio de sesi�n
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
   document.getElementById("inicio-sesion").addEventListener("click", function (event) {
     event.preventDefault();
 
-    // Obtener el usuario y la contrase�a del formulario
+    // Obtener el usuario y la contraseña del formulario
     var usuario = document.getElementById("usuario").value;
     var contrasena = document.getElementById("contrasena").value;
 
@@ -1198,7 +1227,7 @@ if (usuarioAlmacenado) {
     var colorPicker = document.getElementById("colorPicker");
     var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contrase�a
+// Hacer una solicitud al servidor para verificar el usuario y la contraseña
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -1230,7 +1259,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// Funci�n para calcular el tiempo restante en milisegundos
+// Función para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
   var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -1239,7 +1268,7 @@ function calcularTiempoRestante() {
   return tiempoRestante;
 }
 
-// Funci�n para mostrar el tiempo restante en el div correspondiente
+// Función para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
@@ -1252,7 +1281,7 @@ function mostrarTiempoRestante(tiempoRestante) {
   }
 }
 
-// Funci�n para iniciar el contador de tiempo
+// Función para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -1304,7 +1333,7 @@ function close_sessionok(event) {
       sessionStorage.removeItem("magi-horaInicio");
       tiempoRestanteDiv.innerHTML = "";    
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la p�gina
+  // Recargar la página
       modal.style.display = "block";
 
 }
