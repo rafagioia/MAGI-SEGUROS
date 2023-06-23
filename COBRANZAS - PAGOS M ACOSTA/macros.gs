@@ -1,12 +1,10 @@
-
-
-///////////////////////////////////// HTML /////////////////////////////////////////////
+ ///////////////////////////////////// HTML /////////////////////////////////////////////
 
 
 /////////// ABRIMOS EL HTML ///////////////
 function doGet(){
   var template = HtmlService.createTemplateFromFile('registro');
-  template.pubUrl = "https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
+  template.pubUrl = "https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
   var output = template.evaluate();
   return output;
 }
@@ -19,12 +17,15 @@ function include( fileName ){
 
 //////////////////////////// INGRESO SIN DOPOST ///////////////////////
 
+
 function pagoNuevo(infomultiRec, infoDNI, infoCliente, infoWpp, infoPatente, infoMarca, infoPoliza, infoCnia, infoCuota, infoVigencia, infoImporte, infoVence, infoColor, infoUsuario, infoNotas, infoMedio) {
 
-let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2);IF(edate(F2;1)<now(); if(month(vlookup(B2;indirect("B:F");5;false))>month(edate(now();-1));"";"Poliza con Deuda");"");"");"")';
 
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
+
+
+let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2);IF(edate(F2;1)<now(); if(month(vlookup(B2;indirect("B:F");5;false))>month(edate(now();-1));"";"Poliza con Deuda");"");"");"")';
 
 
  // Buscar si el DNI ya existe en la hoja de clientes
@@ -85,12 +86,13 @@ var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte,
     LISTADO.insertRowBefore(2).getRange(2, 1, 1, vehVals.length).setValues([vehVals]);
   }
 
+
   var spreadsheetId = "1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA";
   var sheetName = "BD COBRANZAS";
   var sheetRegistro2 = SpreadsheetApp.openById(spreadsheetId).getSheetByName(sheetName);
 
   var fecha = new Date();
-  var sucursal = "MARCOS PAZ";
+  var sucursal = "MARIANO ACOSTA";
   var notas1 = "//" + infoUsuario + " / (" + infoNotas + ")";
 
   if (infomultiRec > 1 && infomultiRec < 7) {
@@ -143,7 +145,7 @@ var fecha = new Date();
 let concepto1 = concepto + " - //" + usuario_p;
   var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T9").getValue() + 1;
   BD_COBRANZAS.getRange("CARGADORES!T9").setValue(numeroRecibo);
-var sucursal = "MARCOS PAZ";
+var sucursal = "MARIANO ACOSTA";
 
 var sourceVals = [numeroRecibo, concepto1, medio, sucursal, importe, para, fecha];
 sheetRegistro2.insertRowBefore(3).getRange(3, 1, 1, sourceVals.length).setValues([sourceVals]);
@@ -172,7 +174,7 @@ const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadshe
   var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T7").getValue() + 1;
   BD_COBRANZAS.getRange("CARGADORES!T7").setValue(numeroRecibo);
   var magi = '=IF(CONCATENATE(DAY(H3);MONTH(H3);YEAR(H3))=CONCATENATE(DAY(INDIRECT("CARGADORES!T6"));MONTH(INDIRECT("CARGADORES!T6"));YEAR(INDIRECT("CARGADORES!T6")));ROW();"")';
-var sucursal = "MARCOS PAZ";
+var sucursal = "MARIANO ACOSTA";
 var fecha = new Date();
 let concepto1 = gastoConcepto + " - //" + usuario_p;
 var sourceVals = [, numeroRecibo, concepto1, sucursal, gastoImporte, magi, gastoPara, fecha, gastoMedio];
@@ -188,7 +190,7 @@ const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadshe
   var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T8").getValue() + 1;
   BD_COBRANZAS.getRange("CARGADORES!T8").setValue(numeroRecibo);
   var magi = '=IF(CONCATENATE(DAY(H3);MONTH(H3);YEAR(H3))=CONCATENATE(DAY(INDIRECT("CARGADORES!T6"));MONTH(INDIRECT("CARGADORES!T6"));YEAR(INDIRECT("CARGADORES!T6")));ROW();"")';
-var sucursal = "MARCOS PAZ";
+var sucursal = "MARIANO ACOSTA";
 var fecha = new Date();
 let concepto1 = recibiConcepto + " - //" + usuario_p;
 var sourceVals = [, numeroRecibo, concepto1, sucursal, recibiImporte, magi, recibiPara, fecha, recibiMedio];
