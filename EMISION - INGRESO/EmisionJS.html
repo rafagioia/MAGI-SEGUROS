@@ -392,6 +392,7 @@ infoHasta.value = new Date(today.getFullYear(), today.getMonth() + 12, today.get
         alert("No se encontraron valores");
  document.getElementById('valoresContainer_veh').style.display = 'block';
  document.getElementById('StatVeh').textContent = "NUEVO VEHICULO";
+ document.getElementById('patenteValor').textContent = document.getElementById('patente').value;
         infoPatente.value = patente
 var today = new Date();
 infoVigencia.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
