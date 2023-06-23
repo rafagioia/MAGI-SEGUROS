@@ -4,15 +4,15 @@
 <script>
   
 //////////////// BOTON DEL MENU ///////////////////////
-    // Obt閚 una referencia al bot髇
+    // Obt茅n una referencia al bot贸n
 const navbarToggler = document.getElementById('navbar-toggler');
 
-// Agrega un evento de clic al bot髇
+// Agrega un evento de clic al bot贸n
 navbarToggler.addEventListener('click', function() {
-  // Obt閚 una referencia al elemento de destino
+  // Obt茅n una referencia al elemento de destino
   const navbarNav = document.getElementById('navbarNav');
 
-  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegaci髇
+  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegaci贸n
   navbarNav.classList.toggle('show');
 });
 
@@ -78,7 +78,7 @@ pendientesHtml += "<div class='border' style='background-color: #FFFFFF; margin-
     sinPendientesDiv.innerHTML = pendientesHtml;
   }
 
-  // Llamar a la funci髇 getData() del lado del servidor
+  // Llamar a la funci贸n getData() del lado del servidor
   google.script.run.withSuccessHandler(updateSinPendientes).getData();
   /////////////////////////////////////////
 
@@ -102,7 +102,7 @@ pendientesHtml2 += "<div class='border' style='background-color: #FFFFFF; margin
     sinPendientesDiv2.innerHTML = pendientesHtml2;
   }
 
-  // Llamar a la funci髇 getData() del lado del servidor
+  // Llamar a la funci贸n getData() del lado del servidor
   google.script.run.withSuccessHandler(updateSinPendientes2).getDataGastos();
   /////////////////////////////////////////
 
@@ -127,7 +127,7 @@ pendientesHtml2 += "<div class='border' style='background-color: #FFFFFF; margin
     sinPendientesDiv3.innerHTML = pendientesHtml3;
   }
 
-  // Llamar a la funci髇 getData() del lado del servidor
+  // Llamar a la funci贸n getData() del lado del servidor
   google.script.run.withSuccessHandler(updateSinPendientes3).getDataRecibis();
   /////////////////////////////////////////
 </script>
@@ -159,15 +159,15 @@ function calcularSumaPagos(data) {
   // Recorre los datos recibidos y verifica los criterios
   for (var i = 0; i < data.length; i++) {
     var fila = data[i];
-    var columnaQ = fila[10]; // 蚽dice 10 corresponde a la columna Q
-    var columnaT = fila[12]; // 蚽dice 13 corresponde a la columna T
+    var columnaQ = fila[10]; // 脥ndice 10 corresponde a la columna Q
+    var columnaT = fila[12]; // 脥ndice 13 corresponde a la columna T
 
     var fechaPagoStr = fila[4];
     var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-    var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d韆, mes y a駉
+    var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d铆a, mes y a帽o
     var hora = parseInt(fechaSplit[0], 10);
 
-    var valor = fila[8]; // 蚽dice 8 corresponde a la columna Importe
+    var valor = fila[8]; // 脥ndice 8 corresponde a la columna Importe
     var valorNumerico = parseInt(valor.replace(/\D/g, ''));
 
     if (columnaQ === "MARCOS PAZ") {
@@ -226,14 +226,14 @@ function calcularSumaGastos(data) {
   // Recorre los datos recibidos y verifica los criterios
   for (var i = 0; i < data.length; i++) {
     var fila = data[i];
-    var columnaQ = fila[3]; // 蚽dice 10 corresponde a la columna Q
-    var columnaT = fila[5]; // 蚽dice 13 corresponde a la columna T
+    var columnaQ = fila[3]; // 脥ndice 10 corresponde a la columna Q
+    var columnaT = fila[5]; // 脥ndice 13 corresponde a la columna T
     var fechaPagoStr = fila[4];
     var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-    var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d韆, mes y a駉
+    var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d铆a, mes y a帽o
     var hora = parseInt(fechaSplit[0], 10);
 
-    var valor = fila[2]; // 蚽dice 8 corresponde a la columna Importe
+    var valor = fila[2]; // 脥ndice 8 corresponde a la columna Importe
     var valorNumerico = parseInt(valor.replace(/\D/g, ''));
 
     if (columnaQ === "MARCOS PAZ") {
@@ -292,14 +292,14 @@ function calcularSumaRecibis(data) {
   // Recorre los datos recibidos y verifica los criterios
   for (var i = 0; i < data.length; i++) {
     var fila = data[i];
-    var columnaQ = fila[3]; // 蚽dice 10 corresponde a la columna Q
-    var columnaT = fila[5]; // 蚽dice 13 corresponde a la columna T
+    var columnaQ = fila[3]; // 脥ndice 10 corresponde a la columna Q
+    var columnaT = fila[5]; // 脥ndice 13 corresponde a la columna T
     var fechaPagoStr = fila[4];
     var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-    var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d韆, mes y a駉
+    var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d铆a, mes y a帽o
     var hora = parseInt(fechaSplit[0], 10);
 
-    var valor = fila[2]; // 蚽dice 8 corresponde a la columna Importe
+    var valor = fila[2]; // 脥ndice 8 corresponde a la columna Importe
     var valorNumerico = parseInt(valor.replace(/\D/g, ''));
 
     if (columnaQ === "MARCOS PAZ") {
@@ -415,7 +415,7 @@ function refresh() {
   google.script.run.withSuccessHandler(calcularSumaGastos).getDataGastos();
   google.script.run.withSuccessHandler(calcularSumaRecibis).getDataRecibis();
 
-  // Ocultar el spinner despu閟 de completar todas las llamadas
+  // Ocultar el spinner despu茅s de completar todas las llamadas
   Promise.all([
     new Promise((resolve, reject) => {
       google.script.run.withSuccessHandler(resolve).getData();
@@ -433,14 +433,14 @@ function refresh() {
 
 
 function bajarXLM(downloadUrl) {
-  // L骻ica para descargar el archivo
-  alert("Env韔 de caja exitoso!");
+  // L贸gica para descargar el archivo
+  alert("Env铆o de caja exitoso!");
    const spinner = document.getElementById('spinner_send_caja');
       spinner.style.display = 'none';
 }
 
 function mostrarErrorEnvio() {
-  alert("Error en el env韔, por favor reintente");
+  alert("Error en el env铆o, por favor reintente");
    const spinner = document.getElementById('spinner_send_caja');
       spinner.style.display = 'none';
 }
@@ -480,7 +480,7 @@ function enviarCaja() {
     var t_gastos_ma_t_d = parseFloat(document.getElementById("t_gastos_ma_t_d").value) || 0;
     var t_recibis_ma_t_d = parseFloat(document.getElementById("t_recibis_ma_t_d").value) || 0;   
 
-  // Llamar a la funci髇 getData() del lado del servidor
+  // Llamar a la funci贸n getData() del lado del servidor
   google.script.run.withSuccessHandler(bajarXLM).withFailureHandler(mostrarErrorEnvio).generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m,t_pagos_mp_t,t_gastos_mp_t,t_recibis_mp_t, t_pagos_ma_m,t_gastos_ma_m,t_recibis_ma_m,t_pagos_ma_t,t_gastos_ma_t,t_recibis_ma_t, t_pagos_mp_m_d, t_gastos_mp_m_d, t_recibis_mp_m_d, t_pagos_mp_t_d, t_gastos_mp_t_d, t_recibis_mp_t_d,  t_pagos_ma_m_d, t_gastos_ma_m_d, t_recibis_ma_m_d, t_pagos_ma_t_d, t_gastos_ma_t_d, t_recibis_ma_t_d);
 
   
@@ -524,7 +524,7 @@ var today = document.getElementById("fecha_caja").value; // Obtener el valor del
     var t_gastos_ma_t_d = parseFloat(document.getElementById("t_gastos_ma_t_d").value) || 0;
     var t_recibis_ma_t_d = parseFloat(document.getElementById("t_recibis_ma_t_d").value) || 0;   
 
-  // Llamar a la funci髇 getData() del lado del servidor
+  // Llamar a la funci贸n getData() del lado del servidor
   google.script.run.withSuccessHandler(bajarXLM).withFailureHandler(mostrarErrorEnvio).generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m,t_pagos_mp_t,t_gastos_mp_t,t_recibis_mp_t, t_pagos_ma_m,t_gastos_ma_m,t_recibis_ma_m,t_pagos_ma_t,t_gastos_ma_t,t_recibis_ma_t, t_pagos_mp_m_d, t_gastos_mp_m_d, t_recibis_mp_m_d, t_pagos_mp_t_d, t_gastos_mp_t_d, t_recibis_mp_t_d,  t_pagos_ma_m_d, t_gastos_ma_m_d, t_recibis_ma_m_d, t_pagos_ma_t_d, t_gastos_ma_t_d, t_recibis_ma_t_d, today);
 }
 
@@ -536,6 +536,36 @@ function abrir_caja_old() {
    const spinner = document.getElementById('spinner_open_caja_old');
   spinner.style.display = 'block';
 
+document.getElementById("lista_recibis").innerHTML = "";
+document.getElementById("lista_gastos").innerHTML = "";
+document.getElementById("sinPendientes").innerHTML = "";
+
+document.getElementById("t_pagos_mp_m").value = "";
+document.getElementById("t_gastos_mp_m").value = "";
+document.getElementById("t_recibis_mp_m").value = "";
+document.getElementById("t_pagos_mp_t").value = "";
+document.getElementById("t_gastos_mp_t").value = "";
+document.getElementById("t_recibis_mp_t").value = "";
+document.getElementById("t_pagos_ma_m").value = "";
+document.getElementById("t_gastos_ma_m").value = "";
+document.getElementById("t_recibis_ma_m").value = "";
+document.getElementById("t_pagos_ma_t").value = "";
+document.getElementById("t_gastos_ma_t").value = "";
+document.getElementById("t_recibis_ma_t").value = "";
+document.getElementById("t_pagos_mp_m_d").value = "";
+document.getElementById("t_gastos_mp_m_d").value = "";
+document.getElementById("t_recibis_mp_m_d").value = "";
+document.getElementById("t_pagos_mp_t_d").value = "";
+document.getElementById("t_gastos_mp_t_d").value = "";
+document.getElementById("t_recibis_mp_t_d").value = "";
+document.getElementById("t_pagos_ma_m_d").value = "";
+document.getElementById("t_gastos_ma_m_d").value = "";
+document.getElementById("t_recibis_ma_m_d").value = "";
+document.getElementById("t_pagos_ma_t_d").value = ""; 
+document.getElementById("t_gastos_ma_t_d").value = ""; 
+document.getElementById("t_recibis_ma_t_d").value = "";
+
+
 var today = document.getElementById("fecha_caja").value; // Obtener el valor del elemento
 
   google.script.run.withSuccessHandler(updateSinPendientes).getData(today);
@@ -546,7 +576,7 @@ var today = document.getElementById("fecha_caja").value; // Obtener el valor del
   google.script.run.withSuccessHandler(calcularSumaGastos).getDataGastos(today);
   google.script.run.withSuccessHandler(calcularSumaRecibis).getDataRecibis(today);
 
-  // Ocultar el spinner despu閟 de completar todas las llamadas
+  // Ocultar el spinner despu茅s de completar todas las llamadas
   Promise.all([
     new Promise((resolve, reject) => {
       google.script.run.withSuccessHandler(resolve).getData();
@@ -573,7 +603,7 @@ var today = document.getElementById("fecha_caja").value; // Obtener el valor del
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Funci髇 para realizar el inicio de sesi髇
+// Funci贸n para realizar el inicio de sesi贸n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -605,19 +635,19 @@ if (usuarioAlmacenado) {
   iniciarContadorTiempo(tiempoRestante);
 } else {
   
-  // Funci髇 para abrir el modal
+  // Funci贸n para abrir el modal
   modal.style.display = "block";
 
-  // Funci髇 para cerrar el modal
+  // Funci贸n para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot髇 de inicio de sesi髇
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot贸n de inicio de sesi贸n
   document.getElementById("inicio-sesion").addEventListener("click", function (event) {
     event.preventDefault();
 
-    // Obtener el usuario y la contrase馻 del formulario
+    // Obtener el usuario y la contrase帽a del formulario
     var usuario = document.getElementById("usuario").value;
     var contrasena = document.getElementById("contrasena").value;
 
@@ -625,7 +655,7 @@ if (usuarioAlmacenado) {
     var colorPicker = document.getElementById("colorPicker");
     var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contrase馻
+// Hacer una solicitud al servidor para verificar el usuario y la contrase帽a
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -657,7 +687,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// Funci髇 para calcular el tiempo restante en milisegundos
+// Funci贸n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
   var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -666,7 +696,7 @@ function calcularTiempoRestante() {
   return tiempoRestante;
 }
 
-// Funci髇 para mostrar el tiempo restante en el div correspondiente
+// Funci贸n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
@@ -679,7 +709,7 @@ function mostrarTiempoRestante(tiempoRestante) {
   }
 }
 
-// Funci髇 para iniciar el contador de tiempo
+// Funci贸n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -731,7 +761,7 @@ function close_sessionok(event) {
       sessionStorage.removeItem("magi-horaInicio");
       tiempoRestanteDiv.innerHTML = "";    
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la p醙ina
+  // Recargar la p谩gina
       modal.style.display = "block";
 
 }
