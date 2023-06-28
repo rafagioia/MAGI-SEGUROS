@@ -1,4 +1,3 @@
-
    body{
     background-color: #CB3234;
   }
@@ -163,7 +162,7 @@
       overflow: auto;
       background-color: rgba(0, 0, 0, 0.4);
     }
-    /* Estilos para la barra de navegaci�n */
+    /* Estilos para la barra de navegación */
       .navbar-brand {
         font-weight: bold;
         font-size: 24px;
@@ -186,7 +185,7 @@
       .nav-item.dropdown:hover .dropdown-menu {
         display: block;
       }
-      /* Estilos para el contenedor de p�ginas */
+      /* Estilos para el contenedor de páginas */
       #page-container {
         margin-top: 20px;
       }
