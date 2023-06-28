@@ -1,18 +1,15 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
-<script>
+
 
 //////////////// BOTON DEL MENU ///////////////////////
-    // Obt�n una referencia al bot�n
+    // Obtén una referencia al botón
 const navbarToggler = document.getElementById('navbar-toggler');
 
-// Agrega un evento de clic al bot�n
+// Agrega un evento de clic al botón
 navbarToggler.addEventListener('click', function() {
-  // Obt�n una referencia al elemento de destino
+  // Obtén una referencia al elemento de destino
   const navbarNav = document.getElementById('navbarNav');
 
-  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegaci�n
+  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegación
   navbarNav.classList.toggle('show');
 });
 
@@ -36,9 +33,6 @@ navbarToggler.addEventListener('click', function() {
    )
 })()
 
-  
-</script>
-<script>
 
 
   //////////////////// INGRESAR PAGOS ///////////////////////
@@ -108,9 +102,9 @@ function handleResponse(response) {
   console.log(numRec);
   console.log(infomultiRec);
   if (infomultiRec === 1) {
-    reimprimirRecibo_b(numRec); // Llama a la funci�n reimprimirRecibo con el valor retornado como numRecibo
+    reimprimirRecibo_b(numRec); // Llama a la función reimprimirRecibo con el valor retornado como numRecibo
   } else if (infomultiRec > 1) {
-    reimprimirReciboMulti_b(numRec); // Llama a la funci�n reimprimirReciboMulti con el valor retornado como numReciboMulti
+    reimprimirReciboMulti_b(numRec); // Llama a la función reimprimirReciboMulti con el valor retornado como numReciboMulti
   }
 }
 
@@ -141,10 +135,6 @@ const boton = document.getElementById('bt-ingreso');
 
 /////////////////////////////////////////////////////////////////////
 
-
-
-</script>
-<script>
 
 ///////// INGRESAR NOMOVE ///////////////
 function ingresarNomove(event) {
@@ -266,7 +256,7 @@ infoNotas.value = contenido;
 
 let rowCount = 0;
 info.forEach(mantenimiento => {
-  if (rowCount < 6) { // solo agrega filas si el n�mero actual de filas es menor que 6
+  if (rowCount < 6) { // solo agrega filas si el número actual de filas es menor que 6
 
     const template = document.getElementById("mantenimientosRow");
     const templateRow = template.content;
@@ -365,7 +355,7 @@ let rowCount = 0;
 let processed = new Set(); // conjunto para almacenar los valores ya procesados
 info.forEach(mantenimiento2 => {
   if (rowCount < 10) {
-    // solo agrega filas si el n�mero actual de filas es menor que 10 y el valor no est� en el conjunto
+    // solo agrega filas si el número actual de filas es menor que 10 y el valor no está en el conjunto
     if (!processed.has(mantenimiento2[1])) {
       const template2 = document.getElementById("mantenimientosRow2");
       const templateRow2 = template2.content;
@@ -465,7 +455,7 @@ infoNotas.value = contenido;
 
 let rowCount = 0;
 info.forEach(mantenimiento => {
-  if (rowCount < 6) { // solo agrega filas si el n�mero actual de filas es menor que 6
+  if (rowCount < 6) { // solo agrega filas si el número actual de filas es menor que 6
 
     const template = document.getElementById("mantenimientosRow");
     const templateRow = template.content;
@@ -560,8 +550,6 @@ actualizarMensaje()
       }
             ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR NOMBRE EN BD EMISION //////////
 
-      </script>
-            <script>
 
   ///// SCRIPT PARA BUSCAR DATOS POR PATENTE EMISION //////////
       function buscarRegistros_emision() {
@@ -627,13 +615,6 @@ actualizarMensaje()
             ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR DNI //////////
 
 
-</script>
-
-
-<script>
-
-
-
   ///// SCRIPT PARA BUSCAR DATOS POR DNI BD EMISION//////////
       function buscarRegistros_dni_emision() {
   const boton = document.getElementById('buscarRegistrosBtn4');
@@ -688,7 +669,7 @@ let rowCount = 0;
 let processed = new Set(); // conjunto para almacenar los valores ya procesados
 info.forEach(mantenimiento4 => {
   if (rowCount < 10) {
-    // solo agrega filas si el n�mero actual de filas es menor que 10 y el valor no est� en el conjunto
+    // solo agrega filas si el número actual de filas es menor que 10 y el valor no está en el conjunto
     if (!processed.has(mantenimiento4[0])) {
       const template5 = document.getElementById("mantenimientosRow5");
       const templateRow5 = template5.content;
@@ -723,11 +704,11 @@ actualizarMensaje()
             ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR DNI //////////
 
 function enviarMensajeWPP() {
-  // Obtener el n�mero de tel�fono ingresado
+  // Obtener el número de teléfono ingresado
   var telefono = document.getElementById("wpp").value;
 
-  // Abrir WhatsApp Web con el n�mero de tel�fono y enviar un mensaje
-  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agend�%20nuestro%20n�mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
+  // Abrir WhatsApp Web con el número de teléfono y enviar un mensaje
+  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendá%20nuestro%20número%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
 }
 
 //////////////////// REIMPRIMIR RECIBO SIMPLE //////////////////
@@ -754,12 +735,8 @@ function reimprimirReciboMulti(event) {
 }
 
 
-</script>
-
-<script>
-
 /////////////////////////////////////////////////////////////////
-//////////////////// SESION DE USUARIOS /////////////////////////
+//////////////////// SESION DE USUARIOS (B) /////////////////////
 /////////////////////////////////////////////////////////////////
 
 //////////////////// INICIAR SESION ////////////////////////
@@ -768,7 +745,7 @@ function reimprimirReciboMulti(event) {
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Funci�n para realizar el inicio de sesi�n
+// Función para realizar el inicio de sesión
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -800,19 +777,19 @@ if (usuarioAlmacenado) {
   iniciarContadorTiempo(tiempoRestante);
 } else {
   
-  // Funci�n para abrir el modal
+  // Función para abrir el modal
   modal.style.display = "block";
 
-  // Funci�n para cerrar el modal
+  // Función para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot�n de inicio de sesi�n
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
   document.getElementById("inicio-sesion").addEventListener("click", function (event) {
     event.preventDefault();
 
-    // Obtener el usuario y la contrase�a del formulario
+    // Obtener el usuario y la contraseña del formulario
     var usuario = document.getElementById("usuario").value;
     var contrasena = document.getElementById("contrasena").value;
 
@@ -820,7 +797,7 @@ if (usuarioAlmacenado) {
     var colorPicker = document.getElementById("colorPicker");
     var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contrase�a
+// Hacer una solicitud al servidor para verificar el usuario y la contraseña
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -852,7 +829,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// Funci�n para calcular el tiempo restante en milisegundos
+// Función para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
   var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -861,7 +838,7 @@ function calcularTiempoRestante() {
   return tiempoRestante;
 }
 
-// Funci�n para mostrar el tiempo restante en el div correspondiente
+// Función para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
@@ -874,7 +851,7 @@ function mostrarTiempoRestante(tiempoRestante) {
   }
 }
 
-// Funci�n para iniciar el contador de tiempo
+// Función para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -903,7 +880,7 @@ function close_sessionok(event) {
       sessionStorage.removeItem("magi-horaInicio");
       tiempoRestanteDiv.innerHTML = "";    
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la p�gina
+  // Recargar la página
       modal.style.display = "block";
 
 }
@@ -948,7 +925,7 @@ function actualizarMensaje() {
 
   var fechaPagoStr = inputElement.value;
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en d�a, mes y a�o
+  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
   var year = "20" + parseInt(fechaSplit[2], 10);
@@ -960,32 +937,32 @@ function actualizarMensaje() {
       case fechaVencimiento > fechaActual && diasDiferencia > 30:
       mensajeElement.innerHTML = "Pago adelantado";
       mensajeElement.style.color = "blue";
-      mensajeElement.style.fontWeight = "bold"; // Fuente m�s gruesa
+      mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
       break;
     case fechaVencimiento > fechaActual && diasDiferencia <= 30 && diasDiferencia >= 0:
       mensajeElement.innerHTML = "OK";
       mensajeElement.style.color = "blue";
-    mensajeElement.style.fontWeight = "bold"; // Fuente m�s gruesa
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
       break;
     case fechaVencimiento < fechaActual && diasDiferencia <= -1 && diasDiferencia >= -45:
       mensajeElement.innerHTML = "Recibo vencido";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente m�s gruesa
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
       break;
     case fechaVencimiento < fechaActual && diasDiferencia <= -46 && diasDiferencia >= -59:
       mensajeElement.innerHTML = "Debe dos meses";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente m�s gruesa
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
       break;
     case fechaVencimiento < fechaActual && diasDiferencia <= -60 && diasDiferencia >= -89:
       mensajeElement.innerHTML = "Debe tres meses";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente m�s gruesa
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
       break;
     case fechaVencimiento < fechaActual && diasDiferencia < -90:
-      mensajeElement.innerHTML = "P�liza posiblemente anulada";
+      mensajeElement.innerHTML = "Póliza posiblemente anulada";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente m�s gruesa
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
       break;
   }
 }
@@ -1080,6 +1057,3 @@ document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo)
 document.getElementById('formularioReimprimir').addEventListener('submit', reimprimirRecibo);
 document.getElementById('formularioReimprimirMulti').addEventListener('submit', reimprimirReciboMulti);
 document.getElementById('close_session').addEventListener('click', close_sessionok);
-
-
-</script>

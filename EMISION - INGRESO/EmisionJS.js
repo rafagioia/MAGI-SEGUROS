@@ -1,10 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
-
-<script>
 
   // Obtén una referencia al botón
 const navbarToggler = document.getElementById('navbar-toggler');
@@ -139,11 +132,6 @@ if (window.matchMedia("(min-width: 1081px)").matches) {
   document.getElementById("take_photos").style.display = "none";
 }
 }
-
-
-</script>
-
-<script>
 
 
 
@@ -334,10 +322,6 @@ function enviarMensajeWPP() {
 }
 
 
-</script>
-
-
- <script>
 /////////////////////// SISTEMA DE EMISION  ///////////////////////////////
 
 
@@ -757,10 +741,6 @@ function calcularUltimoNumeroCuit() {
 
 
 
-</script>
-
-
-<script>
 
   
 //////////////////////// SCRIPTS DE FOTOGRAFIA Y OCR /////////////////////////
@@ -781,8 +761,6 @@ document.getElementById("bt-fotos").addEventListener("click", function(event) {
     }
   }
 });
-</script>
-<script>
 
 
 var video = document.getElementById("videoElement");
@@ -1161,10 +1139,6 @@ alert('Limpieza completa de sistema');
 
 
   
-</script>
-
-<script>
-
   
 /////////////////////////////////////////////////////////////////
 //////////////////// SESION DE USUARIOS /////////////////////////
@@ -1369,10 +1343,6 @@ function close_sessionok(event) {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-
-</script>
-<script>
-
 /// EVENT LISTENERS ////
 document.getElementById('bt-capturePhoto').addEventListener('click', capturePhoto);
 document.getElementById('bt-switchCamera').addEventListener('click', switchCamera);
@@ -1381,4 +1351,3 @@ document.getElementById('formularioEmision').addEventListener('submit', ingresar
 document.getElementById('bt-buscar').addEventListener('click', filtrar);
 document.getElementById('bt-buscar2').addEventListener('click', filtrar2);
 document.getElementById('close_session').addEventListener('click', close_sessionok);
-</script>

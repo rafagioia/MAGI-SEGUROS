@@ -1,13 +1,3 @@
-<!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
-
-<style>
-
-
 
   .cnia_border {
   font-size: 1rem;
@@ -66,7 +56,7 @@
     margin-right: 15px;
     margin-bottom: 40px;
   }
-        /* Estilos para la barra de navegación */
+        /* Estilos para la barra de navegaciï¿½n */
       .navbar-brand {
         font-weight: bold;
         font-size: 24px;
@@ -89,8 +79,7 @@
       .nav-item.dropdown:hover .dropdown-menu {
         display: block;
       }
-      /* Estilos para el contenedor de páginas */
+      /* Estilos para el contenedor de pï¿½ginas */
       #page-container {
         margin-top: 20px;
       }
-</style>

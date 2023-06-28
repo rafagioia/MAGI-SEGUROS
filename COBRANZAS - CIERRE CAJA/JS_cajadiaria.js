@@ -1,7 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
-<script>
+
   
 //////////////// BOTON DEL MENU ///////////////////////
     // Obtén una referencia al botón
@@ -36,9 +33,6 @@ navbarToggler.addEventListener('click', function() {
 })()
 
 
-</script>
-
-<script>
   ////////////// LISTA DE PAGOS ///////////////////////
   function updateSinPendientes(result) {
     var sinPendientesDiv = document.getElementById("sinPendientes");
@@ -130,10 +124,7 @@ pendientesHtml2 += "<div class='border' style='background-color: #FFFFFF; margin
   // Llamar a la función getData() del lado del servidor
   google.script.run.withSuccessHandler(updateSinPendientes3).getDataRecibis();
   /////////////////////////////////////////
-</script>
 
-
-<script>
   
 
 function sumarValores() {
@@ -803,4 +794,3 @@ document.getElementById('enviarCajaOld').addEventListener('click', enviarCajaOld
 document.getElementById('abrir_caja_old').addEventListener('click', abrir_caja_old);
 document.getElementById('cierreCaja').addEventListener('click', enviarCaja);
 // document.getElementById('close_session').addEventListener('click', close_sessionok);
-</script>

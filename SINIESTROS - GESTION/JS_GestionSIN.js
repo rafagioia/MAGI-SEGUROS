@@ -1,26 +1,23 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
-<script>
+
 //////////////// BOTON DEL MENU ///////////////////////
-    // Obtén una referencia al botón
+    // Obtï¿½n una referencia al botï¿½n
 const navbarToggler = document.getElementById('navbar-toggler');
 
-// Agrega un evento de clic al botón
+// Agrega un evento de clic al botï¿½n
 navbarToggler.addEventListener('click', function() {
-  // Obtén una referencia al elemento de destino
+  // Obtï¿½n una referencia al elemento de destino
   const navbarNav = document.getElementById('navbarNav');
 
-  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegación
+  // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegaciï¿½n
   navbarNav.classList.toggle('show');
 });
 
 var queryString = window.location.search;
 
-// Crear un objeto URLSearchParams para extraer los parámetros de la URL
+// Crear un objeto URLSearchParams para extraer los parï¿½metros de la URL
 var urlParams = new URLSearchParams(queryString);
 
-// Obtener el valor del parámetro "usuario"
+// Obtener el valor del parï¿½metro "usuario"
 var usuario = urlParams.get('usuario');
 
 
@@ -54,7 +51,7 @@ function modificarDatos(event) {
 
     google.script.run.modifDatos(valorMod, nuevoValor, tramite_sn);
   event.target.reset();
-alert('Modificación de datos exitosa.');
+alert('Modificaciï¿½n de datos exitosa.');
 
 document.getElementById("sinPendientes").innerHTML = "";
 document.getElementById("nombre").value = "";
@@ -147,11 +144,6 @@ alert('Ingreso de estado exitoso.');
 
 }
 
-  </script>
-
-
-
-<script>
 
 
 function filtrar(event) {
@@ -167,7 +159,7 @@ function filtrar(event) {
   const siniestro_filter = document.getElementById('sinSelect').value;
   const nombre_filter = document.getElementById('nombreSelect').value;
   google.script.run.withSuccessHandler(function(result) {
-  // Actualizar HTML de la página con los nuevos resultados
+  // Actualizar HTML de la pï¿½gina con los nuevos resultados
   var sinPendientesDiv = document.getElementById("sinPendientes");
 
  var pendientesHtml = "";
@@ -177,7 +169,7 @@ var  bgColor = "";
 var dateParts = result[i][9].split("/");
 var month = parseInt(dateParts[1], 10) - 1; // Restar 1 al mes para que sea de 0 a 11
 var day = parseInt(dateParts[0], 10);
-var year = new Date().getFullYear(); // Obtener el año actual
+var year = new Date().getFullYear(); // Obtener el aï¿½o actual
 var date = new Date(year, month, day);
 var today = new Date();
 
@@ -202,7 +194,7 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
     result[i][6] === 'CLEAS' ? "background-color: #37C38D;" :
     result[i][6] === 'COMERCIO' ? "background-color: #AB3F6C;" :
     result[i][6] === 'DEST. TOTAL' ? "background-color: #4C9223;" :
-    result[i][6] === 'DAÑO POR ROBO TOTAL' ? "background-color: #CF8F5E;" :
+    result[i][6] === 'DAï¿½O POR ROBO TOTAL' ? "background-color: #CF8F5E;" :
     result[i][6] === 'HOGAR' ? "background-color: #534F84;" :
     result[i][6] === 'INCENDIO PARCIAL' ? "background-color: #FD964D;" :
     result[i][6] === 'INCENDIO TOTAL' ? "background-color: #C6621A;" :
@@ -231,7 +223,7 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
     "<div style='display: none;' id='taller_" + i + "'>" + result[i][10] + "</div>"+
     "<div style='display: none;' id='notas_" + i + "'>" + result[i][11] + "</div>"+
     "<div style='display: none;' id='wpp_" + i + "'>" + result[i][14] + "</div>"+
-    "<div style='display: none;' id='relato_" + i + "'>-RELATO: " + result[i][15] + "\n-LUGAR DEL HECHO: " + result[i][20] + ", " + result[i][19] + "\n-DAÑOS: " + result[i][12] + result[i][16] + "</div>"+
+    "<div style='display: none;' id='relato_" + i + "'>-RELATO: " + result[i][15] + "\n-LUGAR DEL HECHO: " + result[i][20] + ", " + result[i][19] + "\n-DAï¿½OS: " + result[i][12] + result[i][16] + "</div>"+
     "<div style='display: none;' id='hora_" + i + "'>" + result[i][17] + "</div>"+
     "<div style='display: none;' id='fechaDec_" + i + "'>" + result[i][18] + "</div>"+
     "<div style='display: none;' id='numTramite_" + i + "'>" + result[i][21] + "</div>"+
@@ -241,15 +233,15 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
     sinPendientesDiv.innerHTML = pendientesHtml;
 
 if (result.length === 0) {
-  sinPendientesDiv.innerHTML = "No se encontró ningún valor.";
+  sinPendientesDiv.innerHTML = "No se encontrï¿½ ningï¿½n valor.";
   spinner.style.display = 'none';
 }
 
-      // Agregar evento de click a los divs dinámicos
+      // Agregar evento de click a los divs dinï¿½micos
   var divs = document.querySelectorAll("[id^='div']");
   divs.forEach(function(div) {
     div.addEventListener("click", function() {
-      var id = div.id.slice(3); // Obtener el índice del div
+      var id = div.id.slice(3); // Obtener el ï¿½ndice del div
       document.getElementsByName("nombre")[0].value = document.getElementById("nombre_" + id).textContent;
       document.getElementsByName("riesgo")[0].value = document.getElementById("riesgo_" + id).textContent;
       document.getElementsByName("dni")[0].value = document.getElementById("dni_" + id).textContent;
@@ -276,10 +268,6 @@ mostrarOpciones();
 }
 
 
-
-</script>
-
-<script>
 function updateSinPendientes(result) {
   var sinPendientesDiv = document.getElementById("sinPendientes");
  var pendientesHtml = "";
@@ -289,7 +277,7 @@ var  bgColor = "";
 var dateParts = result[i][9].split("/");
 var month = parseInt(dateParts[1], 10) - 1; // Restar 1 al mes para que sea de 0 a 11
 var day = parseInt(dateParts[0], 10);
-var year = new Date().getFullYear(); // Obtener el año actual
+var year = new Date().getFullYear(); // Obtener el aï¿½o actual
 var date = new Date(year, month, day);
 var today = new Date();
 
@@ -306,7 +294,7 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
     result[i][6] === 'CLEAS' ? "background-color: #37C38D;" :
     result[i][6] === 'COMERCIO' ? "background-color: #AB3F6C;" :
     result[i][6] === 'DEST. TOTAL' ? "background-color: #4C9223;" :
-    result[i][6] === 'DAÑO POR ROBO TOTAL' ? "background-color: #CF8F5E;" :
+    result[i][6] === 'DAï¿½O POR ROBO TOTAL' ? "background-color: #CF8F5E;" :
     result[i][6] === 'HOGAR' ? "background-color: #534F84;" :
     result[i][6] === 'INCENDIO PARCIAL' ? "background-color: #FD964D;" :
     result[i][6] === 'INCENDIO TOTAL' ? "background-color: #C6621A;" :
@@ -335,7 +323,7 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
     "<div style='display: none;' id='taller_" + i + "'>" + result[i][10] + "</div>"+
     "<div style='display: none;' id='notas_" + i + "'>" + result[i][11] + "</div>"+
     "<div style='display: none;' id='wpp_" + i + "'>" + result[i][14] + "</div>"+
-    "<div style='display: none;' id='relato_" + i + "'>-RELATO: " + result[i][15] + "\n-LUGAR DEL HECHO: " + result[i][20] + ", " + result[i][19] + "\n-DAÑOS: " + result[i][12] + result[i][16] + "</div>"+
+    "<div style='display: none;' id='relato_" + i + "'>-RELATO: " + result[i][15] + "\n-LUGAR DEL HECHO: " + result[i][20] + ", " + result[i][19] + "\n-DAï¿½OS: " + result[i][12] + result[i][16] + "</div>"+
     "<div style='display: none;' id='hora_" + i + "'>" + result[i][17] + "</div>"+
     "<div style='display: none;' id='fechaDec_" + i + "'>" + result[i][18] + "</div>"+
     "<div style='display: none;' id='numTramite_" + i + "'>" + result[i][21] + "</div>"+
@@ -345,11 +333,11 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
   sinPendientesDiv.innerHTML = pendientesHtml;
 
 
-  // Agregar evento de click a los divs dinámicos
+  // Agregar evento de click a los divs dinï¿½micos
   var divs = document.querySelectorAll("[id^='div']");
   divs.forEach(function(div) {
     div.addEventListener("click", function() {
-      var id = div.id.slice(3); // Obtener el índice del div
+      var id = div.id.slice(3); // Obtener el ï¿½ndice del div
       document.getElementsByName("nombre")[0].value = document.getElementById("nombre_" + id).textContent;
       document.getElementsByName("riesgo")[0].value = document.getElementById("riesgo_" + id).textContent;
       document.getElementsByName("dni")[0].value = document.getElementById("dni_" + id).textContent;
@@ -373,9 +361,7 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
   });
 }
 google.script.run.withSuccessHandler(updateSinPendientes).getData();
-</script>
 
-<script>
 function mostrarOpciones() {
   console.log("hola")
   var riesgo = document.getElementById("riesgo").value;
@@ -389,18 +375,18 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-    subRiesgo.options[8] = new Option("CL-1 RESOLUCIÓN CLEAS");
+    subRiesgo.options[8] = new Option("CL-1 RESOLUCIï¿½N CLEAS");
     subRiesgo.options[9] = new Option("CL-2 ESPERANDO ELIJA TALLER");
-    subRiesgo.options[10] = new Option("CL-3 INSPECCIÓN EN CURSO");
+    subRiesgo.options[10] = new Option("CL-3 INSPECCIï¿½N EN CURSO");
     subRiesgo.options[11] = new Option("CL-4 ESPERANDO CARTA FCIA");
-    subRiesgo.options[12] = new Option("CL-5 EN COTIZACIÓN");
+    subRiesgo.options[12] = new Option("CL-5 EN COTIZACIï¿½N");
     subRiesgo.options[13] = new Option("CL-6 ESPERANDO REPUESTOS");
     subRiesgo.options[14] = new Option("CL-7 PAGO EN CURSO");
     break;
-  case "DAÑO POR ROBO TOTAL":
+  case "DAï¿½O POR ROBO TOTAL":
   case "INTERASEGURADOS":
   case "TODO RIESGO":
   case "GRANIZO":
@@ -410,15 +396,15 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
     subRiesgo.options[8] = new Option("DT-1 ESPERANDO DOCUMENTACION");
     subRiesgo.options[9] = new Option("DP-2 ESPERANDO CNIA HABILITE");
     subRiesgo.options[10] = new Option("DP-3 ESPERANDO ELIJA TALLER");
-    subRiesgo.options[11] = new Option("DP-4 INSPECCIÓN EN CURSO");
+    subRiesgo.options[11] = new Option("DP-4 INSPECCIï¿½N EN CURSO");
     subRiesgo.options[12] = new Option("DP-5 ESPERANDO CARTA FCIA");
-    subRiesgo.options[13] = new Option("DP-6 EN COTIZACIÓN");
+    subRiesgo.options[13] = new Option("DP-6 EN COTIZACIï¿½N");
     subRiesgo.options[14] = new Option("DP-7 ESPERANDO REPUESTOS");
     subRiesgo.options[15] = new Option("DP-8 PAGO EN CURSO");
     break;
@@ -429,11 +415,11 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
     subRiesgo.options[8] = new Option("DT-1 ESPERANDO DOCUMENTACION (CAUSA PENAL / INFORME BOMBEROS)");
-    subRiesgo.options[9] = new Option("DT-2 INSPECCIÓN EN CURSO");
+    subRiesgo.options[9] = new Option("DT-2 INSPECCIï¿½N EN CURSO");
     subRiesgo.options[10] = new Option("DT-3 COTIZANDO SI ES DT");
     subRiesgo.options[11] = new Option("DT-4 ACUERDO DE PAGO");
     subRiesgo.options[12] = new Option("DT-5 BAJA Y RETIRO DE UNIDAD");
@@ -445,11 +431,11 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
     subRiesgo.options[8] = new Option("RT-1 ESPERANDO CNIA HABILITE");
-    subRiesgo.options[9] = new Option("RT-2 ESPERANDO APARICIÓN");
+    subRiesgo.options[9] = new Option("RT-2 ESPERANDO APARICIï¿½N");
     subRiesgo.options[10] = new Option("RT-3 HACIENDO BAJA");
     subRiesgo.options[11] = new Option("RT-4 ACUERDO DE PAGO");
     subRiesgo.options[12] = new Option("RT-5 FORMULARIO 15");
@@ -462,11 +448,11 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
     subRiesgo.options[8] = new Option("HC-1 ESPERANDO DOCUMENTACION (PRE-EXISTENCIAS/INFORME TECNICO)");
-    subRiesgo.options[9] = new Option("HC-2 INSPECCIÓN EN CURSO");
+    subRiesgo.options[9] = new Option("HC-2 INSPECCIï¿½N EN CURSO");
     subRiesgo.options[10] = new Option("HC-3 ACUERDO DE PAGO");
     subRiesgo.options[11] = new Option("HC-4 ENVIAR CBU, DNI Y ACUERDO");
     subRiesgo.options[12] = new Option("HC-5 PAGO EN CURSO");
@@ -479,15 +465,15 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
     subRiesgo.options[8] = new Option("CR-1 ESPERANDO DOCUMENTACION");
     subRiesgo.options[9] = new Option("CR-2 ESPERANDO CNIA HABILITE");
-    subRiesgo.options[10] = new Option("CR-3 INSPECCIÓN EN CURSO");
+    subRiesgo.options[10] = new Option("CR-3 INSPECCIï¿½N EN CURSO");
     subRiesgo.options[11] = new Option("CR-4 ELEGIENDO PROVEEDOR");
     subRiesgo.options[12] = new Option("CR-5 ESPERANDO VOUCHER");
-    subRiesgo.options[13] = new Option("CR-6 ESPERANDO REPOSICIÓN");
+    subRiesgo.options[13] = new Option("CR-6 ESPERANDO REPOSICIï¿½N");
     subRiesgo.options[14] = new Option("CR-7 PAGO EN CURSO");
     subRiesgo.options[15] = new Option("CR-8 REPARANDO");
       break;
@@ -497,7 +483,7 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("LEGALES");
     subRiesgo.options[8] = new Option("AP-1 ESPERANDO DOCUMENTACION");
@@ -511,7 +497,7 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
     subRiesgo.options[8] = new Option("R3-1 ESPERANDO DOCUMENTACION");
@@ -525,7 +511,7 @@ switch (riesgo) {
     subRiesgo.options[2] = new Option("CON PROBLEMA");
     subRiesgo.options[3] = new Option("SIN COBERTURA");
     subRiesgo.options[4] = new Option("PARA CARGAR");
-    subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+    subRiesgo.options[5] = new Option("PIDEN AMPLIACIï¿½N");
     subRiesgo.options[6] = new Option("RESUELTO");
     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
     subRiesgo.options[8] = new Option("ESPERANDO DOCUMENTACION");
@@ -542,7 +528,7 @@ function cargarCorreos() {
   var numSin = numSinArr[numSinArr.length - 1];
 
 google.script.run.withSuccessHandler(function(emailsHTML) {
-  // Muestra el contenido HTML de los correos electrónicos en el div con ID "emails"
+  // Muestra el contenido HTML de los correos electrï¿½nicos en el div con ID "emails"
   var div2 = document.getElementById("emails");
   console.log(emailsHTML)
   div2.innerHTML = emailsHTML;
@@ -552,26 +538,24 @@ google.script.run.withSuccessHandler(function(emailsHTML) {
 function enviarMail() {
   var numSin = document.getElementById("numSin").value;
 
-  // Dividir la cadena de texto en un arreglo usando una expresión regular que incluya ambos separadores ("/" y "-")
+  // Dividir la cadena de texto en un arreglo usando una expresiï¿½n regular que incluya ambos separadores ("/" y "-")
   var numSinArr = numSin.split(/\/|-/);
 
-  // Obtener el último elemento del arreglo, que es el número que deseas buscar
+  // Obtener el ï¿½ltimo elemento del arreglo, que es el nï¿½mero que deseas buscar
   var numBuscar = numSinArr[numSinArr.length - 1];
 
-  // Abrir Gmail y buscar el número
+  // Abrir Gmail y buscar el nï¿½mero
   window.open("https://mail.google.com/mail/u/0/#search/" + numBuscar);
 }
 
 function enviarMensajeWPP() {
-  // Obtener el número de teléfono ingresado
+  // Obtener el nï¿½mero de telï¿½fono ingresado
   var telefono = document.getElementById("wpp").value;
 
-  // Abrir WhatsApp Web con el número de teléfono y enviar un mensaje
-  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendá%20nuestro%20número%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
+  // Abrir WhatsApp Web con el nï¿½mero de telï¿½fono y enviar un mensaje
+  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendï¿½%20nuestro%20nï¿½mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
 }
 
-</script>
-<script>
 document.getElementById("novedad_sn").addEventListener("change", function() {
   var novedad = this.value;
   var taller = document.getElementById("tallerf_sn");
@@ -596,7 +580,7 @@ document.getElementById("novedad_sn").addEventListener("change", function() {
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Función para realizar el inicio de sesión
+// Funciï¿½n para realizar el inicio de sesiï¿½n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -628,19 +612,19 @@ if (usuarioAlmacenado) {
   iniciarContadorTiempo(tiempoRestante);
 } else {
   
-  // Función para abrir el modal
+  // Funciï¿½n para abrir el modal
   modal.style.display = "block";
 
-  // Función para cerrar el modal
+  // Funciï¿½n para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botï¿½n de inicio de sesiï¿½n
   document.getElementById("inicio-sesion").addEventListener("click", function (event) {
     event.preventDefault();
 
-    // Obtener el usuario y la contraseña del formulario
+    // Obtener el usuario y la contraseï¿½a del formulario
     var usuario = document.getElementById("usuario").value;
     var contrasena = document.getElementById("contrasena").value;
 
@@ -648,7 +632,7 @@ if (usuarioAlmacenado) {
     var colorPicker = document.getElementById("colorPicker");
     var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contraseña
+// Hacer una solicitud al servidor para verificar el usuario y la contraseï¿½a
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -680,7 +664,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// Función para calcular el tiempo restante en milisegundos
+// Funciï¿½n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
   var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -689,7 +673,7 @@ function calcularTiempoRestante() {
   return tiempoRestante;
 }
 
-// Función para mostrar el tiempo restante en el div correspondiente
+// Funciï¿½n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
@@ -702,7 +686,7 @@ function mostrarTiempoRestante(tiempoRestante) {
   }
 }
 
-// Función para iniciar el contador de tiempo
+// Funciï¿½n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -754,7 +738,7 @@ function close_sessionok(event) {
       sessionStorage.removeItem("magi-horaInicio");
       tiempoRestanteDiv.innerHTML = "";    
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la página
+  // Recargar la pï¿½gina
       modal.style.display = "block";
 
 }
@@ -824,7 +808,3 @@ document.getElementById('nuevo_estado_form').addEventListener('submit', actualiE
 document.getElementById('ver_mails_form').addEventListener('submit', cargarCorreos);
 document.getElementById('bt-buscar').addEventListener('click', filtrar);
 document.getElementById('close_session').addEventListener('click', close_sessionok);
-
-
-
-</script>

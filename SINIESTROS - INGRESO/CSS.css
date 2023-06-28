@@ -1,0 +1,192 @@
+   body{
+    background-color: #4C2882;
+  }
+  .container {
+    border: 0px solid white;
+    background-color: #FFFFFF;
+    border-radius: 2%;
+    padding: 20px;
+    width: 400px;
+    margin: 0px 20px  0px 20px;
+  }
+
+ /* Estilos para version celular */
+@media only screen and (max-width: 1080px) {
+  .container {
+    display: block !important;
+    width: 100% !important;
+    font-size: 2.5rem;
+    border: 0px solid white;
+    background-color: #FFFFFF;
+    border-radius: 2%;
+    padding: 20px;
+  }
+  .btn {
+    font-size: 2.5rem;
+  }
+  .form-control,
+  .form-select,
+  .modal-title,
+  .modal-body {
+    font-size: 2.3rem;
+  }
+    #LogoValor {
+    width: 100%;
+    height: auto;
+  }
+  .modal-content {
+    padding: 30px;
+  }
+
+#title_menu {
+  font-size: 2rem;
+	  margin: auto;
+    text-align: center;
+}  
+#navbar-toggler {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+  }
+#siniestrosDropdown,
+#emisionDropdown,
+#cobranzasDropdown,
+#dropdown-item {
+  font-size: 3rem;
+  text-align: right;
+}
+#magi-item {
+  font-size: 1.8rem;
+	  margin: auto;
+    text-align: center;
+}
+  .navbar-nav .dropdown-menu {
+    position: static;
+    display: none;
+    overflow: visible;
+    float: none;
+    padding: 0;
+  }
+  .navbar-nav .dropdown-menu > li {
+    margin-bottom: .5rem;
+  }
+  .navbar-nav .dropdown-menu > li > a {
+    margin-right: 0;
+    margin-bottom: .5rem;
+  }
+    #videoElement {
+      width: 100%;
+      max-width: 450px;
+      border-radius: 15px;
+      margin: 0px;
+    }
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .image-container img {
+      max-width: 200px;
+      border-radius: 10px;
+      margin: 5px;
+    }
+}
+
+ /* Estilos para version pc */
+@media (min-width: 1081px) {
+  .container {
+    display: inline-block !important;
+    width: 470px !important;
+    border: 0px solid white;
+    background-color: #FFFFFF;
+    border-radius: 2%;
+    padding: 20px;
+  }
+  .btn {
+    font-size: 0.9rem;
+  }
+  .form-control {
+    font-size: 1rem;
+  }
+  #LogoValor {
+    width: 21px;
+    height: 21px;
+  }
+  .modal-title {
+    font-size: 1.53rem;
+	  margin: auto;
+    text-align: center;
+  }
+  .modal-content {
+    padding: 10px;
+  }
+  #take_pict_menu {
+    display: none;
+  }  
+  
+  #magi-item {
+  font-size: 1rem;
+	margin: auto;
+  text-align: center;
+}
+}
+
+    .minicontainer {
+    border: 0px solid white;
+    background-color: #FFFFFF;
+    border-radius: 2%;
+    padding: 20px;
+    width: 400px;
+  }
+  
+      /* Estilos para el fondo oscurecido */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    #modal2 {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    /* Estilos para la barra de navegaci�n */
+      .navbar-brand {
+        font-weight: bold;
+        font-size: 24px;
+      }
+      .navbar-nav .nav-link {
+        color: #333;
+      }
+      .navbar-nav .nav-link:hover,
+      .navbar-nav .nav-link:focus {
+        color: #007bff;
+      }
+      .dropdown-menu {
+        border: none;
+      }
+      .dropdown-item:hover,
+      .dropdown-item:focus {
+        background-color: #f8f9fa;
+        color: #333;
+      }
+      .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+      }
+      /* Estilos para el contenedor de p�ginas */
+      #page-container {
+        margin-top: 20px;
+      }

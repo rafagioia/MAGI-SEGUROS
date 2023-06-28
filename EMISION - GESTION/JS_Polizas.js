@@ -1,7 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
-<script>
 
    (function () {
    'use strict'
@@ -23,14 +19,6 @@
 })()
 
 
-  </script>
-
-
-
-<script>
-
-
-
 function filtrar(event) {
   event.preventDefault();
    const spinner = document.getElementById('spinner_filtrar');
@@ -41,7 +29,7 @@ function filtrar(event) {
   const estado_filter = document.getElementById('estadoSelect').value;
   const nombre_filter = document.getElementById('nombreSelect').value;
   google.script.run.withSuccessHandler(function(result) {
-  // Actualizar HTML de la página con los nuevos resultados
+  // Actualizar HTML de la pï¿½gina con los nuevos resultados
   var sinPendientesDiv = document.getElementById("sinPendientes");
 
  var pendientesHtml = "";
@@ -112,15 +100,15 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
     sinPendientesDiv.innerHTML = pendientesHtml;
 
 if (result.length === 0) {
-  sinPendientesDiv.innerHTML = "No se encontró ningún valor.";
+  sinPendientesDiv.innerHTML = "No se encontrï¿½ ningï¿½n valor.";
   spinner.style.display = 'none';
 }
 
-      // Agregar evento de click a los divs dinámicos
+      // Agregar evento de click a los divs dinï¿½micos
   var divs = document.querySelectorAll("[id^='div']");
   divs.forEach(function(div) {
     div.addEventListener("click", function() {
-      var id = div.id.slice(3); // Obtener el índice del div
+      var id = div.id.slice(3); // Obtener el ï¿½ndice del div
       document.getElementsByName("dni")[0].value = document.getElementById("dni_" + id).textContent;
       document.getElementsByName("nombre")[0].value = document.getElementById("nombre_" + id).textContent;
       document.getElementsByName("domicilio")[0].value = document.getElementById("domicilio_" + id).textContent;
@@ -152,9 +140,6 @@ if (result.length === 0) {
 }
 
 
-</script>
-
-<script>
 function updateSinPendientes(result) {
   var sinPendientesDiv = document.getElementById("sinPendientes");
  var pendientesHtml = "";
@@ -164,7 +149,7 @@ var  bgColor = "";
 var dateParts = result[i][9].split("/");
 var month = parseInt(dateParts[1], 10) - 1; // Restar 1 al mes para que sea de 0 a 11
 var day = parseInt(dateParts[0], 10);
-var year = new Date().getFullYear(); // Obtener el año actual
+var year = new Date().getFullYear(); // Obtener el aï¿½o actual
 var date = new Date(year, month, day);
 var today = new Date();
 
@@ -230,11 +215,11 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
   }
   sinPendientesDiv.innerHTML = pendientesHtml;
 
-  // Agregar evento de click a los divs dinámicos
+  // Agregar evento de click a los divs dinï¿½micos
   var divs = document.querySelectorAll("[id^='div']");
   divs.forEach(function(div) {
     div.addEventListener("click", function() {
-      var id = div.id.slice(3); // Obtener el índice del div
+      var id = div.id.slice(3); // Obtener el ï¿½ndice del div
       document.getElementsByName("dni")[0].value = document.getElementById("dni_" + id).textContent;
       document.getElementsByName("nombre")[0].value = document.getElementById("nombre_" + id).textContent;
       document.getElementsByName("domicilio")[0].value = document.getElementById("domicilio_" + id).textContent;
@@ -270,9 +255,6 @@ document.getElementById("operacion_sn2").style.display = "none";
   });
 }
 google.script.run.withSuccessHandler(updateSinPendientes).getData();
-</script>
-
-<script>
 
 //////////////// CARGAR CORREOS  ///////////////
 function cargarCorreos() {
@@ -280,7 +262,7 @@ function cargarCorreos() {
   var patente = document.getElementById("patente").value;
 
 google.script.run.withSuccessHandler(function(emailsHTML) {
-  // Muestra el contenido HTML de los correos electrónicos en el div con ID "emails"
+  // Muestra el contenido HTML de los correos electrï¿½nicos en el div con ID "emails"
   var div2 = document.getElementById("emails");
   console.log(emailsHTML)
   div2.innerHTML = emailsHTML;
@@ -290,16 +272,16 @@ google.script.run.withSuccessHandler(function(emailsHTML) {
 function enviarMail() {
   var patente = document.getElementById("patente").value;
 
-  // Abrir Gmail y buscar el número
+  // Abrir Gmail y buscar el nï¿½mero
   window.open("https://mail.google.com/mail/u/0/#search/" + patente);
 }
 
 function enviarMensajeWPP() {
-  // Obtener el número de teléfono ingresado
+  // Obtener el nï¿½mero de telï¿½fono ingresado
   var telefono = document.getElementById("wpp").value;
 
-  // Abrir WhatsApp Web con el número de teléfono y enviar un mensaje
-  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendá%20nuestro%20número%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
+  // Abrir WhatsApp Web con el nï¿½mero de telï¿½fono y enviar un mensaje
+  window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendï¿½%20nuestro%20nï¿½mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
 }
 
 document.getElementById("novedad_sn").addEventListener("change", function() {
@@ -330,8 +312,6 @@ document.getElementById("novedad_sn").addEventListener("change", function() {
   }
 });
 
-</script>
-<script>
 
   function cleanService() {
   event.preventDefault();
@@ -460,7 +440,7 @@ function modificarDatos(event) {
     let infoNotasVeh =  document.getElementById("notas").value;
 
   google.script.run.modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis);
-alert('Póliza actualizada correctamente');
+alert('Pï¿½liza actualizada correctamente');
   spinner.style.display = 'none';
   boton.disabled = false;
 
@@ -483,7 +463,7 @@ alert('Póliza actualizada correctamente');
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Función para realizar el inicio de sesión
+// Funciï¿½n para realizar el inicio de sesiï¿½n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -515,19 +495,19 @@ if (usuarioAlmacenado) {
   iniciarContadorTiempo(tiempoRestante);
 } else {
   
-  // Función para abrir el modal
+  // Funciï¿½n para abrir el modal
   modal.style.display = "block";
 
-  // Función para cerrar el modal
+  // Funciï¿½n para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botï¿½n de inicio de sesiï¿½n
   document.getElementById("inicio-sesion").addEventListener("click", function (event) {
     event.preventDefault();
 
-    // Obtener el usuario y la contraseña del formulario
+    // Obtener el usuario y la contraseï¿½a del formulario
     var usuario = document.getElementById("usuario").value;
     var contrasena = document.getElementById("contrasena").value;
 
@@ -535,7 +515,7 @@ if (usuarioAlmacenado) {
     var colorPicker = document.getElementById("colorPicker");
     var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contraseña
+// Hacer una solicitud al servidor para verificar el usuario y la contraseï¿½a
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -567,7 +547,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// Función para calcular el tiempo restante en milisegundos
+// Funciï¿½n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
   var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -576,7 +556,7 @@ function calcularTiempoRestante() {
   return tiempoRestante;
 }
 
-// Función para mostrar el tiempo restante en el div correspondiente
+// Funciï¿½n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
@@ -589,7 +569,7 @@ function mostrarTiempoRestante(tiempoRestante) {
   }
 }
 
-// Función para iniciar el contador de tiempo
+// Funciï¿½n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -641,7 +621,7 @@ function close_sessionok(event) {
       sessionStorage.removeItem("magi-horaInicio");
       tiempoRestanteDiv.innerHTML = "";    
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la página
+  // Recargar la pï¿½gina
       modal.style.display = "block";
 
 }
@@ -681,4 +661,3 @@ document.getElementById('bt-reset').addEventListener('click', cleanService);
 document.getElementById('bt-modificar-datos').addEventListener('click', modificarDatos);
 document.getElementById('bt-actualizar_nota').addEventListener('click', actualiEstado);
 document.getElementById('close_session').addEventListener('click', close_sessionok);
-</script>
