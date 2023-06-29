@@ -327,7 +327,6 @@ document.getElementById("wpp").value = "";
 document.getElementById("mail").value = "";
 document.getElementById("fpago").value = "";
 document.getElementById("notascte").value = "";
-
 document.getElementById("patente").value = "";
 document.getElementById("cnia").value = "";
 document.getElementById("marca").value = "";
@@ -343,7 +342,6 @@ document.getElementById("operacion").value = "";
 document.getElementById("sucursal").value = "";
 document.getElementById("danios").value = "";
 document.getElementById("notas").value = "";
-
 document.getElementById("novedad_sn").value = "";
 document.getElementById("notas_sn").value = "";
 document.getElementById("poliza_sn").value = "";
@@ -383,7 +381,6 @@ document.getElementById("wpp").value = "";
 document.getElementById("mail").value = "";
 document.getElementById("fpago").value = "";
 document.getElementById("notascte").value = "";
-
 document.getElementById("patente").value = "";
 document.getElementById("cnia").value = "";
 document.getElementById("marca").value = "";
@@ -399,7 +396,6 @@ document.getElementById("operacion").value = "";
 document.getElementById("sucursal").value = "";
 document.getElementById("danios").value = "";
 document.getElementById("notas").value = "";
-
 document.getElementById("novedad_sn").value = "";
 document.getElementById("notas_sn").value = "";
 document.getElementById("poliza_sn").value = "";
@@ -425,7 +421,6 @@ function modificarDatos(event) {
    let infoMail =  document.getElementById("mail").value;
    let infoFpago =  document.getElementById("fpago").value;
    let infoNotascte =  document.getElementById("notascte").value;
-
    let infoPatente =  document.getElementById("patente").value;
    let infoMarca =  document.getElementById("marca").value;
    let infoMotor =  document.getElementById("motor").value;
@@ -648,9 +643,7 @@ function close_sessionok(event) {
                console.error("Error al almacenar el color de fondo:", error);
            }
 
-           
-////////////////////////////////////////////////////////////////////////////////
-
+////////////////////////// EVENTLISTENERS //////////////////////////////////////////////////////
 
 document.getElementById('bt-buscar').addEventListener('click', filtrar);
 document.getElementById('bt-reset').addEventListener('click', cleanService);
