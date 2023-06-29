@@ -76,7 +76,7 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
         "</div><div class='col-2 modulo' id='dni_" + i + "'>" + result[i][1] +
         "</div><div class='col-4 modulo text-truncate' id='nombre_" + i + "'>" + result[i][2] +
         "</div><div class='col-2 modulo-sm m-0' style='padding-top: 5px;  align: center; width: 150px; color: " + txColor + "' id='operacion_" + i + "'>" + result[i][9] + "</div>" +
-      "</div><div class='row p-0 m-0'><div class='col-2 m-0 modulo-sm-pat' id='patente_" + i + "'>" + result[i][0] +
+      "</div><div class='row p-0 m-0'><div class='col-2 m-0 modulo-sm-pat text-truncate' id='patente_" + i + "'>" + result[i][0] +
       "</div><div class='col-3 modulo-sm text-truncate' id='marca_" + i + "'>" + result[i][11] + 
       "</div><div class='col-2 modulo-sm text-truncate' id='vigencia_" + i + "'>" + result[i][7] + 
       "</div><div class='col-2 modulo-sm text-truncate' id='hasta_" + i + "'>" + result[i][8] + 
