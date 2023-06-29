@@ -961,7 +961,6 @@ function onFailure(error) {
   console.error("Error al almacenar el color de fondo:", error);
 }
 
-////////////////////////////////////////////////////////////////////////////////
 
 document.getElementById("bt-buscar").addEventListener("click", filtrar);
 document.getElementById("bt-reset").addEventListener("click", cleanService);
