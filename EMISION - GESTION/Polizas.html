@@ -13,56 +13,58 @@
 <body style="background-color: #03BB85">
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
     <a class="navbar-brand" href="#">&nbsp;&nbsp;SISTEMA DE EMISION - GESTION DE POLIZAS</a>
- <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="cobranzasDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Cobranzas
-          </a>
-          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+    <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+    <ul class="navbar-nav">
+      <!-- Menú principal -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Cobranzas
+        </a>
+        <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+          <a class="dropdown-item"
+            href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
+            id="dropdown-item">Pagos Marcos Paz</a>
             <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
-              id="pago">Pagos Marcos Paz</a>
-              <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
-              id="pago">Pagos Mariano Acosta</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec">Cierre Caja Diaria</a>
-            <a class="dropdown-item" href="#" onclick="loadPage('Comisiones')">Comisiones (en construccion)</a>
-            <a class="dropdown-item" href="#" onclick="loadPage('Comisiones')">Deudores (en construccion)</a>
-            <a class="dropdown-item" href="#" onclick="loadPage('Comisiones')">Avisos Pagos (en construccion)</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="emisionDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Emisión
-          </a>
-          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" onclick="loadPage('SeguroNuevo')">Ingresar Seguro</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" onclick="loadPage('Buscar')">Gestion Pólizas</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="siniestrosDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Siniestros
-          </a>
-          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
-            <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
-              onclick="loadPage('Denuncia')">Ingresar Denuncia</a>
-            <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
-              onclick="loadPage('AgendaSiniestros')">Gestion Siniestros</a>
-          </div>
-        </li>
-</ul>
-</div>
+            href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
+            id="dropdown-item">Pagos Mariano Acosta</a>
+          <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
+          <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Comisiones (en construccion)</a>
+          <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec">Deudores Pasados</a>
+          <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Avisos Pagos (en construccion)</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Emisión
+        </a>
+        <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+          <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
+          <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Siniestros
+        </a>
+        <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+          <a class="dropdown-item"
+            href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
+            id="dropdown-item" >Ingresar Denuncia</a>
+          <a class="dropdown-item"
+            href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
+            id="dropdown-item">Gestion Siniestros</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- Menú flotante en el lado derecho -->
 <div style="display: none">
             <input type="text" id="userName_hide"  name="userName_hide">
   </div>
