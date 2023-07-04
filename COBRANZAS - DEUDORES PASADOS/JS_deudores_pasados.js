@@ -31,10 +31,11 @@
     })()
     
     
-      ////////////// LISTA DE PAGOS ///////////////////////
+    ////////////// LISTA DE PAGOS ///////////////////////
     function updateSinPendientes(result) {
       var sinPendientesDiv = document.getElementById("sinPendientes");
       var pendientesHtml = "";
+      var idDeudores = []; // Nuevo array para almacenar los id_deudor distintos
     
       // Función para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
       function convertToDate(dateString) {
@@ -57,8 +58,8 @@
           "<div class='col-9 p-0 m-0'>" +
           "<div class='row p-0 m-0'>" +
           "<div class='col-2 text-sm text-truncate' style='width: 90px; padding-top: 10px; font-size: 14px;' id='_vto" + i + "'>" + result[i][7] + "</div>" +
-          "<div class='col-1 text-sm text-truncate' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][5] + "&nbsp;/</div>" +
-          "<div class='col-1 text-sm text-truncate' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][6] + "</div>" +
+          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][5] + "&nbsp;/</div>" +
+          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][6] + "</div>" +
           "<div class='col-2 text-sm' style='width: 170px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][4] + "</div>" +
           "<div class='col-2'>" +
           "<div class='input-group'>" +
@@ -89,9 +90,95 @@
       "<div style='display: none;' id='_poliza" + i + "'>" + result[i][14] + "</div>" +
       "<div style='display: none;' id='_recibo" + i + "'>" + result[i][15] + "</div>" +
       "</div></div>";
-    }
+    
+        if (!idDeudores.includes(result[i][0])) {
+          idDeudores.push(result[i][0]);
+        }
+      }
     
         sinPendientesDiv.innerHTML = pendientesHtml;
+    
+    var idDeudorSelect = document.getElementById("id_deudor_select");
+    var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
+    var totalValInput = document.getElementById("total_val");
+    var resetFiltroBtn = document.getElementById("bt-reset-filtro");
+    
+    ///////////////////// SUMAR VALORES ////////////////
+    
+    function calcularSuma() {
+      var suma = 0;
+      var divs = document.querySelectorAll("#sinPendientes > div");
+    
+      for (var i = 0; i < divs.length; i++) {
+        var div = divs[i];
+    
+        // Verificar si el elemento está visible
+        if (div.style.display !== "none") {
+          var input = div.querySelector("input[id^='_imp']");
+          var valor = parseFloat(input.value);
+    
+          if (!isNaN(valor)) {
+            suma += valor;
+          }
+        }
+      }
+    
+      totalValInput.value = suma.toFixed(2);
+    }
+    
+    // Llamar a la función inicialmente y cada vez que se cambie un valor
+    calcularSuma();
+    
+    var impInputs = document.querySelectorAll("input[id^='_imp']");
+    for (var j = 0; j < impInputs.length; j++) {
+      impInputs[j].addEventListener("input", calcularSuma);
+    }
+    
+    //////////////// ACTUALIZAR VALORES DEL SELECT ///////////////////
+    for (var j = 0; j < idDeudores.length; j++) {
+      var option = document.createElement("option");
+      option.value = idDeudores[j];
+      option.text = idDeudores[j];
+      idDeudorSelect.appendChild(option);
+    }
+    
+    ///////// FILTRAR DATOS POR ID DEUDOR //////////////////////
+    actualizarListaBtn.addEventListener("click", function() {
+    
+      var seleccionado = idDeudorSelect.value;
+    
+      // Filtrar los elementos basados en el valor seleccionado
+      var divs = document.querySelectorAll("#sinPendientes > div");
+      for (var i = 0; i < divs.length; i++) {
+        var div = divs[i];
+        var deudor = div.querySelector(".text-sm[id^='_deudor']").textContent;
+    
+        if (deudor === seleccionado || seleccionado === "todos") {
+          div.style.display = "block"; // Mostrar el elemento
+        } else {
+          div.style.display = "none"; // Ocultar el elemento
+        }
+      }
+    calcularSuma();
+    });
+    
+    //////////////////// BOTON DE RESETEAR FILTRO ///////////////////
+    
+    resetFiltroBtn.addEventListener("click", function() {
+      var divs = document.querySelectorAll("#sinPendientes > div");
+    
+      for (var i = 0; i < divs.length; i++) {
+        var div = divs[i];
+        div.style.display = "block"; // Mostrar todos los elementos
+      }
+    
+      // Restablecer la selección del select
+      idDeudorSelect.selectedIndex = 0;
+    
+    });
+    
+    
+    /////////////// BOTON PARA INGRESAR PAGOS //////////////////
     
       var divs = document.querySelectorAll("[id^='_btn_cob']");
       divs.forEach(function(_btn_cob) {
@@ -99,18 +186,22 @@
           var id = _btn_cob.id.slice(8); // Obtener el índice del div
     
       let infoDeudor = document.getElementById("_deudor" + id).textContent;
-      let infoDNI = document.getElementById("_dni" + id).textContent; /////////
+      let infoDNI = document.getElementById("_dni" + id).textContent; 
       let infoCliente = document.getElementById("_cte" + id).textContent;
-      let infoWpp = document.getElementById("_wpp" + id).textContent; //////
+      let infoWpp = document.getElementById("_wpp" + id).textContent; 
       let infoPatente = document.getElementById("_pat" + id).textContent;
       let infoMarca = document.getElementById("_marca" + id).textContent;
-      let infoPoliza = document.getElementById("_poliza" + id).textContent;  ///////
+      let infoPoliza = document.getElementById("_poliza" + id).textContent; 
       let infoCnia = document.getElementById("_cnia" + id).textContent;
       let infoCuota = document.getElementById("_cta" + id).textContent;
       let infoVigencia = document.getElementById("_ctad" + id).textContent;
       let infoImporte = document.getElementById("_imp" + id).value;
       let infoVence = document.getElementById("_vto" + id).textContent;
       let infoRecibo = document.getElementById("_recibo" + id).textContent;
+    
+    
+    
+      document.getElementById("_ver" + id).textContent = "✔️";
     
       google.script.run.pagoNuevo(
         infoDNI,
@@ -135,68 +226,12 @@
       /////////////////////////////////////////
     
     
+    document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
+      var mes = parseInt(document.getElementById("mes_sn").value, 10);
+      var anio = parseInt(document.getElementById("anio_sn").value, 10);
     
-    
-    
-    function ingresarPago(event) {
-      event.preventDefault();
-      const boton = document.getElementById('bt-ingreso');
-      const spinner = document.getElementById('spinner_pago');
-      spinner.style.display = 'block';
-      boton.disabled = true;
-    
-      let infomultiRec = document.getElementById('multiRec').value;
-      let infoDNI = document.getElementById('dni').value;
-      let infoCliente = document.getElementById('nombreCompleto').value;
-      let infoWpp = document.getElementById('wpp').value;
-      let infoPatente = document.getElementById('patente').value;
-      let infoMarca = document.getElementById('marca').value;
-      let infoPoliza = document.getElementById('poliza').value;
-      let infoCnia = document.getElementById('cnia').value;
-      let infoCuota = document.getElementById('cuota').value;
-      let infoVigencia = document.getElementById('vigencia').value;
-      let infoImporte = document.getElementById('importe').value;
-      let infoVence = document.getElementById('vto').value;
-      let infoColor = document.getElementById('color').value;
-      let infoUsuario = sessionStorage.getItem("magi-usuario");
-      let infoNotas = document.getElementById('notas').value;
-      let infoMedio = document.getElementById('mediopago').value;
-    
-      google.script.run.withSuccessHandler(handleResponse).pagoNuevo(
-        infomultiRec,
-        infoDNI,
-        infoCliente,
-        infoWpp,
-        infoPatente,
-        infoMarca,
-        infoPoliza,
-        infoCnia,
-        infoCuota,
-        infoVigencia,
-        infoImporte,
-        infoVence,
-        infoColor,
-        infoUsuario,
-        infoNotas,
-        infoMedio
-      );
-    
-      document.getElementById("dni").value = "";
-      document.getElementById("nombreCompleto").value = "";
-      document.getElementById("wpp").value = "";
-      document.getElementById("patente").value = "";
-      document.getElementById("marca").value = "";
-      document.getElementById("poliza").value = "";
-      document.getElementById("cnia").value = "";
-      document.getElementById("cuota").value = "";
-      document.getElementById("vigencia").value = "";
-      document.getElementById("importe").value = "";
-      document.getElementById("vto").value = "";
-      document.getElementById("color").value = "";
-      document.getElementById("notas").value = "";
-      document.getElementById("mediopago").value = "EFECTIVO";
-    }
-    
+     google.script.run.withSuccessHandler(updateSinPendientes).getData(mes, anio)
+    });
     
     
     
