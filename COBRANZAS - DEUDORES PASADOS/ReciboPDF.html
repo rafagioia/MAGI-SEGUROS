@@ -1,0 +1,176 @@
+
+</head>
+<body style="padding: 0px;
+    background-color: #FFFFFF;">
+    <div class="container25">
+
+
+    <div style="transform: rotate(-5deg); position:absolute; 
+        z-index: 2; left:210px; top:100px; padding-top: 20; width: 142px; height: 70px; border: 2px solid #686868;">
+        <h3 style="color: #686868; text-align: center; padding-top: 14px;"><b>PAGADO<b></h3>
+    </div>
+    
+    
+    
+    <div class="border25">
+      
+      <div style="display: flex; flex-direction: row; margin: 0,5px; border: 2px solid whiten;">
+        <div class="col-8" style="border: 1px solid white;">
+            <h6 style="font-size: 12px; margin: 0px;"><b>COMPAÑIA:<b></h6>
+            <h6 style="margin-bottom: 0px;"><b><?= sourceVals[10] ?><b></h6>
+        </div>
+        <div style="text-align: center;border: 1px solid white;">
+            <h6 style="font-size: 12px; margin: 0px;"><b>RECIBO N°:<b></h6>
+            <h6 style="margin-bottom: 0px;"><b><?= sourceVals[0] ?><b></h6>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: row; margin: 0,5px; border: 2px solid white;">
+        <div class="col-2" style="height:15px; border: 2px solid white;">
+            <h6 style="font-size: 10px;font-weight: 700;">Recibi de:</h6>
+        </div>
+        <div class="col-10" style="height:15px; background-color: #dcdcdc;border: 1px solid black;">
+            <h6 style="padding-left:3px; font-size: 10px;font-weight: 500;"><b><?= sourceVals[2] ?> - <?= sourceVals[3] ?>.-</h6>
+        </div>       
+      </div>
+      <div style="display: flex; flex-direction: row; margin: 0,5px; border: 2px solid white;">
+        <div class="col-2" style="height:15px; border: 2px solid white;">
+            <h6 style="font-size: 10px;font-weight: 700;">La suma:</h6>
+        </div>
+        <div class="col-10" style="height:15px; background-color: #dcdcdc;border: 1px solid black;">
+            <h6 style="padding-left:3px;font-size: 10px;font-weight: 500;"><b>$<?= sourceVals[11] ?>.- QUE SE APLICARÁ A LA POLIZA DE REF.-</h6>
+        </div>       
+      </div>
+
+        <div class="col-12" style="height:35px;">
+            <h6 style="font-size: 9px;font-weight: 700;">en concepto de seguro y servicio, de acuerdo a lo establecido por la resolución
+                N°429/2000 del Ministerio deEconomia de la Nación, resolución N° 27.627 y
+                aclaratorias de la Superintendencia de Seguros de la Nación</h6>
+    </div>
+    <div class="col-12" style="height:12px;">
+        <h6 style="font-size: 9px;font-weight: 700;text-decoration: underline;">Datos del Vehiculo:</h6>
+</div>
+<div class="col-7" style="height:23px; background-color: #dcdcdc;border: 1px solid black;">
+    <h6 style="font-size: 8px; margin: 1px 2px;"><b>PATENTE: <?= sourceVals[1] ?> - <span id="texto"></span><b></h6>
+    <h6 style="font-size: 8px; margin: 1px 0px 1px 2px;"><b>CUOTA N°<?= sourceVals[7] ?> DESDE <?= sourceVals[5] ?> HASTA <span id="vto-date"><?= sourceVals[5] ?></span><b></h6>
+</div>
+<div style="display: flex; flex-direction: row; margin: 0,5px; border-top: 2px solid white;">
+    <div class="col-2" style="height:15px; border: 2px solid white;">
+        <h6 style="font-size: 7px;font-weight: 700;">Lugar y Fecha:</h6>
+    </div>
+    <div class="col-5" style="height:12px; background-color: #dcdcdc;border: 1px solid black;">
+        <h6 style="padding-left:3px;font-size: 7px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>Marcos Paz - <span id="fechaHora"></span></h6>
+    </div>       
+  </div>
+
+  <div style="display: flex; flex-direction: row; margin: 0px; border: 2px solid whiten;">
+    <div class="col-6" style="border: 1px solid black;">
+        <h6 style="font-size: 9px; margin: 0px;"><b>Whatsapp de atención al cliente:<b></h6>
+            <h4 style="margin-bottom: 0px;"><b>11 2185-3948<b></h4>
+     
+    </div>
+    <div style="text-align: center;border: 1px solid black;">
+        <h6 style="font-size: 9px; margin: 0px;"><b>Recuerde tener la cuota al<b></h6>
+        <h6 style="font-size: 9px; margin: 0px;"><b>dia para evitar inconvenientes.<b></h6>
+        <!-- <h4 style="margin-bottom: 0px;"><b><b></h4> -->
+    </div>   
+  </div>
+  <div style="display: flex; flex-direction: row; margin: 0,5px;">
+    <div class="col-3" style="height:18px; border: 2px solid white;">
+        <h6 style="font-size: 10px;font-weight: 700;">Asistencia 24hs:</h6>
+    </div>
+    <div class="col-9" style="height:18px; display: flex; flex-direction: row; margin: 0px;">
+        <h6 style="font-size: 10px;font-weight: 700;margin-top:2px"><div id="contenido-switch"></div></h6>
+    </div>       
+  </div>
+  <div class="col-12" style="text-align: center;padding: 0px;height:25px; background-color:#404040; border: 2px solid black;">
+    <h6 style="color: white;font-size: 18px;font-weight: 700;padding: 0px 0px 0px 5px;">FIN DE COBERTURA: <span id="vto-date2"><?= sourceVals[5] ?></span></h6>
+</div>
+
+    </div>
+
+  </div>
+<script>
+var contenidoSwitch = document.getElementById("contenido-switch");
+
+switch ("<?= sourceVals[10] ?>") {
+  case "AGROSALTA":
+    contenidoSwitch.innerHTML = "NO POSEE";
+    break;
+  case "AGROSALTA C/GRUA":
+    contenidoSwitch.innerHTML = "0800 666 1366 (100km)";
+    break;
+  case "AGRO (V)":
+    contenidoSwitch.innerHTML = "NO POSEE";
+    break;
+  case "AGRO (V) C/GRUA":
+    contenidoSwitch.innerHTML = "0800 666 1366 (100km)";
+    break;
+  case "RIVADAVIA":
+    contenidoSwitch.innerHTML = "0800-666-6789 / Ext: (5411)43286600";
+    break;
+  case "FED PAT":
+    contenidoSwitch.innerHTML = "0800-222-0022 0800-800-0022";
+    break;
+  case "PROVIDENCIA":
+    contenidoSwitch.innerHTML = "0800-444-4442 / 0800-999-3003";
+    break;
+  case "RIO URUGUAY":
+    contenidoSwitch.innerHTML = "0800-444-1441 0810-888-7080";
+    break;
+  case "ATM":
+    contenidoSwitch.innerHTML = "0800-999-8208 / Ext:(5411)48149058";
+    break;
+  case "LA CAJA":
+    contenidoSwitch.innerHTML = "0800-666-0939";
+    break;
+  case "MAPFRE":
+    contenidoSwitch.innerHTML = "0800-999-7424 / Ex:(5411)57772127";
+    break;
+  case "BENEFICIO":
+    contenidoSwitch.innerHTML = "NO POSEE";
+    break;
+  case "MERCANTIL":
+    contenidoSwitch.innerHTML = "0-800-777-2634";
+    break;
+  case "LIBRA":
+    contenidoSwitch.innerHTML = "0800-999-6500";
+    break;
+  case "GRUA":
+    contenidoSwitch.innerHTML = "0800 666 1366 (100km)";
+    break;
+  default:
+    contenidoSwitch.innerHTML = "";
+}
+
+  var textoOriginal = "<?= sourceVals[13] ?>";
+  var textoLimitado = textoOriginal.substring(0, 20);
+  document.getElementById('texto').textContent = textoLimitado;
+
+        let fechaString = "<?= sourceVals[5] ?>";
+        let partesFecha = fechaString.split('/');
+        let dia = partesFecha[0];
+        let mes = partesFecha[1];
+        let anio = partesFecha[2].slice(-2);
+        let fecha = new Date(anio, mes - 1, dia);
+        fecha.setMonth(fecha.getMonth() + 1)
+        var newDateString = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+    document.getElementById("vto-date").innerHTML = newDateString;
+    document.getElementById("vto-date2").innerHTML = newDateString;
+
+
+  function actualizarFechaHora() {
+    var fechaHora = new Date().toLocaleString();
+    document.getElementById('fechaHora').textContent = fechaHora;
+  }
+
+  actualizarFechaHora();
+  setInterval(actualizarFechaHora, 1000); // actualizar cada segundo
+</script>
+
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+</html>

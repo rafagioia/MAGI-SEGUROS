@@ -129,60 +129,6 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
     return recibo;
   }
 
-//////////////// REIMPRIMIR RECIBOS //////////////////////
-function getValuesFromSheet(numRecibo) {
-  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
-  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
-  
-
-  let sourceVals = [];
-  for (let i = 0; i < mantenimientos.length; i++) {
-    if (mantenimientos[i][0] == numRecibo) {
-
-      sourceVals.push(mantenimientos[i]);
-    }
-  }
-
-  sourceVals = sourceVals[0];
-console.log(sourceVals)
-  var template = HtmlService.createTemplateFromFile('Recibo');
-  template.sourceVals = sourceVals;
-  var content = template.evaluate().getContent();
-  
-  return content;
-}
-
-//////////////// REIMPRIMIR MULTIRECIBOS X6//////////////////////
-function getValuesFromSheetMulti(numReciboMulti) {
-  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
-  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
-
-  const sourceVals = [];
-  let i = 0;
-  while (i < 6) {
-    let reciboEncontrado = false;
-    for (let j = 0; j < mantenimientos.length; j++) {
-      if (mantenimientos[j][0] == numReciboMulti) {
-        sourceVals.push(mantenimientos[j]);
-        i++;
-        reciboEncontrado = true;
-        break;
-      }
-    }
-    if (!reciboEncontrado) {
-      numReciboMulti--;
-    }
-    else {
-      numReciboMulti--;
-    }
-  }
-  var template = HtmlService.createTemplateFromFile('ReciboMulti');
-  template.sourceVals = sourceVals;
-  console.log(sourceVals)
-  var content = template.evaluate().getContent();
-  return content;
-}
-
 //////////////////////////////////////////////////////
 
 
@@ -196,96 +142,6 @@ function getValuesFromSheetMulti(numReciboMulti) {
   SpreadsheetApp.getUi().showModalDialog(output, 'Descargar PDF');
 }
     
-
-
-//////////////// PDF RECIBO //////////////////////
-function getPdfContent(numRecibo) {
-  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
-  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
-
-  let sourceVals = [];
-  for (let i = 0; i < mantenimientos.length; i++) {
-    if (mantenimientos[i][0] == numRecibo) {
-      sourceVals.push(mantenimientos[i]);
-    }
-  }
-
-  sourceVals = sourceVals[0];
-
-  var template = HtmlService.createTemplateFromFile('ReciboPDF');
-  template.sourceVals = sourceVals;
-  var content = template.evaluate().getContent();
-
-  var pdfContent = convertHtmlToPdf(content);
-  
-  return pdfContent;
-}
-
-
-function getPdfContentM(numRecibo) {
-  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
-  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
-
-  const sourceVals = [];
-  let i = 0;
-  while (i < 6) {
-    let reciboEncontrado = false;
-    for (let j = 0; j < mantenimientos.length; j++) {
-      if (mantenimientos[j][0] == numRecibo) {
-        sourceVals.push(mantenimientos[j]);
-        i++;
-        reciboEncontrado = true;
-        break;
-      }
-    }
-    if (!reciboEncontrado) {
-      numRecibo--;
-    }
-    else {
-      numRecibo--;
-    }
-  }
-  var template = HtmlService.createTemplateFromFile('ReciboMultiPDF');
-  template.sourceVals = sourceVals;
-  
-  console.log(sourceVals)
-  var content = template.evaluate().getContent();
-
-  var pdfContent = convertHtmlToPdfM(content);
-  
-  return pdfContent;
-}
-
-function convertHtmlToPdf(htmlContent) {
-  var blob = Utilities.newBlob(htmlContent, 'text/html', 'ReciboPDF.html');
-  
-  var pdfFile = DriveApp.createFile(blob);
-  var pdfBlob = pdfFile.getBlob().getAs('application/pdf');
-  
-  // Eliminar el archivo HTML temporal
-  DriveApp.getFileById(pdfFile.getId()).setTrashed(true);
-
-  var pdfContent = pdfBlob.getBytes();
-  var encodedPdfContent = Utilities.base64Encode(pdfContent);
-
-  return encodedPdfContent;
-}
-
-
-function convertHtmlToPdfM(htmlContent) {
-  var blob = Utilities.newBlob(htmlContent, 'text/html', 'ReciboMultiPDF.html');
-  
-  var pdfFile = DriveApp.createFile(blob);
-  var pdfBlob = pdfFile.getBlob().getAs('application/pdf');
-  
-  // Eliminar el archivo HTML temporal
-  DriveApp.getFileById(pdfFile.getId()).setTrashed(true);
-
-  var pdfContent = pdfBlob.getBytes();
-  var encodedPdfContent = Utilities.base64Encode(pdfContent);
-
-  return encodedPdfContent;
-}
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////  SESION DE USUARIOS ////////////////////////
@@ -386,8 +242,5 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   // Si no se encuentra el usuario o el color, devolver un valor predeterminado o null
   return null;
 }
-
-
-
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////

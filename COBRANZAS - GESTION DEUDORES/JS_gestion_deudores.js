@@ -339,58 +339,6 @@
       ventanaImpresion.print();
     }
     
-    
-    //////////////////// REIMPRIMIR RECIBO SIMPLE //////////////////
-    function reimprimirRecibo(event) {
-      event.preventDefault();
-      const numRecibo = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(content) {
-        var newWindow = window.open();
-        newWindow.document.write(content);
-      }).getValuesFromSheet(numRecibo);
-      console.log(numRecibo);
-    }
-    
-    
-    //////////////////// REIMPRIMIR RECIBO MULTIPLE x6 //////////////////
-    function reimprimirReciboMulti(event) {
-      event.preventDefault();
-      const numReciboMulti = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(content) {
-        var newWindow = window.open();
-        newWindow.document.write(content);
-      }).getValuesFromSheetMulti(numReciboMulti);
-      console.log(numReciboMulti);
-    }
-    
-    
-    ////////////////////////// DESCARGAR PDF DE RECIBOS /////////////////////
-    
-    function descargaRecibo(event) {
-      event.preventDefault();
-      const numRecibo = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(pdfContent) {
-        downloadPdf(pdfContent, "recibo.pdf");
-      }).getPdfContent(numRecibo);
-    }
-    
-    function descargaReciboM(event) {
-      event.preventDefault();
-      const numRecibo = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(pdfContent) {
-        downloadPdf(pdfContent, "recibo.pdf");
-      }).getPdfContentM(numRecibo);
-    }
-    
-    function downloadPdf(pdfContent, fileName) {
-      const link = document.createElement('a');
-      link.href = 'data:application/pdf;base64,' + pdfContent;
-      link.download = fileName;
-      link.target = '_blank';
-      link.click();
-    }
-    
-    
     /////////////////////////////////////////////////////////////////
     //////////////////// SESION DE USUARIOS /////////////////////////
     /////////////////////////////////////////////////////////////////
@@ -589,13 +537,4 @@
                 function onFailure(error) {
                     console.error("Error al almacenar el color de fondo:", error);
                 }
-    
-                
-    /////////////////////// EVENT LISTENERS ////////////////////////////
-    
-    document.getElementById('btn-reimprimirReciboMulti').addEventListener('click', reimprimirReciboMulti);
-    document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
-    document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
-    document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
-    //////////////////////////////////////////////////////////////////
     
