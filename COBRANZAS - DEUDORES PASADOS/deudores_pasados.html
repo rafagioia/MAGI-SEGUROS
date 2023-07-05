@@ -171,19 +171,19 @@
             </div>
            <div class="col-2  m-0 p-0">MES:<br>
               <select class="form-select form-select mt-1" id="mes_sn" name="mes_sn" placeholder="">
-                <option value="1"></option>
-                <option value="1">ENERO</option>
-                <option value="2">FEBRERO</option>
-                <option value="3">MARZO</option>
-                <option value="4">ABRIL</option>
-                <option value="5">MAYO</option>
-                <option value="6">JUNIO</option>
-                <option value="7">JULIO</option>
-                <option value="8">AGOSTO</option>
-                <option value="9">SEPTIEMBRE</option>
-                <option value="10">OCTUBRE</option>
-                <option value="11">NOVIEMBRE</option>
-                <option value="12">DICIEMBRE</option>
+                <option value="0"></option>
+                <option value="0">ENERO</option>
+                <option value="1">FEBRERO</option>
+                <option value="2">MARZO</option>
+                <option value="3">ABRIL</option>
+                <option value="4">MAYO</option>
+                <option value="5">JUNIO</option>
+                <option value="6">JULIO</option>
+                <option value="7">AGOSTO</option>
+                <option value="8">SEPTIEMBRE</option>
+                <option value="9">OCTUBRE</option>
+                <option value="10">NOVIEMBRE</option>
+                <option value="11">DICIEMBRE</option>
               </select>
             </div>
            <div class="col-1  m-0 p-0">AÑO:<br>
@@ -198,8 +198,10 @@
             <div class="col-2"><br>
               <button id="bt-regenarar_lista" class="est_not btn btn-primary  mt-1" type="submit">GENERAR LISTADO</button>
             </div>           
-            <div class="col-3  m-0 p-0"><br>
-
+            <div class="col-1  m-0 p-0"><br>
+            <div class="col-2"><br>
+              <button id="bt-imprimir_lista" class="est_not btn btn-primary  mt-1" type="submit">IMPRIMIR LISTADO</button>
+            </div>   
             </div>           
 
           </div>
@@ -271,6 +273,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+
 <?!= include('JS_deudores_pasados'); ?>
 </body>
 

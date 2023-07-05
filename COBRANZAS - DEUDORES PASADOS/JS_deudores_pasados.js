@@ -58,7 +58,7 @@
           "<div class='col-9 p-0 m-0'>" +
           "<div class='row p-0 m-0'>" +
           "<div class='col-2 text-sm text-truncate' style='width: 90px; padding-top: 10px; font-size: 14px;' id='_vto" + i + "'>" + result[i][7] + "</div>" +
-          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][5] + "&nbsp;/</div>" +
+          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][5] + "</div>" +
           "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][6] + "</div>" +
           "<div class='col-2 text-sm' style='width: 170px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][4] + "</div>" +
           "<div class='col-2'>" +
@@ -234,6 +234,110 @@
     });
     
     
+    
+    document.getElementById('bt-imprimir_lista').addEventListener('click', function() {
+      var tableData = obtenerDatosTabla();
+      generarPDF(tableData);
+    });
+    
+    function obtenerDatosTabla() {
+      var tableData = [];
+      var total = 0;
+      var divs = document.querySelectorAll("#sinPendientes > div");
+    
+      for (var i = 0; i < divs.length; i++) {
+        var div = divs[i];
+        if (div.style.display === "none") {
+          continue; // Si el div está oculto, omitirlo y pasar al siguiente
+        }
+    
+        var rowData = [];
+    
+        rowData.push(div.querySelector(".text-sm[id^='_deudor']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_cte']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_vto']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_cta']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_ctad']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_cnia']").textContent);
+        rowData.push(div.querySelector(".form-control[id^='_imp']").value);
+        rowData.push(div.querySelector(".text-sm[id^='_pat']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_marca']").textContent);
+    
+        var verificado = div.querySelector(".btn[id^='_ver']");
+        if (verificado.style.display !== 'none') {
+          rowData.push(verificado.innerHTML);
+        }
+    
+        tableData.push(rowData);
+    
+        // Sumar el valor
+        var valor = parseFloat(rowData[6]);
+        if (!isNaN(valor)) {
+          total += valor;
+        }
+      }
+    
+      // Mostrar el total
+      var totalElement = document.getElementById("total_val");
+      totalElement.value = total.toFixed(2);
+    
+      return tableData;
+    }
+    
+    function generarPDF(tableData) {
+      var ventanaImpresion = window.open('', '', 'width=800,height=600');
+    
+      ventanaImpresion.document.write('<html><head><title>Lista Pendientes</title></head><body>');
+      ventanaImpresion.document.write('<center><h1>LISTADO DE DEUDA MENSUAL</h1></center><p>');
+      ventanaImpresion.document.write('<style>' +
+        'table { width: 100%; border-collapse: collapse; }' +
+        'th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }' +
+        'th.total-label { font-weight: bold; }' +
+        'td.total-value { font-weight: bold; font-size: 16px; }' +
+        '</style>');
+      ventanaImpresion.document.write('<table>');
+      ventanaImpresion.document.write('<thead><tr>' +
+        '<th>ID:</th>' +
+        '<th>CLIENTE:</th>' +
+        '<th>VTO:</th>' +
+        '<th>CTA:</th>' +
+        '<th>DE:</th>' +
+        '<th>COMPAÑIA</th>' +
+        '<th>IMPORTE:</th>' +
+        '<th>PATENTE:</th>' +
+        '<th>MARCA:</th>' +
+        '<th>PASADO:</th>' +
+        '</tr></thead>');
+      ventanaImpresion.document.write('<tbody>');
+    
+      for (var i = 0; i < tableData.length; i++) {
+        ventanaImpresion.document.write('<tr>');
+    
+        for (var j = 0; j < tableData[i].length; j++) {
+          ventanaImpresion.document.write('<td>' + tableData[i][j] + '</td>');
+        }
+    
+        ventanaImpresion.document.write('</tr>');
+      }
+    
+      // Agregar fila con el total
+      var total = 0;
+      for (var i = 0; i < tableData.length; i++) {
+        var rowData = tableData[i];
+        var importe = parseFloat(rowData[6]);
+        if (!isNaN(importe)) {
+          total += importe;
+        }
+      }
+      ventanaImpresion.document.write('<tr><td colspan="8"></td><td colspan="1" class="total-label">TOTAL:</td><td class="total-value" colspan="1">$' + total.toFixed(2) + '</td></tr>');
+    
+      ventanaImpresion.document.write('</tbody>');
+      ventanaImpresion.document.write('</table>');
+      ventanaImpresion.document.write('</body></html>');
+    
+      ventanaImpresion.document.close();
+      ventanaImpresion.print();
+    }
     
     /////////////////////////////////////////////////////////////////
     //////////////////// SESION DE USUARIOS /////////////////////////
@@ -433,10 +537,4 @@
                 function onFailure(error) {
                     console.error("Error al almacenar el color de fondo:", error);
                 }
-    
-                
-    ////////////////////////////////////////////////////////////////////////////////
-    
-    
-    //////////////////////////////////////////////////////////////////
     
