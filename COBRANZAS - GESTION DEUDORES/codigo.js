@@ -1,6 +1,6 @@
 function doGet(){
-  var template = HtmlService.createTemplateFromFile('deudores_pasados');
-  template.pubUrl = "https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec";
+  var template = HtmlService.createTemplateFromFile('gestion_deudores');
+  template.pubUrl = "https://script.google.com/macros/s/AKfycbwo5gTWUE53KhjSllzENI3agZL5JgJquIyd1W_tzbP5V2ZnG_6tcpPhJx4uyytV5cw5/exec";
   var output = template.evaluate();
   return output;
 }
@@ -14,94 +14,101 @@ function include( fileName ){
 
 ///////////////// LISTADO DE PAGOS ////////////////////////
 
-function getData(cmonth = new Date().getMonth(), cyear = new Date().getFullYear()) {
-  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+// function getData() {
+//   const BD_DEUDORES_C = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+//   const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
+//   const BD_DEUDORES_P = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("RECIBIS");
+
+//   const cobranzasData = BD_DEUDORES_C.getDataRange().getDisplayValues();
+//   const deudoresData = BD_DEUDORES.getDataRange().getDisplayValues();
+//   const recibisData = BD_DEUDORES_P.getDataRange().getDisplayValues();
+
+//   var sinPendientes = [];
+//   for (var i = 1; i < cobranzasData.length; i++) { // Recorrer los datos de BD_COBRANZAS
+//     var patenteCobranzas = cobranzasData[i][1]; // Obtener la patente de BD_COBRANZAS
+
+//     for (var j = 1; j < deudoresData.length; j++) { // Recorrer los datos de BD_DEUDORES
+//       var patenteDeudores = deudoresData[j][3]; // Obtener la patente de BD_DEUDORES
+
+//       if (patenteCobranzas === patenteDeudores) {
+//         var deudor = [];
+//         var idDeudor = deudoresData[j][0]; // ID DEUDOR
+//         var cliente = deudoresData[j][2]; // CLIENTE
+//         var vencimiento = cobranzasData[i][5]; // VENCE
+//         var cuota = cobranzasData[i][7]; // CUOTA
+//         var cuotaHasta = cobranzasData[i][8]; // DEUDOR HASTA
+//         var cnia = cobranzasData[i][10]; // COMPAÑIA
+//         var patente = cobranzasData[i][12]; // PATENTE
+//         var marca = cobranzasData[i][13]; // VEHICULO
+//         var importe = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
+//         var fpago = cobranzasData[i][6]; // FECHA PAGO
+
+//         deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe,0, fpago);
+//         sinPendientes.push(deudor);
+
+//         console.log(deudor)
+//         break; // Se encontró la correspondencia, salir del bucle interno
+//       }
+//     }
+//   }
+//   return sinPendientes;
+// }
+
+function getData() {
+  const BD_DEUDORES_C = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
   const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
+  const BD_DEUDORES_P = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("RECIBIS");
 
-  const cobranzasData = BD_COBRANZAS.getDataRange().getDisplayValues();
+  const cobranzasData = BD_DEUDORES_C.getDataRange().getDisplayValues();
   const deudoresData = BD_DEUDORES.getDataRange().getDisplayValues();
-
-  var currentDate = new Date(cyear, cmonth, 25);
-  var currentMonth = currentDate.getMonth() + 1; // Sumar 1 al mes obtenido
-  var currentYear = String(currentDate.getFullYear()).slice(-2);
-  var currentYear2 = currentDate.getFullYear();
+  const recibisData = BD_DEUDORES_P.getDataRange().getDisplayValues();
 
   var sinPendientes = [];
-  for (var i = 1; i < deudoresData.length; i++) {
 
-    var fechaDesde = deudoresData[i][8]; // Fecha Desde (Columna I)
-    var fechaDesdeSplit = fechaDesde.split("/");
-    var deudorDesdeMonth = fechaDesdeSplit.length > 1 ? parseInt(fechaDesdeSplit[1], 10) : 0;
-    var deudorDesdeYear = fechaDesdeSplit.length > 2 ? fechaDesdeSplit[2].slice(-2) : 0;
+  for (var i = 1; i < cobranzasData.length; i++) {
+    var patenteCobranzas = cobranzasData[i][1];
 
-    var fechaMayorDesde = fechaDesde && (deudorDesdeYear < currentYear || (deudorDesdeYear === currentYear && deudorDesdeMonth-1 < currentMonth));
+    for (var j = 1; j < deudoresData.length; j++) {
+      var patenteDeudores = deudoresData[j][3];
 
-    var fechaHasta = deudoresData[i][9]; // Fecha Hasta (Columna J)
-    var fechaHastaSplit = fechaHasta.split("/");
-    var deudorHastaMonth = fechaHastaSplit.length > 1 ? parseInt(fechaHastaSplit[1], 10) : 0;
-    var deudorHastaYear = fechaHastaSplit.length > 2 ? fechaHastaSplit[2].slice(-2) : 0;
+      if (patenteCobranzas === patenteDeudores) {
+        var deudor = [];
+        var idDeudor = deudoresData[j][0];
+        var cliente = deudoresData[j][2];
+        var vencimiento = cobranzasData[i][5];
+        var cuota = cobranzasData[i][7];
+        var cuotaHasta = cobranzasData[i][8];
+        var cnia = cobranzasData[i][10];
+        var patente = cobranzasData[i][12];
+        var marca = cobranzasData[i][13];
+        var importe = parseInt(cobranzasData[j][11].replace("$", "").replace(",", ""));
+        var fpago = cobranzasData[i][6];
 
-    var fechaMayor = fechaHasta && (deudorHastaYear > currentYear || (deudorHastaYear === currentYear && deudorHastaMonth+1 > currentMonth));
-    if ((!fechaHasta || fechaMayor) && fechaMayorDesde) {
-      var deudor = [];
-      
-      let vto_day = parseInt(deudoresData[i][8].split("/")[0], 10);
-      var vto_month = parseInt(deudoresData[i][8].split("/")[1], 10);
-      var vto_year = parseInt(deudoresData[i][8].split("/")[2], 10);
-      var cuota_div = parseInt(deudoresData[i][7], 10);
-
-      var valor_cuota = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month + 1) % cuota_div;
-      if (valor_cuota <= 0) {
-        valor_cuota += cuota_div;
+        deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe, 0, fpago);
+        sinPendientes.push(deudor);
+        break;
       }
-
-      deudor.push(deudoresData[i][0]); // ID DEUDOR
-      deudor.push(deudoresData[i][2]); // CLIENTE
-      deudor.push(deudoresData[i][3]); // PATENTE
-      deudor.push(deudoresData[i][4]); // VEHICULO
-      deudor.push(deudoresData[i][5]); // COMPAÑIA
-      deudor.push(valor_cuota); // CUOTA
-      deudor.push(deudoresData[i][7]); // VIGENCIA
-      deudor.push(vto_day + "/" + currentMonth + "/" + currentYear); // VENCE
-      deudor.push(deudoresData[i][9]); // DEUDOR HASTA
-      deudor.push(deudoresData[i][10]); // NOTAS
-      deudor.push("❌"); // PASADOS
-      deudor.push(""); // IMPORTE
-      deudor.push(deudoresData[i][1]); // DNI
-      deudor.push(""); // WPP
-      deudor.push(""); // POLIZA
-      deudor.push(""); // RECIBO
-
-
-      let patente = deudoresData[i][3];
-      for (var j = 1; j < cobranzasData.length; j++) {
-        if (cobranzasData[j][1] === patente) {
-          deudor[13] = cobranzasData[j][4]; // WPP
-          deudor[14] = cobranzasData[j][9]; // POLIZA
-          var cobranzaFecha = cobranzasData[j][5]; // PAGO en columna F
-          var fechaSplit = cobranzaFecha.split("/"); // Dividir la fecha en día, mes y año
-          var paymentMonth = parseInt(fechaSplit[1], 10);
-          var paymentYear = fechaSplit[2].slice(-2); // Obtener los últimos dos dígitos del año
-
-          if (paymentMonth === currentMonth && paymentYear === currentYear) {
-            deudor[10] = "✔️";
-            deudor[15] = cobranzasData[j][0]; // RECIBO
-            deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
-          } else if ((paymentMonth === currentMonth - 1 && paymentYear === currentYear) || 
-                    (paymentMonth === 12 && currentMonth === 1 && paymentYear === currentYear - 1)) {
-            deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
-            }
-          }
-          if (valor_cuota == 1 && deudor[10] == "❌") {
-            deudor[11] = ""; // IMPORTE
-          }
-
-
-        } 
-      sinPendientes.push(deudor);
     }
   }
-    return sinPendientes;
+
+  for (var i = 2; i < recibisData.length; i++) {
+        var deudor = [];
+    var idDeudor = recibisData[i][5];
+    var recibi_de = recibisData[i][6];
+    var concepto = recibisData[i][2];
+    var montoRecibi = parseInt(recibisData[i][4].replace("$", "").replace(",", ""));
+    var fpago = recibisData[i][7];
+    var blank_1 = "";
+    var blank_2 = "";
+    var blank_3 = "";
+    var blank_4 = "";
+
+    deudor.push(idDeudor, recibi_de, blank_3, blank_1, blank_2, concepto, fpago, blank_4, 0, montoRecibi, fpago);
+
+    sinPendientes.push(deudor);
+  }
+    console.log(sinPendientes)
+  return sinPendientes;
 }
 
 /////////////// INGRESAR DEUDOR /////////////////////
@@ -129,6 +136,60 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
     return recibo;
   }
 
+//////////////// REIMPRIMIR RECIBOS //////////////////////
+function getValuesFromSheet(numRecibo) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
+  
+
+  let sourceVals = [];
+  for (let i = 0; i < mantenimientos.length; i++) {
+    if (mantenimientos[i][0] == numRecibo) {
+
+      sourceVals.push(mantenimientos[i]);
+    }
+  }
+
+  sourceVals = sourceVals[0];
+console.log(sourceVals)
+  var template = HtmlService.createTemplateFromFile('Recibo');
+  template.sourceVals = sourceVals;
+  var content = template.evaluate().getContent();
+  
+  return content;
+}
+
+//////////////// REIMPRIMIR MULTIRECIBOS X6//////////////////////
+function getValuesFromSheetMulti(numReciboMulti) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
+
+  const sourceVals = [];
+  let i = 0;
+  while (i < 6) {
+    let reciboEncontrado = false;
+    for (let j = 0; j < mantenimientos.length; j++) {
+      if (mantenimientos[j][0] == numReciboMulti) {
+        sourceVals.push(mantenimientos[j]);
+        i++;
+        reciboEncontrado = true;
+        break;
+      }
+    }
+    if (!reciboEncontrado) {
+      numReciboMulti--;
+    }
+    else {
+      numReciboMulti--;
+    }
+  }
+  var template = HtmlService.createTemplateFromFile('ReciboMulti');
+  template.sourceVals = sourceVals;
+  console.log(sourceVals)
+  var content = template.evaluate().getContent();
+  return content;
+}
+
 //////////////////////////////////////////////////////
 
 
@@ -142,6 +203,96 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
   SpreadsheetApp.getUi().showModalDialog(output, 'Descargar PDF');
 }
     
+
+
+//////////////// PDF RECIBO //////////////////////
+function getPdfContent(numRecibo) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
+
+  let sourceVals = [];
+  for (let i = 0; i < mantenimientos.length; i++) {
+    if (mantenimientos[i][0] == numRecibo) {
+      sourceVals.push(mantenimientos[i]);
+    }
+  }
+
+  sourceVals = sourceVals[0];
+
+  var template = HtmlService.createTemplateFromFile('ReciboPDF');
+  template.sourceVals = sourceVals;
+  var content = template.evaluate().getContent();
+
+  var pdfContent = convertHtmlToPdf(content);
+  
+  return pdfContent;
+}
+
+
+function getPdfContentM(numRecibo) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
+
+  const sourceVals = [];
+  let i = 0;
+  while (i < 6) {
+    let reciboEncontrado = false;
+    for (let j = 0; j < mantenimientos.length; j++) {
+      if (mantenimientos[j][0] == numRecibo) {
+        sourceVals.push(mantenimientos[j]);
+        i++;
+        reciboEncontrado = true;
+        break;
+      }
+    }
+    if (!reciboEncontrado) {
+      numRecibo--;
+    }
+    else {
+      numRecibo--;
+    }
+  }
+  var template = HtmlService.createTemplateFromFile('ReciboMultiPDF');
+  template.sourceVals = sourceVals;
+  
+  console.log(sourceVals)
+  var content = template.evaluate().getContent();
+
+  var pdfContent = convertHtmlToPdfM(content);
+  
+  return pdfContent;
+}
+
+function convertHtmlToPdf(htmlContent) {
+  var blob = Utilities.newBlob(htmlContent, 'text/html', 'ReciboPDF.html');
+  
+  var pdfFile = DriveApp.createFile(blob);
+  var pdfBlob = pdfFile.getBlob().getAs('application/pdf');
+  
+  // Eliminar el archivo HTML temporal
+  DriveApp.getFileById(pdfFile.getId()).setTrashed(true);
+
+  var pdfContent = pdfBlob.getBytes();
+  var encodedPdfContent = Utilities.base64Encode(pdfContent);
+
+  return encodedPdfContent;
+}
+
+
+function convertHtmlToPdfM(htmlContent) {
+  var blob = Utilities.newBlob(htmlContent, 'text/html', 'ReciboMultiPDF.html');
+  
+  var pdfFile = DriveApp.createFile(blob);
+  var pdfBlob = pdfFile.getBlob().getAs('application/pdf');
+  
+  // Eliminar el archivo HTML temporal
+  DriveApp.getFileById(pdfFile.getId()).setTrashed(true);
+
+  var pdfContent = pdfBlob.getBytes();
+  var encodedPdfContent = Utilities.base64Encode(pdfContent);
+
+  return encodedPdfContent;
+}
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////  SESION DE USUARIOS ////////////////////////
@@ -242,5 +393,8 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   // Si no se encuentra el usuario o el color, devolver un valor predeterminado o null
   return null;
 }
+
+
+
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////

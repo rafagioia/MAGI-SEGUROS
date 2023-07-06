@@ -32,81 +32,95 @@
     
     
     ////////////// LISTA DE PAGOS ///////////////////////
+    
     function updateSinPendientes(result) {
       var sinPendientesDiv = document.getElementById("sinPendientes");
-      var pendientesHtml = "";
+    
       var idDeudores = []; // Nuevo array para almacenar los id_deudor distintos
     
-      // Función para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
-      function convertToDate(dateString) {
-        var parts = dateString.split('/');
-        return new Date(parts[2], parts[1] - 1, parts[0]); // Restamos 1 al mes ya que en Date() los meses van de 0 a 11
-      }
     
-      // Ordenar el arreglo result de menor a mayor según las fechas (result[i][2])
-      result.sort(function(a, b) {
-        var dateA = convertToDate(a[7]);
-        var dateB = convertToDate(b[7]);
-        return dateA - dateB;
-      });
+    function convertToDateTime(dateTimeString) {
+      var parts = dateTimeString.split(' ');
+      var datePart = parts[0].split('/');
+      var timePart = parts[1].split(':');
     
-      for (var i = 0; i < result.length; i++) {
-        pendientesHtml += "<div class='border' style='background-color: #FFFFFF; margin-bottom: 0; box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>" +
-          "<div class='row' style='padding: 0px;'>" +
-          "<div class='col-1 text-sm' style='font-size: 14px;' id='_deudor" + i + "'>" + result[i][0] + "</div>" +
-          "<div class='col-2 text-sm text-truncate' style='font-size: 14px; padding-top: 10px; ' id='_cte" + i + "'>" + result[i][1] + "</div>" +
-          "<div class='col-9 p-0 m-0'>" +
-          "<div class='row p-0 m-0'>" +
-          "<div class='col-2 text-sm text-truncate' style='width: 90px; padding-top: 10px; font-size: 14px;' id='_vto" + i + "'>" + result[i][7] + "</div>" +
-          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][5] + "</div>" +
-          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][6] + "</div>" +
-          "<div class='col-2 text-sm' style='width: 170px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][4] + "</div>" +
-          "<div class='col-2'>" +
-          "<div class='input-group'>" +
-          "<div class='input-group-prepend'>" +
-          "<span class='input-group-text'>$</span>" +
-          "</div>" + 
-          "<input type='text' class='form-control' id='_imp" + i + "' value='" + result[i][11] + "'>" +
-          "</div>" + "</div>" +
-          "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px; width: 100px; ' id='_pat" + i + "'>" + result[i][2] + "</div>" +
-          "<div class='col-2 text-sm text-truncate' style='padding-top: 10px; font-size: 14px;' id='_marca" + i + "'>" + result[i][3] + "</div>" +
-          "<div class='col-1 btn btn-sm' style='margin: 2px 0px 0px 5px; border: 1px solid black; width: 32px; height: 32px;'";
+      var year = parseInt(datePart[2]);
+      var month = parseInt(datePart[1]) - 1; // Restamos 1 al mes ya que en Date() los meses van de 0 a 11
+      var day = parseInt(datePart[0]);
     
-    // Establecer el estilo según el valor de result[i][9]
-    if (result[i][10] === "✔️") {
-      pendientesHtml += "id='_ver" + i + "'>✔️</div>";
-    } else if (result[i][10] === "❌") {
-      pendientesHtml += "id='_ver" + i + "'>❌</div>";
-    } else {
-      pendientesHtml += "'>" + result[i][10] + "</div>";
+      return new Date(year, month, day);
     }
-    pendientesHtml += 
-    "<div class='col-1' style='padding: 2px 0px 0px 5px;width: 48px;'><button class='btn btn-secondary btn-sm' id='_print" + i + "'>🖨️</button></div>"+
-    "<div class='col-1' style='padding: 2px 0px 0px 0px;'><button class='btn btn-success btn-sm' id='_btn_cob" + i + "'>COBRAR</button></div>"+
-    "</div>" +
-      "</div>" +
-      "<div style='display: none;' id='_dni" + i + "'>" + result[i][12] + "</div>" +
-      "<div style='display: none;' id='_wpp" + i + "'>" + result[i][13] + "</div>" +
-      "<div style='display: none;' id='_poliza" + i + "'>" + result[i][14] + "</div>" +
-      "<div style='display: none;' id='_recibo" + i + "'>" + result[i][15] + "</div>" +
-      "</div></div>";
     
+    result.sort(function(a, b) {
+      var dateA = convertToDateTime(a[10]);
+      var dateB = convertToDateTime(b[10]);
+      return dateB - dateA;
+    });
+    
+      var pendientesHtml = "";
+      var saldosPorId = {}; // Objeto para almacenar las sumas de saldos por ID
+    console.log("ordenado: " + result)
+    for (var i = result.length - 1; i >= 0; i--) {
+        var imp =  isNaN(result[i][8]) ? 0 : parseInt(result[i][8]);
+        var haber = isNaN(result[i][9]) ? 0 : parseInt(result[i][9]);
+        
+        if (!saldosPorId[result[i][0]]) {
+          saldosPorId[result[i][0]] = 0; // Inicializar el saldo para el ID deudor actual
+        }
+        
+        var saldoPorId = saldosPorId[result[i][0]];
+        saldoPorId += imp - haber; // Sumar el saldo al ID deudor actual
+        saldosPorId[result[i][0]] = saldoPorId;
+    
+    function getBackgroundColor(imp, haber) {
+      if (imp > 0) {
+        return "#FFFAFA"; // Rojo
+      } else if (haber > 0) {
+        return "#FAFFF9"; // Verde
+      } else {
+        return "#FFFFFF"; // Blanco
+      }
+    }
+    
+    pendientesHtml += "<div class='border elemento' style='background-color: " + getBackgroundColor(result[i][8], result[i][9]) + "; margin-bottom: 0; box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>" +
+      "<div class='row' style='padding: 0px;'>" +
+      "<div class='col-1 text-sm' id='_deudor" + i + "'>" + result[i][0] + "</div>" +
+      "<div class='col-2 text-sm text-truncate' style='padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>" +
+      "<div class='col-1 text-sm text-truncate' style='width: 90px; padding-top: 10px; font-size: 14px;' id='_vto" + i + "'>" + result[i][2] + "</div>" +
+      "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][3] + "</div>" +
+      "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][4] + "</div>" +
+      "<div class='col-1 text-sm' style='width: 130px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][5] + "</div>" +
+      "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px; width: 100px;' id='_pat" + i + "'>" + result[i][6] + "</div>" +
+      "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px;' id='_marca" + i + "'>" + result[i][7] + "</div>" +
+    
+      "<div class='col-4'><div class='row'>" + 
+          "<span class='input-group-text p-2 m-1' style='width:22px;'>$</span>" + 
+          "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #8B0000; width: 100px;font-size: 18px;font-weight: 700;' id='_imp" + i + "' value='" + imp  + "' readonly>" + 
+          "<span class='input-group-text p-2 m-1' style='width:22px;'>$</span>" + 
+          "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #2D572C; width: 100px;font-size: 18px;font-weight: 700;' id='_haber" + i + "' value='" + haber + "' readonly>" + 
+          "<span class='input-group-text p-2 m-1' style='width:22px;'>$</span>" + 
+          "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #252850; width: 100px;font-size: 18px;font-weight: 700;' id='_saldo" + i + "' value='" + saldoPorId + "' readonly>" + "</div></div>" +
+          "<div class='col-1 text-sm text-truncate' style='padding-top: 22px; font-size: 11px;width: 20px;' id='_fpago" + i + "'>" + result[i][10] + "</div>" +
+          "</div></div></div></div>";
         if (!idDeudores.includes(result[i][0])) {
           idDeudores.push(result[i][0]);
         }
       }
     
-        sinPendientesDiv.innerHTML = pendientesHtml;
+      sinPendientesDiv.innerHTML = "";
+    
+      sinPendientesDiv.innerHTML = pendientesHtml;
     
     var idDeudorSelect = document.getElementById("id_deudor_select");
     var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
     var totalValInput = document.getElementById("total_val");
     var resetFiltroBtn = document.getElementById("bt-reset-filtro");
     
+    
     ///////////////////// SUMAR VALORES ////////////////
     
     function calcularSuma() {
-      var suma = 0;
+      var ultimoSaldo = null; // Variable para almacenar el último saldo
       var divs = document.querySelectorAll("#sinPendientes > div");
     
       for (var i = 0; i < divs.length; i++) {
@@ -114,17 +128,18 @@
     
         // Verificar si el elemento está visible
         if (div.style.display !== "none") {
-          var input = div.querySelector("input[id^='_imp']");
-          var valor = parseFloat(input.value);
+          var saldoInput = div.querySelector("input[id^='_saldo']");
+          var saldo = parseFloat(saldoInput.value);
     
-          if (!isNaN(valor)) {
-            suma += valor;
+          if (!isNaN(saldo)) {
+            ultimoSaldo = saldo; // Actualizar el último saldo
           }
         }
       }
     
-      totalValInput.value = suma.toFixed(2);
+      totalValInput.value = ultimoSaldo.toFixed(2);
     }
+    
     
     // Llamar a la función inicialmente y cada vez que se cambie un valor
     calcularSuma();
@@ -177,53 +192,15 @@
     
     });
     
-    
-    /////////////// BOTON PARA INGRESAR PAGOS //////////////////
-    
-      var divs = document.querySelectorAll("[id^='_btn_cob']");
-      divs.forEach(function(_btn_cob) {
-        _btn_cob.addEventListener("click", function() {
-          var id = _btn_cob.id.slice(8); // Obtener el índice del div
-    
-      let infoDeudor = document.getElementById("_deudor" + id).textContent;
-      let infoDNI = document.getElementById("_dni" + id).textContent; 
-      let infoCliente = document.getElementById("_cte" + id).textContent;
-      let infoWpp = document.getElementById("_wpp" + id).textContent; 
-      let infoPatente = document.getElementById("_pat" + id).textContent;
-      let infoMarca = document.getElementById("_marca" + id).textContent;
-      let infoPoliza = document.getElementById("_poliza" + id).textContent; 
-      let infoCnia = document.getElementById("_cnia" + id).textContent;
-      let infoCuota = document.getElementById("_cta" + id).textContent;
-      let infoVigencia = document.getElementById("_ctad" + id).textContent;
-      let infoImporte = document.getElementById("_imp" + id).value;
-      let infoVence = document.getElementById("_vto" + id).textContent;
-      let infoRecibo = document.getElementById("_recibo" + id).textContent;
-    
-    
-    
-      document.getElementById("_ver" + id).textContent = "✔️";
-    
-      google.script.run.pagoNuevo(
-        infoDNI,
-        infoCliente,
-        infoWpp,
-        infoPatente, 
-        infoMarca,
-        infoPoliza,
-        infoCnia,
-        infoCuota,
-        infoVigencia,
-        infoImporte,
-        infoVence,
-        infoRecibo
-      );
-        });
-      });
       }
     
       // Llamar a la función getData() del lado del servidor
       google.script.run.withSuccessHandler(updateSinPendientes).getData();
       /////////////////////////////////////////
+    
+    
+    
+    
     
     
     document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
@@ -244,6 +221,7 @@
       var tableData = [];
       var total = 0;
       var divs = document.querySelectorAll("#sinPendientes > div");
+      var ultimoSaldo = null; // Variable para almacenar el último saldo
     
       for (var i = 0; i < divs.length; i++) {
         var div = divs[i];
@@ -259,27 +237,25 @@
         rowData.push(div.querySelector(".text-sm[id^='_cta']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_ctad']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_cnia']").textContent);
-        rowData.push(div.querySelector(".form-control[id^='_imp']").value);
         rowData.push(div.querySelector(".text-sm[id^='_pat']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_marca']").textContent);
+        rowData.push(div.querySelector(".form-control[id^='_imp']").value);
+        rowData.push(div.querySelector(".form-control[id^='_haber']").value);
     
-        var verificado = div.querySelector(".btn[id^='_ver']");
-        if (verificado.style.display !== 'none') {
-          rowData.push(verificado.innerHTML);
-        }
+        var saldo = parseFloat(div.querySelector(".form-control[id^='_saldo']").value);
+        rowData.push(saldo);
+    
+        // Actualizar el total sumando el saldo actual
+        total += saldo;
+    
+        // Actualizar el último saldo
+        ultimoSaldo = saldo;
     
         tableData.push(rowData);
-    
-        // Sumar el valor
-        var valor = parseFloat(rowData[6]);
-        if (!isNaN(valor)) {
-          total += valor;
-        }
       }
     
       // Mostrar el total
-      var totalElement = document.getElementById("total_val");
-      totalElement.value = total.toFixed(2);
+      document.getElementById("total_val").value = ultimoSaldo;
     
       return tableData;
     }
@@ -303,33 +279,34 @@
         '<th>CTA:</th>' +
         '<th>DE:</th>' +
         '<th>COMPAÑIA</th>' +
-        '<th>IMPORTE:</th>' +
         '<th>PATENTE:</th>' +
         '<th>MARCA:</th>' +
-        '<th>PASADO:</th>' +
+        '<th>DEBE:</th>' +
+        '<th>HABER:</th>' +
+        '<th>SALDO:</th>' +
         '</tr></thead>');
       ventanaImpresion.document.write('<tbody>');
+    
+      var ultimoSaldo = null; // Variable para almacenar el último saldo
     
       for (var i = 0; i < tableData.length; i++) {
         ventanaImpresion.document.write('<tr>');
     
         for (var j = 0; j < tableData[i].length; j++) {
-          ventanaImpresion.document.write('<td>' + tableData[i][j] + '</td>');
+          var rowData = tableData[i];
+          if (j === 10) {
+            var saldo = parseFloat(rowData[j]);
+            if (!isNaN(saldo)) {
+              ultimoSaldo = saldo; // Actualizar el último saldo
+            }
+          }
+          ventanaImpresion.document.write('<td>' + rowData[j] + '</td>');
         }
     
         ventanaImpresion.document.write('</tr>');
       }
     
-      // Agregar fila con el total
-      var total = 0;
-      for (var i = 0; i < tableData.length; i++) {
-        var rowData = tableData[i];
-        var importe = parseFloat(rowData[6]);
-        if (!isNaN(importe)) {
-          total += importe;
-        }
-      }
-      ventanaImpresion.document.write('<tr><td colspan="8"></td><td colspan="1" class="total-label">TOTAL:</td><td class="total-value" colspan="1">$' + total.toFixed(2) + '</td></tr>');
+      ventanaImpresion.document.write('<tr><td colspan="8"></td><td colspan="1" class="total-label">TOTAL:</td><td class="total-value" colspan="1">$' + ultimoSaldo.toFixed(2) + '</td></tr>');
     
       ventanaImpresion.document.write('</tbody>');
       ventanaImpresion.document.write('</table>');
@@ -338,6 +315,72 @@
       ventanaImpresion.document.close();
       ventanaImpresion.print();
     }
+    
+    
+    //////////////////// MPRIMIR RECIBO SIMPLE //////////////////
+    function imprimirRecibo(numRecibo) {
+      // event.preventDefault();
+      console.log("llegó a la funcion imprimirRecibo")
+      google.script.run.withSuccessHandler(function(content) {
+        var newWindow = window.open();
+        newWindow.document.write(content);
+      }).getValuesFromSheet(numRecibo);
+      console.log(numRecibo);
+    }
+    
+    
+    
+    
+    //////////////////// REIMPRIMIR RECIBO SIMPLE //////////////////
+    function reimprimirRecibo(event) {
+      event.preventDefault();
+      const numRecibo = document.getElementById('numRecibo').value;
+      google.script.run.withSuccessHandler(function(content) {
+        var newWindow = window.open();
+        newWindow.document.write(content);
+      }).getValuesFromSheet(numRecibo);
+      console.log(numRecibo);
+    }
+    
+    
+    //////////////////// REIMPRIMIR RECIBO MULTIPLE x6 //////////////////
+    function reimprimirReciboMulti(event) {
+      event.preventDefault();
+      const numReciboMulti = document.getElementById('numRecibo').value;
+      google.script.run.withSuccessHandler(function(content) {
+        var newWindow = window.open();
+        newWindow.document.write(content);
+      }).getValuesFromSheetMulti(numReciboMulti);
+      console.log(numReciboMulti);
+    }
+    
+    
+    ////////////////////////// DESCARGAR PDF DE RECIBOS /////////////////////
+    
+    function descargaRecibo(event) {
+      event.preventDefault();
+      const numRecibo = document.getElementById('numRecibo').value;
+      google.script.run.withSuccessHandler(function(pdfContent) {
+        downloadPdf(pdfContent, "recibo.pdf");
+      }).getPdfContent(numRecibo);
+    }
+    
+    function descargaReciboM(event) {
+      event.preventDefault();
+      const numRecibo = document.getElementById('numRecibo').value;
+      google.script.run.withSuccessHandler(function(pdfContent) {
+        downloadPdf(pdfContent, "recibo.pdf");
+      }).getPdfContentM(numRecibo);
+    }
+    
+    function downloadPdf(pdfContent, fileName) {
+      const link = document.createElement('a');
+      link.href = 'data:application/pdf;base64,' + pdfContent;
+      link.download = fileName;
+      link.target = '_blank';
+      link.click();
+    }
+    
     
     /////////////////////////////////////////////////////////////////
     //////////////////// SESION DE USUARIOS /////////////////////////
@@ -537,4 +580,13 @@
                 function onFailure(error) {
                     console.error("Error al almacenar el color de fondo:", error);
                 }
+    
+                
+    /////////////////////// EVENT LISTENERS ////////////////////////////
+    
+    document.getElementById('btn-reimprimirReciboMulti').addEventListener('click', reimprimirReciboMulti);
+    document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
+    document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
+    document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
+    //////////////////////////////////////////////////////////////////
     
