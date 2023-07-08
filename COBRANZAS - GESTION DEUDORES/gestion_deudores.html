@@ -164,69 +164,31 @@
               </select>
             </div>
             <div class="col-2"><br>
-
               <button id="bt-actualizar_lista" class="est_not btn btn-primary  mt-1" type="submit">FILTRAR</button>
               <button id="bt-reset-filtro" class="est_not btn btn-danger mt-1" type="submit">LIMPIAR</button>
             </div>
-           <div class="col-2  m-0 p-0">MES:<br>
-              <select class="form-select form-select mt-1" id="mes_sn" name="mes_sn" placeholder="">
-                <option value="0"></option>
-                <option value="0">ENERO</option>
-                <option value="1">FEBRERO</option>
-                <option value="2">MARZO</option>
-                <option value="3">ABRIL</option>
-                <option value="4">MAYO</option>
-                <option value="5">JUNIO</option>
-                <option value="6">JULIO</option>
-                <option value="7">AGOSTO</option>
-                <option value="8">SEPTIEMBRE</option>
-                <option value="9">OCTUBRE</option>
-                <option value="10">NOVIEMBRE</option>
-                <option value="11">DICIEMBRE</option>
-              </select>
+           <div class="col-2  m-0 p-0">CONCEPTO:<br>
+          <input type='text' class='form-control form-control-sm m-1' style='background-color: #FFFFFF; width: 200px;font-size: 18px;' id='r_concepto' value='PAGOS'>
             </div>
-           <div class="col-1  m-0 p-0">AÑO:<br>
-              <select class="form-select form-select mt-1" id="anio_sn" name="anio_sn" placeholder="">
-                <option value="2023"></option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-              </select>
+           <div class="col-1  m-0 p-0">IMPORTE:<br>
+          <div class='row'><span class='input-group-text p-1' style='width:22px;margin: 4px 0px 0px 0px; '>$</span>
+          <input type='text' class='form-control form-control-sm py-1' style='margin: 4px 0px 0px 0px; background-color: #FFFFFF; color: #2D572C; width: 100px;font-size: 18px;font-weight: 700;' id='r_importe'></div>
+            </div>
+          <div class="col-1  m-0 p-0">MEDIO PAGO:<br>
+                <select class="form-select form-select-sm" id="mediopago" name="mediopago" style='margin: 4px 0px 0px 0px;font-size: 18px;' required>
+                  <option value="EFECTIVO">EFECTIVO</option>
+                  <option value="DIGITAL">DIGITAL</option>
+                </select>
             </div>
             <div class="col-2"><br>
-              <button id="bt-regenarar_lista" class="est_not btn btn-primary  mt-1" type="submit">GENERAR LISTADO</button>
+              <button id="btn-agregar-recibi" class="est_not btn btn-success  mt-1" type="submit">COBRAR</button>
             </div>           
-            <div class="col-3"><br>
+            <div class="col-2"><br>
               <button id="bt-imprimir_lista" class="est_not btn btn-primary  mt-1" type="submit">IMPRIMIR LISTADO</button>
             </div>   
             </div>           
-<label style="text-align: center;" class="form-label">REIMPRIMIR RECIBOS:</label>
 
-      <form id="formularioReimprimirMulti" name="formularioReimprimirMulti">
- 
-   <div class="row">
-    <div class="col-1">
-      <div class="mb-1">
-        <label for="numReciboMulti" class="form-label mt-1">Último N°:</label>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="mb-1">
-        <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
-      </div>
-    </div>
-    <div class="col-3">
-        <button id="btn-reimprimirRecibo" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X1</button>
-        <button id="bt-desc-rec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X1</button>
-    </div>
-      <div class="col-6">
-        <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X6</button>
-        <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
 
-    </div>
-  </div>
-</form>
 
  <div class="p-2" style="height: 420px; overflow-y: scroll;">
       <div id="sinPendientes"></div>

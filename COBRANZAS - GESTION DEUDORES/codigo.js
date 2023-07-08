@@ -14,83 +14,45 @@ function include( fileName ){
 
 ///////////////// LISTADO DE PAGOS ////////////////////////
 
-// function getData() {
-//   const BD_DEUDORES_C = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
-//   const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
-//   const BD_DEUDORES_P = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("RECIBIS");
-
-//   const cobranzasData = BD_DEUDORES_C.getDataRange().getDisplayValues();
-//   const deudoresData = BD_DEUDORES.getDataRange().getDisplayValues();
-//   const recibisData = BD_DEUDORES_P.getDataRange().getDisplayValues();
-
-//   var sinPendientes = [];
-//   for (var i = 1; i < cobranzasData.length; i++) { // Recorrer los datos de BD_COBRANZAS
-//     var patenteCobranzas = cobranzasData[i][1]; // Obtener la patente de BD_COBRANZAS
-
-//     for (var j = 1; j < deudoresData.length; j++) { // Recorrer los datos de BD_DEUDORES
-//       var patenteDeudores = deudoresData[j][3]; // Obtener la patente de BD_DEUDORES
-
-//       if (patenteCobranzas === patenteDeudores) {
-//         var deudor = [];
-//         var idDeudor = deudoresData[j][0]; // ID DEUDOR
-//         var cliente = deudoresData[j][2]; // CLIENTE
-//         var vencimiento = cobranzasData[i][5]; // VENCE
-//         var cuota = cobranzasData[i][7]; // CUOTA
-//         var cuotaHasta = cobranzasData[i][8]; // DEUDOR HASTA
-//         var cnia = cobranzasData[i][10]; // COMPAÑIA
-//         var patente = cobranzasData[i][12]; // PATENTE
-//         var marca = cobranzasData[i][13]; // VEHICULO
-//         var importe = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
-//         var fpago = cobranzasData[i][6]; // FECHA PAGO
-
-//         deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe,0, fpago);
-//         sinPendientes.push(deudor);
-
-//         console.log(deudor)
-//         break; // Se encontró la correspondencia, salir del bucle interno
-//       }
-//     }
-//   }
-//   return sinPendientes;
-// }
-
 function getData() {
   const BD_DEUDORES_C = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
   const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
   const BD_DEUDORES_P = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("RECIBIS");
+  const BD_DEUDORES_G = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("GASTOS");
 
   const cobranzasData = BD_DEUDORES_C.getDataRange().getDisplayValues();
   const deudoresData = BD_DEUDORES.getDataRange().getDisplayValues();
   const recibisData = BD_DEUDORES_P.getDataRange().getDisplayValues();
+  const gastosData = BD_DEUDORES_G.getDataRange().getDisplayValues();
 
   var sinPendientes = [];
 
-  for (var i = 1; i < cobranzasData.length; i++) {
-    var patenteCobranzas = cobranzasData[i][1];
+for (var i = 1; i < cobranzasData.length; i++) {
+  var patenteCobranzas = cobranzasData[i][1];
 
-    for (var j = 1; j < deudoresData.length; j++) {
-      var patenteDeudores = deudoresData[j][3];
+  for (var j = 1; j < deudoresData.length; j++) {
+    var patenteDeudores = deudoresData[j][3];
 
-      if (patenteCobranzas === patenteDeudores) {
-        var deudor = [];
-        var idDeudor = deudoresData[j][0];
-        var cliente = deudoresData[j][2];
-        var vencimiento = cobranzasData[i][5];
-        var cuota = cobranzasData[i][7];
-        var cuotaHasta = cobranzasData[i][8];
-        var cnia = cobranzasData[i][10];
-        var patente = cobranzasData[i][12];
-        var marca = cobranzasData[i][13];
-        var importe = parseInt(cobranzasData[j][11].replace("$", "").replace(",", ""));
-        var fpago = cobranzasData[i][6];
+    if (patenteCobranzas === patenteDeudores) {
+      var deudor = [];
+      var idDeudor = deudoresData[j][0];
+      var cliente = deudoresData[j][2];
+      var vencimiento = cobranzasData[i][5];
+      var cuota = cobranzasData[i][7];
+      var cuotaHasta = cobranzasData[i][8];
+      var cnia = cobranzasData[i][10];
+      var patente = cobranzasData[i][12];
+      var marca = cobranzasData[i][13];
+      var importe = parseInt(cobranzasData[i][11].replace("$", "").replace(",", "")); // Corrección aquí
+      var fpago = cobranzasData[i][6];
 
-        deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe, 0, fpago);
-        sinPendientes.push(deudor);
-        break;
-      }
+      deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe, 0, fpago);
+      sinPendientes.push(deudor);
+      break;
     }
   }
-
+}
+///////////// BUCLE DE HABER ////////////////
   for (var i = 2; i < recibisData.length; i++) {
         var deudor = [];
     var idDeudor = recibisData[i][5];
@@ -107,9 +69,48 @@ function getData() {
 
     sinPendientes.push(deudor);
   }
+
+///////////// BUCLE DE DEBE ////////////////
+    for (var i = 2; i < gastosData.length; i++) {
+        var deudor = [];
+    var idDeudor = gastosData[i][5];
+    var gasto_de = gastosData[i][6];
+    var concepto = gastosData[i][2];
+    var montoGasto = parseInt(gastosData[i][4].replace("$", "").replace(",", ""));
+    var fpago = gastosData[i][7];
+    var blank_1 = "";
+    var blank_2 = "";
+    var blank_3 = "";
+    var blank_4 = "";
+
+    deudor.push(idDeudor, gasto_de, blank_3, blank_1, blank_2, concepto, fpago, blank_4, montoGasto, 0, fpago);
+
+    sinPendientes.push(deudor);
+  }
     console.log(sinPendientes)
   return sinPendientes;
 }
+
+
+////////////// INGESAMOS RECIBI A LA BD RECIBIS //////////////////
+function agregarRecibi(recibiIDdeudor, recibiConcepto, recibiImporte,usuario_p) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("RECIBIS");
+
+const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit")
+ var sheetRegistro2 = BD_COBRANZAS.getSheetByName("RECIBIS");
+
+  var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T8").getValue() + 1;
+  BD_COBRANZAS.getRange("CARGADORES!T8").setValue(numeroRecibo);
+  var magi = '=IF(CONCATENATE(DAY(H3);MONTH(H3);YEAR(H3))=CONCATENATE(DAY(INDIRECT("CARGADORES!T6"));MONTH(INDIRECT("CARGADORES!T6"));YEAR(INDIRECT("CARGADORES!T6")));ROW();"")';
+var sucursal = "BD DEUDORES";
+var fecha = new Date();
+let concepto1 = recibiConcepto + " - //" + usuario_p;
+var sourceVals = [, numeroRecibo, concepto1, sucursal, recibiImporte, recibiIDdeudor, , fecha, "DEUDOR"];
+BD_DEUDORES.insertRowBefore(3).getRange(3, 1, 1, sourceVals.length).setValues([sourceVals]);
+  Logger.log("Recibi agregado: " + concepto1 + " " + recibiPara + " " + recibiImporte);
+}
+
+
 
 /////////////// INGRESAR DEUDOR /////////////////////
 
@@ -394,7 +395,3 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   return null;
 }
 
-
-
-
-////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////

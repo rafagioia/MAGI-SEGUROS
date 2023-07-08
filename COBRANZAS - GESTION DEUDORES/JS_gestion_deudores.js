@@ -59,7 +59,7 @@
     
       var pendientesHtml = "";
       var saldosPorId = {}; // Objeto para almacenar las sumas de saldos por ID
-    console.log("ordenado: " + result)
+    
     for (var i = result.length - 1; i >= 0; i--) {
         var imp =  isNaN(result[i][8]) ? 0 : parseInt(result[i][8]);
         var haber = isNaN(result[i][9]) ? 0 : parseInt(result[i][9]);
@@ -90,7 +90,7 @@
       "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][3] + "</div>" +
       "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][4] + "</div>" +
       "<div class='col-1 text-sm' style='width: 130px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][5] + "</div>" +
-      "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px; width: 100px;' id='_pat" + i + "'>" + result[i][6] + "</div>" +
+      "<div class='col-1 text-sm' style='padding-top: 10px; font-size: 14px; width: 100px;' id='_pat" + i + "'>" + result[i][6] + "</div>" +
       "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px;' id='_marca" + i + "'>" + result[i][7] + "</div>" +
     
       "<div class='col-4'><div class='row'>" + 
@@ -100,7 +100,7 @@
           "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #2D572C; width: 100px;font-size: 18px;font-weight: 700;' id='_haber" + i + "' value='" + haber + "' readonly>" + 
           "<span class='input-group-text p-2 m-1' style='width:22px;'>$</span>" + 
           "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #252850; width: 100px;font-size: 18px;font-weight: 700;' id='_saldo" + i + "' value='" + saldoPorId + "' readonly>" + "</div></div>" +
-          "<div class='col-1 text-sm text-truncate' style='padding-top: 22px; font-size: 11px;width: 20px;' id='_fpago" + i + "'>" + result[i][10] + "</div>" +
+          // "<div class='col-1 text-sm text-truncate' style='padding-top: 22px; font-size: 11px;width: 20px;' id='_fpago" + i + "'>" + result[i][10] + "</div>" +
           "</div></div></div></div>";
         if (!idDeudores.includes(result[i][0])) {
           idDeudores.push(result[i][0]);
@@ -197,19 +197,6 @@
       // Llamar a la función getData() del lado del servidor
       google.script.run.withSuccessHandler(updateSinPendientes).getData();
       /////////////////////////////////////////
-    
-    
-    
-    
-    
-    
-    document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
-      var mes = parseInt(document.getElementById("mes_sn").value, 10);
-      var anio = parseInt(document.getElementById("anio_sn").value, 10);
-    
-     google.script.run.withSuccessHandler(updateSinPendientes).getData(mes, anio)
-    });
-    
     
     
     document.getElementById('bt-imprimir_lista').addEventListener('click', function() {
@@ -317,69 +304,17 @@
     }
     
     
-    //////////////////// MPRIMIR RECIBO SIMPLE //////////////////
-    function imprimirRecibo(numRecibo) {
-      // event.preventDefault();
-      console.log("llegó a la funcion imprimirRecibo")
-      google.script.run.withSuccessHandler(function(content) {
-        var newWindow = window.open();
-        newWindow.document.write(content);
-      }).getValuesFromSheet(numRecibo);
-      console.log(numRecibo);
-    }
-    
-    
-    
-    
-    //////////////////// REIMPRIMIR RECIBO SIMPLE //////////////////
-    function reimprimirRecibo(event) {
+    ///////// INGRESAR RECIBI ///////////////
+    function ingresarRecibi(event) {
       event.preventDefault();
-      const numRecibo = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(content) {
-        var newWindow = window.open();
-        newWindow.document.write(content);
-      }).getValuesFromSheet(numRecibo);
-      console.log(numRecibo);
+      const recibiIDdeudor = document.getElementById('id_deudor_select').value;
+      const recibiConcepto = document.getElementById('r_concepto').value;
+      const recibiImporte = document.getElementById('r_importe').value;
+      var usuario_p = sessionStorage.getItem("magi-usuario");
+      google.script.run.agregarRecibi(recibiIDdeudor, recibiConcepto, recibiImporte,usuario_p);
+    alert('Recibi ingresado correctamente');
     }
     
-    
-    //////////////////// REIMPRIMIR RECIBO MULTIPLE x6 //////////////////
-    function reimprimirReciboMulti(event) {
-      event.preventDefault();
-      const numReciboMulti = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(content) {
-        var newWindow = window.open();
-        newWindow.document.write(content);
-      }).getValuesFromSheetMulti(numReciboMulti);
-      console.log(numReciboMulti);
-    }
-    
-    
-    ////////////////////////// DESCARGAR PDF DE RECIBOS /////////////////////
-    
-    function descargaRecibo(event) {
-      event.preventDefault();
-      const numRecibo = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(pdfContent) {
-        downloadPdf(pdfContent, "recibo.pdf");
-      }).getPdfContent(numRecibo);
-    }
-    
-    function descargaReciboM(event) {
-      event.preventDefault();
-      const numRecibo = document.getElementById('numRecibo').value;
-      google.script.run.withSuccessHandler(function(pdfContent) {
-        downloadPdf(pdfContent, "recibo.pdf");
-      }).getPdfContentM(numRecibo);
-    }
-    
-    function downloadPdf(pdfContent, fileName) {
-      const link = document.createElement('a');
-      link.href = 'data:application/pdf;base64,' + pdfContent;
-      link.download = fileName;
-      link.target = '_blank';
-      link.click();
-    }
     
     
     /////////////////////////////////////////////////////////////////
@@ -584,9 +519,6 @@
                 
     /////////////////////// EVENT LISTENERS ////////////////////////////
     
-    document.getElementById('btn-reimprimirReciboMulti').addEventListener('click', reimprimirReciboMulti);
-    document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
-    document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
-    document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
+    document.getElementById('btn-agregar-recibi').addEventListener('click', ingresarRecibi);
     //////////////////////////////////////////////////////////////////
     
