@@ -104,14 +104,14 @@
   infoNotasFull = "";
   infoMotor =  "";
   infoChasis =  "";
-  document.getElementById("dniValor").value =  "";
-  document.getElementById("nombreCompletoValor").value =  "";
-  document.getElementById("whatsappValor").value =  "";
-  document.getElementById("statCte").value =  "";
-  document.getElementById("patenteValor").value =  "";
-  document.getElementById("marcaValor").value =  "";
-  document.getElementById("cniaValor").value =  "";
-  document.getElementById("statVeh").value =  "";
+  document.getElementById("dniValor").textContent = "";
+  document.getElementById("nombreCompletoValor").textContent = "";
+  document.getElementById("whatsappValor").textContent = "";
+  document.getElementById("statCte").textContent = "";
+  document.getElementById("patenteValor").textContent =  "";
+  document.getElementById("marcaValor").textContent =  "";
+  document.getElementById("cniaValor").textContent =  "";
+  document.getElementById("statVeh").textContent =  "";
   
   document.getElementById('valoresContainer').style.display = 'none';
   document.getElementById('valoresContainer_veh').style.display = 'none';
