@@ -104,6 +104,16 @@ infoUsuario =  "";
 infoNotasFull = "";
 infoMotor =  "";
 infoChasis =  "";
+dniValor =  "";
+nombreCompletoValor =  "";
+logoValor = "";
+whatsappValor =  "";
+statCte =  "";
+patenteValor =  "";
+marcaValor =  "";
+cniaValor =  "";
+statVeh =  "";
+        
 
 document.getElementById('valoresContainer').style.display = 'none';
 document.getElementById('valoresContainer_veh').style.display = 'none';
@@ -132,7 +142,6 @@ if (window.matchMedia("(min-width: 1081px)").matches) {
   document.getElementById("take_photos").style.display = "none";
 }
 }
-
 
 
   ///// SCRIPT PARA BUSCAR DATOS POR DNI EN BD EMISION//////////
@@ -167,13 +176,13 @@ function buscarRegistros_dni_emision() {
       document.getElementById('valoresContainer').style.display = 'block';
       document.getElementById('dniValor').textContent = infoDNI.value;
       document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
-      document.getElementById('LogoValor').innerHTML = "<img src='https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh' style='width: 100%;height: auto;'>";
-      document.getElementById('WhatsappValor').textContent = infoWpp.value;
+      document.getElementById('logoValor').innerHTML = "<img src='https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh' style='width: 100%;height: auto;'>";
+      document.getElementById('whatsappValor').textContent = infoWpp.value;
     } else {
       alert("No se encontraron valores");
       document.getElementById('valoresContainer').style.display = 'block';
       document.getElementById('mail').textContent = "";
-      document.getElementById('StatCte').textContent = "NUEVO CLIENTE";
+      document.getElementById('statCte').textContent = "NUEVO CLIENTE";
       document.getElementById("notascte").textContent = "";
       infoCliente =  "";
 infoDomicilio.value =  "";
@@ -194,7 +203,7 @@ infoNotascte.value =  "";
       google.script.run.withSuccessHandler((info) => {
         if (info.length > 0) {
           const modifiedInfo = [[info[0][0], info[0][1], info[0][2]]]; // Modificar la estructura de resultado de buscarMantenimientos11
-          document.getElementById('StatCte').textContent = "FALTAN DATOS!";
+          document.getElementById('statCte').textContent = "FALTAN DATOS!";
           document.getElementById('mail').textContent = "";
           document.getElementById("notascte").textContent = "";
           mostrarValores(modifiedInfo);
@@ -202,7 +211,7 @@ infoNotascte.value =  "";
         } else {
           alert("No se encontraron valores");
           document.getElementById('valoresContainer').style.display = 'block';
-          document.getElementById('StatCte').textContent = "NUEVO CLIENTE";
+          document.getElementById('statCte').textContent = "NUEVO CLIENTE";
         infoDNI.value = numeroInventario2;
       infoCliente.value =  "";
 infoDomicilio.value =  "";
@@ -257,13 +266,13 @@ function buscarRegistros_nombre_emision() {
       document.getElementById('valoresContainer').style.display = 'block';
       document.getElementById('dniValor').textContent = infoDNI.value;
       document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
-      document.getElementById('LogoValor').innerHTML = "<img src='https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh' style='width: 100%;height: auto;'>";
-      document.getElementById('WhatsappValor').textContent = infoWpp.value;
+      document.getElementById('logoValor').innerHTML = "<img src='https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh' style='width: 100%;height: auto;'>";
+      document.getElementById('whatsappValor').textContent = infoWpp.value;
     } else {
       alert("No se encontraron valores");
       document.getElementById('valoresContainer').style.display = 'block';
       document.getElementById('mail').textContent = "";
-      document.getElementById('StatCte').textContent = "NUEVO CLIENTE";
+      document.getElementById('statCte').textContent = "NUEVO CLIENTE";
       document.getElementById("notascte").textContent = "";
       infoCliente =  "";
       infoDomicilio.value =  "";
@@ -284,7 +293,7 @@ function buscarRegistros_nombre_emision() {
       google.script.run.withSuccessHandler((info) => {
         if (info.length > 0) {
           const modifiedInfo = [[info[0][0], info[0][1], info[0][2]]]; // Modificar la estructura de resultado de buscarMantenimientos11
-          document.getElementById('StatCte').textContent = "FALTAN DATOS!";
+          document.getElementById('statCte').textContent = "FALTAN DATOS!";
           document.getElementById('mail').textContent = "";
           document.getElementById("notascte").textContent = "";
           mostrarValores(modifiedInfo);
@@ -292,7 +301,7 @@ function buscarRegistros_nombre_emision() {
         } else {
           alert("No se encontraron valores");
           document.getElementById('valoresContainer').style.display = 'block';
-          document.getElementById('StatCte').textContent = "NUEVO CLIENTE";
+          document.getElementById('statCte').textContent = "NUEVO CLIENTE";
         infoDNI.value = numeroInventario2;
       infoCliente.value =  "";
 infoDomicilio.value =  "";
@@ -323,7 +332,6 @@ function enviarMensajeWPP() {
 
 
 /////////////////////// SISTEMA DE EMISION  ///////////////////////////////
-
 
 
   ///// SCRIPT PARA BUSCAR DATOS POR PATENTE EN BD EMISION //////////
@@ -370,12 +378,12 @@ infoHasta.value = new Date(today.getFullYear(), today.getMonth() + 12, today.get
  document.getElementById('patenteValor').textContent = document.getElementById('patente').value;
  document.getElementById('marcaValor').textContent = document.getElementById('marca').value;
  document.getElementById('cniaValor').textContent = document.getElementById('cnia').value;
- document.getElementById('StatVeh').textContent = document.getElementById('cobertura').value;
+ document.getElementById('statVeh').textContent = document.getElementById('cobertura').value;
         buscarModelo()
       } else {
         alert("No se encontraron valores");
  document.getElementById('valoresContainer_veh').style.display = 'block';
- document.getElementById('StatVeh').textContent = "NUEVO VEHICULO";
+ document.getElementById('statVeh').textContent = "NUEVO VEHICULO";
  document.getElementById('patenteValor').textContent = document.getElementById('patente').value;
         infoPatente.value = patente
 var today = new Date();
@@ -399,9 +407,6 @@ document.getElementById("notasveh").value =  "";
   }
 
   ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR PATENTE EN BD EMISION //////////
-
-
-
 
 
 
@@ -456,7 +461,7 @@ pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-
  document.getElementById('patenteValor').textContent = document.getElementById('patente_sn').value;
  document.getElementById('marcaValor').textContent = document.getElementById('marca').value;
  document.getElementById('cniaValor').textContent = document.getElementById('cnia').value;
- document.getElementById('StatVeh').textContent = document.getElementById('cobertura').value;
+ document.getElementById('statVeh').textContent = document.getElementById('cobertura').value;
  
     let infoVigencia =  document.getElementById("vigencia");
     let infoHasta =  document.getElementById("hasta");
@@ -516,8 +521,8 @@ pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-
          document.getElementById('valoresContainer').style.display = 'block';
  document.getElementById('dniValor').textContent = document.getElementById('dni').value;
  document.getElementById('nombreCompletoValor').textContent = document.getElementById('nombreCompleto').value;
- document.getElementById('WhatsappValor').textContent = document.getElementById('wpp').value;
- document.getElementById('StatCte').textContent = document.getElementById('domicilio').value;
+ document.getElementById('whatsappValor').textContent = document.getElementById('wpp').value;
+ document.getElementById('statCte').textContent = document.getElementById('domicilio').value;
     });
   });
   spinner.style.display = 'none';
@@ -537,7 +542,7 @@ crearClienteBtn.addEventListener('click', () => {
     valoresContainer.style.display = 'block';
  document.getElementById('dniValor').textContent = document.getElementById('dni').value;
  document.getElementById('nombreCompletoValor').textContent = document.getElementById('nombreCompleto').value;
- document.getElementById('WhatsappValor').textContent = document.getElementById('wpp').value;
+ document.getElementById('whatsappValor').textContent = document.getElementById('wpp').value;
 });
 
 valoresContainer.addEventListener('click', () => {
@@ -557,7 +562,7 @@ crearClienteBtn_veh.addEventListener('click', () => {
  document.getElementById('patenteValor').textContent = document.getElementById('patente_sn').value;
  document.getElementById('marcaValor').textContent = document.getElementById('marca').value;
  document.getElementById('cniaValor').textContent = document.getElementById('cnia').value;
- document.getElementById('StatVeh').textContent = document.getElementById('cobertura').value;
+ document.getElementById('statVeh').textContent = document.getElementById('cobertura').value;
 });
 
 valoresContainer_veh.addEventListener('click', () => {
@@ -741,8 +746,6 @@ function calcularUltimoNumeroCuit() {
 
 
 
-
-  
 //////////////////////// SCRIPTS DE FOTOGRAFIA Y OCR /////////////////////////
 
 
@@ -761,8 +764,6 @@ document.getElementById("bt-fotos").addEventListener("click", function(event) {
     }
   }
 });
-
-
 var video = document.getElementById("videoElement");
 var canvas = document.createElement("canvas");
 var context = canvas.getContext("2d");
@@ -1071,14 +1072,14 @@ function cleanservice() {
     let info_input_patente =  document.getElementById("patente").value;
     let infodniValorid =  document.getElementById("dniValorid").value;
     let infonombreCompletoValor =  document.getElementById("nombreCompletoValor").value;
-    let infoLogoValor =  document.getElementById("LogoValor").value;
-    let infoWhatsappValor =  document.getElementById("WhatsappValor").value;
-    let infoStatCte =  document.getElementById("StatCte").value;
+    let infologoValor =  document.getElementById("logoValor").value;
+    let infowhatsappValor =  document.getElementById("whatsappValor").value;
+    let infostatCte =  document.getElementById("statCte").value;
     let infosinPendientes =  document.getElementById("sinPendientes").value;
     let infopatenteValor =  document.getElementById("patenteValor").value;
     let infomarcaValor =  document.getElementById("marcaValor").value;
     let infocniaValor =  document.getElementById("cniaValor").value;
-    let infoStatVeh =  document.getElementById("StatVeh").value;
+    let infostatVeh =  document.getElementById("statVeh").value;
     let infosinPendientes2 =  document.getElementById("sinPendientes2").value;
 
 
@@ -1114,14 +1115,14 @@ info_input_dni =  "";
 info_input_patente =  "";
 infodniValorid =  "";
 infonombreCompletoValor =  "";
-infoLogoValor =  "";
-infoWhatsappValor =  "";
-infoStatCte =  "";
+infologoValor =  "";
+infowhatsappValor =  "";
+infostatCte =  "";
 infosinPendientes = "";
 infopatenteValor = "";
 infomarcaValor = "";
 infocniaValor = "";
-infoStatVeh = "";
+infostatVeh = "";
 infosinPendientes2 = "";
 infoPatente1= "";
 
@@ -1133,13 +1134,10 @@ spinner.style.display = 'none';
 boton.disabled = false;
 
 alert('Limpieza completa de sistema');
-  
 }
 
 
 
-  
-  
 /////////////////////////////////////////////////////////////////
 //////////////////// SESION DE USUARIOS /////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -1341,6 +1339,7 @@ function close_sessionok(event) {
 
             
 ////////////////////////////////////////////////////////////////////////////////
+
 
 
 /// EVENT LISTENERS ////

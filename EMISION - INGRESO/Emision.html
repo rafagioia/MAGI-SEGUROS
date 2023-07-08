@@ -1,67 +1,68 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <base target="_top">    <meta charset="utf-8">
+    <base target="_top">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<?!= include('EmisionCSS'); ?>
+    <?!= include('EmisionCSS'); ?>
+  
     <title>SISTEMA DE EMISION</title>
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
     <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE EMISION - INGRESAR POLIZA</a>
     <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
-    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
-    <ul class="navbar-nav">
-      <!-- Menú principal -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Cobranzas
-        </a>
-        <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
-          <a class="dropdown-item"
-            href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
-            id="dropdown-item">Pagos Marcos Paz</a>
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Menú principal -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cobranzas
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
             <a class="dropdown-item"
-            href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
-            id="dropdown-item">Pagos Mariano Acosta</a>
-          <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
-          <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Comisiones (en construccion)</a>
-          <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec">Deudores Pasados</a>
-          <a class="dropdown-item" id="dropdown-item" href="#" onclick="loadPage('Comisiones')">Avisos Pagos (en construccion)</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Emisión
-        </a>
-        <div class="dropdown-menu" aria-labelledby="emisionDropdown">
-          <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
-          <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Siniestros
-        </a>
-        <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
-          <a class="dropdown-item"
-            href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
-            id="dropdown-item" >Ingresar Denuncia</a>
-          <a class="dropdown-item"
-            href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
-            id="dropdown-item">Gestion Siniestros</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <!-- Menú flotante en el lado derecho -->
+              href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
+              id="dropdown-item">Pagos Marcos Paz</a>
+              <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
+              id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec">Deudores Pasados</a>
+            <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwo5gTWUE53KhjSllzENI3agZL5JgJquIyd1W_tzbP5V2ZnG_6tcpPhJx4uyytV5cw5/exec">Gestion Deudores</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Emisión
+          </a>
+          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Siniestros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
+              id="dropdown-item" >Ingresar Denuncia</a>
+            <a class="dropdown-item"
+              href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
+              id="dropdown-item">Gestion Siniestros</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Menú flotante en el lado derecho -->
     <div class="collapse navbar-collapse" id="navbarNavRight">
       <div id="tiempo-restante"></div>
 <div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
@@ -201,16 +202,16 @@
             <div class="col-4 fw-bold">
         <div class="row" style="border-radius:10px;color:white; background-color: #009B7D; box-shadow: 0px 0px 2px 0px #000000;">
        <div class="col-2 p-0">
-        <div id="LogoValor"></div>
+        <div id="logoValor"></div>
       </div>
       <div class="col-10 fw-bold"  style="color: #FFFFFF; padding-left: 4px;">
-        <span id="WhatsappValor"></span>
+        <span id="whatsappValor"></span>
       </div>
       </div>
       </div>
             <div class="col-8 fw-bold">
         <div class="row mx-1 bg-light border" style="text-align: left; border-radius:5px; color: #9B9B9B; ">
-        <span id="StatCte">NO MODIFICA DATOS</span>
+        <span id="statCte">NO MODIFICA DATOS</span>
       </div>
       </div>
     </div>
@@ -838,6 +839,9 @@
                          <select class="form-select form-select-sm" id="sucursal" name="sucursal" placeholder="" required>
 <option value="MARCOS PAZ">MARCOS PAZ</option>
 <option value="MARIANO ACOSTA">MARIANO ACOSTA</option>
+<option value="JS AUTOMOTORES">JS AUTOMOTORES</option>
+<option value="DEL BENE">DEL BENE</option>
+<option value="AUTOMANIA">AUTOMANIA</option>
                 </select>
             </div>
             </div>
@@ -925,7 +929,7 @@
       </div>
             <div class="col-8 fw-bold" >
         <div class="row mx-1 bg-light border" style=" text-align: left; border-radius:5px; color: #9B9B9B;">
-        <span id="StatVeh">NO MODIFICA DATOS</span>
+        <span id="statVeh">NO MODIFICA DATOS</span>
       </div>
       </div>
     </div>
@@ -1306,6 +1310,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
-<?!= include('EmisionJS'); ?>
+    <?!= include('EmisionJS'); ?>
   </body>
 </html>
