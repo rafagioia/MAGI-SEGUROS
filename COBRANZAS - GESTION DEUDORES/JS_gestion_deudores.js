@@ -521,3 +521,4 @@
     
     document.getElementById('btn-agregar-recibi').addEventListener('click', ingresarRecibi);
     //////////////////////////////////////////////////////////////////
+    
