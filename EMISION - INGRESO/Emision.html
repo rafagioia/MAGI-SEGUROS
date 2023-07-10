@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <base target="_top">    <meta charset="utf-8">
+    <base target="_top">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<?!= include('EmisionCSS'); ?>
+    <?!= include('EmisionCSS'); ?>
+  
     <title>SISTEMA DE EMISION</title>
   </head>
   <body>
@@ -200,16 +202,16 @@
             <div class="col-4 fw-bold">
         <div class="row" style="border-radius:10px;color:white; background-color: #009B7D; box-shadow: 0px 0px 2px 0px #000000;">
        <div class="col-2 p-0">
-        <div id="LogoValor"></div>
+        <div id="logoValor"></div>
       </div>
       <div class="col-10 fw-bold"  style="color: #FFFFFF; padding-left: 4px;">
-        <span id="WhatsappValor"></span>
+        <span id="whatsappValor"></span>
       </div>
       </div>
       </div>
             <div class="col-8 fw-bold">
         <div class="row mx-1 bg-light border" style="text-align: left; border-radius:5px; color: #9B9B9B; ">
-        <span id="StatCte">NO MODIFICA DATOS</span>
+        <span id="statCte">NO MODIFICA DATOS</span>
       </div>
       </div>
     </div>
@@ -837,6 +839,9 @@
                          <select class="form-select form-select-sm" id="sucursal" name="sucursal" placeholder="" required>
 <option value="MARCOS PAZ">MARCOS PAZ</option>
 <option value="MARIANO ACOSTA">MARIANO ACOSTA</option>
+<option value="JS AUTOMOTORES">JS AUTOMOTORES</option>
+<option value="DEL BENE">DEL BENE</option>
+<option value="AUTOMANIA">AUTOMANIA</option>
                 </select>
             </div>
             </div>
@@ -924,7 +929,7 @@
       </div>
             <div class="col-8 fw-bold" >
         <div class="row mx-1 bg-light border" style=" text-align: left; border-radius:5px; color: #9B9B9B;">
-        <span id="StatVeh">NO MODIFICA DATOS</span>
+        <span id="statVeh">NO MODIFICA DATOS</span>
       </div>
       </div>
     </div>
@@ -1305,6 +1310,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
-<?!= include('EmisionJS'); ?>
+    <?!= include('EmisionJS'); ?>
   </body>
 </html>
