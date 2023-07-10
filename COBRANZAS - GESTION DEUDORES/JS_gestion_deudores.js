@@ -84,23 +84,23 @@
     
     pendientesHtml += "<div class='border elemento' style='background-color: " + getBackgroundColor(result[i][8], result[i][9]) + "; margin-bottom: 0; box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>" +
       "<div class='row' style='padding: 0px;'>" +
-      "<div class='col-1 text-sm' id='_deudor" + i + "'>" + result[i][0] + "</div>" +
+      "<div class='col-1 text-sm'  style='font-size: 10px;' id='_deudor" + i + "'>" + result[i][0] + "</div>" +
       "<div class='col-2 text-sm text-truncate' style='padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>" +
       "<div class='col-1 text-sm text-truncate' style='width: 90px; padding-top: 10px; font-size: 14px;' id='_vto" + i + "'>" + result[i][2] + "</div>" +
       "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][3] + "</div>" +
-      "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][4] + "</div>" +
+      "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][4] + "</div>" + 
+      // modveh +
       "<div class='col-1 text-sm' style='width: 130px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][5] + "</div>" +
       "<div class='col-1 text-sm' style='padding-top: 10px; font-size: 14px; width: 100px;' id='_pat" + i + "'>" + result[i][6] + "</div>" +
       "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px;' id='_marca" + i + "'>" + result[i][7] + "</div>" +
-    
       "<div class='col-4'><div class='row'>" + 
-          "<span class='input-group-text p-2 m-1' style='width:22px;'>$</span>" + 
-          "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #8B0000; width: 100px;font-size: 18px;font-weight: 700;' id='_imp" + i + "' value='" + imp  + "' readonly>" + 
-          "<span class='input-group-text p-2 m-1' style='width:22px;'>$</span>" + 
-          "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #2D572C; width: 100px;font-size: 18px;font-weight: 700;' id='_haber" + i + "' value='" + haber + "' readonly>" + 
-          "<span class='input-group-text p-2 m-1' style='width:22px;'>$</span>" + 
-          "<input type='text' class='form-control m-1' style='background-color: #FFFFFF; color: #252850; width: 100px;font-size: 18px;font-weight: 700;' id='_saldo" + i + "' value='" + saldoPorId + "' readonly>" + "</div></div>" +
-          // "<div class='col-1 text-sm text-truncate' style='padding-top: 22px; font-size: 11px;width: 20px;' id='_fpago" + i + "'>" + result[i][10] + "</div>" +
+          "<span class='input-group-text p-2 m-0' style='width:22px; border: none;background-color: #FFFFFF; '>$</span>" + 
+          "<input type='text' class='form-control m-0' style='background-color: #FFFFFF; border: none; color: #8B0000; width: 100px;font-size: 18px;font-weight: 700;' id='_imp" + i + "' value='" + imp  + "' readonly>" + 
+          "<span class='input-group-text p-2 m-0' style='width:22px;border: none;background-color: #FFFFFF;'>$</span>" + 
+          "<input type='text' class='form-control m-0' style='background-color: #FFFFFF; border: none; color: #2D572C; width: 100px;font-size: 18px;font-weight: 700;' id='_haber" + i + "' value='" + haber + "' readonly>" + 
+          "<span class='input-group-text p-2 m-0' style='width:22px;border: none;background-color: #FFFFFF;'>$</span>" + 
+          "<input type='text' class='form-control m-0' style='background-color: #FFFFFF; border: none; color: #252850; width: 100px;font-size: 18px;font-weight: 700;' id='_saldo" + i + "' value='" + saldoPorId + "' readonly>" + "</div></div>" +
+          "<div class=' text-sm text-truncate' style='display: none; padding-top: 22px; font-size: 11px;width: 20px;' id='_fpago" + i + "'>" + result[i][10] + "</div>" +
           "</div></div></div></div>";
         if (!idDeudores.includes(result[i][0])) {
           idDeudores.push(result[i][0]);
