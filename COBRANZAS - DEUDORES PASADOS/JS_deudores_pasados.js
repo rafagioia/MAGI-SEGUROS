@@ -53,14 +53,14 @@
       for (var i = 0; i < result.length; i++) {
         pendientesHtml += "<div class='border' style='background-color: #FFFFFF; margin-bottom: 0; box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>" +
           "<div class='row' style='padding: 0px;'>" +
-          "<div class='col-1 text-sm' style='font-size: 14px;' id='_deudor" + i + "'>" + result[i][0] + "</div>" +
+          "<div class='col-1 text-sm' style='font-size: 10px;' id='_deudor" + i + "'>" + result[i][0] + "</div>" +
           "<div class='col-2 text-sm text-truncate' style='font-size: 14px; padding-top: 10px; ' id='_cte" + i + "'>" + result[i][1] + "</div>" +
           "<div class='col-9 p-0 m-0'>" +
           "<div class='row p-0 m-0'>" +
           "<div class='col-2 text-sm text-truncate' style='width: 90px; padding-top: 10px; font-size: 14px;' id='_vto" + i + "'>" + result[i][7] + "</div>" +
           "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][5] + "</div>" +
           "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][6] + "</div>" +
-          "<div class='col-2 text-sm' style='width: 170px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][4] + "</div>" +
+          "<div class='col-2 text-sm' style='width: 130px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][4] + "</div>" +
           "<div class='col-2'>" +
           "<div class='input-group'>" +
           "<div class='input-group-prepend'>" +
@@ -70,21 +70,21 @@
           "</div>" + "</div>" +
           "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px; width: 100px; ' id='_pat" + i + "'>" + result[i][2] + "</div>" +
           "<div class='col-2 text-sm text-truncate' style='padding-top: 10px; font-size: 14px;' id='_marca" + i + "'>" + result[i][3] + "</div>" +
-          "<div class='col-1 btn btn-sm' style='margin: 2px 0px 0px 5px; border: 1px solid black; width: 32px; height: 32px;'";
+          "<div class='col-1 p-1' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; width: 32px; height: 32px;'";
     
     // Establecer el estilo según el valor de result[i][9]
     if (result[i][10] === "✔️") {
-      pendientesHtml += "id='_ver" + i + "'>✔️</div>";
+      pendientesHtml += "id='_ver" + i + "'>✔️</div>" +
+        "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;width: 40px;'><button class='btn btn-success btn-sm' style='display: none;' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm' style='margin-top: 2px;' id='_print" + i + "'>🖨️</button></div>"+
+        "<div  class='col-1 m-0 p-0' style='width: 40px;'><button class='btn btn-secondary btn-sm' style='margin-top: 2px;' id='_down" + i + "'>⬇</button></div>"+
+        "<div  class='col-1 m-0 p-0' style='margin-top: 2px;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
     } else if (result[i][10] === "❌") {
-      pendientesHtml += "id='_ver" + i + "'>❌</div>";
-    } else {
-      pendientesHtml += "'>" + result[i][10] + "</div>";
-    }
-    pendientesHtml += 
-    "<div class='col-1' style='padding: 2px 0px 0px 5px;width: 48px;'><button class='btn btn-secondary btn-sm' id='_print" + i + "'>🖨️</button></div>"+
-    "<div class='col-1' style='padding: 2px 0px 0px 0px;'><button class='btn btn-success btn-sm' id='_btn_cob" + i + "'>COBRAR</button></div>"+
-    "</div>" +
-      "</div>" +
+      pendientesHtml += "id='_ver" + i + "'>❌</div>" +
+        "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;width: 40px;'><button style='margin-top: 2px;' class='btn btn-success btn-sm' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm' style='display: none; margin-top: 2px;' id='_print" + i + "'>🖨️</button></div>"+
+        "<div  class='col-1 m-0 p-0' style='width: 40px;'><button class='btn btn-secondary btn-sm' style=' display: none; margin-top: 2px; width: 35px;' id='_down" + i + "'>⬇</button></div>" +
+        "<div  class='col-1 m-0 p-0' style='display: none;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
+    } 
+    pendientesHtml += "</div></div>" +
       "<div style='display: none;' id='_dni" + i + "'>" + result[i][12] + "</div>" +
       "<div style='display: none;' id='_wpp" + i + "'>" + result[i][13] + "</div>" +
       "<div style='display: none;' id='_poliza" + i + "'>" + result[i][14] + "</div>" +
@@ -177,6 +177,16 @@
     
     });
     
+    ///////////// BOTON PARA IMPRIMIR RECIBOS ///////////////
+    var printBtns = document.querySelectorAll("[id^='_print']");
+    printBtns.forEach(function (printBtns) {
+      printBtns.addEventListener("click", function () {
+        var id = printBtns.id.slice(6); // Obtener el índice del div
+        console.log("id: " + id)
+        var numRecibo = document.getElementById("_num_rec" + id).textContent;
+        imprimirRecibo(numRecibo);
+      });
+    });
     
     /////////////// BOTON PARA INGRESAR PAGOS //////////////////
     
@@ -203,7 +213,17 @@
     
       document.getElementById("_ver" + id).textContent = "✔️";
     
-      google.script.run.pagoNuevo(
+        
+        // Ocultar el botón
+        _btn_cob.style.display = "none";
+        document.getElementById("_num_rec" + id).style.display = "block";
+        document.getElementById("_print" + id).style.display = "block";
+        document.getElementById("_down" + id).style.display = "block";
+    
+    
+        google.script.run.withSuccessHandler(function (recibo) {
+         document.getElementById("_num_rec" + id).textContent = recibo;
+        }).pagoNuevo(
         infoDNI,
         infoCliente,
         infoWpp,
@@ -224,6 +244,10 @@
       // Llamar a la función getData() del lado del servidor
       google.script.run.withSuccessHandler(updateSinPendientes).getData();
       /////////////////////////////////////////
+    
+    
+    
+    
     
     
     document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
@@ -262,11 +286,6 @@
         rowData.push(div.querySelector(".form-control[id^='_imp']").value);
         rowData.push(div.querySelector(".text-sm[id^='_pat']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_marca']").textContent);
-    
-        var verificado = div.querySelector(".btn[id^='_ver']");
-        if (verificado.style.display !== 'none') {
-          rowData.push(verificado.innerHTML);
-        }
     
         tableData.push(rowData);
     
@@ -338,6 +357,20 @@
       ventanaImpresion.document.close();
       ventanaImpresion.print();
     }
+    
+    
+    //////////////////// MPRIMIR RECIBO SIMPLE //////////////////
+    function imprimirRecibo(numRecibo) {
+      // event.preventDefault();
+      console.log("llegó a la funcion imprimirRecibo")
+      google.script.run.withSuccessHandler(function(content) {
+        var newWindow = window.open();
+        newWindow.document.write(content);
+      }).getValuesFromSheet(numRecibo);
+      console.log(numRecibo);
+    }
+    
+    
     
     
     //////////////////// REIMPRIMIR RECIBO SIMPLE //////////////////
