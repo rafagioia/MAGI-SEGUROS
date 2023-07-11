@@ -14,9 +14,9 @@
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+    <!-- Menú principal en entorno de Google Appscript-->
+    <!-- <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
       <ul class="navbar-nav">
-        <!-- Menú principal -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -59,8 +59,67 @@
           </div>
         </li>
       </ul>
+    </div> -->
+    <!-- Fin de Menú principal en entorno de Google Appscript-->
+
+    <!-- Menú principal en entorno normal-->
+    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cobranzas
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+            <a class="dropdown-item"
+              href="/COBRANZAS_PAGOS_MP/registro.html"
+              id="dropdown-item">Pagos Marcos Paz</a>
+            <a class="dropdown-item"
+            href="/COBRANZAS_PAGOS_MA/registro.html"
+            id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item"
+            href="/COBRANZAS_CIERRE_CAJA/cajadiaria.html"
+            id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item"
+              href="/COBRANZAS_DEUDORES_PASADOS/deudores_pasados.html"
+              id="dropdown-item">Deudores Pasados</a>
+              <a class="dropdown-item"
+              href="/COBRANZAS_GESTION_DEUDORES/gestion_deudores.html"
+              id="dropdown-item">Gestion Deudores</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Emisión
+          </a>
+          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+            <a class="dropdown-item"
+              href="/EMISION_INGRESO/Emision.html"
+              id="dropdown-item">Ingresar Seguro</a>
+              <a class="dropdown-item"
+              href="/EMISION_GESTION/Polizas.html"
+              id="dropdown-item">Gestion Pólizas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Siniestros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item"
+              href="/SINIESTROS_INGRESO/Denuncia.html"
+              id="dropdown-item">Ingresar Denuncia</a>
+              <a class="dropdown-item"
+              href="/SINIESTROS_GESTION/Gestion.html"
+              id="dropdown-item">Gestion Siniestros</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <!-- Menú flotante en el lado derecho -->
+    <!-- Fin de Menú principal en entorno normal-->
+
   <div>&nbsp;&nbsp;</div>
   <div class="navbar-text" id="magi-item">MAGI v1.2&nbsp;&nbsp;&nbsp;&nbsp;</div>
   </nav>

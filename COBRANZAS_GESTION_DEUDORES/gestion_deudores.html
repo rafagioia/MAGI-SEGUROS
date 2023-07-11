@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SISTEMA DE COBRANZAS - DEUDORES PASADOS</title>
+  <title>SISTEMA DE COBRANZAS - GESTION DEUDORES</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <base target="_top">
-<?!= include('CSS_deudores_pasados'); ?>
+<?!= include('CSS_gestion_deudores'); ?>
 </head>
 
 <body style="background-color: #03BB85">
  <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
-    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE COBRANZAS - DEUDORES PASADOS</a>
+    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE COBRANZAS - GESTION DEUDORES</a>
     <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+    <!-- Menú principal en entorno de Google Appscript-->
+    <!-- <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
       <ul class="navbar-nav">
-        <!-- Menú principal -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -61,8 +61,67 @@
           </div>
         </li>
       </ul>
+    </div> -->
+    <!-- Fin de Menú principal en entorno de Google Appscript-->
+
+    <!-- Menú principal en entorno normal-->
+    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cobranzas
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+            <a class="dropdown-item"
+              href="/COBRANZAS_PAGOS_MP/registro.html"
+              id="dropdown-item">Pagos Marcos Paz</a>
+            <a class="dropdown-item"
+            href="/COBRANZAS_PAGOS_MA/registro.html"
+            id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item"
+            href="/COBRANZAS_CIERRE_CAJA/cajadiaria.html"
+            id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item"
+              href="/COBRANZAS_DEUDORES_PASADOS/deudores_pasados.html"
+              id="dropdown-item">Deudores Pasados</a>
+              <a class="dropdown-item"
+              href="/COBRANZAS_GESTION_DEUDORES/gestion_deudores.html"
+              id="dropdown-item">Gestion Deudores</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Emisión
+          </a>
+          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+            <a class="dropdown-item"
+              href="/EMISION_INGRESO/Emision.html"
+              id="dropdown-item">Ingresar Seguro</a>
+              <a class="dropdown-item"
+              href="/EMISION_GESTION/Polizas.html"
+              id="dropdown-item">Gestion Pólizas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Siniestros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item"
+              href="/SINIESTROS_INGRESO/Denuncia.html"
+              id="dropdown-item">Ingresar Denuncia</a>
+              <a class="dropdown-item"
+              href="/SINIESTROS_GESTION/Gestion.html"
+              id="dropdown-item">Gestion Siniestros</a>
+          </div>
+        </li>
+      </ul>
     </div>
-    <!-- Menú flotante en el lado derecho -->
+    <!-- Fin de Menú principal en entorno normal-->
+
     <div class="collapse navbar-collapse" id="navbarNavRight">
       <div id="tiempo-restante"></div>
 <div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
@@ -164,82 +223,44 @@
               </select>
             </div>
             <div class="col-2"><br>
-
               <button id="bt-actualizar_lista" class="est_not btn btn-primary  mt-1" type="submit">FILTRAR</button>
               <button id="bt-reset-filtro" class="est_not btn btn-danger mt-1" type="submit">LIMPIAR</button>
             </div>
-           <div class="col-2  m-0 p-0">MES:<br>
-              <select class="form-select form-select mt-1" id="mes_sn" name="mes_sn" placeholder="">
-                <option value="0"></option>
-                <option value="0">ENERO</option>
-                <option value="1">FEBRERO</option>
-                <option value="2">MARZO</option>
-                <option value="3">ABRIL</option>
-                <option value="4">MAYO</option>
-                <option value="5">JUNIO</option>
-                <option value="6">JULIO</option>
-                <option value="7">AGOSTO</option>
-                <option value="8">SEPTIEMBRE</option>
-                <option value="9">OCTUBRE</option>
-                <option value="10">NOVIEMBRE</option>
-                <option value="11">DICIEMBRE</option>
-              </select>
+           <div class="col-2  m-0 p-0">CONCEPTO:<br>
+          <input type='text' class='form-control form-control-sm m-1' style='background-color: #FFFFFF; width: 200px;font-size: 18px;' id='r_concepto' value='PAGOS'>
             </div>
-           <div class="col-1  m-0 p-0">AÑO:<br>
-              <select class="form-select form-select mt-1" id="anio_sn" name="anio_sn" placeholder="">
-                <option value="2023"></option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-              </select>
+           <div class="col-1  m-0 p-0">IMPORTE:<br>
+          <div class='row'><span class='input-group-text p-1' style='width:22px;margin: 4px 0px 0px 0px; '>$</span>
+          <input type='text' class='form-control form-control-sm py-1' style='margin: 4px 0px 0px 0px; background-color: #FFFFFF; color: #2D572C; width: 100px;font-size: 18px;font-weight: 700;' id='r_importe'></div>
+            </div>
+          <div class="col-1  m-0 p-0">MEDIO PAGO:<br>
+                <select class="form-select form-select-sm" id="mediopago" name="mediopago" style='margin: 4px 0px 0px 0px;font-size: 18px;' required>
+                  <option value="EFECTIVO">EFECTIVO</option>
+                  <option value="DIGITAL">DIGITAL</option>
+                </select>
             </div>
             <div class="col-2"><br>
-              <button id="bt-regenarar_lista" class="est_not btn btn-primary  mt-1" type="submit">GENERAR LISTADO</button>
+              <button id="btn-agregar-recibi" class="est_not btn btn-success  mt-1" type="submit">COBRAR</button>
             </div>           
-            <div class="col-3"><br>
+            <div class="col-2"><br>
               <button id="bt-imprimir_lista" class="est_not btn btn-primary  mt-1" type="submit">IMPRIMIR LISTADO</button>
             </div>   
             </div>           
-<label style="text-align: center;" class="form-label">REIMPRIMIR RECIBOS:</label>
 
-      <form id="formularioReimprimirMulti" name="formularioReimprimirMulti">
- 
-   <div class="row">
-    <div class="col-1">
-      <div class="mb-1">
-        <label for="numReciboMulti" class="form-label mt-1">Último N°:</label>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="mb-1">
-        <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
-      </div>
-    </div>
-    <div class="col-3">
-        <button id="btn-reimprimirRecibo" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X1</button>
-        <button id="bt-desc-rec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X1</button>
-    </div>
-      <div class="col-6">
-        <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X6</button>
-        <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
 
+    <!---------- ENCABEZADO ------------>
+    <div class="row p-2" style="font-weight: bold;">
+      <div class="col-1" >ID:</div>
+      <div class="col-2" >CLIENTE:</div>
+      <div class="col-1" style="width: 60px;">VTO:</div>
+      <div class="col-2" style="width: 70px;">CUOTA:</div>
+      <div class="col-2" style="width: 130px;">COMPAÑIA:</div>
+      <div class="col-1" style="width: 100px;">PATENTE:</div>
+      <div class="col-1">MARCA:</div>
+      <div class="col-1" style="width: 120px;">DEBE:</div>
+      <div class="col-1" style="width: 120px;">HABER:</div>
+      <div class="col-1" style="width: 120px;">SALDO:</div>
     </div>
-  </div>
-</form>
-
-<div class="row p-2" style="font-weight: bold;">
-  <div class="col-1">ID:</div>
-  <div class="col-2">CLIENTE:</div>
-  <div class="col-1" style="width: 60px;">VTO:</div>
-  <div class="col-2" style="width: 70px;">CUOTA:</div>
-  <div class="col-2" style="width: 140px;">COMPAÑIA:</div>
-  <div class="col-1" style="width: 130px;">IMPORTE:</div>
-  <div class="col-1" style="width: 110px;">PATENTE:</div>
-  <div class="col-1" style="width: 140px;">MARCA:</div>
-  <div class="col-1" style="width: 120px;">PASADO:</div>
-</div>
-
  <div class="p-2" style="height: 420px; overflow-y: scroll;">
       <div id="sinPendientes"></div>
     </div>
@@ -308,7 +329,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
 
-<?!= include('JS_deudores_pasados'); ?>
+<?!= include('JS_gestion_deudores'); ?>
 </body>
 
 </html>
