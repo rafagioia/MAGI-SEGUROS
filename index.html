@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SISTEMA DE COBRANZAS - GESTION DEUDORES</title>
+  <title>SISTEMA MAGI</title>
+ 
+  <style>
+  </style>
+  <base target="_top">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <base target="_top">
   <!-- Estilos en entorno de Google Appscript -->
-  <!--<?!= include('CSS_gestion_deudores'); ?> -->
+  <!--<?!= include('style'); ?> -->
   <!-- Fin de Estilos en entorno de Google Appscript -->
 
   <!-- Estilos en entorno comun -->
-  <link rel="stylesheet" href="CSS_gestion_deudores.css">
+  <link rel="stylesheet" href="style.css">
   <!-- Fin de Estilos en entorno comun -->
 
 </head>
 
+
 <body style="background-color: #03BB85">
  <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
-    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE COBRANZAS - GESTION DEUDORES</a>
+    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE SEGUROS MAGI</a>
     <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -214,129 +218,18 @@
 </div>
 
 
-
-  <!---------- AREA DE CAJA DIARIA ------------>
-
-  <div class="col-12" id="miDiv" style="padding: 20px;">
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<div style="font-size: 20px; margin-top: 2px;"><b>DEUDORES PASADOS:</b></div>
-
-
-          <div class="row  m-0 p-0 bg-light py-2">
-
-            <div class="col-2  m-0 p-0">ID DEUDOR:<br>
-              <select class="form-select form-select mt-1" id="id_deudor_select" placeholder="">
-              </select>
-            </div>
-            <div class="col-2"><br>
-              <button id="bt-actualizar_lista" class="est_not btn btn-primary  mt-1" type="submit">FILTRAR</button>
-              <button id="bt-reset-filtro" class="est_not btn btn-danger mt-1" type="submit">LIMPIAR</button>
-            </div>
-           <div class="col-2  m-0 p-0">CONCEPTO:<br>
-          <input type='text' class='form-control form-control-sm m-1' style='background-color: #FFFFFF; width: 200px;font-size: 18px;' id='r_concepto' value='PAGOS'>
-            </div>
-           <div class="col-1  m-0 p-0">IMPORTE:<br>
-          <div class='row'><span class='input-group-text p-1' style='width:22px;margin: 4px 0px 0px 0px; '>$</span>
-          <input type='text' class='form-control form-control-sm py-1' style='margin: 4px 0px 0px 0px; background-color: #FFFFFF; color: #2D572C; width: 100px;font-size: 18px;font-weight: 700;' id='r_importe'></div>
-            </div>
-          <div class="col-1  m-0 p-0">MEDIO PAGO:<br>
-                <select class="form-select form-select-sm" id="mediopago" name="mediopago" style='margin: 4px 0px 0px 0px;font-size: 18px;' required>
-                  <option value="EFECTIVO">EFECTIVO</option>
-                  <option value="DIGITAL">DIGITAL</option>
-                </select>
-            </div>
-            <div class="col-2"><br>
-              <button id="btn-agregar-recibi" class="est_not btn btn-success  mt-1" type="submit">COBRAR</button>
-            </div>           
-            <div class="col-2"><br>
-              <button id="bt-imprimir_lista" class="est_not btn btn-primary  mt-1" type="submit">IMPRIMIR LISTADO</button>
-            </div>   
-            </div>           
-
-
-    <!---------- ENCABEZADO ------------>
-    <div class="row p-2" style="font-weight: bold;">
-      <div class="col-1" >ID:</div>
-      <div class="col-2" >CLIENTE:</div>
-      <div class="col-1" style="width: 60px;">VTO:</div>
-      <div class="col-2" style="width: 70px;">CUOTA:</div>
-      <div class="col-2" style="width: 130px;">COMPAÑIA:</div>
-      <div class="col-1" style="width: 100px;">PATENTE:</div>
-      <div class="col-1">MARCA:</div>
-      <div class="col-1" style="width: 120px;">DEBE:</div>
-      <div class="col-1" style="width: 120px;">HABER:</div>
-      <div class="col-1" style="width: 120px;">SALDO:</div>
-    </div>
- <div class="p-2" style="height: 420px; overflow-y: scroll;">
-      <div id="sinPendientes"></div>
-    </div>
-
-
-          <div class="row  m-0 p-0 bg-light py-2">
-
-            <div class="col-9  m-0 p-0"><br>
-            </div>
-
-
-            <div class="col-2 m-0 p-0">TOTAL:<br>
-            <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>$</span>
-      </div><input type="text" class="form-control" id="total_val"></div>
-            </div>
-            <div class="col-1  m-0 p-0"><br>
-            </div>
-          </div>
-
-
-</div>
-
-  </div>
-  <!---------- FIN AREA DE CAJA DIARIA ------------>
-
-  <!---------- AREA DE GASTOS Y RECIBIS ------------>
-
-  <div class="row">
-
-    <div class="col-6" style="padding: 20px">
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<div style="font-size: 20px; margin-top: 2px;"><b>GASTOS:</b></div>
- <div class="p-2" style="height: 210px; overflow-y: scroll;">
-      <div id="lista_gastos"></div>
-    </div>
-
-  </div>
-
-  <!---------- FIN AREA DE GASTOS Y RECIBIS------------>
-
-
-  </div>
-
-
-
-    <div class="col-6" style="padding: 20px">
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<div style="font-size: 20px; margin-top: 2px;"><b>RECIBIS:</b></div>
- <div class="p-2" style="height: 210px; overflow-y: scroll;">
-      <div id="lista_recibis"></div>
-    </div>
-
-</div>
-
-  <!---------- FIN AREA DE GASTOS Y RECIBIS------------>
-
-
-  </div>
-
-
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
 
-<?!= include('JS_gestion_deudores'); ?>
+<!-- Estilos en entorno de Google Appscript -->
+<!--<?!= include('scripts'); ?> -->
+<!-- Fin de Estilos en entorno de Google Appscript -->
+
+<!-- Estilos en entorno comun -->
+<script src="scripts.js"></script>
+<!-- Fin de Estilos en entorno comun -->
+
 </body>
 
 </html>
