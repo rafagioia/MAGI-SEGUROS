@@ -20,7 +20,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
-    <a class="navbar-brand" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE EMISION - INGRESAR POLIZA</a>
+    <a class="navbar-brand" id="title_menu" href="#" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;SISTEMA DE EMISION - INGRESAR POLIZA</a>
     <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse"
       data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -131,11 +131,12 @@
     </div>
     <!-- Fin de Menú principal en entorno normal-->
 
-    <!-- Menú flotante en el lado derecho -->
+    <!-- Fin de Menú principal en entorno normal-->
+
     <div class="collapse navbar-collapse" id="navbarNavRight">
-      <div id="tiempo-restante"></div>
-      <div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
-      <ul class="navbar-nav">
+      <!-- <div id="tiempo-restante"></div> -->
+<div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
+<ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" style="font-weight: 600;" role="button" data-toggle="dropdown"
             aria-haspopup="true" id="usuario_sp" aria-expanded="false">
@@ -146,25 +147,23 @@
             <a class="dropdown-item" href="#" id="cambiar_clave">Cambiar contraseña</a>
             <a class="dropdown-item">
               <div class="row">
-                <div class="col-7 pt-1">
-
-                  Color fondo:
-                </div>
-                <div class="col-5">
-
-                  <input type="color" id="colorPicker" class="form-control form-control-sm" onchange="changeColor()"
-                    style="border-radius: 5%;">
-                </div>
+              <div class="col-7 pt-1">
+              
+              Color fondo: 
               </div>
-            </a>
-
+              <div class="col-5">
+              
+              <input type="color" id="colorPicker" class="form-control form-control-sm" onchange="changeColor()" style="border-radius: 5%;">
+</div>
+              </div>
+              </a>
+            
           </div>
         </li>
       </ul>
     </div>
     <!-- Fin Menú flotante en el lado derecho -->
-    <div>&nbsp;&nbsp;</div>
-    <div class="navbar-text" id="magi-item">MAGI v1.2&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="110px" alt="logo"> v1.2&nbsp;&nbsp;</div>
   </nav>
   <br>
 

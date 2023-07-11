@@ -112,7 +112,8 @@
   document.getElementById("marcaValor").textContent =  "";
   document.getElementById("cniaValor").textContent =  "";
   document.getElementById("statVeh").textContent =  "";
-  
+  document.getElementById("sinPendientes").textContent =  "";
+  document.getElementById("sinPendientes2").textContent =  "";
   document.getElementById('valoresContainer').style.display = 'none';
   document.getElementById('valoresContainer_veh').style.display = 'none';
   document.getElementById('formContainer').style.display = 'none';
@@ -159,6 +160,20 @@
     const infoMail = document.getElementById("mail");
     const infoNotascte = document.getElementById("notascte");
     const infoSucursal = document.getElementById("sucursal");
+  document.getElementById("dniValor").textContent = "";
+  document.getElementById("nombreCompletoValor").textContent = "";
+  document.getElementById("whatsappValor").textContent = "";
+  document.getElementById("statCte").textContent = "";
+  document.getElementById("patenteValor").textContent =  "";
+  document.getElementById("marcaValor").textContent =  "";
+  document.getElementById("cniaValor").textContent =  "";
+  document.getElementById("statVeh").textContent =  "";
+  document.getElementById("sinPendientes").textContent =  "";
+  document.getElementById("sinPendientes2").textContent =  "";
+  document.getElementById('valoresContainer').style.display = 'none';
+  document.getElementById('valoresContainer_veh').style.display = 'none';
+  document.getElementById('formContainer').style.display = 'none';
+  document.getElementById('formContainer_veh').style.display = 'none';
   
     const mostrarValores = (info) => {
       if (info.length > 0) {
@@ -253,6 +268,20 @@
     const infoMail = document.getElementById("mail");
     const infoNotascte = document.getElementById("notascte");
     const infoSucursal = document.getElementById("sucursal");
+  document.getElementById("dniValor").textContent = "";
+  document.getElementById("nombreCompletoValor").textContent = "";
+  document.getElementById("whatsappValor").textContent = "";
+  document.getElementById("statCte").textContent = "";
+  document.getElementById("patenteValor").textContent =  "";
+  document.getElementById("marcaValor").textContent =  "";
+  document.getElementById("cniaValor").textContent =  "";
+  document.getElementById("statVeh").textContent =  "";
+  document.getElementById("sinPendientes").textContent =  "";
+  document.getElementById("sinPendientes2").textContent =  "";
+  document.getElementById('valoresContainer').style.display = 'none';
+  document.getElementById('valoresContainer_veh').style.display = 'none';
+  document.getElementById('formContainer').style.display = 'none';
+  document.getElementById('formContainer_veh').style.display = 'none';
   
     const mostrarValores = (info) => {
       if (info.length > 0) {
@@ -360,6 +389,20 @@
       let infoNotasVeh =  document.getElementById("notasvehold");
       let infoMotor =  document.getElementById("motor");
       let infoChasis =  document.getElementById("chasis");
+  document.getElementById("dniValor").textContent = "";
+  document.getElementById("nombreCompletoValor").textContent = "";
+  document.getElementById("whatsappValor").textContent = "";
+  document.getElementById("statCte").textContent = "";
+  document.getElementById("patenteValor").textContent =  "";
+  document.getElementById("marcaValor").textContent =  "";
+  document.getElementById("cniaValor").textContent =  "";
+  document.getElementById("statVeh").textContent =  "";
+  document.getElementById("sinPendientes").textContent =  "";
+  document.getElementById("sinPendientes2").textContent =  "";
+  document.getElementById('valoresContainer').style.display = 'none';
+  document.getElementById('valoresContainer_veh').style.display = 'none';
+  document.getElementById('formContainer').style.display = 'none';
+  document.getElementById('formContainer_veh').style.display = 'none';
   
       google.script.run.withSuccessHandler(info => {
         if (info.length > 0) {
@@ -434,10 +477,10 @@
    var pendientesHtml = "";
     for (var i = 0; i < result.length; i++) {
   
-  pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-radius:5px; padding: 5px 10px 5px 10px; border: 2px solid #000; box-shadow: 0px 0px 5px 0px #000;margin-bottom: 5px;background-color: #FFFFFF' id='div" + i + "'><div class='row' style='padding-left: 5px; '><div class='row mb-1'><div class='col-3 text-muted fw-bold' style='padding-left: 15px;' id='patente_sn_" + i + "'>" + result[i][0] + "</div><div class='col-9 text-muted fw-bold text-truncate' id='marca_" + i + "'>" + result[i][1] +  "</div></div><div class='row mb-1'><div class='col-4 fw-bold'><div class='row' style='text-align: center; border-radius:10px; color:white; background-color: #686868; box-shadow: 0px 0px 2px 0px #000000;'><div class='col-12 fw-bold' style='margin-top: 0px; color: #FFFFFF;'id='cnia_" + i + "'>" + result[i][2] + "</div></div></div><div class='col-8 fw-bold' style='padding-left: 2px;'><div class='row bg-light border ml-1' style='padding-left: 5px; text-align: left;  margin-left: 2px; border-radius:5px;color: #9B9B9B; border: 1px solid black;' id='cobertura_" + i + "'>" + result[i][3] + "</div></div></div>" +
+  pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-radius:5px; padding: 5px 10px 5px 10px; border: 2px solid #000; box-shadow: 0px 0px 5px 0px #000;margin-bottom: 5px;background-color: #FFFFFF' id='div" + i + "'><div class='row' style='padding-left: 5px; '><div class='row mb-1'><div class='col-3 text-muted fw-bold' style='padding-left: 15px;' id='patente_sn_" + i + "'>" + result[i][0] + "</div><div class='col-9 text-muted fw-bold text-truncate' id='marca_" + i + "'>" + result[i][1] +  "</div></div><div class='row mb-1'><div class='col-4 fw-bold'><div class='row' style='text-align: center; border-radius:10px; color:white; background-color: #686868; box-shadow: 0px 0px 2px 0px #000000;'><div class='col-12 fw-bold' style='margin-top: 0px; color: #FFFFFF;'id='cnia_" + i + "'>" + result[i][2] + "</div></div></div><div class='col-8 fw-bold' style='padding-left: 2px;'><div class='row bg-light border ml-1' style='padding-left: 5px; text-align: left;  margin-left: 2px; border-radius:5px;color: #9B9B9B; border: 1px solid black;' id='cobertura_" + i + "'>" + result[i][3] + "</div></div></div><div class='row bg-light border ml-1' style='font-size: 0.7rem; padding-left: 5px; text-align: left;  margin-left: 2px;  margin-right: 2px; ' id='operacion_" + i + "'>" + result[i][6] + "</div>" +
       "<div style='display: none' id='importe_" + i + "'>" + result[i][4] + "</div>"+
       "<div style='display: none' id='poliza_" + i + "'>" + result[i][5] + "</div></div>"+
-      "<div style='display: none' id='operacion_" + i + "'>" + result[i][6] + "</div>"+
+      // "<div style='display: none' id='operacion_" + i + "'>" + result[i][6] + "</div>"+
       "<div style='display: none' id='vigencia_" + i + "'>" + result[i][7] + "</div>"+
       "<div style='display: none' id='hasta_" + i + "'>" + result[i][8] + "</div>"+
       "<div style='display: none' id='danios_" + i + "'>" + result[i][9] + "</div>"+
