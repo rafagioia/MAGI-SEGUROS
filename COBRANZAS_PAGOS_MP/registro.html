@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
   <!-- Estilos en entorno de Google Appscript -->
-  <!--<?!= include('CSS'); ?> -->
+  <!-- <?!= include('CSS'); ?> -->
   <!-- Fin de Estilos en entorno de Google Appscript -->
 
   <!-- Estilos en entorno comun -->
@@ -15,13 +16,14 @@
 
   </head>
   <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
-    <a class="navbar-brand" id="title_menu" href="#" >&nbsp;&nbsp;SISTEMA DE COBRANZAS - INGRESO PAGOS </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light visor bg-light shadow p-0">
+    <a class="navbar-brand fs-5" id="title_menu" href="#">
+      &nbsp;&nbsp;&nbsp;SISTEMA DE COBRANZAS - INGRESO PAGOS</div> </a>
     <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <!-- Menú principal en entorno de Google Appscript-->
+        <!-- Menú principal -->
     <!-- <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
@@ -67,7 +69,7 @@
         </li>
       </ul>
     </div> -->
-    <!-- Fin de Menú principal en entorno de Google Appscript-->
+        <!-- Fin de Menú principal en entorno de Google Appscript-->
 
     <!-- Menú principal en entorno normal-->
     <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
@@ -102,10 +104,10 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="emisionDropdown">
             <a class="dropdown-item"
-              href="./EMISION_INGRESO/Emision.html"
+              href="/EMISION_INGRESO/Emision.html"
               id="dropdown-item">Ingresar Seguro</a>
               <a class="dropdown-item"
-              href="./EMISION_GESTION/Polizas.html"
+              href="/EMISION_GESTION/Polizas.html"
               id="dropdown-item">Gestion Pólizas</a>
           </div>
         </li>
@@ -116,17 +118,17 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
             <a class="dropdown-item"
-              href="./SINIESTROS_INGRESO/Denuncia.html"
+              href="/SINIESTROS_INGRESO/Denuncia.html"
               id="dropdown-item">Ingresar Denuncia</a>
               <a class="dropdown-item"
-              href="./SINIESTROS_GESTION/Gestion.html"
+              href="/SINIESTROS_GESTION/Gestion.html"
               id="dropdown-item">Gestion Siniestros</a>
           </div>
         </li>
       </ul>
     </div>
     <!-- Fin de Menú principal en entorno normal-->
-
+    <!-- Menú flotante en el lado derecho -->
     <div class="collapse navbar-collapse" id="navbarNavRight">
       <!-- <div id="tiempo-restante"></div> -->
 <div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
@@ -157,7 +159,7 @@
       </ul>
     </div>
     <!-- Fin Menú flotante en el lado derecho -->
-    <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="110px" alt="logo"> v1.2&nbsp;&nbsp;</div>
+    <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="100px" alt="logo"> v1.2&nbsp;&nbsp;</div>
   </nav>
 
 
@@ -485,7 +487,6 @@
                 <select class="form-select form-select-sm" id="mediopago" name="mediopago" required>
                   <option value="EFECTIVO">EFECTIVO</option>
                   <option value="DIGITAL">DIGITAL</option>
-                  <option value="DEUDOR">DEUDOR</option>
                 </select>
             </div>
             </div>
@@ -1040,7 +1041,7 @@ POLIZAS VIGENTES BD EMISION
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
 <!-- Scripts en entorno de Google Appscript -->
-<!--<?!= include('JS'); ?> -->
+<!-- <?!= include('JS'); ?> -->
 <!-- Fin de Scripts en entorno de Google Appscript -->
 
 <!-- Scripts en entorno comun -->
