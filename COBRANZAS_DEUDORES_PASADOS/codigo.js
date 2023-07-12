@@ -48,12 +48,31 @@ function getData(cmonth = new Date().getMonth(), cyear = new Date().getFullYear(
       let vto_day = parseInt(deudoresData[i][8].split("/")[0], 10);
       var vto_month = parseInt(deudoresData[i][8].split("/")[1], 10);
       var vto_year = parseInt(deudoresData[i][8].split("/")[2], 10);
-      var cuota_div = parseInt(deudoresData[i][7], 10);
+      // var cuota_div = parseInt(deudoresData[i][7], 10);
 
-      var valor_cuota = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month + 1) % cuota_div;
-      if (valor_cuota <= 0) {
-        valor_cuota += cuota_div;
-      }
+      // var valor_cuota = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month + 1) % cuota_div;
+      // if (valor_cuota <= 0) {
+      //   valor_cuota += cuota_div;
+      // }
+
+var cuota_div = parseInt(deudoresData[i][7], 10);
+var valor_cuota;
+
+if (cuota_div === 10) {
+  var total_meses = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month);
+  var meses_desde_inicio = total_meses % 12;
+
+  if (meses_desde_inicio >= 0 && meses_desde_inicio < cuota_div) {
+    valor_cuota = (meses_desde_inicio % cuota_div) + 1;
+  } else {
+    valor_cuota = 0;
+  }
+} else {
+  valor_cuota = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month + 1) % cuota_div;
+  if (valor_cuota <= 0) {
+    valor_cuota += cuota_div;
+  }
+}
 
       deudor.push(deudoresData[i][0]); // ID DEUDOR
       deudor.push(deudoresData[i][2]); // CLIENTE
@@ -71,6 +90,7 @@ function getData(cmonth = new Date().getMonth(), cyear = new Date().getFullYear(
       deudor.push(""); // WPP
       deudor.push(""); // POLIZA
       deudor.push(""); // RECIBO
+      deudor.push(""); // PASADO
 
 
       let patente = deudoresData[i][3];
@@ -78,6 +98,9 @@ function getData(cmonth = new Date().getMonth(), cyear = new Date().getFullYear(
 
           if (valor_cuota == 1 && deudor[10] == "❌") {
             deudor[11] = ""; // IMPORTE
+          }
+          if (valor_cuota == 0 && deudor[10] == "❌") {
+            deudor[11] = "DESCANSO"; //
           }
 
         if (cobranzasData[j][1] === patente && ((paymentMonth === currentMonth - 1 && paymentYear === currentYear) || 
@@ -104,6 +127,7 @@ function getData(cmonth = new Date().getMonth(), cyear = new Date().getFullYear(
           if (paymentMonth === currentMonth && paymentYear === currentYear) {
             deudor[10] = "✔️";
             deudor[15] = cobranzasData[j][0]; // RECIBO
+            deudor[16] = cobranzasData[j][18]; // PASADO
             deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
           }
           }
@@ -296,6 +320,22 @@ function convertHtmlToPdfM(htmlContent) {
 
   return encodedPdfContent;
 }
+
+
+/////////////////// TILDAR PAGOS ///////////////////////
+
+function marcarColumnaS(numRecibo) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+  const data = BD_DEUDORES.getDataRange().getDisplayValues();
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][0] === numRecibo) {
+      BD_DEUDORES.getRange(i + 1, 19).setValue(true);
+      break;
+    }
+  }
+}
+
+
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////  SESION DE USUARIOS ////////////////////////
