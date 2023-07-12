@@ -690,7 +690,12 @@ function calcularTiempoRestante() {
 // Función para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
-    tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      sessionStorage.removeItem("magi-usuario");
+      sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
+      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      modal.style.display = "block";
   } else {
     var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
     var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
@@ -709,6 +714,7 @@ function iniciarContadorTiempo(tiempoRestante) {
       clearInterval(intervalo);
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
       tiempoRestanteDiv.innerHTML = "Tiempo expirado";
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
       modal.style.display = "block";
@@ -733,7 +739,6 @@ document.getElementById("guardar_clave").addEventListener("click", function() {
   var usuario_pass = sessionStorage.getItem("magi-usuario");
   var antiguaClave = document.getElementById("antigua_clave").value;
   var nuevaClave = document.getElementById("nueva_clave").value;
-console.log("cliente: " + usuario_pass + antiguaClave + nuevaClave)
   google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
     modal2.style.display = "none";
 alert('Clave cambiada correctamente');

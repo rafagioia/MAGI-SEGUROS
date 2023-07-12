@@ -732,6 +732,85 @@ function reimprimirReciboMulti(event) {
   console.log(numReciboMulti);
 }
 
+//////////////////// MENSAJES DE VENCIMIENTO /////////////////////////////////
+var mensajeElement = document.getElementById("mensaje");
+var inputElement = document.getElementById("vto");
+
+function actualizarMensaje() {
+  var fechaActual = new Date();
+
+  var fechaPagoStr = inputElement.value;
+  var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
+  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
+  var day = parseInt(fechaSplit[0], 10);
+  var month = parseInt(fechaSplit[1], 10);
+  var year = "20" + parseInt(fechaSplit[2], 10);
+  var fechaVencimiento = new Date(year, month - 1, day); // Formatea la fecha como "m/d/yyyy" sin ceros innecesarios
+  var tiempoDiferencia = fechaVencimiento.getTime() - fechaActual.getTime();
+  var diasDiferencia = Math.floor(tiempoDiferencia / (1000 * 3600 * 24)+1);
+
+  switch (true) {
+      case fechaVencimiento > fechaActual && diasDiferencia > 30:
+      mensajeElement.innerHTML = "Pago adelantado";
+      mensajeElement.style.color = "blue";
+      mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      break;
+    case fechaVencimiento > fechaActual && diasDiferencia <= 30 && diasDiferencia >= 0:
+      mensajeElement.innerHTML = "OK";
+      mensajeElement.style.color = "blue";
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      break;
+    case fechaVencimiento < fechaActual && diasDiferencia <= -1 && diasDiferencia >= -45:
+      mensajeElement.innerHTML = "Recibo vencido";
+      mensajeElement.style.color = "red";
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      break;
+    case fechaVencimiento < fechaActual && diasDiferencia <= -46 && diasDiferencia >= -59:
+      mensajeElement.innerHTML = "Debe dos meses";
+      mensajeElement.style.color = "red";
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      break;
+    case fechaVencimiento < fechaActual && diasDiferencia <= -60 && diasDiferencia >= -89:
+      mensajeElement.innerHTML = "Debe tres meses";
+      mensajeElement.style.color = "red";
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      break;
+    case fechaVencimiento < fechaActual && diasDiferencia < -90:
+      mensajeElement.innerHTML = "Póliza posiblemente anulada";
+      mensajeElement.style.color = "red";
+    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      break;
+  }
+}
+
+  ////////////////////////////////////////////////////////////
+
+////////////////////////// DESCARGAR PDF DE RECIBOS /////////////////////
+
+function descargaRecibo(event) {
+  event.preventDefault();
+  const numRecibo = document.getElementById('numRecibo').value;
+  google.script.run.withSuccessHandler(function(pdfContent) {
+    downloadPdf(pdfContent, "recibo.pdf");
+  }).getPdfContent(numRecibo);
+}
+
+function downloadPdf(pdfContent, fileName) {
+  const link = document.createElement('a');
+  link.href = 'data:application/pdf;base64,' + pdfContent;
+  link.download = fileName;
+  link.target = '_blank';
+  link.click();
+}
+
+
+function descargaReciboM(event) {
+  event.preventDefault();
+  const numRecibo = document.getElementById('numReciboMulti').value;
+  google.script.run.withSuccessHandler(function(pdfContent) {
+    downloadPdf(pdfContent, "recibo.pdf");
+  }).getPdfContentM(numRecibo);
+}
 
 /////////////////////////////////////////////////////////////////
 //////////////////// SESION DE USUARIOS /////////////////////////
@@ -839,7 +918,12 @@ function calcularTiempoRestante() {
 // Función para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
-    tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      sessionStorage.removeItem("magi-usuario");
+      sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
+      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      modal.style.display = "block";
   } else {
     var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
     var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
@@ -858,6 +942,7 @@ function iniciarContadorTiempo(tiempoRestante) {
       clearInterval(intervalo);
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
       tiempoRestanteDiv.innerHTML = "Tiempo expirado";
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
       modal.style.display = "block";
@@ -867,6 +952,28 @@ function iniciarContadorTiempo(tiempoRestante) {
   }, 1000);
 }
 
+
+////////////////////// CAMBIAR LA CLAVE DE USUARI ////////////////////////
+
+document.getElementById("cambiar_clave").addEventListener("click", function() {
+    event.preventDefault();
+    
+  document.getElementById("modal2").style.display = "block";
+});
+
+document.getElementById("guardar_clave").addEventListener("click", function() {
+    event.preventDefault();
+
+  var usuario_pass = sessionStorage.getItem("magi-usuario");
+  var antiguaClave = document.getElementById("antigua_clave").value;
+  var nuevaClave = document.getElementById("nueva_clave").value;
+  google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
+    modal2.style.display = "none";
+alert('Clave cambiada correctamente');
+
+});
+
+////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////// CERRAR SESION //////////////////////
 
@@ -911,88 +1018,6 @@ function close_sessionok(event) {
 
             
 ////////////////////////////////////////////////////////////////////////////////
-            
-
-
-//////////////////// MENSAJES DE VENCIMIENTO /////////////////////////////////
-var mensajeElement = document.getElementById("mensaje");
-var inputElement = document.getElementById("vto");
-
-function actualizarMensaje() {
-  var fechaActual = new Date();
-
-  var fechaPagoStr = inputElement.value;
-  var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
-  var day = parseInt(fechaSplit[0], 10);
-  var month = parseInt(fechaSplit[1], 10);
-  var year = "20" + parseInt(fechaSplit[2], 10);
-  var fechaVencimiento = new Date(year, month - 1, day); // Formatea la fecha como "m/d/yyyy" sin ceros innecesarios
-  var tiempoDiferencia = fechaVencimiento.getTime() - fechaActual.getTime();
-  var diasDiferencia = Math.floor(tiempoDiferencia / (1000 * 3600 * 24)+1);
-
-  switch (true) {
-      case fechaVencimiento > fechaActual && diasDiferencia > 30:
-      mensajeElement.innerHTML = "Pago adelantado";
-      mensajeElement.style.color = "blue";
-      mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
-      break;
-    case fechaVencimiento > fechaActual && diasDiferencia <= 30 && diasDiferencia >= 0:
-      mensajeElement.innerHTML = "OK";
-      mensajeElement.style.color = "blue";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
-      break;
-    case fechaVencimiento < fechaActual && diasDiferencia <= -1 && diasDiferencia >= -45:
-      mensajeElement.innerHTML = "Recibo vencido";
-      mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
-      break;
-    case fechaVencimiento < fechaActual && diasDiferencia <= -46 && diasDiferencia >= -59:
-      mensajeElement.innerHTML = "Debe dos meses";
-      mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
-      break;
-    case fechaVencimiento < fechaActual && diasDiferencia <= -60 && diasDiferencia >= -89:
-      mensajeElement.innerHTML = "Debe tres meses";
-      mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
-      break;
-    case fechaVencimiento < fechaActual && diasDiferencia < -90:
-      mensajeElement.innerHTML = "Póliza posiblemente anulada";
-      mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
-      break;
-  }
-}
-
-  ////////////////////////////////////////////////////////////
-
-////////////////////////// DESCARGAR PDF DE RECIBOS /////////////////////
-
-function descargaRecibo(event) {
-  event.preventDefault();
-  const numRecibo = document.getElementById('numRecibo').value;
-  google.script.run.withSuccessHandler(function(pdfContent) {
-    downloadPdf(pdfContent, "recibo.pdf");
-  }).getPdfContent(numRecibo);
-}
-
-function downloadPdf(pdfContent, fileName) {
-  const link = document.createElement('a');
-  link.href = 'data:application/pdf;base64,' + pdfContent;
-  link.download = fileName;
-  link.target = '_blank';
-  link.click();
-}
-
-
-function descargaReciboM(event) {
-  event.preventDefault();
-  const numRecibo = document.getElementById('numReciboMulti').value;
-  google.script.run.withSuccessHandler(function(pdfContent) {
-    downloadPdf(pdfContent, "recibo.pdf");
-  }).getPdfContentM(numRecibo);
-}
 
 
 
@@ -1008,28 +1033,6 @@ function descargaReciboM(event) {
     boton.disabled = true;
   });
   /////////////////////////////////////////////////////
-
-
-////////////////////// CAMBIAR LA CLAVE DE USUARI ////////////////////////
-
-document.getElementById("cambiar_clave").addEventListener("click", function() {
-    event.preventDefault();
-    
-  document.getElementById("modal2").style.display = "block";
-});
-
-document.getElementById("guardar_clave").addEventListener("click", function() {
-    event.preventDefault();
-
-  var usuario_pass = sessionStorage.getItem("magi-usuario");
-  var antiguaClave = document.getElementById("antigua_clave").value;
-  var nuevaClave = document.getElementById("nueva_clave").value;
-console.log("cliente: " + usuario_pass + antiguaClave + nuevaClave)
-  google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
-    modal2.style.display = "none";
-alert('Clave cambiada correctamente');
-
-});
 
 document.getElementById("vto").addEventListener("change", function() {
   console.log("hola")

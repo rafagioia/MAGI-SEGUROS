@@ -29,7 +29,7 @@ function filtrar(event) {
   const nombre_filter = document.getElementById("nombreSelect").value;
   google.script.run
     .withSuccessHandler(function (result) {
-      // Actualizar HTML de la página con los nuevos resultados
+      // Actualizar HTML de la pï¿½gina con los nuevos resultados
       var sinPendientesDiv = document.getElementById("sinPendientes");
 
       var pendientesHtml = "";
@@ -208,15 +208,15 @@ function filtrar(event) {
       sinPendientesDiv.innerHTML = pendientesHtml;
 
       if (result.length === 0) {
-        sinPendientesDiv.innerHTML = "No se encontró ningún valor.";
+        sinPendientesDiv.innerHTML = "No se encontrï¿½ ningï¿½n valor.";
         spinner.style.display = "none";
       }
 
-      // Agregar evento de click a los divs dinámicos
+      // Agregar evento de click a los divs dinï¿½micos
       var divs = document.querySelectorAll("[id^='div']");
       divs.forEach(function (div) {
         div.addEventListener("click", function () {
-          var id = div.id.slice(3); // Obtener el índice del div
+          var id = div.id.slice(3); // Obtener el ï¿½ndice del div
           document.getElementsByName("dni")[0].value = document.getElementById(
             "dni_" + id
           ).textContent;
@@ -286,7 +286,7 @@ function updateSinPendientes(result) {
     var dateParts = result[i][9].split("/");
     var month = parseInt(dateParts[1], 10) - 1; // Restar 1 al mes para que sea de 0 a 11
     var day = parseInt(dateParts[0], 10);
-    var year = new Date().getFullYear(); // Obtener el año actual
+    var year = new Date().getFullYear(); // Obtener el aï¿½o actual
     var date = new Date(year, month, day);
     var today = new Date();
 
@@ -462,11 +462,11 @@ function updateSinPendientes(result) {
   }
   sinPendientesDiv.innerHTML = pendientesHtml;
 
-  // Agregar evento de click a los divs dinámicos
+  // Agregar evento de click a los divs dinï¿½micos
   var divs = document.querySelectorAll("[id^='div']");
   divs.forEach(function (div) {
     div.addEventListener("click", function () {
-      var id = div.id.slice(3); // Obtener el índice del div
+      var id = div.id.slice(3); // Obtener el ï¿½ndice del div
       document.getElementsByName("dni")[0].value = document.getElementById(
         "dni_" + id
       ).textContent;
@@ -550,7 +550,7 @@ function cargarCorreos() {
 
   google.script.run
     .withSuccessHandler(function (emailsHTML) {
-      // Muestra el contenido HTML de los correos electrónicos en el div con ID "emails"
+      // Muestra el contenido HTML de los correos electrï¿½nicos en el div con ID "emails"
       var div2 = document.getElementById("emails");
       console.log(emailsHTML);
       div2.innerHTML = emailsHTML;
@@ -561,19 +561,19 @@ function cargarCorreos() {
 function enviarMail() {
   var patente = document.getElementById("patente").value;
 
-  // Abrir Gmail y buscar el número
+  // Abrir Gmail y buscar el nï¿½mero
   window.open("https://mail.google.com/mail/u/0/#search/" + patente);
 }
 
 function enviarMensajeWPP() {
-  // Obtener el número de teléfono ingresado
+  // Obtener el nï¿½mero de telï¿½fono ingresado
   var telefono = document.getElementById("wpp").value;
 
-  // Abrir WhatsApp Web con el número de teléfono y enviar un mensaje
+  // Abrir WhatsApp Web con el nï¿½mero de telï¿½fono y enviar un mensaje
   window.open(
     "https://web.whatsapp.com/send?phone=549" +
       telefono +
-      "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendá%20nuestro%20número%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas."
+      "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendï¿½%20nuestro%20nï¿½mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas."
   );
 }
 
@@ -763,7 +763,7 @@ function modificarDatos(event) {
     infoMotor,
     infoChasis
   );
-  alert("Póliza actualizada correctamente");
+  alert("Pï¿½liza actualizada correctamente");
   spinner.style.display = "none";
   boton.disabled = false;
 }
@@ -778,7 +778,7 @@ function modificarDatos(event) {
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Función para realizar el inicio de sesión
+// FunciÃ³n para realizar el inicio de sesiÃ³n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -795,15 +795,13 @@ if (usuarioAlmacenado) {
     document.body.style.backgroundColor = colorAlmacenado;
   } else {
     // Si no hay un color almacenado, solicitarlo al servidor
-    google.script.run
-      .withSuccessHandler(function (color) {
-        if (color) {
-          console.log("este es el color: " + color);
-          sessionStorage.setItem("magi-color", color);
-          document.body.style.backgroundColor = color;
-        }
-      })
-      .buscarColorAlmacenado(usuarioAlmacenado);
+    google.script.run.withSuccessHandler(function (color) {
+      if (color) {
+        console.log("este es el color: " + color)
+        sessionStorage.setItem("magi-color", color);
+        document.body.style.backgroundColor = color;
+      }
+    }).buscarColorAlmacenado(usuarioAlmacenado);
   }
 
   // Calcular el tiempo restante
@@ -811,82 +809,87 @@ if (usuarioAlmacenado) {
   mostrarTiempoRestante(tiempoRestante);
   iniciarContadorTiempo(tiempoRestante);
 } else {
-  // Función para abrir el modal
+  
+  // FunciÃ³n para abrir el modal
   modal.style.display = "block";
 
-  // Función para cerrar el modal
+  // FunciÃ³n para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
-  document
-    .getElementById("inicio-sesion")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botÃ³n de inicio de sesiÃ³n
+  document.getElementById("inicio-sesion").addEventListener("click", function (event) {
+    event.preventDefault();
 
-      // Obtener el usuario y la contraseña del formulario
-      var usuario = document.getElementById("usuario").value;
-      var contrasena = document.getElementById("contrasena").value;
+    // Obtener el usuario y la contraseÃ±a del formulario
+    var usuario = document.getElementById("usuario").value;
+    var contrasena = document.getElementById("contrasena").value;
 
-      // Obtener el valor seleccionado del color
-      var colorPicker = document.getElementById("colorPicker");
-      var colorSeleccionado = colorPicker.value;
+    // Obtener el valor seleccionado del color
+    var colorPicker = document.getElementById("colorPicker");
+    var colorSeleccionado = colorPicker.value;
 
-      // Hacer una solicitud al servidor para verificar el usuario y la contraseña
+// Hacer una solicitud al servidor para verificar el usuario y la contraseÃ±a
 
-      google.script.run
-        .withSuccessHandler(function (color) {
-          if (color) {
-            document.getElementById("usuario_sp").innerHTML = usuario;
-            modal.style.display = "none";
-            user.style.display = "block";
-            close_session.style.display = "block";
 
-            // Guardar el usuario y el color en sessionStorage
-            sessionStorage.setItem("magi-usuario", usuario);
-            sessionStorage.setItem("magi-horaInicio", new Date().getTime());
-            sessionStorage.setItem("magi-color", color);
+google.script.run.withSuccessHandler(function (color) {
+  if (color) {
+    document.getElementById("usuario_sp").innerHTML = usuario;
+    modal.style.display = "none";
+    user.style.display = "block";
+    close_session.style.display = "block";
 
-            document.body.style.backgroundColor = color;
-          } else {
-            // El color no fue encontrado, manejar el error adecuadamente
-            console.log("Color no encontrado");
-          }
+    // Guardar el usuario y el color en sessionStorage
+    sessionStorage.setItem("magi-usuario", usuario);
+    sessionStorage.setItem("magi-horaInicio", new Date().getTime());
+    sessionStorage.setItem("magi-color", color);
+    
+    document.body.style.backgroundColor = color;
+  
+  } else {
+    // El color no fue encontrado, manejar el error adecuadamente
+    console.log("Color no encontrado");
+  }
 
-          // Calcular el tiempo restante
-          var tiempoRestante = calcularTiempoRestante();
-          mostrarTiempoRestante(tiempoRestante);
-          iniciarContadorTiempo(tiempoRestante);
-        })
-        .verificarCredenciales(usuario, contrasena);
-    });
+    // Calcular el tiempo restante
+    var tiempoRestante = calcularTiempoRestante();
+    mostrarTiempoRestante(tiempoRestante);
+    iniciarContadorTiempo(tiempoRestante);
+}).verificarCredenciales(usuario, contrasena);
+  });
 }
 
-// Función para calcular el tiempo restante en milisegundos
+
+
+// FunciÃ³n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
-  var horaExpiracion = horaInicio + 4 * 60 * 60 * 1000; // 4 horas en milisegundos
+  var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
   var tiempoRestante = horaExpiracion - new Date().getTime();
 
   return tiempoRestante;
 }
 
-// Función para mostrar el tiempo restante en el div correspondiente
+// FunciÃ³n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
-    tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      sessionStorage.removeItem("magi-usuario");
+      sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
+      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      modal.style.display = "block";
   } else {
     var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
     var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
     var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
 
-    tiempoRestanteDiv.innerHTML =
-      "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+    tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
   }
 }
 
-// Función para iniciar el contador de tiempo
+// FunciÃ³n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -895,6 +898,7 @@ function iniciarContadorTiempo(tiempoRestante) {
       clearInterval(intervalo);
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
       tiempoRestanteDiv.innerHTML = "Tiempo expirado";
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
       modal.style.display = "block";
@@ -904,24 +908,25 @@ function iniciarContadorTiempo(tiempoRestante) {
   }, 1000);
 }
 
+
 ////////////////////// CAMBIAR LA CLAVE DE USUARI ////////////////////////
 
-document.getElementById("cambiar_clave").addEventListener("click", function () {
-  event.preventDefault();
-
+document.getElementById("cambiar_clave").addEventListener("click", function() {
+    event.preventDefault();
+    
   document.getElementById("modal2").style.display = "block";
 });
 
-document.getElementById("guardar_clave").addEventListener("click", function () {
-  event.preventDefault();
+document.getElementById("guardar_clave").addEventListener("click", function() {
+    event.preventDefault();
 
   var usuario_pass = sessionStorage.getItem("magi-usuario");
   var antiguaClave = document.getElementById("antigua_clave").value;
   var nuevaClave = document.getElementById("nueva_clave").value;
-  console.log("cliente: " + usuario_pass + antiguaClave + nuevaClave);
   google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
-  modal2.style.display = "none";
-  alert("Clave cambiada correctamente");
+    modal2.style.display = "none";
+alert('Clave cambiada correctamente');
+
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -929,38 +934,47 @@ document.getElementById("guardar_clave").addEventListener("click", function () {
 ////////////////////////// CERRAR SESION //////////////////////
 
 function close_sessionok(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  // Eliminar el valor almacenado en sessionStorage
-  sessionStorage.removeItem("magi-usuario");
-  sessionStorage.removeItem("magi-horaInicio");
-  tiempoRestanteDiv.innerHTML = "";
-  document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la página
-  modal.style.display = "block";
+    // Eliminar el valor almacenado en sessionStorage
+    sessionStorage.removeItem("magi-usuario");
+      sessionStorage.removeItem("magi-horaInicio");
+      tiempoRestanteDiv.innerHTML = "";    
+      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+  // Recargar la pÃ¡gina
+      modal.style.display = "block";
+
 }
+
 
 //////////// CAMBIAR COLOR DE FONDO //////////////////////////
-function changeColor() {
-  var colorPicker = document.getElementById("colorPicker");
-  var color = colorPicker.value;
-  var usuario = sessionStorage.getItem("magi-usuario");
-  sessionStorage.setItem("magi-color", color);
-  document.body.style.backgroundColor = color;
+            function changeColor() {
+                var colorPicker = document.getElementById("colorPicker");
+                var color = colorPicker.value;
+                var usuario = sessionStorage.getItem("magi-usuario");
+        sessionStorage.setItem("magi-color", color);
+        document.body.style.backgroundColor = color;
 
-  google.script.run
-    .withSuccessHandler(onSuccess)
-    .withFailureHandler(onFailure)
-    .changeBackgroundColor(color, usuario);
-}
+                google.script.run
+                    .withSuccessHandler(onSuccess)
+                    .withFailureHandler(onFailure)
+                    .changeBackgroundColor(color, usuario);
 
-function onSuccess() {
-  console.log("Color de fondo almacenado correctamente.");
-}
+            }
 
-function onFailure(error) {
-  console.error("Error al almacenar el color de fondo:", error);
-}
+            function onSuccess() {
+                console.log("Color de fondo almacenado correctamente.");
+
+                
+            }
+
+            function onFailure(error) {
+                console.error("Error al almacenar el color de fondo:", error);
+            }
+
+            
+////////////////////////////////////////////////////////////////////////////////
+
 
 ////////////////////////// EVENTLISTENERS //////////////////////////////////////////////////////
 
