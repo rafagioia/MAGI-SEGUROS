@@ -1,73 +1,136 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>SISTEMA DE EMISION - GESTION</title>
+  <head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-  <base target="_top">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-<?!= include('CSS_Polizas'); ?>
-</head>
+  <!-- Estilos en entorno de Google Appscript -->
+  <!-- <?!= include('EmisionCSS'); ?> -->
+  <!-- Fin de Estilos en entorno de Google Appscript -->
 
-<body style="background-color: #03BB85">
+  <!-- Estilos en entorno comun -->
+  <link rel="stylesheet" href="EmisionCSS.css">
+  <!-- Fin de Estilos en entorno comun -->
+
+    <title>SISTEMA DE EMISION</title>
+  </head>
+  <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
-    <a class="navbar-brand" href="#">&nbsp;&nbsp;SISTEMA DE EMISION - GESTION DE POLIZAS</a>
- <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
+    <a class="navbar-brand fs-5" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE EMISION - INGRESAR POLIZA</a>
+    <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+        <!-- Menú principal -->
+    <!-- <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Cobranzas
           </a>
           <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
             <a class="dropdown-item"
               href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
-              id="pago">Pagos Marcos Paz</a>
+              id="dropdown-item">Pagos Marcos Paz</a>
               <a class="dropdown-item"
               href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
-              id="pago">Pagos Mariano Acosta</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec">Cierre Caja Diaria</a>
-            <a class="dropdown-item" href="#" onclick="loadPage('Comisiones')">Comisiones (en construccion)</a>
-            <a class="dropdown-item" href="#" onclick="loadPage('Comisiones')">Deudores (en construccion)</a>
-            <a class="dropdown-item" href="#" onclick="loadPage('Comisiones')">Avisos Pagos (en construccion)</a>
+              id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec">Deudores Pasados</a>
+            <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwo5gTWUE53KhjSllzENI3agZL5JgJquIyd1W_tzbP5V2ZnG_6tcpPhJx4uyytV5cw5/exec">Gestion Deudores</a>
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="emisionDropdown" role="button" data-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Emisión
           </a>
           <div class="dropdown-menu" aria-labelledby="emisionDropdown">
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" onclick="loadPage('SeguroNuevo')">Ingresar Seguro</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" onclick="loadPage('Buscar')">Gestion Pólizas</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Siniestros
           </a>
           <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
             <a class="dropdown-item"
               href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
-              onclick="loadPage('Denuncia')">Ingresar Denuncia</a>
+              id="dropdown-item" >Ingresar Denuncia</a>
             <a class="dropdown-item"
               href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
-              onclick="loadPage('AgendaSiniestros')">Gestion Siniestros</a>
+              id="dropdown-item">Gestion Siniestros</a>
           </div>
         </li>
-</ul>
-</div>
-<div style="display: none">
-            <input type="text" id="userName_hide"  name="userName_hide">
-  </div>
-<input type="text" style="display:none;" id="user_sp" name="user_sp">
-<div id="tiempo-restante"></div>
+      </ul>
+    </div> -->
+        <!-- Fin de Menú principal en entorno de Google Appscript-->
+
+    <!-- Menú principal en entorno normal-->
+    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Cobranzas
+          </a>
+          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
+            <a class="dropdown-item"
+              href="./COBRANZAS_PAGOS_MP/registro.html"
+              id="dropdown-item">Pagos Marcos Paz</a>
+            <a class="dropdown-item"
+            href="./COBRANZAS_PAGOS_MA/registro.html"
+            id="dropdown-item">Pagos Mariano Acosta</a>
+            <a class="dropdown-item"
+            href="./COBRANZAS_CIERRE_CAJA/cajadiaria.html"
+            id="dropdown-item">Cierre Caja Diaria</a>
+            <a class="dropdown-item"
+              href="./COBRANZAS_DEUDORES_PASADOS/deudores_pasados.html"
+              id="dropdown-item">Deudores Pasados</a>
+              <a class="dropdown-item"
+              href="./COBRANZAS_GESTION_DEUDORES/gestion_deudores.html"
+              id="dropdown-item">Gestion Deudores</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Emisión
+          </a>
+          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
+            <a class="dropdown-item"
+              href="/EMISION_INGRESO/Emision.html"
+              id="dropdown-item">Ingresar Seguro</a>
+              <a class="dropdown-item"
+              href="/EMISION_GESTION/Polizas.html"
+              id="dropdown-item">Gestion Pólizas</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Siniestros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
+            <a class="dropdown-item"
+              href="/SINIESTROS_INGRESO/Denuncia.html"
+              id="dropdown-item">Ingresar Denuncia</a>
+              <a class="dropdown-item"
+              href="/SINIESTROS_GESTION/Gestion.html"
+              id="dropdown-item">Gestion Siniestros</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Fin de Menú principal en entorno normal-->
+    <!-- Menú flotante en el lado derecho -->
+    <div class="collapse navbar-collapse" id="navbarNavRight">
+      <div id="tiempo-restante"></div>
 <div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
 <ul class="navbar-nav">
         <li class="nav-item dropdown">
@@ -93,11 +156,11 @@
             
           </div>
         </li>
-</ul>
-<div>&nbsp;&nbsp;</div>
-<div class="navbar-text ml-auto fs-6">&nbsp;&nbsp;&nbsp;&nbsp;MAGI v1.0&nbsp;&nbsp;</div>
-</nav>
-
+      </ul>
+    </div>
+    <!-- Fin Menú flotante en el lado derecho -->
+    <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="100px" alt="logo"> v1.2&nbsp;&nbsp;</div>
+  </nav>
 
 <br>
 
@@ -150,51 +213,145 @@
 
 
 
+        <form id="formularioEmision" name="formularioEmision" class="needs-validation">
+<div class="row">
+<!----------------------- INGRESO DE DATOS ----------------->
 
-  <div class="row">
+                  <div class="col-4 container"  style="margin-bottom: 25px;">
+                          <div class="text-muted fw-bold p-0" style='text-align: center;'>
+        <span>CARGA DE CLIENTE:</span>
+      </div>
 
-    <div class="col-6 container" style="width: 700px">
-      <form id="visorGeneral">
-        <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<!----- SECTOR CLIENTE ------->
-          <div class="row p-0 m-0" style="border-bottom: 2px solid #000000">
-            <div class="col-2 p-0 text-sm" style="width: 60px; height: 60px; margin-right: 12px;" >
-<img src="https://drive.google.com/uc?id=1_VD-SQ8M_dzoAwKF7lepJut7zNqyzI9z" alt="Imagen" style="width: 60px;">
-                </div>
-            <div class="col-6 m-0 p-0 text-sm" >
-            <input type="text" class="form-control-xs p-0 bg-transparent border-0 text-dark fs-5"
-          style="font-weight: 500;width: 360px;margin-top: 4px;" id="nombre" name="nombre" placeholder="" readonly><br>
-          <div class="row" style='margin-left: 1px;font-weight: 500;font-size: 14px;'>DNI:
-              <input type="text" class="form-control-xs m-0 bg-transparent border-0 text-dark"
-                style='font-weight: 500;font-size: 14px; width: 91px; height: 20px; padding-left: 4px' id="dni" name="dni" placeholder="" readonly></div>
-            </div>
-            <div class="col-4  m-0  p-0 text-sm" style="text-align: center;">
-            </div>
+
+<hr>
+
+          <div class="row">
+            <div class="col-5 justify-content-center">
+          <label for="buscar_dni" class="form-label mr-0 text-muted fw-bold">BUSCAR X NOMBRE:</label>
           </div>
-<!----- FIN SECTOR CLIENTE ------->
+          <div class="col-4  text-center">
+          
+          <input type="text" class="form-control form-control-sm ml-0 mr-0" id="text-box-numeroInventario_nombre" name="buscar_nombre" placeholder="Buscar por Nombre" oninput="this.value=this.value.toUpperCase()">
+          </div>
+                            <div class="col-3  text-center">
+              <button type="button"  id="buscarRegistrosBtn3" class="btn btn-success btn-sm ml-0 mr-0" onclick="buscarRegistros_nombre_emision()">BUSCAR
+<span id="spinner3" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+          </div>
+          </div>
+
+<hr>
+          <div class="row">
+            <div class="col-5 justify-content-center">
+          <label for="buscar_dni" class="form-label mr-0 text-muted fw-bold">BUSCAR POR DNI:</label>
+          </div>
+          <div class="col-4  text-center">
+          
+          <input type="number" class="form-control form-control-sm ml-0 mr-0" id="text-box-numeroInventario_dni" name="buscar_dni" placeholder="Buscar por DNI">
+          </div>
+                            <div class="col-3  text-center">
+              <button type="button"  id="buscarRegistrosBtn4" class="btn btn-success btn-sm ml-0 mr-0" onclick="buscarRegistros_dni_emision()">BUSCAR
+<span id="spinner4" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+          </div>
+          </div>
+
+<hr>
+  <div id="valoresContainer" class='bg-light border p-2' style='display: none;border-radius:5px; border: 2px solid #000; box-shadow: 0px 0px 3px 0px #000;background-color: #FFFFFF'>
+    <div class="row m-0 mb-1">
+      <div class="col-3 text-muted fw-bold p-0" style='text-align: center;'>
+        <span id="dniValor"></span>
+      </div>
+      <div class="col-9 text-muted fw-bold text-truncate  p-0">
+        <span id="nombreCompletoValor"></span>
+      </div>
+    </div>
+    <div class="row m-0  p-0">
+            <div class="col-4 fw-bold">
+        <div class="row" style="border-radius:10px;color:white; background-color: #009B7D; box-shadow: 0px 0px 2px 0px #000000;">
+       <div class="col-2 p-0">
+        <div id="logoValor"></div>
+      </div>
+      <div class="col-10 fw-bold"  style="color: #FFFFFF; padding-left: 4px;">
+        <span id="whatsappValor"></span>
+      </div>
+      </div>
+      </div>
+            <div class="col-8 fw-bold">
+        <div class="row mx-1 bg-light border" style="text-align: left; border-radius:5px; color: #9B9B9B; ">
+        <span id="statCte">NO MODIFICA DATOS</span>
+      </div>
+      </div>
+    </div>
+</div>
 
 
-<!----- SECTOR FORM CLIENTE ------->
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+<div id="formContainer" class='cte-container bg-light border' style='display: none; margin-bottom: 0;border-radius:5px; padding: 5px 10px 5px 20px; border: 2px solid #000; box-shadow: 0px 0px 3px 0px #000;background-color: #FFFFFF'>
 
+          <button type="button" id="crearClienteBtn" class="btn btn-success btn-sm ml-0 mr-0">OCULTAR</button><br>
 
           <div class="row">
           <div class="col-2">
             <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">Domicilio:</label>
+          <label for="dni" class="form-label mt-1">DNI:</label>
             </div>
           </div>
           <div class="col-4">
+            <div class="mb-1">
+          <input type="number" class="form-control form-control-sm" id="dni" name="dni" placeholder="Ingrese el DNI" required>
+            </div>
+            </div>
+           <div class="col-2">
+            <div class="mb-1">
+            <select class="form-select form-select-sm" id="cuit_s" name="cuit_s" onchange="calcularUltimoNumeroCuit()">
+<option value="20">CUIT M 20</option>
+<option value="27">CUIT F 27</option>
+<option value="23">CUIT 23</option>
+<option value="24">CUIT 24</option>
+                </select>
+            </div>
+            </div>
+
+          <div class="col-4">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="cuit" name="cuit" style="border: none;" readonly>
+            </div>
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="nombreCompleto" class="form-label mt-1">Cliente:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="nombreCompleto" name="nombreCompleto" placeholder="Nombre completo" required>
+            </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="nombreCompleto" class="form-label mt-1">Domicilio:</label>
+            </div>
+          </div>
+          <div class="col-9">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="domicilio" name="domicilio" placeholder="Calle y numero" required>
             </div>
             </div>
-          <div class="col-2">
+          </div>
+
+
+                    <div class="row">
+          <div class="col-3">
             <div class="mb-1">
           <label for="nombreCompleto" class="form-label mt-1">Localidad:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-9">
             <div class="mb-1">
            <select class="form-select form-select-sm" id="localidad" name="localidad" placeholder="" required>
   <optgroup label="Localidades frecuentes:">
@@ -683,12 +840,12 @@
           </div>
 
           <div class="row">
-          <div class="col-2">
+          <div class="col-3">
             <div class="mb-1">
           <label for="wpp" class="form-label mt-1">Whatsapp</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-5">
             <div class="mb-1">
           <input type="number" class="form-control form-control-sm" id="wpp" name="wpp" placeholder="10 digitos" pattern="\d{10}" required>
           
@@ -700,7 +857,7 @@
             </div>
           </div>
 
-          <div class="col-4">
+          <div class="col-2">
             <div class="mb-1">
           <button style='width: 32px;height:32px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button>
             </div>
@@ -708,22 +865,25 @@
           </div>
 
            <div class="row">
-          <div class="col-2">
+          <div class="col-3">
             <div class="mb-1">
           <label for="nombreCompleto" class="form-label mt-1">Mail:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-9">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="mail" name="mail" placeholder="mail: xxxx@xxx.xxx">
             </div>
             </div>
-          <div class="col-2">
+          </div>
+
+          <div class="row">
+          <div class="col-3">
             <div class="mb-1">
           <label for="nombreCompleto" class="form-label mt-1">F. Pago:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-9">
             <div class="mb-1">
            <select class="form-select form-select-sm" id="fpago" name="fpago" placeholder="" required>
 <option value="CUPONES">CUPONES</option>
@@ -735,66 +895,170 @@
           </div>
 
           <div class="row">
-          <div class="col-2">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="nombreCompleto" class="form-label mt-1">Sucursal:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+                         <select class="form-select form-select-sm" id="sucursal" name="sucursal" placeholder="" required>
+<option value="MARCOS PAZ">MARCOS PAZ</option>
+<option value="MARIANO ACOSTA">MARIANO ACOSTA</option>
+<option value="JS AUTOMOTORES">JS AUTOMOTORES</option>
+<option value="DEL BENE">DEL BENE</option>
+<option value="AUTOMANIA">AUTOMANIA</option>
+                </select>
+            </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+          <div class="col-3">
             <div class="mb-1">
           <label for="notas" class="form-label mt-1">NotasCte:</label>
             </div>
           </div>
-          <div class="col-10">
+          <div class="col-9">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notascte" name="notascte" placeholder="Notas sobre el cliente">
             </div>
             </div>
           </div>
-
+          
+<hr>
+<div class="row">
+  <div class="col-8">VEHICULOS VIGENTES DEL CLIENTE:
+    </div>
+  <div class="col-4">
+    <button type="button"  id="bt-buscar" class="btn btn-success btn-sm ml-0 mr-0">BUSCAR
+<span id="spinner12" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+    </div>
+              
 </div>
 
+    <div class="p-2" style="height: 200px; overflow-y: scroll;">
+      <div id="sinPendientes"></div>
+    </div>
+
+</div>
+<!---- FIN DE INGRESO DE CLIENTE ----->
+
+</div>
+<!----- FIN DE CARGA CLIENTE SECTOR #1---->
 <br>
 
 
-<!----- FIN SECTOR FORM CLIENTE ------->
+<!----- INICIO DE TABLA DE VEHICULOS ---->
+<div class="col-4 container"  style="margin-bottom: 25px;display: none;">
+
+                            <div class="text-muted fw-bold p-0" style='text-align: center;'>
+        <span>CARGA DE VEHICULO:</span>
+      </div>
+<hr>
+
+<!---- INICIO DE CARGA VEHICULOS -----> 
+<div class="row">
+  <div class="col-5 justify-content-center">
+    <label for="buscar_dni" class="form-label mr-0 text-muted fw-bold">BUSCAR PATENTE:</label>
+  </div>
+  <div class="col-4  text-center">
+    <input type="text" class="form-control form-control-sm" oninput="this.value=this.value.toUpperCase()" id="patente" name="patente" placeholder="Ingrese patente">
+  </div>
+  <div class="col-3  text-center">
+    <button type="button" id="buscarRegistrosBtn2" class="btn btn-success btn-sm ml-0 mr-0" onclick="buscarRegistros_emision()">
+      BUSCAR
+      <span id="spinner2" class="spinner-border spinner-border-sm" style="display:none"></span>
+    </button>
+  </div>
+</div>
+
+<hr>
+<div class="container-2">
+  <div id="valoresContainer_veh" class='bg-light border p-2' style='display: none; margin-bottom: 0;border-radius:5px; border: 2px solid #000; box-shadow: 0px 0px 3px 0px #000;background-color: #FFFFFF'>
+    <div class="row mb-1">
+      <div class="col-3 text-muted fw-bold" style='text-align: center;'>
+        <span id="patenteValor"></span>
+      </div>
+      <div class="col-9 text-muted fw-bold text-truncate">
+        <span id="marcaValor"></span>
+      </div>
+    </div>
+    <div class="row m-0  p-0">
+            <div class="col-4 fw-bold" style="padding-left: 4px;">
+        <div class="row" style="border-radius:8px;text-align: center; color:white; background-color: #0A497B; box-shadow: 0px 0px 2px 0px #000000;">
+      <div class="col-12 fw-bold" style='color: #FFFFFF;'>
+        <span id="cniaValor"></span>
+      </div>
+      </div>
+      </div>
+            <div class="col-8 fw-bold" >
+        <div class="row mx-1 bg-light border" style=" text-align: left; border-radius:5px; color: #9B9B9B;">
+        <span id="statVeh">NO MODIFICA DATOS</span>
+      </div>
+      </div>
+    </div>
+</div>
+</div>
+
+  <div id="formContainer_veh" class='cte-container bg-light border' style='display: none; margin-bottom: 0;border-radius:5px; padding: 5px 10px 5px 20px; border: 2px solid #000; box-shadow: 0px 0px 3px 0px #000;background-color: #FFFFFF'>
+
+          <button type="button" id="crearClienteBtn_veh" class="btn btn-success btn-sm ml-0 mr-0">OCULTAR</button><br>
 
 
-<!----- SECTOR VEHICULO ------->
-          <div class="row m-0" style="border-bottom: 2px solid #000000; padding: 5px 0px 5px 0px;">
-            <div class="col-3 p-0 text-sm" style="margin: auto;" >
-              <input type="text" class="form-control-xs  m-0 p-0 pt-1 bg-transparent border-0 text-dark fs-5"
-                style='text-align: center; border: 2px solid black;border-radius:5px; box-shadow: 0px 0px 2px 0px #000000;padding: 1px; background-image: url("https://drive.google.com/uc?id=19QdP6YcZkkXV0ogbAb8XwqQdITPWwIuf"); background-size: contain; background-repeat: no-repeat; width: 140px; height: 45px;'
-                id="patente" name="patente" placeholder="" readonly>
-                </div>
-            <div class="col-9 m-0 p-0 text-sm">
-              <div><input type="text" class="form-control-xs  m-0 p-0 bg-transparent border-0 text-dark fs-6"
-                style="font-weight: 500;" id="marca" name="marca" placeholder="" readonly></div>
-              <div>MOTOR : || CHASIS:</div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="patente" class="form-label mt-1">Patente:</label>
             </div>
           </div>
-<!----- FIN SECTOR VEHICULO ------->
+          <div class="col-4">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" onchange="buscarModelo()" id="patente_sn" name="patente_sn" placeholder="Patente" required>
+            </div>
+            </div>
+          <div class="col-5">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="modelo" name="modelo" style="border: none;" readonly>
+            </div>
+            </div>
+          </div>
+          
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="marca" class="form-label mt-1">MarcaVeh:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="marca" name="marca" placeholder="Marca y Modelo + Año" required>
+            </div>
+            </div>
+          </div>
 
-<!----- SECTOR FORM VEH ------->
-
-
-
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-
-
-           <div class="row">
-          <div class="col-2">
+                    <div class="row">
+          <div class="col-3">
             <div class="mb-1">
           <label for="marca" class="form-label mt-1">Motor:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-9">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="motor" name="motor" placeholder="N° Motor">
             </div>
             </div>
-          <div class="col-2">
+          </div>
+
+
+                    <div class="row">
+          <div class="col-3">
             <div class="mb-1">
           <label for="marca" class="form-label mt-1">Chasis:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-9">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="chasis" name="chasis" placeholder="N° Chasis">
             </div>
@@ -803,15 +1067,15 @@
 
 
                     <div class="row">
-          <div class="col-2">
+          <div class="col-3">
             <div class="mb-1">
                 <label for="cnia" class="form-label mt-1">Compañia:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-9">
             <div class="mb-1">
                 <select class="form-select form-select-sm" id="cnia" name="cnia" placeholder="" required>
-                  <option value="">""</option>
+                  <option value="AGROSALTA">""</option>
                   <option value="AGROSALTA">AGROSALTA</option>
                   <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
                   <option value="RIVADAVIA">RIVADAVIA</option>
@@ -832,15 +1096,15 @@
                 </select>
             </div>
             </div>
-          <div class="col-2">
+          </div><div class="row">
+          <div class="col-3">
             <div class="mb-1">
                 <label for="cnia" class="form-label mt-1">Cobertura:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-9">
             <div class="mb-1">
                 <select class="form-select form-select-sm" id="cobertura" name="cobertura" placeholder="" required>
-<option value="">""</option>
 <option value="A">A</option>
 <option value="B1">B1</option>
 <option value="B1 - COBRE">B1 - COBRE</option>
@@ -887,34 +1151,12 @@
             </div>
           </div>
                     <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="importe" class="form-label mt-1">Importe:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="importe" name="importe" placeholder="">
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="poliza" class="form-label mt-1">Poliza:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="poliza" name="poliza" placeholder="">
-            </div>
-            </div>
-          </div>
-                    <div class="row">
-          <div class="col-2">
+          <div class="col-3">
             <div class="mb-1">
           <label for="vto" class="form-label mt-1">Vigencia:</label>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm" id="vigencia" name="vigencia" placeholder="dd/mm/aa"  required>
             </div>
@@ -924,255 +1166,222 @@
           <div class="mt-1 ml-0">Hasta:</div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm" id="hasta" name="hasta" placeholder="dd/mm/aa" required>
             </div>
             </div>
           </div>
-                              <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="poliza" class="form-label mt-1">Operación:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-              <select class="form-select form-select-sm mt-1" id="operacion" name="operacion" placeholder="">
-                <option value=""></option>
-                <option value="PENDIENTE">PENDIENTE</option>
-<option value="SEGURO NUEVO">SEGURO NUEVO</option>
-<option value="RENOVACION">RENOVACION</option>
-<option value="ANULACION">ANULACION</option>
-              </select>
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">Sucursal:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-                         <select class="form-select form-select-sm" id="sucursal" name="sucursal" placeholder="" required>
-<option value="">""</option>
-<option value="MARCOS PAZ">MARCOS PAZ</option>
-<option value="MARIANO ACOSTA">MARIANO ACOSTA</option>
-                </select>
-            </div>
-            </div>
-          </div>
-
           <div class="row">
-          <div class="col-2">
+          <div class="col-3">
             <div class="mb-1">
           <label for="poliza" class="form-label mt-1">Daños:</label>
             </div>
           </div>
-          <div class="col-10">
+          <div class="col-9">
             <div class="mb-1">
           <input type="text" class="form-control form-control-sm" id="danios" name="danios" placeholder="Daños existentes">
             </div>
             </div>
           </div>
-
           <div class="row">
-          <div class="col-2">
+          <div class="col-3">
             <div class="mb-1">
           <label for="poliza" class="form-label mt-1">NotasVeh:</label>
             </div>
           </div>
-          <div class="col-10">
+          <div class="col-9">
             <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="notas" name="notas" placeholder="Observaciones">
+          <input type="text" class="form-control form-control-sm" id="notasveh" name="notasveh" placeholder="Observaciones">
             </div>
             </div>
           </div>
-
-
-
-
-          </div>
-<br>
           <div class="row">
-          <div class="col-8">
+          <div class="col-12">
             <div class="mb-1">
-            </div>
-            </div>
-          <div class="col-4">
-            <div class="mb-1">
-              
-               <button class="btn btn-success mx-5" id="bt-modificar-datos" style="border-radius: 30px;">Modificar<span id="spinner5" class="spinner-border spinner-border-sm" style="display:none;"></span></button>
-
+          <input type="text" class="form-control form-control-sm" id="notasvehold" name="notasvehold" placeholder="Observaciones">
             </div>
             </div>
           </div>
+          <hr>
 
-<!------- FIN SECTOR FORM VEH ------>
-
-          <hr style="margin-bottom: 0px;">
-
-
-
-      </form>
-      <br>
-      <!------------ NUEVA MODIFICACION A LA POLIZA --------------->
-      <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-
-        <div class="row  m-0 p-0 bg-light py-2">GESTIONAR POLIZA:</div>
-        <form id="nuevo_estado_form">
-          <div class="row">
-            <div class="col-2  m-0 p-0"> 
-            </div>
-
-            <div class="col-4  m-0 p-0"> Novedad:<br>
-              <select class="form-select form-select-sm mt-1" style='border-radius: 30px' id="novedad_sn"
-                name="novedad_sn" placeholder="">
-                <option value=""> </option>
-                <option value="ALTA DE POLIZA">ALTA DE POLIZA</option>
-                <option value="BAJA DE POLIZA">BAJA DE POLIZA</option>
-                <option value="PROBLEMAS DE EMISION">PROBLEMAS DE EMISION</option>
-                <option value="OTROS">OTROS</option>
-              </select>
-            </div>
-            <div class="col-3  m-0 p-0" id="operacion_sn2" style="display: none;">Operación:<br>
-            <select class="form-select form-select-sm mt-1" id="operacion_sn" name="operacion_sn" placeholder="" style="border-radius: 30px;">
-<option value="SEGURO NUEVO">SEGURO NUEVO</option>
-<option value="ANULACION">ANULACION</option>
-              </select>
-            </div>
-            <div class="col-3  m-0 p-0" id="poliza_sn2" style="display: none;">Póliza:<br>
-              <input type="number" class="form-control form-control-sm mt-1" style="border-radius: 30px;"
-                id="poliza_sn" name="poliza_sn" placeholder="">
-            </div>
-          </div>
-
-          <div class="row m-0">
-            <label for="estado">Observaciones / Motivos:</label>
-            <input type="text" class="form-control" style="height:80px" id="notas_sn" name="notas_sn" placeholder="">
-          </div>
-
-          <div class="row  m-0 p-0 bg-light py-2">
-
-
-            <div class="col-9">
-            </div>
-
-            <div class="col-3">
-
-              <button id="bt-actualizar_nota" class="btn btn-success" style="border-radius: 30px;">Gestionar</button>
-            </div>
-          </div>
-    </form>
-      </div>
-  <!------------ FIN NUEVA MODIFICACION A LA POLIZA --------------->
-
-            <!------------ MAILS DEL CASO --------------->
-      <div class="visor bg-light shadow p-3" style="border-radius: 10px;">    
-        <form id="ver_mails_form">
 <div class="row">
-        <div class="col-8 m-0 p-0">MAILS REFERIDOS AL CASO:</div>
-        <div class="col-4 m-0 p-0">
-           <button id="bt-ver-mails" class="btn btn-success" style="border-radius: 30px;" type="submit">Ver Emails</button>
-            </div>
-            </div>
-</form>
-
-<div id="emails"></div>
-      </div>
-      <!------------ FIN MAILS DEL CASO --------------->
-
-
+  <div class="col-8">CLIENTE ASOCIADO AL VEHICULO:
     </div>
-  </div>
-  <!---------- AREA DE POLIZAS PENDIENTES ------------>
-
-  <div class="col-6 container" id="miDiv" style="width: 700px">
-    FILTRAR POLIZAS:
-    <div class="row">
-      <div class="col-4  m-0"> Patente:<br>
-        <input type="text" class="form-control form-control-sm" id="patenteSelect" name="patenteSelect"
-          placeholder="Ingrese patente" oninput="this.value=this.value.toUpperCase()">
-      </div>
-      <div class="col-4  m-0"> DNI:<br>
-        <input type="text" class="form-control form-control-sm" id="dniSelect" name="dniSelect"
-          placeholder="Ingrese DNI">
-      </div>
-      <div class="col-4  m-0"> Cliente:<br>
-        <input type="text" class="form-control form-control-sm" id="nombreSelect" name="nombreSelect"
-          placeholder="Apellido y Nombre" oninput="this.value=this.value.toUpperCase()">
-      </div>
+  <div class="col-4">
+    <button type="button"  id="bt-buscar2" class="btn btn-success btn-sm ml-0 mr-0">BUSCAR
+<span id="spinner11" class="spinner-border spinner-border-sm" style="display:none"></span></button>
     </div>
-    <div class="row pt-0 mt-0 mb-2">
-      <!-- <div class="col-4  m-0"> Fecha Gestion:<br>
-        <input type="text" class="form-control form-control-sm" id="gestionSelect" name="gestionSelect"
-          placeholder="D/M (ej: 3/4)">
-      </div> -->
-      <div class="col-6  m-0"> Compañía:<br>
-        <select class="form-select form-select-sm" id="companiaSelect" name="companiaSelect" placeholder="">
-          <option value="">Todas</option>
-          <option value="AGROSALTA">AGROSALTA</option>
-          <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
-          <option value="RIVADAVIA">RIVADAVIA</option>
-          <option value="FED PAT">FED PAT</option>
-          <option value="PROVIDENCIA">PROVIDENCIA</option>
-          <option value="RIO URUGUAY">RIO URUGUAY</option>
-          <option value="ATM">ATM</option>
-          <option value="LA CAJA">LA CAJA</option>
-          <option value="NIVEL">NIVEL</option>
-          <option value="MAPFRE">MAPFRE</option>
-          <option value="BENEFICIO">BENEFICIO</option>
-          <option value="MERCANTIL">MERCANTIL</option>
-          <option value="LIBRA">LIBRA</option>
-          <option value="GRUA">GRUA</option>
-          <option value="AGRO (V)">AGRO (V)</option>
-          <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
-        </select>
-      </div>
-      <div class="col-6 m-0"> Operación:<br>
-        <select class="form-select form-select-sm" id="estadoSelect" name="estadoSelect" placeholder="">
-                <option value="PENDIENTE">PENDIENTE</option>
+              
+</div>
+
+    <div class="p-2" style="height: 200px; overflow-y: scroll;">
+      <div id="sinPendientes2"></div>
+    </div>
+
+          </div>
+           <!--- FIN DIV BLOQUE VEHICULO --->
+
+
+
+<hr>
+
+
+            <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="operacion" class="form-label mt-1">Operacion:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+                              <select class="form-select form-select-sm" id="operacion" name="operacion" placeholder="">
 <option value="SEGURO NUEVO">SEGURO NUEVO</option>
+<option value="PENDIENTE">PENDIENTE</option>
 <option value="RENOVACION">RENOVACION</option>
 <option value="ANULACION">ANULACION</option>
-        </select>
+                </select>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="importe" class="form-label mt-1">Importe:</label>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="importe" name="importe" placeholder="Importe">
+            </div>
+            </div>
+          <div class="col-2">
+            <div class="mb-1">
+          <label for="poliza" class="form-label mt-1">Poliza:</label>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-1">
+          <input type="text"  class="form-control form-control-sm" id="poliza" name="poliza" placeholder="N° de Poliza">
+            </div>
+            </div>
+          </div>
 
-      </div>
+<div id="alertMessage" class="alert alert-danger" style="display: none;"></div>
 
-      <div class="row pt-0 m-0">
-        <div class="col-7  m-0 p-2">
+            <div class="row">
+          <div class="col-9">
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="polizas-vigentes">
-            <label class="form-check-label" for="polizas-activas">
-              Polizas vigentes
+            <input class="form-check-input" type="checkbox" id="notifica" name="notifica">
+            <label class="form-check-label" for="notifica">
+              Notificaciones de Vto
               <span class="form-check-input-indicator"></span>
             </label>
           </div>
+            </div>
+          <div class="col-3">
+            <div class="mb-1">
+ <button type="submit" class="btn btn-success text-right mt-1" id="bt-ingreso" >INGRESAR<span id="spinner5" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+            </div>
+            </div>
+          </div>
+
+
+          
+</form>
+
+
+</div>
+<!--- FIN DE SECTOR #2 ---->
+
+
+
+<!----- INICIO DE SECTOR #3  ???? ---->
+<!----- SECTOR: #3 ??? ---->
+<div class="col-4 container">
+<div id="take_pict_menu">
+    <!-- <button type="button" id="bt-fotos" class="btn btn-success btn-sm ml-0 mr-0">TOMAR FOTOS</button> -->
+<div class="row">
+  <div class="col-9"><br>
+        <span style="justify-content: center;">TOMAR FOTOS DEL VEHICULO:</span>
         </div>
-        <div class="col-2  m-0 p-2">
-          <button class="btn btn-danger btn-sm" id="bt-reset">Reset</button>
-        </div>
-        <div class="col-3  m-0 p-2">
-
-                    <button id="bt-buscar" class="btn btn-primary btn-sm">Filtrar Poliza
-          <span id="spinner_filtrar" class="spinner-border spinner-border-sm" style="display:none"></span></button>
-        </div>
-      </div>
+        <div class="col-3">
+<button style='width: 200px;height:200px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1FaV0CsCqxKtm-vnZO6eTq3zwZ7iMIWEO"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-fotos" ></button>
+</div>
+</div>
 
 
-    </div>
+<div style="display: none;" id="take_photos">
+ <div class="row p-0 mb-1" style="border: 1px solid black; border-radius: 15px;margin: auto;">
+  
+<div class="col-9 p-0 m-0 d-flex justify-content-center">
+  <video id="videoElement" autoplay></video>
+</div>
+<div class="col-3" style="margin: auto;">
+  <button style='width: 150px;height:150px;background-image: url("https://drive.google.com/uc?id=1FlTl5xpad9nwGmcdDWZJhdrRilqFY8ex"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;' id="bt-capturePhoto" ></button>
+  <br>
+  <button style='width: 150px;height:150px;background-image: url("https://drive.google.com/uc?id=1FfRvYqpzbgTVoDSB23Pk0jwVjJGWZLjN"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;' id="bt-switchCamera" ></button>
+  <br>
+    <button style='width: 150px;height:150px;background-image: url("https://drive.google.com/uc?id=1IqkNkhzT4TZaKY4_Tfc81Q5vhhG-0BoX"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;' id="capturePhoto2" onclick="tomarFoto()"></button>
+  <br>
 
-    <div class="p-2" style="height: 940px; overflow-y: scroll;">
-      <div id="sinPendientes"></div>
-    </div>
+    <canvas id="canvas2" width="500" height="800"style="display:none;"></canvas>
+    <div id="resultado" style="display:none;"></div>
+    <img id="img-modificada" src="" alt="Imagen modificada"style="display:none;">
+</div>
   </div>
-  <!---------- FIN AREA DE POLIZAS PENDIENTES ------------>
-
+  <div class="row mb-3">
+  <div class="image-container" id="imageContainer"></div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
-  <?!= include('JS_Polizas'); ?>
-</body>
+  <div class="row">
+  <button id="bt-sendPhotos" class="btn btn-success btn-sm ml-0 mr-0" style="border-radius: 15px;">Enviar fotos</button>
+    </div>
+</div>
+<hr>
+</div>
 
+          <div class="row">
+            <div class="col-5 justify-content-center">
+          <label for="buscar_dni" class="form-label mr-0 text-muted fw-bold">LIMPIAR DATOS:</label>
+          </div>
+          <div class="col-4  text-center">
+          </div>
+                            <div class="col-3  text-center">
+              <button type="button"  id="buscarRegistrosBtn4" class="btn btn-success btn-sm ml-0 mr-0" onclick="cleanservice()">LIMPIAR
+<span id="spinner_clean" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+          </div>
+          </div>
+
+<hr>
+<div class="row">
+  <div class="col-9">COBERTURAS PERMITIDAS:
+  </div>
+    <div class="col-3">
+    <button type="button"  id="bt-coberturas" class="btn btn-success btn-sm ml-0 mr-0">VER
+      <span id="spinner6" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+    </div>
+</div>
+
+  </div></div></div>
+
+<!--- FIN DE SECTOR #3 ---->
+
+<!----- FIN DEL SECTOR #3 POLIZAS VIGENTES ---->
+<br><br><br>
+
+
+<!---- FIN DE LOS TRES SECTORES --->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
+<!-- Scripts en entorno de Google Appscript -->
+<!-- <?!= include('EmisionJS'); ?> -->
+<!-- Fin de Scripts en entorno de Google Appscript -->
+
+<!-- Scripts en entorno comun -->
+<script src="EmisionJS.js"></script>
+<!-- Fin de Scripts en entorno comun -->
+  </body>
 </html>

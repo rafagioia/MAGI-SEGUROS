@@ -580,7 +580,7 @@ document.getElementById("novedad_sn").addEventListener("change", function() {
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Funci�n para realizar el inicio de sesi�n
+// Función para realizar el inicio de sesión
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -612,19 +612,19 @@ if (usuarioAlmacenado) {
   iniciarContadorTiempo(tiempoRestante);
 } else {
   
-  // Funci�n para abrir el modal
+  // Función para abrir el modal
   modal.style.display = "block";
 
-  // Funci�n para cerrar el modal
+  // Función para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot�n de inicio de sesi�n
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
   document.getElementById("inicio-sesion").addEventListener("click", function (event) {
     event.preventDefault();
 
-    // Obtener el usuario y la contrase�a del formulario
+    // Obtener el usuario y la contraseña del formulario
     var usuario = document.getElementById("usuario").value;
     var contrasena = document.getElementById("contrasena").value;
 
@@ -632,7 +632,7 @@ if (usuarioAlmacenado) {
     var colorPicker = document.getElementById("colorPicker");
     var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contrase�a
+// Hacer una solicitud al servidor para verificar el usuario y la contraseña
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -664,7 +664,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// Funci�n para calcular el tiempo restante en milisegundos
+// Función para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
   var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -673,10 +673,15 @@ function calcularTiempoRestante() {
   return tiempoRestante;
 }
 
-// Funci�n para mostrar el tiempo restante en el div correspondiente
+// Función para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
-    tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      sessionStorage.removeItem("magi-usuario");
+      sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
+      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      modal.style.display = "block";
   } else {
     var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
     var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
@@ -686,7 +691,7 @@ function mostrarTiempoRestante(tiempoRestante) {
   }
 }
 
-// Funci�n para iniciar el contador de tiempo
+// Función para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -695,6 +700,7 @@ function iniciarContadorTiempo(tiempoRestante) {
       clearInterval(intervalo);
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
+      sessionStorage.removeItem("magi-color");
       tiempoRestanteDiv.innerHTML = "Tiempo expirado";
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
       modal.style.display = "block";
@@ -719,7 +725,6 @@ document.getElementById("guardar_clave").addEventListener("click", function() {
   var usuario_pass = sessionStorage.getItem("magi-usuario");
   var antiguaClave = document.getElementById("antigua_clave").value;
   var nuevaClave = document.getElementById("nueva_clave").value;
-console.log("cliente: " + usuario_pass + antiguaClave + nuevaClave)
   google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
     modal2.style.display = "none";
 alert('Clave cambiada correctamente');
@@ -738,7 +743,7 @@ function close_sessionok(event) {
       sessionStorage.removeItem("magi-horaInicio");
       tiempoRestanteDiv.innerHTML = "";    
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la p�gina
+  // Recargar la página
       modal.style.display = "block";
 
 }

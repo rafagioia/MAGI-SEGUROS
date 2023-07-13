@@ -1,5 +1,4 @@
 
-
 ///////////////////////////////////// HTML /////////////////////////////////////////////
 
 
@@ -353,60 +352,6 @@ function buscarMantenimientos6(numeroInventario = "1192774"){
 
 
 
-//////////////// REIMPRIMIR RECIBOS //////////////////////
-function getValuesFromSheet(numRecibo) {
-  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
-  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
-  
-
-  let sourceVals = [];
-  for (let i = 0; i < mantenimientos.length; i++) {
-    if (mantenimientos[i][0] == numRecibo) {
-
-      sourceVals.push(mantenimientos[i]);
-    }
-  }
-
-  sourceVals = sourceVals[0];
-
-  var template = HtmlService.createTemplateFromFile('Recibo');
-  template.sourceVals = sourceVals;
-  var content = template.evaluate().getContent();
-  
-  return content;
-}
-
-//////////////// REIMPRIMIR MULTIRECIBOS X6//////////////////////
-function getValuesFromSheetMulti(numReciboMulti) {
-  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
-  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
-
-  const sourceVals = [];
-  let i = 0;
-  while (i < 6) {
-    let reciboEncontrado = false;
-    for (let j = 0; j < mantenimientos.length; j++) {
-      if (mantenimientos[j][0] == numReciboMulti) {
-        sourceVals.push(mantenimientos[j]);
-        i++;
-        reciboEncontrado = true;
-        break;
-      }
-    }
-    if (!reciboEncontrado) {
-      numReciboMulti--;
-    }
-    else {
-      numReciboMulti--;
-    }
-  }
-  var template = HtmlService.createTemplateFromFile('ReciboMulti');
-  template.sourceVals = sourceVals;
-  var content = template.evaluate().getContent();
-  return content;
-}
-
-
 ////////////////////////  SESION DE USUARIOS ////////////////////////
 
 
@@ -507,6 +452,78 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 
 
 
+
+///////////////////// SCRIPTS RECIBOS DESCARGA / REIMPRIME ///////////////////
+
+//////////////// REIMPRIMIR RECIBOS //////////////////////
+function getValuesFromSheet(numRecibo) {
+  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
+  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
+  
+
+  let sourceVals = [];
+  for (let i = 0; i < mantenimientos.length; i++) {
+    if (mantenimientos[i][0] == numRecibo) {
+
+      sourceVals.push(mantenimientos[i]);
+    }
+  }
+
+  sourceVals = sourceVals[0];
+console.log(sourceVals)
+  var template = HtmlService.createTemplateFromFile('Recibo');
+  template.sourceVals = sourceVals;
+  var content = template.evaluate().getContent();
+  
+  return content;
+}
+
+//////////////// REIMPRIMIR MULTIRECIBOS X6//////////////////////
+function getValuesFromSheetMulti(numReciboMulti) {
+  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
+  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
+
+  const sourceVals = [];
+  let i = 0;
+  while (i < 6) {
+    let reciboEncontrado = false;
+    for (let j = 0; j < mantenimientos.length; j++) {
+      if (mantenimientos[j][0] == numReciboMulti) {
+        sourceVals.push(mantenimientos[j]);
+        i++;
+        reciboEncontrado = true;
+        break;
+      }
+    }
+    if (!reciboEncontrado) {
+      numReciboMulti--;
+    }
+    else {
+      numReciboMulti--;
+    }
+  }
+  var template = HtmlService.createTemplateFromFile('ReciboMulti');
+  template.sourceVals = sourceVals;
+  console.log(sourceVals)
+  var content = template.evaluate().getContent();
+  return content;
+}
+
+/////////////////// DESCARGAR PDF /////////////////////
+
+
+  function generarPDF() {
+  var archivoPDF = DocumentApp.create('Lista Pendientes').getAs('application/pdf');
+  var pdfBlob = archivoPDF.getBlob();
+  
+  var enlaceDescarga = '<a href="' + getURLWithToken(pdfBlob) + '">Descargar PDF</a>';
+  
+  var output = HtmlService.createHtmlOutput(enlaceDescarga);
+  SpreadsheetApp.getUi().showModalDialog(output, 'Descargar PDF');
+}
+    
+
+
 //////////////// PDF RECIBO //////////////////////
 function getPdfContent(numRecibo) {
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
@@ -530,7 +547,7 @@ function getPdfContent(numRecibo) {
   return pdfContent;
 }
 
-
+/////////////////// CONVERTIR PDF /////////////////////
 function convertHtmlToPdf(htmlContent) {
   var blob = Utilities.newBlob(htmlContent, 'text/html', 'ReciboPDF.html');
   
@@ -547,6 +564,8 @@ function convertHtmlToPdf(htmlContent) {
 }
 
 
+
+//////////////// PDF RECIBO MULTI //////////////////////
 function getPdfContentM(numRecibo) {
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
   const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
@@ -556,7 +575,7 @@ function getPdfContentM(numRecibo) {
   while (i < 6) {
     let reciboEncontrado = false;
     for (let j = 0; j < mantenimientos.length; j++) {
-      if (mantenimientos[j][0] == numReciboMulti) {
+      if (mantenimientos[j][0] == numRecibo) {
         sourceVals.push(mantenimientos[j]);
         i++;
         reciboEncontrado = true;
@@ -564,17 +583,36 @@ function getPdfContentM(numRecibo) {
       }
     }
     if (!reciboEncontrado) {
-      numReciboMulti--;
+      numRecibo--;
     }
     else {
-      numReciboMulti--;
+      numRecibo--;
     }
   }
   var template = HtmlService.createTemplateFromFile('ReciboMultiPDF');
   template.sourceVals = sourceVals;
+  
+  console.log(sourceVals)
   var content = template.evaluate().getContent();
 
-  var pdfContent = convertHtmlToPdf(content);
+  var pdfContent = convertHtmlToPdfM(content);
   
   return pdfContent;
+}
+
+
+/////////////////// CONVERTIR PDF MULTI /////////////////////
+function convertHtmlToPdfM(htmlContent) {
+  var blob = Utilities.newBlob(htmlContent, 'text/html', 'ReciboMultiPDF.html');
+  
+  var pdfFile = DriveApp.createFile(blob);
+  var pdfBlob = pdfFile.getBlob().getAs('application/pdf');
+  
+  // Eliminar el archivo HTML temporal
+  DriveApp.getFileById(pdfFile.getId()).setTrashed(true);
+
+  var pdfContent = pdfBlob.getBytes();
+  var encodedPdfContent = Utilities.base64Encode(pdfContent);
+
+  return encodedPdfContent;
 }

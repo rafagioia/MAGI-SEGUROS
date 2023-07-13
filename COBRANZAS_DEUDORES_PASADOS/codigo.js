@@ -1,6 +1,6 @@
 function doGet(){
-  var template = HtmlService.createTemplateFromFile('gestion_deudores');
-  template.pubUrl = "https://script.google.com/macros/s/AKfycbwo5gTWUE53KhjSllzENI3agZL5JgJquIyd1W_tzbP5V2ZnG_6tcpPhJx4uyytV5cw5/exec";
+  var template = HtmlService.createTemplateFromFile('deudores_pasados');
+  template.pubUrl = "https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec";
   var output = template.evaluate();
   return output;
 }
@@ -14,117 +14,129 @@ function include( fileName ){
 
 ///////////////// LISTADO DE PAGOS ////////////////////////
 
-function getData() {
+function getData(cmonth = new Date().getMonth(), cyear = new Date().getFullYear()) {
   const BD_DEUDORES_C = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
   const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
-  const BD_DEUDORES_P = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("RECIBIS");
-  const BD_DEUDORES_G = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("GASTOS");
 
   const cobranzasData = BD_DEUDORES_C.getDataRange().getDisplayValues();
   const deudoresData = BD_DEUDORES.getDataRange().getDisplayValues();
-  const recibisData = BD_DEUDORES_P.getDataRange().getDisplayValues();
-  const gastosData = BD_DEUDORES_G.getDataRange().getDisplayValues();
+
+  var currentDate = new Date(cyear, cmonth, 25);
+  var currentMonth = currentDate.getMonth() + 1; // Sumar 1 al mes obtenido
+  var currentYear = String(currentDate.getFullYear()).slice(-2);
+  var currentYear2 = currentDate.getFullYear();
 
   var sinPendientes = [];
+  for (var i = 1; i < deudoresData.length; i++) {
 
-for (var i = 1; i < cobranzasData.length; i++) {
-  var patenteCobranzas = cobranzasData[i][1];
+    var fechaDesde = deudoresData[i][8]; // Fecha Desde (Columna I)
+    var fechaDesdeSplit = fechaDesde.split("/");
+    var deudorDesdeMonth = fechaDesdeSplit.length > 1 ? parseInt(fechaDesdeSplit[1], 10) : 0;
+    var deudorDesdeYear = fechaDesdeSplit.length > 2 ? fechaDesdeSplit[2].slice(-2) : 0;
 
-  for (var j = 1; j < deudoresData.length; j++) {
-    var patenteDeudores = deudoresData[j][3];
+    var fechaMayorDesde = fechaDesde && (deudorDesdeYear < currentYear || (deudorDesdeYear === currentYear && deudorDesdeMonth-1 < currentMonth));
 
-    if (patenteCobranzas === patenteDeudores) {
+    var fechaHasta = deudoresData[i][9]; // Fecha Hasta (Columna J)
+    var fechaHastaSplit = fechaHasta.split("/");
+    var deudorHastaMonth = fechaHastaSplit.length > 1 ? parseInt(fechaHastaSplit[1], 10) : 0;
+    var deudorHastaYear = fechaHastaSplit.length > 2 ? fechaHastaSplit[2].slice(-2) : 0;
+
+    var fechaMayor = fechaHasta && (deudorHastaYear > currentYear || (deudorHastaYear === currentYear && deudorHastaMonth+1 > currentMonth));
+    if ((!fechaHasta || fechaMayor) && fechaMayorDesde) {
       var deudor = [];
-      var idDeudor = deudoresData[j][0];
-      var cliente = deudoresData[j][2];
-      var vencimiento = cobranzasData[i][5];
-      var cuota = cobranzasData[i][7];
-      var cuotaHasta = cobranzasData[i][8];
-      var cnia = cobranzasData[i][10];
-      var patente = cobranzasData[i][12];
-      var marca = cobranzasData[i][13];
-      var importe = parseInt(cobranzasData[i][11].replace("$", "").replace(",", "")); // Corrección aquí
-      var fpago = cobranzasData[i][6];
+      
+      let vto_day = parseInt(deudoresData[i][8].split("/")[0], 10);
+      var vto_month = parseInt(deudoresData[i][8].split("/")[1], 10);
+      var vto_year = parseInt(deudoresData[i][8].split("/")[2], 10);
+      // var cuota_div = parseInt(deudoresData[i][7], 10);
 
-      deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe, 0, fpago);
+      // var valor_cuota = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month + 1) % cuota_div;
+      // if (valor_cuota <= 0) {
+      //   valor_cuota += cuota_div;
+      // }
+
+var cuota_div = parseInt(deudoresData[i][7], 10);
+var valor_cuota;
+
+if (cuota_div === 10) {
+  var total_meses = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month);
+  var meses_desde_inicio = total_meses % 12;
+
+  if (meses_desde_inicio >= 0 && meses_desde_inicio < cuota_div) {
+    valor_cuota = (meses_desde_inicio % cuota_div) + 1;
+  } else {
+    valor_cuota = 0;
+  }
+} else {
+  valor_cuota = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month + 1) % cuota_div;
+  if (valor_cuota <= 0) {
+    valor_cuota += cuota_div;
+  }
+}
+
+      deudor.push(deudoresData[i][0]); // ID DEUDOR
+      deudor.push(deudoresData[i][2]); // CLIENTE
+      deudor.push(deudoresData[i][3]); // PATENTE
+      deudor.push(deudoresData[i][4]); // VEHICULO
+      deudor.push(deudoresData[i][5]); // COMPAÑIA
+      deudor.push(valor_cuota); // CUOTA
+      deudor.push(deudoresData[i][7]); // VIGENCIA
+      deudor.push(vto_day + "/" + currentMonth + "/" + currentYear); // VENCE
+      deudor.push(deudoresData[i][9]); // DEUDOR HASTA
+      deudor.push(deudoresData[i][10]); // NOTAS
+      deudor.push("❌"); // PASADOS
+      deudor.push(""); // IMPORTE
+      deudor.push(deudoresData[i][1]); // DNI
+      deudor.push(""); // WPP
+      deudor.push(""); // POLIZA
+      deudor.push(""); // RECIBO
+      deudor.push(""); // PASADO
+
+
+      let patente = deudoresData[i][3];
+            for (var j = 1; j < cobranzasData.length; j++) {
+
+          if (valor_cuota == 1 && deudor[10] == "❌") {
+            deudor[11] = ""; // IMPORTE
+          }
+          if (valor_cuota == 0 && deudor[10] == "❌") {
+            deudor[11] = "DESCANSO"; //
+          }
+
+        if (cobranzasData[j][1] === patente && ((paymentMonth === currentMonth - 1 && paymentYear === currentYear) || 
+                    (paymentMonth === 12 && currentMonth === 1 && paymentYear === currentYear - 1))) {
+          deudor[13] = cobranzasData[j][4]; // WPP
+          deudor[14] = cobranzasData[j][9]; // POLIZA
+          deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
+          }
+        } 
+
+      for (var j = 1; j < cobranzasData.length; j++) {
+
+        if (cobranzasData[j][1] === patente) {
+          deudor[13] = cobranzasData[j][4]; // WPP
+          deudor[14] = cobranzasData[j][9]; // POLIZA
+          var cobranzaFecha = cobranzasData[j][5]; // PAGO en columna F
+          var fechaSplit = cobranzaFecha.split("/"); // Dividir la fecha en día, mes y año
+          var paymentMonth = parseInt(fechaSplit[1], 10);
+          var paymentYear = fechaSplit[2].slice(-2); // Obtener los últimos dos dígitos del año
+            // if ((paymentMonth === currentMonth - 1 && paymentYear === currentYear) || 
+            //         (paymentMonth === 12 && currentMonth === 1 && paymentYear === currentYear - 1)) {
+            // deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
+            // }
+          if (paymentMonth === currentMonth && paymentYear === currentYear) {
+            deudor[10] = "✔️";
+            deudor[15] = cobranzasData[j][0]; // RECIBO
+            deudor[16] = cobranzasData[j][18]; // PASADO
+            deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
+          }
+          }
+        } 
       sinPendientes.push(deudor);
-      break;
     }
   }
+    return sinPendientes;
 }
-///////////// BUCLE DE HABER ////////////////
-  for (var i = 2; i < recibisData.length; i++) {
-        var deudor = [];
-    var idDeudor = recibisData[i][5];
-    var recibi_de = recibisData[i][6];
-    var concepto = recibisData[i][2];
-    var montoRecibi = parseInt(recibisData[i][4].replace("$", "").replace(",", ""));
-    var fpago2 = recibisData[i][7];
-    var partes = fpago2.split('/');
-var dia = partes[0];
-var mes = partes[1];
-var anio = partes[2];
-var contenidoAntesDelEspacio = anio.split(' ')[0];
-var fpago = dia + '/' + mes + '/' + contenidoAntesDelEspacio.slice(-2);
-    var blank_1 = "";
-    var blank_2 = "";
-    var blank_3 = "";
-    var blank_4 = "";
-
-    deudor.push(idDeudor, recibi_de, fpago, blank_1, blank_2, concepto, blank_3, blank_4, 0, montoRecibi, fpago2);
-
-    sinPendientes.push(deudor);
-  }
-
-///////////// BUCLE DE DEBE ////////////////
-    for (var i = 2; i < gastosData.length; i++) {
-        var deudor = [];
-    var idDeudor = gastosData[i][5];
-    var gasto_de = gastosData[i][6];
-    var concepto = gastosData[i][2];
-    var montoGasto = parseInt(gastosData[i][4].replace("$", "").replace(",", ""));
-    var fpago2 = gastosData[i][7];
-
-var partes = fpago2.split('/');
-var dia = partes[0];
-var mes = partes[1];
-var anio = partes[2];
-var contenidoAntesDelEspacio = anio.split(' ')[0];
-var fpago = dia + '/' + mes + '/' + contenidoAntesDelEspacio.slice(-2);
-
-    var blank_1 = "";
-    var blank_2 = "";
-    var blank_3 = "";
-    var blank_4 = "";
-
-    deudor.push(idDeudor, gasto_de, fpago, blank_1, blank_2, concepto, blank_3, blank_4, montoGasto, 0, fpago2);
-
-    sinPendientes.push(deudor);
-  }
-    console.log(sinPendientes)
-  return sinPendientes;
-}
-
-
-////////////// INGESAMOS RECIBI A LA BD RECIBIS //////////////////
-function agregarRecibi(recibiIDdeudor, recibiConcepto, recibiImporte,usuario_p) {
-  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("RECIBIS");
-
-const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit")
- var sheetRegistro2 = BD_COBRANZAS.getSheetByName("RECIBIS");
-
-  var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T8").getValue() + 1;
-  BD_COBRANZAS.getRange("CARGADORES!T8").setValue(numeroRecibo);
-  var magi = '=IF(CONCATENATE(DAY(H3);MONTH(H3);YEAR(H3))=CONCATENATE(DAY(INDIRECT("CARGADORES!T6"));MONTH(INDIRECT("CARGADORES!T6"));YEAR(INDIRECT("CARGADORES!T6")));ROW();"")';
-var sucursal = "BD DEUDORES";
-var fecha = new Date();
-let concepto1 = recibiConcepto + " - //" + usuario_p;
-var sourceVals = [, numeroRecibo, concepto1, sucursal, recibiImporte, recibiIDdeudor, , fecha, "DEUDOR"];
-BD_DEUDORES.insertRowBefore(3).getRange(3, 1, 1, sourceVals.length).setValues([sourceVals]);
-  Logger.log("Recibi agregado: " + concepto1 + " " + recibiPara + " " + recibiImporte);
-}
-
-
 
 /////////////// INGRESAR DEUDOR /////////////////////
 
@@ -308,6 +320,22 @@ function convertHtmlToPdfM(htmlContent) {
 
   return encodedPdfContent;
 }
+
+
+/////////////////// TILDAR PAGOS ///////////////////////
+
+function marcarColumnaS(numRecibo) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
+  const data = BD_DEUDORES.getDataRange().getDisplayValues();
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][0] === numRecibo) {
+      BD_DEUDORES.getRange(i + 1, 19).setValue(true);
+      break;
+    }
+  }
+}
+
+
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////  SESION DE USUARIOS ////////////////////////
