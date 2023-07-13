@@ -98,215 +98,192 @@
   </nav>
 
 
-<br>
+  <br>
 
-<div id="myModal" class="modal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
-          </div>
-          <div class="form-group">
-            <label for="contraseña" class=" mt-3">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
-          </div>
-          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div id="modal2" style="display: none;">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
-  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
-          </div>
-          <div class="form-group">
-            <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
-  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
-          </div>
-  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
-        </form>
+  <div id="myModal" class="modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Usuario:</label>
+              <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+            </div>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Contraseña:</label>
+              <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+            </div>
+            <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
-  <!---------- AREA DE CAJA DIARIA ------------>
-
-  <div class="col-12" id="miDiv" style="padding: 20px;">
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<div style="font-size: 20px; margin-top: 2px;"><b>DEUDORES PASADOS:</b></div>
-
-
-          <div class="row  m-0 p-0 bg-light py-2">
-
-            <div class="col-2  m-0 p-0">ID DEUDOR:<br>
-              <select class="form-select form-select mt-1" id="id_deudor_select" placeholder="">
-              </select>
+  
+  
+  <div id="modal2" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+    <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
             </div>
-            <div class="col-2"><br>
-
-              <button id="bt-actualizar_lista" class="est_not btn btn-primary  mt-1" type="submit">FILTRAR</button>
-              <button id="bt-reset-filtro" class="est_not btn btn-danger mt-1" type="submit">LIMPIAR</button>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+    <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
             </div>
-           <div class="col-2  m-0 p-0">MES:<br>
-              <select class="form-select form-select mt-1" id="mes_sn" name="mes_sn" placeholder="">
-                <option value="0"></option>
-                <option value="0">ENERO</option>
-                <option value="1">FEBRERO</option>
-                <option value="2">MARZO</option>
-                <option value="3">ABRIL</option>
-                <option value="4">MAYO</option>
-                <option value="5">JUNIO</option>
-                <option value="6">JULIO</option>
-                <option value="7">AGOSTO</option>
-                <option value="8">SEPTIEMBRE</option>
-                <option value="9">OCTUBRE</option>
-                <option value="10">NOVIEMBRE</option>
-                <option value="11">DICIEMBRE</option>
-              </select>
-            </div>
-           <div class="col-1  m-0 p-0">AÑO:<br>
-              <select class="form-select form-select mt-1" id="anio_sn" name="anio_sn" placeholder="">
-                <option value="2023"></option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-              </select>
-            </div>
-            <div class="col-2"><br>
-              <button id="bt-regenarar_lista" class="est_not btn btn-primary  mt-1" type="submit">GENERAR LISTADO</button>
-            </div>           
-            <div class="col-3"><br>
-              <button id="bt-imprimir_lista" class="est_not btn btn-primary  mt-1" type="submit">IMPRIMIR LISTADO</button>
-            </div>   
-            </div>           
-<label style="text-align: center;" class="form-label">REIMPRIMIR RECIBOS:</label>
-
-      <form id="formularioReimprimirMulti" name="formularioReimprimirMulti">
- 
-   <div class="row">
-    <div class="col-1">
-      <div class="mb-1">
-        <label for="numReciboMulti" class="form-label mt-1">Último N°:</label>
+    <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+          </form>
+        </div>
       </div>
     </div>
-    <div class="col-2">
-      <div class="mb-1">
-        <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
-      </div>
-    </div>
-    <div class="col-3">
-        <button id="btn-reimprimirRecibo" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X1</button>
-        <button id="bt-desc-rec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X1</button>
-    </div>
-      <div class="col-6">
-        <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X6</button>
-        <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
-
-    </div>
   </div>
-</form>
-
-<div class="row p-2" style="font-weight: bold;">
-  <div class="col-1">ID:</div>
-  <div class="col-2">CLIENTE:</div>
-  <div class="col-1" style="width: 60px;">VTO:</div>
-  <div class="col-2" style="width: 70px;">CUOTA:</div>
-  <div class="col-2" style="width: 140px;">COMPAÑIA:</div>
-  <div class="col-1" style="width: 130px;">IMPORTE:</div>
-  <div class="col-1" style="width: 110px;">PATENTE:</div>
-  <div class="col-1" style="width: 140px;">MARCA:</div>
-  <div class="col-1" style="width: 120px;">PASADO:</div>
-</div>
-
- <div class="p-2" style="height: 420px; overflow-y: scroll;">
-      <div id="sinPendientes"></div>
-    </div>
-
-
-          <div class="row  m-0 p-0 bg-light py-2">
-
-            <div class="col-9  m-0 p-0"><br>
-            </div>
-
-
-            <div class="col-2 m-0 p-0">TOTAL:<br>
-            <div class='input-group'><div class='input-group-prepend'><span class='input-group-text'>$</span>
-      </div><input type="text" class="form-control" id="total_val"></div>
-            </div>
-            <div class="col-1  m-0 p-0"><br>
-            </div>
-          </div>
-
-
-</div>
-
-  </div>
-  <!---------- FIN AREA DE CAJA DIARIA ------------>
-
-  <!---------- AREA DE GASTOS Y RECIBIS ------------>
-
+  
+  
+  
+    <!---------- AREA DE CAJA DIARIA ------------>
+  
+    <div class="col-12" id="miDiv" style="padding: 20px;">
+  
+     <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+  <div style="font-size: 20px; margin-top: 2px;"><b>DEUDORES PASADOS:</b></div>
+  
+  
+            <div class="row  m-0 p-0 bg-light py-2">
+              <div class="col-4 container">
+                <div class="row">
+              <div class="col-6  m-0 p-0">ID DEUDOR:<br>
+                <select class="form-select form-select mt-1" id="id_deudor_select" placeholder="">
+                </select>
+              </div>
+              <div class="col-6"><br>
+  
+                <button id="bt-actualizar_lista" class="est_not btn btn-primary  mt-1" type="submit">FILTRAR</button>
+                <button id="bt-reset-filtro" class="est_not btn btn-danger mt-1" type="submit">LIMPIAR</button>
+              </div>
+              </div>
+              </div>
+              <div class="col-8 container">
+                <div class="row">
+             <div class="col-3  m-0 p-0">MES:<br>
+                <select class="form-select form-select mt-1" id="mes_sn" name="mes_sn" placeholder="">
+                  <option value="0"></option>
+                  <option value="0">ENERO</option>
+                  <option value="1">FEBRERO</option>
+                  <option value="2">MARZO</option>
+                  <option value="3">ABRIL</option>
+                  <option value="4">MAYO</option>
+                  <option value="5">JUNIO</option>
+                  <option value="6">JULIO</option>
+                  <option value="7">AGOSTO</option>
+                  <option value="8">SEPTIEMBRE</option>
+                  <option value="9">OCTUBRE</option>
+                  <option value="10">NOVIEMBRE</option>
+                  <option value="11">DICIEMBRE</option>
+                </select>
+              </div>
+             <div class="col-2  m-0 p-0">AÑO:<br>
+                <select class="form-select form-select mt-1" id="anio_sn" name="anio_sn" placeholder="">
+                  <option value="2023"></option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                </select>
+              </div>
+              <div class="col-3"><br>
+                <button id="bt-regenarar_lista" class="est_not btn btn-primary  mt-1" type="submit">GENERA LISTADO</button>
+              </div>           
+              <div class="col-4"><br>
+                <button id="bt-imprimir_lista" class="est_not btn btn-primary  mt-1" type="submit">IMPRIMIR LISTADO</button>
+              </div>   
+              </div>   
+              
+              </div>
+              </div>        
+  <div style="font-size: 20px; margin-top: 2px;"><b>REIMPRIMIR RECIBOS:</b></div>
   <div class="row">
-
-    <div class="col-6" style="padding: 20px">
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<div style="font-size: 20px; margin-top: 2px;"><b>GASTOS:</b></div>
- <div class="p-2" style="height: 210px; overflow-y: scroll;">
-      <div id="lista_gastos"></div>
+      <div class="col-6 container">
+     <div class="row">
+      <div class="col-3">
+        <div class="mb-1">
+          <label for="numReciboMulti" class="form-label mt-1">Último N°:</label>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="mb-1">
+          <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="mb-1">
+        </div>
+      </div>
+      </div>
+      </div>
+  
+      <div class="col-6 container">
+     <div class="row">
+      <div class="col-6">
+          <button id="btn-reimprimirRecibo" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X1</button>
+          <button id="bt-desc-rec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X1</button>
+      </div>
+        <div class="col-6">
+          <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X6</button>
+          <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
+      </div>
     </div>
-
-  </div>
-
-  <!---------- FIN AREA DE GASTOS Y RECIBIS------------>
-
-
-  </div>
-
-
-
-    <div class="col-6" style="padding: 20px">
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<div style="font-size: 20px; margin-top: 2px;"><b>RECIBIS:</b></div>
- <div class="p-2" style="height: 210px; overflow-y: scroll;">
-      <div id="lista_recibis"></div>
     </div>
-
-</div>
-
-  <!---------- FIN AREA DE GASTOS Y RECIBIS------------>
-
-
+    </div>
+  
+  <div class="row p-2" style="font-weight: bold;">
+    <div class="col-1">ID:</div>
+    <div class="col-2" style="width: 220px;">CLIENTE:</div>
+    <div class="col-1" style="width: 60px;">VTO:</div>
+    <div class="col-2" style="width: 80px;">CUOTA:</div>
+    <div class="col-2" style="width: 140px;">COMPAÑIA:</div>
+    <div class="col-1" style="width: 140px;">IMPORTE:</div>
+    <div class="col-1" style="width: 130px;">PATENTE:</div>
+    <div class="col-1" style="width: 120px;">MARCA:</div>
+    <div class="col-1" style="width: 120px;">PASADO:</div>
   </div>
-
-
+  
+   <div class="p-2" style="height: 420px; overflow-y: scroll;">
+        <div id="sinPendientes"></div>
+      </div>
+  
+  
+            <div class="row  m-0 p-0 bg-light py-2">
+  
+              <div class="col-xl-9 col-sm-7 m-0 p-0"><br>
+              </div>
+  
+  
+              <div class="col-xl-2 col-sm-5 m-0 p-0">TOTAL:<br>
+              <div class='input-group'><div class='input-group-prepend'><span class='input-group-text form-control'>$</span>
+        </div><input type="text" class="form-control" id="total_val"></div>
+              </div>
+              <div class="col-1  m-0 p-0"><br>
+              </div>
+            </div>
+  
+  
   </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+  
+    </div>
+    <!---------- FIN AREA DE CAJA DIARIA ------------>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
 
 <?!= include('JS_deudores_pasados'); ?>
 </body>

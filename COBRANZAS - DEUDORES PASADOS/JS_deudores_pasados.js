@@ -51,45 +51,73 @@
       });
     
       for (var i = 0; i < result.length; i++) {
-        pendientesHtml += "<div class='border' style='background-color: #FFFFFF; margin-bottom: 0; box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>" +
-          "<div class='row' style='padding: 0px;'>" +
-          "<div class='col-1 text-sm' style='font-size: 10px;' id='_deudor" + i + "'>" + result[i][0] + "</div>" +
-          "<div class='col-2 text-sm text-truncate' style='font-size: 14px; padding-top: 10px; ' id='_cte" + i + "'>" + result[i][1] + "</div>" +
-          "<div class='col-9 p-0 m-0'>" +
-          "<div class='row p-0 m-0'>" +
-          "<div class='col-2 text-sm text-truncate' style='width: 90px; padding-top: 10px; font-size: 14px;' id='_vto" + i + "'>" + result[i][7] + "</div>" +
-          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_cta" + i + "'>" + result[i][5] + "</div>" +
-          "<div class='col-1 text-sm' style='padding: 10px 0px 0px 0px; width: 20px;font-size: 13px;' id='_ctad" + i + "'>" + result[i][6] + "</div>" +
-          "<div class='col-2 text-sm' style='width: 130px; padding-top: 10px; font-size: 14px;' id='_cnia" + i + "'>" + result[i][4] + "</div>" +
-          "<div class='col-2'>" +
-          "<div class='input-group'>" +
-          "<div class='input-group-prepend'>" +
-          "<span class='input-group-text'>$</span>" +
-          "</div>" + 
-          "<input type='text' class='form-control' id='_imp" + i + "' value='" + result[i][11] + "'>" +
-          "</div>" + "</div>" +
-          "<div class='col-1 text-sm text-truncate' style='padding-top: 10px; font-size: 14px; width: 100px; ' id='_pat" + i + "'>" + result[i][2] + "</div>" +
-          "<div class='col-2 text-sm text-truncate' style='padding-top: 10px; font-size: 14px;' id='_marca" + i + "'>" + result[i][3] + "</div>" +
-          "<div class='col-1 p-1' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; width: 32px; height: 32px;'";
+    pendientesHtml += "<div class='border mb-0 bg-white' style='box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>";
+    pendientesHtml += "<div class='row' style='padding: 5px;'>";
+    pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
+    
+    // Columna de deudor
+    pendientesHtml += "<div class='col-1 text-sm' style='font-size: 10px;' id='_deudor" + i + "'>" + result[i][0] + "</div>";
+    
+    // Columna de cliente
+    pendientesHtml += "<div class='col-5 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>";
+    
+    // Columna de vencimiento
+    pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_vto" + i + "'>" + result[i][7] + "</div>";
+    
+    // Columna de cuenta
+    pendientesHtml += "<div class='col-1 text-sm planilla'><div class='row p-0 m-0'>"
+    
+    
+    pendientesHtml += "<div class='col-4 m-0 p-1 text-sm planilla' id='_cta" + i + "'>" + result[i][5] + "</div>";
+    pendientesHtml += "<div class='col-2 m-0 p-1 planilla'>/</div>";
+    // Columna de cuenta adicional
+    pendientesHtml += "<div class='col-4 m-0 p-1 text-sm planilla'  id='_ctad" + i + "'>" + result[i][6] + "</div></div></div>";
+    
+    // Columna de CNIA
+    pendientesHtml += "<div class='col-3 text-sm planilla' style='padding-top: 10px;' id='_cnia" + i + "'>" + result[i][4] + "</div>";
+    
+    
+    pendientesHtml += "</div></div>";
+    pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
+    // Columna de importe
+    pendientesHtml += "<div class='col-3 planilla'><div class='input-group'><div class='input-group-prepend'><span class='input-group-text planilla'>$</span></div>";
+    pendientesHtml += "<input type='text' class='form-control planilla'  id='_imp" + i + "' value='" + result[i][11] + "'></div></div>";
+    
+    // Columna de patente
+    pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' id='_pat" + i + "'>" + result[i][2] + "</div>";
+    
+    // Columna de marca
+    pendientesHtml += "<div class='col-3 text-sm text-truncate  planilla'  id='_marca" + i + "'>" + result[i][3] + "</div>";
+    
+    // Columna de pasados
+    pendientesHtml += "<div class='col-4 row planilla'>";
+    
+    // Columna de verificación
+    pendientesHtml += "<div class='col-2 p-1 planilla' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; height: 32px;'";
     
     // Establecer el estilo según el valor de result[i][9]
     if (result[i][10] === "✔️") {
-      pendientesHtml += "id='_ver" + i + "'>✔️</div>" +
-        "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;width: 40px;'><button class='btn btn-success btn-sm' style='display: none;' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm' style='margin-top: 2px;' id='_print" + i + "'>🖨️</button></div>"+
-        "<div  class='col-1 m-0 p-0' style='width: 40px;'><button class='btn btn-secondary btn-sm' style='margin-top: 2px;' id='_down" + i + "'>⬇</button></div>"+
-        "<div  class='col-1 m-0 p-0' style='margin-top: 2px;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
+      pendientesHtml += "id='_ver" + i + "'>✔️</div>";
+      pendientesHtml += "<div class='col-2 m-0 p-0' style='padding: 2px 0px 0px 5px;'><button class='btn btn-success btn-sm' style='display: none;' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm planilla' style='margin-top: 2px' id='_print" + i + "'>🖨️</button></div>";
+      pendientesHtml += "<div class='col-1 m-0 p-0' style=''><input type='checkbox' class='form-check-input planilla' style='margin: 10px;' id='_check" + i + "'";
+    if (result[i][16] === "TRUE") {
+      pendientesHtml += " checked='checked'"; // Elimina el atributo checked aquí
+    }
+      pendientesHtml += "></div><div class='col-1 m-0 planilla' style='padding-top: 7px;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
     } else if (result[i][10] === "❌") {
-      pendientesHtml += "id='_ver" + i + "'>❌</div>" +
-        "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;width: 40px;'><button style='margin-top: 2px;' class='btn btn-success btn-sm' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm' style='display: none; margin-top: 2px;' id='_print" + i + "'>🖨️</button></div>"+
-        "<div  class='col-1 m-0 p-0' style='width: 40px;'><button class='btn btn-secondary btn-sm' style=' display: none; margin-top: 2px; width: 35px;' id='_down" + i + "'>⬇</button></div>" +
-        "<div  class='col-1 m-0 p-0' style='display: none;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
-    } 
-    pendientesHtml += "</div></div>" +
-      "<div style='display: none;' id='_dni" + i + "'>" + result[i][12] + "</div>" +
+      pendientesHtml += "id='_ver" + i + "'>❌</div>";
+      pendientesHtml += "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;'><button style='margin-top: 2px;' class='btn btn-success btn-sm' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm planilla' style='display: none;' style='margin-top: 2px'  id='_print" + i + "'>🖨️</button></div>";
+      pendientesHtml += "<div class='col-1 m-0 p-0' style=''><input type='checkbox' class='form-check-input planilla' style='display: none;margin: 10px;' id='_check" + i + "'></div><div class='col-1 m-0 planilla' style='padding-top: 7px;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
+    }
+    
+    pendientesHtml += "</div></div>";
+    pendientesHtml += "<div style='display: none;' id='_dni" + i + "'>" + result[i][12] + "</div>" +
       "<div style='display: none;' id='_wpp" + i + "'>" + result[i][13] + "</div>" +
       "<div style='display: none;' id='_poliza" + i + "'>" + result[i][14] + "</div>" +
       "<div style='display: none;' id='_recibo" + i + "'>" + result[i][15] + "</div>" +
-      "</div></div>";
+      "</div></div></div>";
+    
+    
     
         if (!idDeudores.includes(result[i][0])) {
           idDeudores.push(result[i][0]);
@@ -182,9 +210,22 @@
     printBtns.forEach(function (printBtns) {
       printBtns.addEventListener("click", function () {
         var id = printBtns.id.slice(6); // Obtener el índice del div
-        console.log("id: " + id)
         var numRecibo = document.getElementById("_num_rec" + id).textContent;
         imprimirRecibo(numRecibo);
+      });
+    });
+    
+    ////////////// CHECK BOX PARA TILDAR PAGOS PASADOS /////////////
+    
+    var checkboxes = document.querySelectorAll("input[id^='_check']");
+    checkboxes.forEach(function (checkbox) {
+      checkbox.addEventListener("change", function () {
+        var id = checkbox.id.slice(6); // Obtener el índice del div
+        var numRecibo = document.getElementById("_num_rec" + id).textContent;
+        var isChecked = checkbox.checked; // Obtener el estado del checkbox (marcado o no)
+    
+        // Llamar a la función en el servidor con el estado del checkbox
+        google.script.run.marcarColumnaS(numRecibo, isChecked);
       });
     });
     
@@ -218,8 +259,8 @@
         _btn_cob.style.display = "none";
         document.getElementById("_num_rec" + id).style.display = "block";
         document.getElementById("_print" + id).style.display = "block";
-        document.getElementById("_down" + id).style.display = "block";
-    
+        document.getElementById("_check" + id).style.display = "block";
+        // document.getElementById("_down" + id).style.display = "block";
     
         google.script.run.withSuccessHandler(function (recibo) {
          document.getElementById("_num_rec" + id).textContent = recibo;
@@ -424,6 +465,7 @@
     }
     
     
+    
     /////////////////////////////////////////////////////////////////
     //////////////////// SESION DE USUARIOS /////////////////////////
     /////////////////////////////////////////////////////////////////
@@ -530,7 +572,12 @@
     // Función para mostrar el tiempo restante en el div correspondiente
     function mostrarTiempoRestante(tiempoRestante) {
       if (tiempoRestante <= 0) {
-        tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+          sessionStorage.removeItem("magi-usuario");
+          sessionStorage.removeItem("magi-horaInicio");
+          sessionStorage.removeItem("magi-color");
+          tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+          document.getElementById("usuario_sp").innerHTML = "Desconocido";
+          modal.style.display = "block";
       } else {
         var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
         var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
@@ -549,6 +596,7 @@
           clearInterval(intervalo);
           sessionStorage.removeItem("magi-usuario");
           sessionStorage.removeItem("magi-horaInicio");
+          sessionStorage.removeItem("magi-color");
           tiempoRestanteDiv.innerHTML = "Tiempo expirado";
           document.getElementById("usuario_sp").innerHTML = "Desconocido";
           modal.style.display = "block";
@@ -573,7 +621,6 @@
       var usuario_pass = sessionStorage.getItem("magi-usuario");
       var antiguaClave = document.getElementById("antigua_clave").value;
       var nuevaClave = document.getElementById("nueva_clave").value;
-    console.log("cliente: " + usuario_pass + antiguaClave + nuevaClave)
       google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
         modal2.style.display = "none";
     alert('Clave cambiada correctamente');
@@ -624,11 +671,15 @@
                 }
     
                 
+    ////////////////////////////////////////////////////////////////////////////////
+    
+                
     /////////////////////// EVENT LISTENERS ////////////////////////////
     
     document.getElementById('btn-reimprimirReciboMulti').addEventListener('click', reimprimirReciboMulti);
     document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
     document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
     document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
+    document.getElementById('close_session').addEventListener('click', close_sessionok);
     //////////////////////////////////////////////////////////////////
     

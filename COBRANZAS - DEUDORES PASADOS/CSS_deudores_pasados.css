@@ -21,7 +21,7 @@ body{
   margin-bottom: 6px;
 }
 .btn {
-  font-size: 2.5rem;
+  font-size: 2.0rem;
 }
 .form-control,
 .form-select,
@@ -37,6 +37,11 @@ body{
   padding: 30px;
 }
 
+.planilla {
+font-size: 1.2rem;
+  margin: auto;
+  text-align: center;
+}  
 #title_menu {
 font-size: 2rem;
   margin: auto;
@@ -95,14 +100,10 @@ font-size: 1.8rem;
 @media (min-width: 1081px) {
 .container {
   display: inline-block !important;
-  width: 30% !important;
+  width: 50% !important;
   font-size: 1.1rem;
   border: 0px solid white;
-  background-color: #FFFFFF;
   border-radius: 2%;
-  padding: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
 }
 .titulos {
   font-size: 1.5rem;
@@ -111,6 +112,11 @@ font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 6px;
 }
+.planilla {
+font-size: 1.0rem;
+  margin: auto;
+  text-align: center;
+}  
 .btn {
   font-size: 0.9rem;
 }
