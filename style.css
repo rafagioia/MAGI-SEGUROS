@@ -1,7 +1,16 @@
 
-body{
-  background-color: #CB3234;
+html, body {
+  height: 100%;
 }
+
+.image-container {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85%;
+}
+
 
 /* Estilos para version celular */
 @media only screen and (max-width: 1080px) {

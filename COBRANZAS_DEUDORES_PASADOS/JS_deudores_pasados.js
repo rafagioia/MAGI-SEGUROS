@@ -56,7 +56,7 @@
     pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
     
     // Columna de deudor
-    pendientesHtml += "<div class='col-1 text-sm' style='font-size: 10px;' id='_deudor" + i + "'>" + result[i][0] + "</div>";
+    pendientesHtml += "<div class='col-1 text-sm' style='font-size: 8px;' id='_deudor" + i + "'>" + result[i][0] + "</div>";
     
     // Columna de cliente
     pendientesHtml += "<div class='col-5 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>";
@@ -463,6 +463,34 @@
       link.target = '_blank';
       link.click();
     }
+    
+    
+    
+    ////////////////////// ALTA DEUDOR NUEVO ////////////////////////
+    
+    document.getElementById("alta_nueva").addEventListener("click", function() {
+        event.preventDefault();
+        
+      document.getElementById("modal3").style.display = "block";
+    });
+    
+    document.getElementById("alta_deudor").addEventListener("click", function() {
+        event.preventDefault();
+    
+      var altaDNI = document.getElementById("alta_dni").value;
+      var altaCliente = document.getElementById("alta_cliente").value;
+      var altaPatente = document.getElementById("alta_patente").value;
+      var altaMarca = document.getElementById("alta_marca").value;
+      var altaCnia = document.getElementById("alta_cnia").value;
+      var altaVigencia = document.getElementById("alta_vigencia").value;
+      var altaID_Deudor = document.getElementById("alta_id_deudor").value;
+      var altaVto = document.getElementById("alta_vto").value;
+      google.script.run.alta_nuevadeudor(altaVto, altaID_Deudor, altaVigencia, altaCnia, altaMarca, altaPatente, altaCliente, altaDNI);
+        modal3.style.display = "none";
+    alert('Alta de deudor exitosa');
+    
+    });
+    
     
     
     
