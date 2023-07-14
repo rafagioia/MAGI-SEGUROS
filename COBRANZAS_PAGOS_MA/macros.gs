@@ -104,6 +104,7 @@ var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte,
 
       var numeroRecibo = sheetRegistro2.getRange("CARGADORES!T5").getValue() + 1;
       sheetRegistro2.getRange("CARGADORES!T5").setValue(numeroRecibo);
+    SpreadsheetApp.flush();
       var recibo = numeroRecibo;
 
       var fechaString = infoVence;
@@ -156,6 +157,7 @@ const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadshe
 
   var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T7").getValue() + 1;
   BD_COBRANZAS.getRange("CARGADORES!T7").setValue(numeroRecibo);
+    SpreadsheetApp.flush();
   var magi = '=IF(CONCATENATE(DAY(H3);MONTH(H3);YEAR(H3))=CONCATENATE(DAY(INDIRECT("CARGADORES!T6"));MONTH(INDIRECT("CARGADORES!T6"));YEAR(INDIRECT("CARGADORES!T6")));ROW();"")';
 var sucursal = "MARIANO ACOSTA";
 var fecha = new Date();
@@ -172,6 +174,7 @@ const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadshe
 
   var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T8").getValue() + 1;
   BD_COBRANZAS.getRange("CARGADORES!T8").setValue(numeroRecibo);
+    SpreadsheetApp.flush();
   var magi = '=IF(CONCATENATE(DAY(H3);MONTH(H3);YEAR(H3))=CONCATENATE(DAY(INDIRECT("CARGADORES!T6"));MONTH(INDIRECT("CARGADORES!T6"));YEAR(INDIRECT("CARGADORES!T6")));ROW();"")';
 var sucursal = "MARIANO ACOSTA";
 var fecha = new Date();

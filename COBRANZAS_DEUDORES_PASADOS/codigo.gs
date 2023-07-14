@@ -155,7 +155,11 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
 
     var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T5").getValue() + 1;
     BD_COBRANZAS.getRange("CARGADORES!T5").setValue(numeroRecibo);
+    SpreadsheetApp.flush();
     var recibo = numeroRecibo;
+
+
+
 
     var sourceVals = [recibo, infoPatente, infoDNI, infoCliente, infoWpp, infoVence, fecha, infoCuota, infoVigencia, infoPoliza, infoCnia, infoImporte, infoPatente, infoMarca, , , sucursal, f_deudor, , "DEUDOR"];
     sheetRegistro2.insertRowBefore(2).getRange(2, 1, 1, sourceVals.length).setValues([sourceVals]);
@@ -324,17 +328,17 @@ function convertHtmlToPdfM(htmlContent) {
 
 /////////////////// TILDAR PAGOS ///////////////////////
 
-function marcarColumnaS(numRecibo) {
+function marcarColumnaS(numRecibo, isChecked) {
   const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
   const data = BD_DEUDORES.getDataRange().getDisplayValues();
   for (var i = 0; i < data.length; i++) {
     if (data[i][0] === numRecibo) {
-      BD_DEUDORES.getRange(i + 1, 19).setValue(true);
+      var value = isChecked ? true : false; // Marcar como TRUE si isChecked es true, de lo contrario, marcar como FALSE
+      BD_DEUDORES.getRange(i + 1, 19).setValue(value);
       break;
     }
   }
 }
-
 
 
 ////////////////////////////////////////////////////////////////////
@@ -436,8 +440,6 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   // Si no se encuentra el usuario o el color, devolver un valor predeterminado o null
   return null;
 }
-
-
 
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
