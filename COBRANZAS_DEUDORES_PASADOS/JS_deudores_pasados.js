@@ -127,6 +127,7 @@
         sinPendientesDiv.innerHTML = pendientesHtml;
     
     var idDeudorSelect = document.getElementById("id_deudor_select");
+    var idDeudorSelectAlta = document.getElementById("alta_id_deudor");
     var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
     var totalValInput = document.getElementById("total_val");
     var resetFiltroBtn = document.getElementById("bt-reset-filtro");
@@ -164,10 +165,15 @@
     
     //////////////// ACTUALIZAR VALORES DEL SELECT ///////////////////
     for (var j = 0; j < idDeudores.length; j++) {
-      var option = document.createElement("option");
-      option.value = idDeudores[j];
-      option.text = idDeudores[j];
-      idDeudorSelect.appendChild(option);
+      var option1 = document.createElement("option");
+      option1.value = idDeudores[j];
+      option1.text = idDeudores[j];
+      idDeudorSelect.appendChild(option1);
+    
+      var option2 = document.createElement("option");
+      option2.value = idDeudores[j];
+      option2.text = idDeudores[j];
+      idDeudorSelectAlta.appendChild(option2);
     }
     
     ///////// FILTRAR DATOS POR ID DEUDOR //////////////////////
@@ -735,9 +741,9 @@
     /////////////////////// EVENT LISTENERS ////////////////////////////
     
     document.getElementById('btn-reimprimirReciboMulti').addEventListener('click', reimprimirReciboMulti);
-    document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
+    // document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
     document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
-    document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
+    // document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
     document.getElementById('close_session').addEventListener('click', close_sessionok);
     //////////////////////////////////////////////////////////////////
     
