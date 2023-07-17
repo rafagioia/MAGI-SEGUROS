@@ -489,9 +489,39 @@
         modal3.style.display = "none";
     alert('Alta de deudor exitosa');
     
+    
+      document.getElementById("alta_dni").value = "";
+      document.getElementById("alta_cliente").value = "";
+      document.getElementById("alta_patente").value = "";
+      document.getElementById("alta_marca").value = "";
+      document.getElementById("alta_cnia").value = "";
+      document.getElementById("alta_vigencia").value = "";
+      document.getElementById("alta_id_deudor").value = "";
+      document.getElementById("alta_vto").value = "";
+    
     });
     
     
+    ////////////////////// BAJA DEUDOR NUEVO ////////////////////////
+    
+    document.getElementById("baja_nueva").addEventListener("click", function() {
+        event.preventDefault();
+        
+      document.getElementById("modal4").style.display = "block";
+    });
+    
+    document.getElementById("baja_deudor").addEventListener("click", function() {
+        event.preventDefault();
+    
+      var bajaPatente = document.getElementById("baja_patente").value;
+      var bajaVto = document.getElementById("baja_vto").value;
+      google.script.run.baja_nuevadeudor(bajaVto, bajaPatente);
+        modal4.style.display = "none";
+    alert('Baja de deudor exitosa');
+      document.getElementById("baja_patente").value  = "";
+      document.getElementById("baja_vto").value  = "";
+    
+    });
     
     
     /////////////////////////////////////////////////////////////////

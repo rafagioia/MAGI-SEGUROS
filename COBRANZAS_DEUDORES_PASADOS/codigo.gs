@@ -180,6 +180,23 @@ function alta_nuevadeudor(altaVto, altaID_Deudor, altaVigencia, altaCnia, altaMa
 
 }
 
+
+///////////////////// BAJA NUEVO DEUDOR /////////////////
+
+function baja_nuevadeudor(bajaVto, bajaPatente) {
+  const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
+  const mantenimientos = BD_DEUDORES.getDataRange().getDisplayValues();
+
+for(let i = 1; i < mantenimientos.length; i++) {
+  if(bajaPatente === mantenimientos[i][3]) {
+    BD_DEUDORES.getRange(i+1,10).setValue(bajaVto);
+  }
+}
+    return bajaPatente;
+
+}
+
+
 //////////////// REIMPRIMIR RECIBOS //////////////////////
 function getValuesFromSheet(numRecibo) {
   const BD_DEUDORES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("BD DEUDORES");
@@ -456,6 +473,8 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   // Si no se encuentra el usuario o el color, devolver un valor predeterminado o null
   return null;
 }
+
+
 
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
