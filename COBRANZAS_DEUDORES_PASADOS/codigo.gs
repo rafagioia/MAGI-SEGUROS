@@ -458,6 +458,4 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 }
 
 
-
-
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
