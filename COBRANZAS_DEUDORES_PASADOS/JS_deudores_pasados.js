@@ -489,12 +489,14 @@
       var altaMarca = document.getElementById("alta_marca").value;
       var altaCnia = document.getElementById("alta_cnia").value;
       var altaVigencia = document.getElementById("alta_vigencia").value;
-      var altaID_Deudor = document.getElementById("alta_id_deudor").value;
       var altaVto = document.getElementById("alta_vto").value;
+      var altaID_Deudor = document.getElementById("alta_id_deudor").value;
+    if(altaID_Deudor === "") {
+      altaID_Deudor = document.getElementById("alta_id_deudor_manual").value
+    }
       google.script.run.alta_nuevadeudor(altaVto, altaID_Deudor, altaVigencia, altaCnia, altaMarca, altaPatente, altaCliente, altaDNI);
         modal3.style.display = "none";
     alert('Alta de deudor exitosa');
-    
     
       document.getElementById("alta_dni").value = "";
       document.getElementById("alta_cliente").value = "";
@@ -504,9 +506,21 @@
       document.getElementById("alta_vigencia").value = "";
       document.getElementById("alta_id_deudor").value = "";
       document.getElementById("alta_vto").value = "";
-    
+      document.getElementById("alta_id_deudor_manual").value = "";
+      alta_id_deudor_manual.style.display = "none";
     });
     
+    /////////////////// ALTA DE DEUDOR CON ID NUEVA MANUAL ////////////////////////////
+      document.getElementById("alta_id_deudor").addEventListener("change", function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var inputField = document.getElementById("alta_id_deudor_manual");
+        
+        if (selectedOption.getAttribute("data-input") === "true") {
+          inputField.style.display = "block";
+        } else {
+          inputField.style.display = "none";
+        }
+      });
     
     ////////////////////// BAJA DEUDOR NUEVO ////////////////////////
     
@@ -529,6 +543,24 @@
     
     });
     
+    //////////////////// OCULTAR MODAL PRESIONANDO FUERA DE LA PANTALLA /////////////////
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      // Obtenemos el modal por su ID
+      var modal = document.getElementById('modal3');
+      var modal2 = document.getElementById('modal4');
+    
+      // Agregamos un evento para cerrar el modal cuando se hace clic fuera de él
+      window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+        if (event.target === modal2) {
+          modal2.style.display = 'none';
+        }
+      });
+    });
+      
     
     /////////////////////////////////////////////////////////////////
     //////////////////// SESION DE USUARIOS /////////////////////////
