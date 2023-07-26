@@ -165,1074 +165,1086 @@
   </nav>
 
 
-<br>
+  <br>
 
-<div id="myModal" class="modal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
-          </div>
-          <div class="form-group">
-            <label for="contraseña" class=" mt-3">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
-          </div>
-          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div id="modal2" style="display: none;">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
-  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
-          </div>
-          <div class="form-group">
-            <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
-  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
-          </div>
-  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
-        </form>
+  <div id="myModal" class="modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Usuario:</label>
+              <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+            </div>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Contraseña:</label>
+              <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+            </div>
+            <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
-
-  <div class="row">
-
-    <div class="col-6 container" style="width: 700px">
-      <form id="visorGeneral">
-        <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<!----- SECTOR CLIENTE ------->
-          <div class="row p-0 m-0" style="border-bottom: 2px solid #000000">
-            <div class="col-2 p-0 text-sm" style="width: 60px; height: 60px; margin-right: 12px;" >
-<img src="https://drive.google.com/uc?id=1_VD-SQ8M_dzoAwKF7lepJut7zNqyzI9z" alt="Imagen" style="width: 60px;">
-                </div>
-            <div class="col-6 m-0 p-0 text-sm" >
-            <input type="text" class="form-control-xs p-0 bg-transparent border-0 text-dark fs-5"
-          style="font-weight: 500;width: 360px;margin-top: 4px;" id="nombre" name="nombre" placeholder="" readonly><br>
-          <div class="row" style='margin-left: 1px;font-weight: 500;font-size: 14px;'>DNI:
-              <input type="text" class="form-control-xs m-0 bg-transparent border-0 text-dark"
-                style='font-weight: 500;font-size: 14px; width: 91px; height: 20px; padding-left: 4px' id="dni" name="dni" placeholder="" readonly></div>
-            </div>
-            <div class="col-4  m-0  p-0 text-sm" style="text-align: center;">
-            </div>
-          </div>
-<!----- FIN SECTOR CLIENTE ------->
-
-
-<!----- SECTOR FORM CLIENTE ------->
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-
-
-          <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">Domicilio:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="domicilio" name="domicilio" placeholder="Calle y numero" required>
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">Localidad:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-           <select class="form-select form-select-sm" id="localidad" name="localidad" placeholder="" required>
-  <optgroup label="Localidades frecuentes:">
-    <option value="MARCOS PAZ (1727)">MARCOS PAZ (1727)</option>
-    <option value="MARIANO ACOSTA (1723)">MARIANO ACOSTA (1723)</option>
-    <option value="MERLO (1722)">MERLO (1722)</option>
-    <option value="GENERAL LAS HERAS (1741)">GENERAL LAS HERAS (1741)</option>
-    <option value="VILLARS (1731)">VILLARS (1731)</option>
-    <option value="AGUSTIN FERRARI (1723)">AGUSTIN FERRARI (1723)</option>
-    <option value="CAPITAL FEDERAL">CAPITAL FEDERAL</option>
-  </optgroup>
-  <optgroup label="Partidos y localidades Pcia Bs As">
-<option value="29 DE AGOSTO (6405)">29 DE AGOSTO (6405)</option>
-<option value="8 DE ABRIL (1776)">8 DE ABRIL (1776)</option>
-<option value="9 DE JULIO (6500)">9 DE JULIO (6500)</option>
-<option value="ABASTO (1903)">ABASTO (1903)</option>
-<option value="ACASSUSO (1640)">ACASSUSO (1640)</option>
-<option value="ACEVEDO (2717)">ACEVEDO (2717)</option>
-<option value="ADOLFO GONZALES CHAVES (7513)">ADOLFO GONZALES CHAVES (7513)</option>
-<option value="ADROGUE (1846)">ADROGUE (1846)</option>
-<option value="AGOTE (6608)">AGOTE (6608)</option>
-<option value="AGUSTIN ROCA (6001)">AGUSTIN ROCA (6001)</option>
-<option value="AGUSTINA (6001)">AGUSTINA (6001)</option>
-<option value="ALBERDI (6034)">ALBERDI (6034)</option>
-<option value="ALBERTI (6634)">ALBERTI (6634)</option>
-<option value="ALDO BONZI (1770)">ALDO BONZI (1770)</option>
-<option value="ALEJANDRO KORN (1864)">ALEJANDRO KORN (1864)</option>
-<option value="ALTAMIRANO (1986)">ALTAMIRANO (1986)</option>
-<option value="AMERICA (6237)">AMERICA (6237)</option>
-<option value="APARICIO (8158)">APARICIO (8158)</option>
-<option value="ARANA (1909)">ARANA (1909)</option>
-<option value="ARGERICH (8134)">ARGERICH (8134)</option>
-<option value="ARRECIFES (2740)">ARRECIFES (2740)</option>
-<option value="ARRIBEÑOS (6007)">ARRIBEÑOS (6007)</option>
-<option value="ARROYO CORTO (8172)">ARROYO CORTO (8172)</option>
-<option value="ARROYO DULCE (2743)">ARROYO DULCE (2743)</option>
-<option value="ARTURO SEGUI (1895)">ARTURO SEGUI (1895)</option>
-<option value="ATALAYA (1913)">ATALAYA (1913)</option>
-<option value="AVELLANEDA (1870)">AVELLANEDA (1870)</option>
-<option value="AYACUCHO (7150)">AYACUCHO (7150)</option>
-<option value="BAHIA BLANCA (8000)">BAHIA BLANCA (8000)</option>
-<option value="BAHIA SAN BLAS (8506)">BAHIA SAN BLAS (8506)</option>
-<option value="BAIGORRITA (6013)">BAIGORRITA (6013)</option>
-<option value="BALCARCE (7620)">BALCARCE (7620)</option>
-<option value="BALNEARIO CLAROMECO (7505)">BALNEARIO CLAROMECO (7505)</option>
-<option value="BANFIELD (1828)">BANFIELD (1828)</option>
-<option value="BARADERO (2942)">BARADERO (2942)</option>
-<option value="BARKER (7005)">BARKER (7005)</option>
-<option value="BARRIO BATAN (7601)">BARRIO BATAN (7601)</option>
-<option value="BATERIAS (8113)">BATERIAS (8113)</option>
-<option value="BECCAR (1643)">BECCAR (1643)</option>
-<option value="BELEN DE ESCOBAR (1625)">BELEN DE ESCOBAR (1625)</option>
-<option value="BELLA VISTA (1661)">BELLA VISTA (1661)</option>
-<option value="BENAVIDEZ (1621)">BENAVIDEZ (1621)</option>
-<option value="BENITO JUAREZ (7020)">BENITO JUAREZ (7020)</option>
-<option value="BERAZATEGUI (1884)">BERAZATEGUI (1884)</option>
-<option value="BERISSO (1923)">BERISSO (1923)</option>
-<option value="BERNAL (1876)">BERNAL (1876)</option>
-<option value="BOLIVAR (6550)">BOLIVAR (6550)</option>
-<option value="BONIFACIO (6439)">BONIFACIO (6439)</option>
-<option value="BORDENAVE (8187)">BORDENAVE (8187)</option>
-<option value="BOSQUES (1889)">BOSQUES (1889)</option>
-<option value="BOULOGNE (1609)">BOULOGNE (1609)</option>
-<option value="BRAGADO (6640)">BRAGADO (6640)</option>
-<option value="BURZACO (1852)">BURZACO (1852)</option>
-<option value="CABILDO (8118)">CABILDO (8118)</option>
-<option value="CACHARI (7214)">CACHARI (7214)</option>
-<option value="CAMET (7612)">CAMET (7612)</option>
-<option value="CAMPANA (2804)">CAMPANA (2804)</option>
-<option value="CAMPO DE MAYO (1659)">CAMPO DE MAYO (1659)</option>
-<option value="CANNING (1804)">CANNING (1804)</option>
-<option value="CAÑADA SECA (6105)">CAÑADA SECA (6105)</option>
-<option value="CAÑUELAS (1814)">CAÑUELAS (1814)</option>
-<option value="CAPILLA DEL SEÑOR (2812)">CAPILLA DEL SEÑOR (2812)</option>
-<option value="CAPITAN SARMIENTO (2752)">CAPITAN SARMIENTO (2752)</option>
-<option value="CARABELAS (2703)">CARABELAS (2703)</option>
-<option value="CARAPACHAY (1605)">CARAPACHAY (1605)</option>
-<option value="CARDENAL CAGLIERO (8506)">CARDENAL CAGLIERO (8506)</option>
-<option value="CARHUE (6430)">CARHUE (6430)</option>
-<option value="CARILO (7167)">CARILO (7167)</option>
-<option value="CARLOS CASARES (6530)">CARLOS CASARES (6530)</option>
-<option value="CARLOS SALAS (6453)">CARLOS SALAS (6453)</option>
-<option value="CARLOS SPEGAZZINI (1812)">CARLOS SPEGAZZINI (1812)</option>
-<option value="CARLOS TEJEDOR (6455)">CARLOS TEJEDOR (6455)</option>
-<option value="CARMEN DE ARECO (6725)">CARMEN DE ARECO (6725)</option>
-<option value="CARMEN DE PATAGONES (8504)">CARMEN DE PATAGONES (8504)</option>
-<option value="CASALINS (7225)">CASALINS (7225)</option>
-<option value="CASBAS (6417)">CASBAS (6417)</option>
-<option value="CASEROS (1678)">CASEROS (1678)</option>
-<option value="CASTELAR (1712)">CASTELAR (1712)</option>
-<option value="CASTELLI (7114)">CASTELLI (7114)</option>
-<option value="CENTRO AGRICOLA EL PATO (1893)">CENTRO AGRICOLA EL PATO (1893)</option>
-<option value="CHACABUCO (6740)">CHACABUCO (6740)</option>
-<option value="CHASCOMUS (7130)">CHASCOMUS (7130)</option>
-<option value="CHASICO (8117)">CHASICO (8117)</option>
-<option value="CHILLAR (7311)">CHILLAR (7311)</option>
-<option value="CHIVILCOY (6620)">CHIVILCOY (6620)</option>
-<option value="CITY BELL (1896)">CITY BELL (1896)</option>
-<option value="CIUDAD EVITA (1778)">CIUDAD EVITA (1778)</option>
-<option value="CIUDAD JARDIN DEL PALOMAR (1684)">CIUDAD JARDIN DEL PALOMAR (1684)</option>
-<option value="CIUDAD MADERO (1768)">CIUDAD MADERO (1768)</option>
-<option value="CIUDADELA (1702)">CIUDADELA (1702)</option>
-<option value="CLAYPOLE (1849)">CLAYPOLE (1849)</option>
-<option value="COLON (2720)">COLON (2720)</option>
-<option value="COLONIA LA MERCED (8105)">COLONIA LA MERCED (8105)</option>
-<option value="COLONIA SAN MARTIN (8164)">COLONIA SAN MARTIN (8164)</option>
-<option value="COLONIA SERE (6459)">COLONIA SERE (6459)</option>
-<option value="COMANDANTE NICANOR OTAMENDI (7603)">COMANDANTE NICANOR OTAMENDI (7603)</option>
-<option value="COPETONAS (7511)">COPETONAS (7511)</option>
-<option value="CORONEL BRANDSEN (1980)">CORONEL BRANDSEN (1980)</option>
-<option value="CORONEL CHARLONE (6223)">CORONEL CHARLONE (6223)</option>
-<option value="CORONEL DORREGO (8150)">CORONEL DORREGO (8150)</option>
-<option value="CORONEL GRANADA (6062)">CORONEL GRANADA (6062)</option>
-<option value="CORONEL PRINGLES (7530)">CORONEL PRINGLES (7530)</option>
-<option value="CORONEL SUAREZ (7540)">CORONEL SUAREZ (7540)</option>
-<option value="CORONEL VIDAL (7174)">CORONEL VIDAL (7174)</option>
-<option value="CORTINES (6712)">CORTINES (6712)</option>
-<option value="CURARU (6451)">CURARU (6451)</option>
-<option value="DAIREAUX (6555)">DAIREAUX (6555)</option>
-<option value="DARREGUEIRA (8183)">DARREGUEIRA (8183)</option>
-<option value="DE LA GARMA (7515)">DE LA GARMA (7515)</option>
-<option value="DEL CARRIL (7265)">DEL CARRIL (7265)</option>
-<option value="DEL VISO (1669)">DEL VISO (1669)</option>
-<option value="DIQUE LUJAN (1623)">DIQUE LUJAN (1623)</option>
-<option value="DOCK SUD (1871)">DOCK SUD (1871)</option>
-<option value="DOLORES (7100)">DOLORES (7100)</option>
-<option value="DON BOSCO (1876)">DON BOSCO (1876)</option>
-<option value="DON TORCUATO (1611)">DON TORCUATO (1611)</option>
-<option value="DUDIGNAC (6505)">DUDIGNAC (6505)</option>
-<option value="EL DORADO (6031)">EL DORADO (6031)</option>
-<option value="EL JAGUEL (1842)">EL JAGUEL (1842)</option>
-<option value="EL PARAISO (2916)">EL PARAISO (2916)</option>
-<option value="EL SOCORRO (7215)">EL SOCORRO (7215)</option>
-<option value="EL TALAR (1617)">EL TALAR (1617)</option>
-<option value="EL TRIUNFO (6073)">EL TRIUNFO (6073)</option>
-<option value="EMILIO BUNGE (6241)">EMILIO BUNGE (6241)</option>
-<option value="EMPALME LOBOS (7249)">EMPALME LOBOS (7249)</option>
-<option value="ENERGIA (7641)">ENERGIA (7641)</option>
-<option value="ENSENADA (1925)">ENSENADA (1925)</option>
-<option value="ESCALADA (2801)">ESCALADA (2801)</option>
-<option value="ESPARTILLAR (8171)">ESPARTILLAR (8171)</option>
-<option value="ESPORA (6601)">ESPORA (6601)</option>
-<option value="EXALTACION DE LA CRUZ (2812)">EXALTACION DE LA CRUZ (2812)</option>
-<option value="EZEIZA (1804)">EZEIZA (1804)</option>
-<option value="EZPELETA (1882)">EZPELETA (1882)</option>
-<option value="FELIPE SOLA (8129)">FELIPE SOLA (8129)</option>
-<option value="FERRE (6003)">FERRE (6003)</option>
-<option value="FLORENCIO VARELA (1888)">FLORENCIO VARELA (1888)</option>
-<option value="FLORENTINO AMEGHINO (6064)">FLORENTINO AMEGHINO (6064)</option>
-<option value="FLORIDA (1602)">FLORIDA (1602)</option>
-<option value="FORTIN OLAVARRIA (6403)">FORTIN OLAVARRIA (6403)</option>
-<option value="FRANCISCO ALVAREZ (1746)">FRANCISCO ALVAREZ (1746)</option>
-<option value="FRANCISCO MADERO (6472)">FRANCISCO MADERO (6472)</option>
-<option value="GARIN (1619)">GARIN (1619)</option>
-<option value="GARRE (6411)">GARRE (6411)</option>
-<option value="GENERAL ALVARADO (7607)">GENERAL ALVARADO (7607)</option>
-<option value="GENERAL ALVEAR (7263)">GENERAL ALVEAR (7263)</option>
-<option value="GENERAL ARENALES (6005)">GENERAL ARENALES (6005)</option>
-<option value="GENERAL BELGRANO (7223)">GENERAL BELGRANO (7223)</option>
-<option value="GENERAL CONESA (7101)">GENERAL CONESA (7101)</option>
-<option value="GENERAL LAMADRID (7406)">GENERAL LAMADRID (7406)</option>
-<option value="GENERAL LAS HERAS (1741)">GENERAL LAS HERAS (1741)</option>
-<option value="GENERAL LAVALLE (7103)">GENERAL LAVALLE (7103)</option>
-<option value="GENERAL MADARIAGA (7163)">GENERAL MADARIAGA (7163)</option>
-<option value="GENERAL O'BRIEN (6646)">GENERAL O'BRIEN (6646)</option>
-<option value="GENERAL PACHECO (1617)">GENERAL PACHECO (1617)</option>
-<option value="GENERAL PINTO (6050)">GENERAL PINTO (6050)</option>
-<option value="GENERAL PIRAN (7172)">GENERAL PIRAN (7172)</option>
-<option value="GENERAL RODRIGUEZ (1748)">GENERAL RODRIGUEZ (1748)</option>
-<option value="GENERAL ROJO (2905)">GENERAL ROJO (2905)</option>
-<option value="GENERAL SAN MARTIN (1650)">GENERAL SAN MARTIN (1650)</option>
-<option value="GENERAL VILLEGAS (6230)">GENERAL VILLEGAS (6230)</option>
-<option value="GERLI (1870)">GERLI (1870)</option>
-<option value="GLEW (1856)">GLEW (1856)</option>
-<option value="GOBERNADOR UGARTE (6621)">GOBERNADOR UGARTE (6621)</option>
-<option value="GONZALEZ CATAN (1759)">GONZALEZ CATAN (1759)</option>
-<option value="GONZALEZ MORENO (6239)">GONZALEZ MORENO (6239)</option>
-<option value="GORCHS (7226)">GORCHS (7226)</option>
-<option value="GOYENA (8175)">GOYENA (8175)</option>
-<option value="GRAL DANIEL CERRI (8105)">GRAL DANIEL CERRI (8105)</option>
-<option value="GRAL MANSILLA (1911)">GRAL MANSILLA (1911)</option>
-<option value="GRAND BOURG (1615)">GRAND BOURG (1615)</option>
-<option value="GREGORIO DE LAFERRERE (1757)">GREGORIO DE LAFERRERE (1757)</option>
-<option value="GUAMINI (6435)">GUAMINI (6435)</option>
-<option value="GUERNICA (1862)">GUERNICA (1862)</option>
-<option value="GUERRICO (2717)">GUERRICO (2717)</option>
-<option value="GUILLERMO HUDSON (1885)">GUILLERMO HUDSON (1885)</option>
-<option value="HAEDO (1706)">HAEDO (1706)</option>
-<option value="HENDERSON (6465)">HENDERSON (6465)</option>
-<option value="HILARIO ASCASUBI (8142)">HILARIO ASCASUBI (8142)</option>
-<option value="HINOJO (7318)">HINOJO (7318)</option>
-<option value="HORNOS (1739)">HORNOS (1739)</option>
-<option value="HUANGUELEN (7545)">HUANGUELEN (7545)</option>
-<option value="HURLINGHAM (1686)">HURLINGHAM (1686)</option>
-<option value="INDIO RICO (7501)">INDIO RICO (7501)</option>
-<option value="INES INDART (2747)">INES INDART (2747)</option>
-<option value="INGENIERO ADOLFO SOURDEAUX (1612)">INGENIERO ADOLFO SOURDEAUX (1612)</option>
-<option value="INGENIERO MASCHWITZ (1623)">INGENIERO MASCHWITZ (1623)</option>
-<option value="INGENIERO WHITE (8103)">INGENIERO WHITE (8103)</option>
-<option value="IRIARTE (6042)">IRIARTE (6042)</option>
-<option value="ISIDRO CASANOVA (1765)">ISIDRO CASANOVA (1765)</option>
-<option value="ISLA MARTIN GARCIA (1601)">ISLA MARTIN GARCIA (1601)</option>
-<option value="ITUZAINGO (1714)">ITUZAINGO (1714)</option>
-<option value="JEPPENER (1986)">JEPPENER (1986)</option>
-<option value="JOAQUIN GORINA (1896)">JOAQUIN GORINA (1896)</option>
-<option value="JOSE A GUISASOLA (8156)">JOSE A GUISASOLA (8156)</option>
-<option value="JOSE C. PAZ (1665)">JOSE C. PAZ (1665)</option>
-<option value="JOSE INGENIEROS (1702)">JOSE INGENIEROS (1702)</option>
-<option value="JOSE LEON SUAREZ (1655)">JOSE LEON SUAREZ (1655)</option>
-<option value="JOSE MARIA JAUREGUI (6706)">JOSE MARIA JAUREGUI (6706)</option>
-<option value="JOSE MARMOL (1846)">JOSE MARMOL (1846)</option>
-<option value="JUAN BAUTISTA ALBERDI (6034)">JUAN BAUTISTA ALBERDI (6034)</option>
-<option value="JUAN COUSTE (7136)">JUAN COUSTE (7136)</option>
-<option value="JUAN JOSE PASO (6474)">JUAN JOSE PASO (6474)</option>
-<option value="JUAN MARIA GUTIERREZ (1890)">JUAN MARIA GUTIERREZ (1890)</option>
-<option value="JUAN N FERNANDEZ (7011)">JUAN N FERNANDEZ (7011)</option>
-<option value="JUNIN (6000)">JUNIN (6000)</option>
-<option value="LA DULCE (7637)">LA DULCE (7637)</option>
-<option value="LA LUCILA (1636)">LA LUCILA (1636)</option>
-<option value="LA PAMPA (7263)">LA PAMPA (7263)</option>
-<option value="LA PLATA (1900)">LA PLATA (1900)</option>
-<option value="LA REJA (1744)">LA REJA (1744)</option>
-<option value="LA SALADA (1744)">LA SALADA (1744)</option>
-<option value="LA TABLADA (1766)">LA TABLADA (1766)</option>
-<option value="LA UNION (1803)">LA UNION (1803)</option>
-<option value="LABARDEN (7161)">LABARDEN (7161)</option>
-<option value="LANUS (1824)">LANUS (1824)</option>
-<option value="LAPRIDA (7414)">LAPRIDA (7414)</option>
-<option value="LAS ARMAS (7172)">LAS ARMAS (7172)</option>
-<option value="LAS FLORES (7200)">LAS FLORES (7200)</option>
-<option value="LAS MALVINAS (1673)">LAS MALVINAS (1673)</option>
-<option value="LAS OSCURAS (8115)">LAS OSCURAS (8115)</option>
-<option value="LAS TONINAS (7106)">LAS TONINAS (7106)</option>
-<option value="LEANDRO N ALEM (6032)">LEANDRO N ALEM (6032)</option>
-<option value="LEZAMA (7116)">LEZAMA (7116)</option>
-<option value="LIBERTAD (1716)">LIBERTAD (1716)</option>
-<option value="LIMA (2806)">LIMA (2806)</option>
-<option value="LINCOLN (6070)">LINCOLN (6070)</option>
-<option value="LISANDRO OLMOS ETCHEVERRY (1901)">LISANDRO OLMOS ETCHEVERRY (1901)</option>
-<option value="LLAVALLOL (1836)">LLAVALLOL (1836)</option>
-<option value="LOBERIA (7635)">LOBERIA (7635)</option>
-<option value="LOBOS (7240)">LOBOS (7240)</option>
-<option value="LOMA HERMOSA (1657)">LOMA HERMOSA (1657)</option>
-<option value="LOMA NEGRA (7403)">LOMA NEGRA (7403)</option>
-<option value="LOMA VERDE (1628)">LOMA VERDE (1628)</option>
-<option value="LOMAS DE ZAMORA (1832)">LOMAS DE ZAMORA (1832)</option>
-<option value="LOMAS DEL MIRADOR (1752)">LOMAS DEL MIRADOR (1752)</option>
-<option value="LONGCHAMPS (1854)">LONGCHAMPS (1854)</option>
-<option value="LOS BOSQUES (6018)">LOS BOSQUES (6018)</option>
-<option value="LOS CARDALES (2814)">LOS CARDALES (2814)</option>
-<option value="LOS POLVORINES (1613)">LOS POLVORINES (1613)</option>
-<option value="LOS TOLDOS (6015)">LOS TOLDOS (6015)</option>
-<option value="LUIS GUILLON (1838)">LUIS GUILLON (1838)</option>
-<option value="LUJAN (6700)">LUJAN (6700)</option>
-<option value="MAGDALENA (1913)">MAGDALENA (1913)</option>
-<option value="MAIPU (7160)">MAIPU (7160)</option>
-<option value="MALVINAS ARGENTINAS (1846)">MALVINAS ARGENTINAS (1846)</option>
-<option value="MANUEL ALBERTI (1667)">MANUEL ALBERTI (1667)</option>
-<option value="MANUEL B GONNET (1897)">MANUEL B GONNET (1897)</option>
-<option value="MANUEL OCAMPO (3713)">MANUEL OCAMPO (3713)</option>
-<option value="MAQUINISTA F SAVIO (1620)">MAQUINISTA F SAVIO (1620)</option>
-<option value="MAR CHIQUITA (7609)">MAR CHIQUITA (7609)</option>
-<option value="MAR DE AJO (7109)">MAR DE AJO (7109)</option>
-<option value="MAR DE COBO (7609)">MAR DE COBO (7609)</option>
-<option value="MAR DEL PLATA (7600)">MAR DEL PLATA (7600)</option>
-<option value="MAR DEL SUD (7607)">MAR DEL SUD (7607)</option>
-<option value="MAR DEL TUYU (7108)">MAR DEL TUYU (7108)</option>
-<option value="MARCOS PAZ (1727)">MARCOS PAZ (1727)</option>
-<option value="MARIANO ACOSTA (1723)">MARIANO ACOSTA (1723)</option>
-<option value="MARTIN CORONADO (1682)">MARTIN CORONADO (1682)</option>
-<option value="MARTINEZ (1640)">MARTINEZ (1640)</option>
-<option value="MATHEU (1627)">MATHEU (1627)</option>
-<option value="MAXIMO PAZ (1812)">MAXIMO PAZ (1812)</option>
-<option value="MAYOR BURATOVICH (8146)">MAYOR BURATOVICH (8146)</option>
-<option value="MECHONGUE (7605)">MECHONGUE (7605)</option>
-<option value="MEDANOS (8132)">MEDANOS (8132)</option>
-<option value="MELCHOR ROMERO (1903)">MELCHOR ROMERO (1903)</option>
-<option value="MERCEDES (6600)">MERCEDES (6600)</option>
-<option value="MERLO (1722)">MERLO (1722)</option>
-<option value="MINISTRO RIVADAVIA (1852)">MINISTRO RIVADAVIA (1852)</option>
-<option value="MIRAMAR (7607)">MIRAMAR (7607)</option>
-<option value="MONES CAZON (6469)">MONES CAZON (6469)</option>
-<option value="MONTE CHINGOLO (1825)">MONTE CHINGOLO (1825)</option>
-<option value="MONTE GRANDE (1842)">MONTE GRANDE (1842)</option>
-<option value="MONTE HERMOSO (8153)">MONTE HERMOSO (8153)</option>
-<option value="MOREA (6507)">MOREA (6507)</option>
-<option value="MORENO (1744)">MORENO (1744)</option>
-<option value="MORON (1708)">MORON (1708)</option>
-<option value="MORSE (6013)">MORSE (6013)</option>
-<option value="MUNRO (1605)">MUNRO (1605)</option>
-<option value="MUÑIZ (1663)">MUÑIZ (1663)</option>
-<option value="NAVARRO (6605)">NAVARRO (6605)</option>
-<option value="NECOCHEA (7630)">NECOCHEA (7630)</option>
-<option value="NICANOR OLIVERA (7637)">NICANOR OLIVERA (7637)</option>
-<option value="NORBERTO DE LA RIESTRA (6663)">NORBERTO DE LA RIESTRA (6663)</option>
-<option value="O'HIGGINS (6748)">O'HIGGINS (6748)</option>
-<option value="OLAVARRIA (7400)">OLAVARRIA (7400)</option>
-<option value="OLIVERA (6608)">OLIVERA (6608)</option>
-<option value="OLIVOS (1636)">OLIVOS (1636)</option>
-<option value="OPEN DOOR (6708)">OPEN DOOR (6708)</option>
-<option value="ORENSE (7503)">ORENSE (7503)</option>
-<option value="ORIENTE (7509)">ORIENTE (7509)</option>
-<option value="OSTENDE (7167)">OSTENDE (7167)</option>
-<option value="PABLO NOGUES (1613)">PABLO NOGUES (1613)</option>
-<option value="PABLO PODESTA (1657)">PABLO PODESTA (1657)</option>
-<option value="PARADA ROBLES (6703)">PARADA ROBLES (6703)</option>
-<option value="PARQUE LELOIR (1713)">PARQUE LELOIR (1713)</option>
-<option value="PARQUE SAN MARTIN (1721)">PARQUE SAN MARTIN (1721)</option>
-<option value="PASO DEL REY (1742)">PASO DEL REY (1742)</option>
-<option value="PASTEUR (6077)">PASTEUR (6077)</option>
-<option value="PEDERNALES (6665)">PEDERNALES (6665)</option>
-<option value="PEDRO LURO (8148)">PEDRO LURO (8148)</option>
-<option value="PEHUAJO (6450)">PEHUAJO (6450)</option>
-<option value="PELLEGRINI (6346)">PELLEGRINI (6346)</option>
-<option value="PEREZ MILLAN (2933)">PEREZ MILLAN (2933)</option>
-<option value="PERGAMINO (2700)">PERGAMINO (2700)</option>
-<option value="PIEDRITAS (6241)">PIEDRITAS (6241)</option>
-<option value="PIGUE (8170)">PIGUE (8170)</option>
-<option value="PILA (7116)">PILA (7116)</option>
-<option value="PILAR (1629)">PILAR (1629)</option>
-<option value="PINAMAR (7167)">PINAMAR (7167)</option>
-<option value="PIPINAS (1921)">PIPINAS (1921)</option>
-<option value="PIROVANO (6551)">PIROVANO (6551)</option>
-<option value="PLATANOS (1885)">PLATANOS (1885)</option>
-<option value="POBLET (1905)">POBLET (1905)</option>
-<option value="PONTEVEDRA (1761)">PONTEVEDRA (1761)</option>
-<option value="PRESIDENTE DERQUI (1635)">PRESIDENTE DERQUI (1635)</option>
-<option value="PUAN (8180)">PUAN (8180)</option>
-<option value="PUEBLO SAN JOSE (7541)">PUEBLO SAN JOSE (7541)</option>
-<option value="PUERTO BELGRANO (8111)">PUERTO BELGRANO (8111)</option>
-<option value="PUERTO ROSALES (8111)">PUERTO ROSALES (8111)</option>
-<option value="PUNTA ALTA (8109)">PUNTA ALTA (8109)</option>
-<option value="PUNTA INDIO (1917)">PUNTA INDIO (1917)</option>
-<option value="PUNTA LARA (1931)">PUNTA LARA (1931)</option>
-<option value="QUENUMA (6335)">QUENUMA (6335)</option>
-<option value="QUEQUEN (7631)">QUEQUEN (7631)</option>
-<option value="QUILMES (1878)">QUILMES (1878)</option>
-<option value="QUILMES OESTE (1879)">QUILMES OESTE (1879)</option>
-<option value="QUIROGA (6533)">QUIROGA (6533)</option>
-<option value="RAFAEL CALZADA (1847)">RAFAEL CALZADA (1847)</option>
-<option value="RAFAEL CASTILLO (1755)">RAFAEL CASTILLO (1755)</option>
-<option value="RAMALLO (2915)">RAMALLO (2915)</option>
-<option value="RAMOS MEJIA (1704)">RAMOS MEJIA (1704)</option>
-<option value="RANCHOS (1987)">RANCHOS (1987)</option>
-<option value="RANELAGH (1886)">RANELAGH (1886)</option>
-<option value="RAUCH (7203)">RAUCH (7203)</option>
-<option value="RAWSON (6734)">RAWSON (6734)</option>
-<option value="REMEDIOS DE ESCALADA (1826)">REMEDIOS DE ESCALADA (1826)</option>
-<option value="RETA (7511)">RETA (7511)</option>
-<option value="RICARDO ROJAS (1618)">RICARDO ROJAS (1618)</option>
-<option value="RINCON DE MILBERG (1624)">RINCON DE MILBERG (1624)</option>
-<option value="RIVADAVIA (6237)">RIVADAVIA (6237)</option>
-<option value="RIVERA (6441)">RIVERA (6441)</option>
-<option value="ROBERTS (6075)">ROBERTS (6075)</option>
-<option value="ROJAS (2705)">ROJAS (2705)</option>
-<option value="ROQUE PEREZ (7245)">ROQUE PEREZ (7245)</option>
-<option value="ROSAS (7205)">ROSAS (7205)</option>
-<option value="SAAVEDRA (8174)">SAAVEDRA (8174)</option>
-<option value="SALADILLO (7260)">SALADILLO (7260)</option>
-<option value="SALDUNGARAY (8166)">SALDUNGARAY (8166)</option>
-<option value="SALLIQUELO (6339)">SALLIQUELO (6339)</option>
-<option value="SALTO (2741)">SALTO (2741)</option>
-<option value="SAN ANDRES (1651)">SAN ANDRES (1651)</option>
-<option value="SAN ANDRES DE GILES (6720)">SAN ANDRES DE GILES (6720)</option>
-<option value="SAN ANTONIO DE ARECO (2760)">SAN ANTONIO DE ARECO (2760)</option>
-<option value="SAN ANTONIO DE PADUA (1718)">SAN ANTONIO DE PADUA (1718)</option>
-<option value="SAN BERNARDO (7111)">SAN BERNARDO (7111)</option>
-<option value="SAN CAYETANO (7521)">SAN CAYETANO (7521)</option>
-<option value="SAN CLEMENTE DEL TUYU (7105)">SAN CLEMENTE DEL TUYU (7105)</option>
-<option value="SAN FERNANDO (1646)">SAN FERNANDO (1646)</option>
-<option value="SAN FRANCISCO DE BELLOCQ (7505)">SAN FRANCISCO DE BELLOCQ (7505)</option>
-<option value="SAN FRANCISCO SOLANO (1881)">SAN FRANCISCO SOLANO (1881)</option>
-<option value="SAN GERMAN (8124)">SAN GERMAN (8124)</option>
-<option value="SAN ISIDRO (1642)">SAN ISIDRO (1642)</option>
-<option value="SAN JOSE (1834)">SAN JOSE (1834)</option>
-<option value="SAN JUAN (6500)">SAN JUAN (6500)</option>
-<option value="SAN JUSTO (1754)">SAN JUSTO (1754)</option>
-<option value="SAN MANUEL (7007)">SAN MANUEL (7007)</option>
-<option value="SAN MIGUEL (1663)">SAN MIGUEL (1663)</option>
-<option value="SAN MIGUEL DEL MONTE (7220)">SAN MIGUEL DEL MONTE (7220)</option>
-<option value="SAN NICOLAS DE LOS ARROYOS (2900)">SAN NICOLAS DE LOS ARROYOS (2900)</option>
-<option value="SAN PEDRO (2930)">SAN PEDRO (2930)</option>
-<option value="SAN VICENTE (1865)">SAN VICENTE (1865)</option>
-<option value="SANTA CLARA DEL MAR (7609)">SANTA CLARA DEL MAR (7609)</option>
-<option value="SANTA LUCIA (2935)">SANTA LUCIA (2935)</option>
-<option value="SANTA ROSA (7303)">SANTA ROSA (7303)</option>
-<option value="SANTA TERESITA (7107)">SANTA TERESITA (7107)</option>
-<option value="SANTOS LUGARES (3403)">SANTOS LUGARES (3403)</option>
-<option value="SARANDI (1872)">SARANDI (1872)</option>
-<option value="SIEMPRE VERDE (7609)">SIEMPRE VERDE (7609)</option>
-<option value="SIERRA DE LA VENTANA (8168)">SIERRA DE LA VENTANA (8168)</option>
-<option value="SIERRA DE LOS PADRES (7601)">SIERRA DE LOS PADRES (7601)</option>
-<option value="SIERRAS BAYAS (7403)">SIERRAS BAYAS (7403)</option>
-<option value="SOLIS (2764)">SOLIS (2764)</option>
-<option value="SOURIGUES (1886)">SOURIGUES (1886)</option>
-<option value="STROEDER (6508)">STROEDER (6508)</option>
-<option value="SUIPACHA (6612)">SUIPACHA (6612)</option>
-<option value="TANDIL (7000)">TANDIL (7000)</option>
-<option value="TAPALQUE (7303)">TAPALQUE (7303)</option>
-<option value="TAPIALES (1770)">TAPIALES (1770)</option>
-<option value="TEMPERLEY (1834)">TEMPERLEY (1834)</option>
-<option value="TIGRE (1648)">TIGRE (1648)</option>
-<option value="TORNQUIST (8160)">TORNQUIST (8160)</option>
-<option value="TORRES (6703)">TORRES (6703)</option>
-<option value="TORTUGUITAS (1667)">TORTUGUITAS (1667)</option>
-<option value="TRENQUE LAUQUEN (6400)">TRENQUE LAUQUEN (6400)</option>
-<option value="TRES ALGARROBOS (6231)">TRES ALGARROBOS (6231)</option>
-<option value="TRES ARROYOS (7500)">TRES ARROYOS (7500)</option>
-<option value="TRES LOMAS (6409)">TRES LOMAS (6409)</option>
-<option value="TRES SARGENTOS (6727)">TRES SARGENTOS (6727)</option>
-<option value="TRISTAN SUAREZ (1806)">TRISTAN SUAREZ (1806)</option>
-<option value="TRONCOS DEL TALAR (1608)">TRONCOS DEL TALAR (1608)</option>
-<option value="TROPEZON (6501)">TROPEZON (6501)</option>
-<option value="TRUJUI (1664)">TRUJUI (1664)</option>
-<option value="TURDERA (1834)">TURDERA (1834)</option>
-<option value="URDAMPILLETA (6553)">URDAMPILLETA (6553)</option>
-<option value="URIBELARREA (1815)">URIBELARREA (1815)</option>
-<option value="VALDEZ (6667)">VALDEZ (6667)</option>
-<option value="VALENTIN ALSINA (1822)">VALENTIN ALSINA (1822)</option>
-<option value="VALERIA DEL MAR (7167)">VALERIA DEL MAR (7167)</option>
-<option value="VEDIA (6030)">VEDIA (6030)</option>
-<option value="VELA (7003)">VELA (7003)</option>
-<option value="VERONICA (1917)">VERONICA (1917)</option>
-<option value="VICENTE CASARES (1808)">VICENTE CASARES (1808)</option>
-<option value="VICENTE LOPEZ (1638)">VICENTE LOPEZ (1638)</option>
-<option value="VICTORIA (1644)">VICTORIA (1644)</option>
-<option value="VILLA ADELINA (1607)">VILLA ADELINA (1607)</option>
-<option value="VILLA BALLESTER (1653)">VILLA BALLESTER (1653)</option>
-<option value="VILLA BOSCH (1682)">VILLA BOSCH (1682)</option>
-<option value="VILLA DE MAYO (1613)">VILLA DE MAYO (1613)</option>
-<option value="VILLA DOMINICO (1874)">VILLA DOMINICO (1874)</option>
-<option value="VILLA ELISA (1894)">VILLA ELISA (1894)</option>
-<option value="VILLA ESPAÑA (1884)">VILLA ESPAÑA (1884)</option>
-<option value="VILLA FRANCIA (6062)">VILLA FRANCIA (6062)</option>
-<option value="VILLA GESELL (7165)">VILLA GESELL (7165)</option>
-<option value="VILLA HARDING GREEN (8101)">VILLA HARDING GREEN (8101)</option>
-<option value="VILLA INSUPERABLE (1752)">VILLA INSUPERABLE (1752)</option>
-<option value="VILLA IRIS (8126)">VILLA IRIS (8126)</option>
-<option value="VILLA LIA (2761)">VILLA LIA (2761)</option>
-<option value="VILLA LUZURIAGA (1754)">VILLA LUZURIAGA (1754)</option>
-<option value="VILLA LYNCH (1672)">VILLA LYNCH (1672)</option>
-<option value="VILLA MARTELLI (1603)">VILLA MARTELLI (1603)</option>
-<option value="VILLA MAZA (6343)">VILLA MAZA (6343)</option>
-<option value="VILLA MITRE (1884)">VILLA MITRE (1884)</option>
-<option value="VILLA MOQUEHUA (6625)">VILLA MOQUEHUA (6625)</option>
-<option value="VILLA RAMALLO (2914)">VILLA RAMALLO (2914)</option>
-<option value="VILLA ROSA (1631)">VILLA ROSA (1631)</option>
-<option value="VILLA ROSAS (8103)">VILLA ROSAS (8103)</option>
-<option value="VILLA SANTOS TESEI (1688)">VILLA SANTOS TESEI (1688)</option>
-<option value="VILLA SARMIENTO (1706)">VILLA SARMIENTO (1706)</option>
-<option value="VILLALONGA (8512)">VILLALONGA (8512)</option>
-<option value="VILLARS (1731)">VILLARS (1731)</option>
-<option value="VIÑA (2754)">VIÑA (2754)</option>
-<option value="VIRREY DEL PINO (1763)">VIRREY DEL PINO (1763)</option>
-<option value="VIRREYES (1646)">VIRREYES (1646)</option>
-<option value="WILDE (1875)">WILDE (1875)</option>
-<option value="ZARATE (2800)">ZARATE (2800)</option>
-  </optgroup>
-  <optgroup label="Si no es de Bs As.">
-<option value="PCIA. CATAMARCA">PCIA. CATAMARCA</option>
-<option value="PCIA. CHACO">PCIA. CHACO</option>
-<option value="PCIA. CHUBUT">PCIA. CHUBUT</option>
-<option value="PCIA. CORDOBA">PCIA. CORDOBA</option>
-<option value="PCIA. CORRIENTES">PCIA. CORRIENTES</option>
-<option value="PCIA. ENTRE RIOS">PCIA. ENTRE RIOS</option>
-<option value="PCIA. JUJUY">PCIA. JUJUY</option>
-<option value="PCIA. LA PAMPA">PCIA. LA PAMPA</option>
-<option value="PCIA. LA RIOJA">PCIA. LA RIOJA</option>
-<option value="PCIA. MENDOZA">PCIA. MENDOZA</option>
-<option value="PCIA. MISIONES">PCIA. MISIONES</option>
-<option value="PCIA. NEUQUEN">PCIA. NEUQUEN</option>
-<option value="PCIA. RIO NEGRO">PCIA. RIO NEGRO</option>
-<option value="PCIA. SALTA">PCIA. SALTA</option>
-<option value="PCIA. SAN JUAN">PCIA. SAN JUAN</option>
-<option value="PCIA. SAN LUIS">PCIA. SAN LUIS</option>
-<option value="PCIA. SANTA CRUZ">PCIA. SANTA CRUZ</option>
-<option value="PCIA. SANTA FE">PCIA. SANTA FE</option>
-<option value="PCIA. SANTIAGO DEL ESTERO">PCIA. SANTIAGO DEL ESTERO</option>
-<option value="PCIA. TIERRA DEL FUEGO">PCIA. TIERRA DEL FUEGO</option>
-<option value="PCIA. TUCUMAN">PCIA. TUCUMAN</option>
-  </optgroup>
-                </select>
-
-            </div>
-            </div>
-          </div>
-
-          <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="wpp" class="form-label mt-1">Whatsapp</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="number" class="form-control form-control-sm" id="wpp" name="wpp" placeholder="10 digitos" pattern="\d{10}" required>
-          
-            </div>
-            </div>
-                      <div class="col-2">
-            <div class="mb-1">
-          <label for="wpp" class="form-label mt-1">Enviar:</label>
-            </div>
-          </div>
-
-          <div class="col-4">
-            <div class="mb-1">
-          <button style='width: 32px;height:32px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button>
-            </div>
-            </div>
-          </div>
-
-           <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">Mail:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="mail" name="mail" placeholder="mail: xxxx@xxx.xxx">
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">F. Pago:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-           <select class="form-select form-select-sm" id="fpago" name="fpago" placeholder="" required>
-<option value="CUPONES">CUPONES</option>
-<option value="TARJETA CREDITO">TARJETA CREDITO</option>
-<option value="DEBITO CBU">DEBITO CBU</option>
-                </select>
-            </div>
-            </div>
-          </div>
-
-          <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="notas" class="form-label mt-1">NotasCte:</label>
-            </div>
-          </div>
-          <div class="col-10">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notascte" name="notascte" placeholder="Notas sobre el cliente">
-            </div>
-            </div>
-          </div>
-
-</div>
-
-<br>
-
-
-<!----- FIN SECTOR FORM CLIENTE ------->
-
-
-<!----- SECTOR VEHICULO ------->
-          <div class="row m-0" style="border-bottom: 2px solid #000000; padding: 5px 0px 5px 0px;">
-            <div class="col-3 p-0 text-sm" style="margin: auto;" >
-              <input type="text" class="form-control-xs  m-0 p-0 pt-1 bg-transparent border-0 text-dark fs-5"
-                style='text-align: center; border: 2px solid black;border-radius:5px; box-shadow: 0px 0px 2px 0px #000000;padding: 1px; background-image: url("https://drive.google.com/uc?id=19QdP6YcZkkXV0ogbAb8XwqQdITPWwIuf"); background-size: contain; background-repeat: no-repeat; width: 140px; height: 45px;'
-                id="patente" name="patente" placeholder="" readonly>
-                </div>
-            <div class="col-9 m-0 p-0 text-sm">
-              <div><input type="text" class="form-control-xs  m-0 p-0 bg-transparent border-0 text-dark fs-6"
-                style="font-weight: 500;" id="marca" name="marca" placeholder="" readonly></div>
-              <div>MOTOR : || CHASIS:</div>
-            </div>
-          </div>
-<!----- FIN SECTOR VEHICULO ------->
-
-<!----- SECTOR FORM VEH ------->
-
-
-
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-
-
-           <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="marca" class="form-label mt-1">Motor:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="motor" name="motor" placeholder="N° Motor">
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="marca" class="form-label mt-1">Chasis:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="chasis" name="chasis" placeholder="N° Chasis">
-            </div>
-            </div>
-          </div>
-
-
-                    <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-                <label for="cnia" class="form-label mt-1">Compañia:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-                <select class="form-select form-select-sm" id="cnia" name="cnia" placeholder="" required>
-                  <option value="">""</option>
-                  <option value="AGROSALTA">AGROSALTA</option>
-                  <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
-                  <option value="RIVADAVIA">RIVADAVIA</option>
-                  <option value="FED PAT">FED PAT</option>
-                  <option value="PROVIDENCIA">PROVIDENCIA</option>
-                  <option value="RIO URUGUAY">RIO URUGUAY</option>
-                  <option value="ATM">ATM</option>
-                  <option value="LA CAJA">LA CAJA</option>
-                  <option value="NIVEL">NIVEL</option>
-                  <option value="MAPFRE">MAPFRE</option>
-                  <option value="BENEFICIO">BENEFICIO</option>
-                  <option value="MERCANTIL">MERCANTIL</option>
-                  <option value="LIBRA">LIBRA</option>
-                  <option value="GRUA">GRUA</option>
-                  <option value="AGRO (V)">AGRO (V)</option>
-                  <option value="ALLIANZ">ALLIANZ</option>
-                  <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
-                </select>
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-                <label for="cnia" class="form-label mt-1">Cobertura:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-                <select class="form-select form-select-sm" id="cobertura" name="cobertura" placeholder="" required>
-<option value="">""</option>
-<option value="A">A</option>
-<option value="B1">B1</option>
-<option value="B1 - COBRE">B1 - COBRE</option>
-<option value="B">B</option>
-<option value="B - PLATA">B - PLATA</option>
-<option value="C1">C1</option>
-<option value="C">C</option>
-<option value="ORO PLUS">ORO PLUS</option>
-<option value="C - PLUS">C - PLUS</option>
-<option value="M - MEGA PLAN">M - MEGA PLAN</option>
-<option value="C - FULL">C - FULL</option>
-<option value="COB - M BASE">COB - M BASE</option>
-<option value="COB - M15">COB - M15</option>
-<option value="C3-80">C3-80</option>
-<option value="S- CERO">S- CERO</option>
-<option value="SIGMA">SIGMA</option>
-<option value="M - PREMIUM">M - PREMIUM</option>
-<option value="P - MEGA PREMIUM">P - MEGA PREMIUM</option>
-<option value="MX - MEGA MAX">MX - MEGA MAX</option>
-<option value="C - MAXIMA">C - MAXIMA</option>
-<option value="ORO MAX">ORO MAX</option>
-<option value="PREMIUM">PREMIUM</option>
-<option value="TR - FRANQUICIA 50000">TR - FRANQUICIA 50000</option>
-<option value="TR - FRANQUICIA 54000">TR - FRANQUICIA 54000</option>
-<option value="TR - FRANQUICIA 60000">TR - FRANQUICIA 60000</option>
-<option value="TR - FRANQUICIA 75000">TR - FRANQUICIA 75000</option>
-<option value="TR - FRANQUICIA 80000">TR - FRANQUICIA 80000</option>
-<option value="TR - FRANQUICIA 85000">TR - FRANQUICIA 85000</option>
-<option value="TR - FRANQUICIA 90000">TR - FRANQUICIA 90000</option>
-<option value="TR - FRANQUICIA 95000">TR - FRANQUICIA 95000</option>
-<option value="TR - FRANQUICIA 100000">TR - FRANQUICIA 100000</option>
-<option value="TR - FRANQUICIA 1%">TR - FRANQUICIA 1%</option>
-<option value="TR - FRANQUICIA 1,5%">TR - FRANQUICIA 1,5%</option>
-<option value="TR - FRANQUICIA 2%">TR - FRANQUICIA 2%</option>
-<option value="TR - FRANQUICIA 3%">TR - FRANQUICIA 3%</option>
-<option value="TR - FRANQUICIA 4%">TR - FRANQUICIA 4%</option>
-<option value="TR - SIN FRANQUICIA">TR - SIN FRANQUICIA</option>
-<option value="E - CUARENTENA">E - CUARENTENA</option>
-<option value="AP">AP</option>
-<option value="COMBINADO FAMILIAR">COMBINADO FAMILIAR</option>
-<option value="GRUA">GRUA</option>
-                </select>
-            </div>
-            </div>
-          </div>
-                    <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="importe" class="form-label mt-1">Importe:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="importe" name="importe" placeholder="">
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="poliza" class="form-label mt-1">Poliza:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="poliza" name="poliza" placeholder="">
-            </div>
-            </div>
-          </div>
-                    <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="vto" class="form-label mt-1">Vigencia:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="vigencia" name="vigencia" placeholder="dd/mm/aa"  required>
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <div class="mt-1 ml-0">Hasta:</div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="hasta" name="hasta" placeholder="dd/mm/aa" required>
-            </div>
-            </div>
-          </div>
-                              <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="poliza" class="form-label mt-1">Operación:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-              <select class="form-select form-select-sm mt-1" id="operacion" name="operacion" placeholder="">
-                <option value=""></option>
-                <option value="PENDIENTE">PENDIENTE</option>
-<option value="SEGURO NUEVO">SEGURO NUEVO</option>
-<option value="RENOVACION">RENOVACION</option>
-<option value="ANULACION">ANULACION</option>
-              </select>
-            </div>
-            </div>
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">Sucursal:</label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="mb-1">
-                         <select class="form-select form-select-sm" id="sucursal" name="sucursal" placeholder="" required>
-<option value="">""</option>
-<option value="MARCOS PAZ">MARCOS PAZ</option>
-<option value="MARIANO ACOSTA">MARIANO ACOSTA</option>
-                </select>
-            </div>
-            </div>
-          </div>
-
-          <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="poliza" class="form-label mt-1">Daños:</label>
-            </div>
-          </div>
-          <div class="col-10">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="danios" name="danios" placeholder="Daños existentes">
-            </div>
-            </div>
-          </div>
-
-          <div class="row">
-          <div class="col-2">
-            <div class="mb-1">
-          <label for="poliza" class="form-label mt-1">NotasVeh:</label>
-            </div>
-          </div>
-          <div class="col-10">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="notas" name="notas" placeholder="Observaciones">
-            </div>
-            </div>
-          </div>
-
-
-
-
-          </div>
-<br>
-          <div class="row">
-          <div class="col-8">
-            <div class="mb-1">
-            </div>
-            </div>
-          <div class="col-4">
-            <div class="mb-1">
-              
-               <button class="btn btn-success mx-5" id="bt-modificar-datos" style="border-radius: 30px;">Modificar<span id="spinner5" class="spinner-border spinner-border-sm" style="display:none;"></span></button>
-
-            </div>
-            </div>
-          </div>
-
-<!------- FIN SECTOR FORM VEH ------>
-
-          <hr style="margin-bottom: 0px;">
-
-
-
-      </form>
-      <br>
-      <!------------ NUEVA MODIFICACION A LA POLIZA --------------->
-      <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-
-        <div class="row  m-0 p-0 bg-light py-2">GESTIONAR POLIZA:</div>
-        <form id="nuevo_estado_form">
-          <div class="row">
-            <div class="col-2  m-0 p-0"> 
-            </div>
-
-            <div class="col-4  m-0 p-0"> Novedad:<br>
-              <select class="form-select form-select-sm mt-1" style='border-radius: 30px' id="novedad_sn"
-                name="novedad_sn" placeholder="">
-                <option value=""> </option>
-                <option value="ALTA DE POLIZA">ALTA DE POLIZA</option>
-                <option value="BAJA DE POLIZA">BAJA DE POLIZA</option>
-                <option value="PROBLEMAS DE EMISION">PROBLEMAS DE EMISION</option>
-                <option value="OTROS">OTROS</option>
-              </select>
-            </div>
-            <div class="col-3  m-0 p-0" id="operacion_sn2" style="display: none;">Operación:<br>
-            <select class="form-select form-select-sm mt-1" id="operacion_sn" name="operacion_sn" placeholder="" style="border-radius: 30px;">
-<option value="SEGURO NUEVO">SEGURO NUEVO</option>
-<option value="ANULACION">ANULACION</option>
-              </select>
-            </div>
-            <div class="col-3  m-0 p-0" id="poliza_sn2" style="display: none;">Póliza:<br>
-              <input type="number" class="form-control form-control-sm mt-1" style="border-radius: 30px;"
-                id="poliza_sn" name="poliza_sn" placeholder="">
-            </div>
-          </div>
-
-          <div class="row m-0">
-            <label for="estado">Observaciones / Motivos:</label>
-            <input type="text" class="form-control" style="height:80px" id="notas_sn" name="notas_sn" placeholder="">
-          </div>
-
-          <div class="row  m-0 p-0 bg-light py-2">
-
-
-            <div class="col-9">
-            </div>
-
-            <div class="col-3">
-
-              <button id="bt-actualizar_nota" class="btn btn-success" style="border-radius: 30px;">Gestionar</button>
-            </div>
-          </div>
-    </form>
+  
+  
+  <div id="modal2" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+    <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
+            </div>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+    <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
+            </div>
+    <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+          </form>
+        </div>
       </div>
-  <!------------ FIN NUEVA MODIFICACION A LA POLIZA --------------->
-
-            <!------------ MAILS DEL CASO --------------->
-      <div class="visor bg-light shadow p-3" style="border-radius: 10px;">    
-        <form id="ver_mails_form">
-<div class="row">
-        <div class="col-8 m-0 p-0">MAILS REFERIDOS AL CASO:</div>
-        <div class="col-4 m-0 p-0">
-           <button id="bt-ver-mails" class="btn btn-success" style="border-radius: 30px;" type="submit">Ver Emails</button>
-            </div>
-            </div>
-</form>
-
-<div id="emails"></div>
-      </div>
-      <!------------ FIN MAILS DEL CASO --------------->
-
-
     </div>
   </div>
-  <!---------- AREA DE POLIZAS PENDIENTES ------------>
-
-  <div class="col-6 container" id="miDiv" style="width: 700px">
-    FILTRAR POLIZAS:
+  
+  
+  
+  
     <div class="row">
-      <div class="col-4  m-0"> Patente:<br>
-        <input type="text" class="form-control form-control-sm" id="patenteSelect" name="patenteSelect"
-          placeholder="Ingrese patente" oninput="this.value=this.value.toUpperCase()">
-      </div>
-      <div class="col-4  m-0"> DNI:<br>
-        <input type="text" class="form-control form-control-sm" id="dniSelect" name="dniSelect"
-          placeholder="Ingrese DNI">
-      </div>
-      <div class="col-4  m-0"> Cliente:<br>
-        <input type="text" class="form-control form-control-sm" id="nombreSelect" name="nombreSelect"
-          placeholder="Apellido y Nombre" oninput="this.value=this.value.toUpperCase()">
+  
+      <div class="col-6 container" style="width: 700px">
+        <form id="visorGeneral">
+          <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+  <!----- SECTOR CLIENTE ------->
+            <div class="row p-0 m-0" style="border-bottom: 2px solid #000000">
+              <div class="col-2 p-0 text-sm" style="width: 60px; height: 60px; margin-right: 12px;" >
+  <img src="https://drive.google.com/uc?id=1_VD-SQ8M_dzoAwKF7lepJut7zNqyzI9z" alt="Imagen" style="width: 60px;">
+                  </div>
+              <div class="col-6 m-0 p-0 text-sm" >
+              <input type="text" class="form-control-xs p-0 bg-transparent border-0 text-dark fs-5"
+            style="font-weight: 500;width: 360px;margin-top: 4px;" id="nombre" name="nombre" placeholder="" readonly><br>
+            <div class="row" style='margin-left: 1px;font-weight: 500;font-size: 14px;'>DNI:
+                <input type="text" class="form-control-xs m-0 bg-transparent border-0 text-dark"
+                  style='font-weight: 500;font-size: 14px; width: 91px; height: 20px; padding-left: 4px' id="dni" name="dni" placeholder="" readonly></div>
+              </div>
+              <div class="col-4  m-0  p-0 text-sm" style="text-align: center;">
+              </div>
+            </div>
+  <!----- FIN SECTOR CLIENTE ------->
+  
+  
+  <!----- SECTOR FORM CLIENTE ------->
+     <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+  
+  
+            <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="nombreCompleto" class="form-label mt-1">Domicilio:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="domicilio" name="domicilio" placeholder="Calle y numero" required>
+              </div>
+              </div>
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="nombreCompleto" class="form-label mt-1">Localidad:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+             <select class="form-select form-select-sm" id="localidad" name="localidad" placeholder="" required>
+    <optgroup label="Localidades frecuentes:">
+      <option value="MARCOS PAZ (1727)">MARCOS PAZ (1727)</option>
+      <option value="MARIANO ACOSTA (1723)">MARIANO ACOSTA (1723)</option>
+      <option value="MERLO (1722)">MERLO (1722)</option>
+      <option value="GENERAL LAS HERAS (1741)">GENERAL LAS HERAS (1741)</option>
+      <option value="VILLARS (1731)">VILLARS (1731)</option>
+      <option value="AGUSTIN FERRARI (1723)">AGUSTIN FERRARI (1723)</option>
+      <option value="CAPITAL FEDERAL">CAPITAL FEDERAL</option>
+    </optgroup>
+    <optgroup label="Partidos y localidades Pcia Bs As">
+  <option value="29 DE AGOSTO (6405)">29 DE AGOSTO (6405)</option>
+  <option value="8 DE ABRIL (1776)">8 DE ABRIL (1776)</option>
+  <option value="9 DE JULIO (6500)">9 DE JULIO (6500)</option>
+  <option value="ABASTO (1903)">ABASTO (1903)</option>
+  <option value="ACASSUSO (1640)">ACASSUSO (1640)</option>
+  <option value="ACEVEDO (2717)">ACEVEDO (2717)</option>
+  <option value="ADOLFO GONZALES CHAVES (7513)">ADOLFO GONZALES CHAVES (7513)</option>
+  <option value="ADROGUE (1846)">ADROGUE (1846)</option>
+  <option value="AGOTE (6608)">AGOTE (6608)</option>
+  <option value="AGUSTIN ROCA (6001)">AGUSTIN ROCA (6001)</option>
+  <option value="AGUSTINA (6001)">AGUSTINA (6001)</option>
+  <option value="ALBERDI (6034)">ALBERDI (6034)</option>
+  <option value="ALBERTI (6634)">ALBERTI (6634)</option>
+  <option value="ALDO BONZI (1770)">ALDO BONZI (1770)</option>
+  <option value="ALEJANDRO KORN (1864)">ALEJANDRO KORN (1864)</option>
+  <option value="ALTAMIRANO (1986)">ALTAMIRANO (1986)</option>
+  <option value="AMERICA (6237)">AMERICA (6237)</option>
+  <option value="APARICIO (8158)">APARICIO (8158)</option>
+  <option value="ARANA (1909)">ARANA (1909)</option>
+  <option value="ARGERICH (8134)">ARGERICH (8134)</option>
+  <option value="ARRECIFES (2740)">ARRECIFES (2740)</option>
+  <option value="ARRIBEÑOS (6007)">ARRIBEÑOS (6007)</option>
+  <option value="ARROYO CORTO (8172)">ARROYO CORTO (8172)</option>
+  <option value="ARROYO DULCE (2743)">ARROYO DULCE (2743)</option>
+  <option value="ARTURO SEGUI (1895)">ARTURO SEGUI (1895)</option>
+  <option value="ATALAYA (1913)">ATALAYA (1913)</option>
+  <option value="AVELLANEDA (1870)">AVELLANEDA (1870)</option>
+  <option value="AYACUCHO (7150)">AYACUCHO (7150)</option>
+  <option value="BAHIA BLANCA (8000)">BAHIA BLANCA (8000)</option>
+  <option value="BAHIA SAN BLAS (8506)">BAHIA SAN BLAS (8506)</option>
+  <option value="BAIGORRITA (6013)">BAIGORRITA (6013)</option>
+  <option value="BALCARCE (7620)">BALCARCE (7620)</option>
+  <option value="BALNEARIO CLAROMECO (7505)">BALNEARIO CLAROMECO (7505)</option>
+  <option value="BANFIELD (1828)">BANFIELD (1828)</option>
+  <option value="BARADERO (2942)">BARADERO (2942)</option>
+  <option value="BARKER (7005)">BARKER (7005)</option>
+  <option value="BARRIO BATAN (7601)">BARRIO BATAN (7601)</option>
+  <option value="BATERIAS (8113)">BATERIAS (8113)</option>
+  <option value="BECCAR (1643)">BECCAR (1643)</option>
+  <option value="BELEN DE ESCOBAR (1625)">BELEN DE ESCOBAR (1625)</option>
+  <option value="BELLA VISTA (1661)">BELLA VISTA (1661)</option>
+  <option value="BENAVIDEZ (1621)">BENAVIDEZ (1621)</option>
+  <option value="BENITO JUAREZ (7020)">BENITO JUAREZ (7020)</option>
+  <option value="BERAZATEGUI (1884)">BERAZATEGUI (1884)</option>
+  <option value="BERISSO (1923)">BERISSO (1923)</option>
+  <option value="BERNAL (1876)">BERNAL (1876)</option>
+  <option value="BOLIVAR (6550)">BOLIVAR (6550)</option>
+  <option value="BONIFACIO (6439)">BONIFACIO (6439)</option>
+  <option value="BORDENAVE (8187)">BORDENAVE (8187)</option>
+  <option value="BOSQUES (1889)">BOSQUES (1889)</option>
+  <option value="BOULOGNE (1609)">BOULOGNE (1609)</option>
+  <option value="BRAGADO (6640)">BRAGADO (6640)</option>
+  <option value="BURZACO (1852)">BURZACO (1852)</option>
+  <option value="CABILDO (8118)">CABILDO (8118)</option>
+  <option value="CACHARI (7214)">CACHARI (7214)</option>
+  <option value="CAMET (7612)">CAMET (7612)</option>
+  <option value="CAMPANA (2804)">CAMPANA (2804)</option>
+  <option value="CAMPO DE MAYO (1659)">CAMPO DE MAYO (1659)</option>
+  <option value="CANNING (1804)">CANNING (1804)</option>
+  <option value="CAÑADA SECA (6105)">CAÑADA SECA (6105)</option>
+  <option value="CAÑUELAS (1814)">CAÑUELAS (1814)</option>
+  <option value="CAPILLA DEL SEÑOR (2812)">CAPILLA DEL SEÑOR (2812)</option>
+  <option value="CAPITAN SARMIENTO (2752)">CAPITAN SARMIENTO (2752)</option>
+  <option value="CARABELAS (2703)">CARABELAS (2703)</option>
+  <option value="CARAPACHAY (1605)">CARAPACHAY (1605)</option>
+  <option value="CARDENAL CAGLIERO (8506)">CARDENAL CAGLIERO (8506)</option>
+  <option value="CARHUE (6430)">CARHUE (6430)</option>
+  <option value="CARILO (7167)">CARILO (7167)</option>
+  <option value="CARLOS CASARES (6530)">CARLOS CASARES (6530)</option>
+  <option value="CARLOS SALAS (6453)">CARLOS SALAS (6453)</option>
+  <option value="CARLOS SPEGAZZINI (1812)">CARLOS SPEGAZZINI (1812)</option>
+  <option value="CARLOS TEJEDOR (6455)">CARLOS TEJEDOR (6455)</option>
+  <option value="CARMEN DE ARECO (6725)">CARMEN DE ARECO (6725)</option>
+  <option value="CARMEN DE PATAGONES (8504)">CARMEN DE PATAGONES (8504)</option>
+  <option value="CASALINS (7225)">CASALINS (7225)</option>
+  <option value="CASBAS (6417)">CASBAS (6417)</option>
+  <option value="CASEROS (1678)">CASEROS (1678)</option>
+  <option value="CASTELAR (1712)">CASTELAR (1712)</option>
+  <option value="CASTELLI (7114)">CASTELLI (7114)</option>
+  <option value="CENTRO AGRICOLA EL PATO (1893)">CENTRO AGRICOLA EL PATO (1893)</option>
+  <option value="CHACABUCO (6740)">CHACABUCO (6740)</option>
+  <option value="CHASCOMUS (7130)">CHASCOMUS (7130)</option>
+  <option value="CHASICO (8117)">CHASICO (8117)</option>
+  <option value="CHILLAR (7311)">CHILLAR (7311)</option>
+  <option value="CHIVILCOY (6620)">CHIVILCOY (6620)</option>
+  <option value="CITY BELL (1896)">CITY BELL (1896)</option>
+  <option value="CIUDAD EVITA (1778)">CIUDAD EVITA (1778)</option>
+  <option value="CIUDAD JARDIN DEL PALOMAR (1684)">CIUDAD JARDIN DEL PALOMAR (1684)</option>
+  <option value="CIUDAD MADERO (1768)">CIUDAD MADERO (1768)</option>
+  <option value="CIUDADELA (1702)">CIUDADELA (1702)</option>
+  <option value="CLAYPOLE (1849)">CLAYPOLE (1849)</option>
+  <option value="COLON (2720)">COLON (2720)</option>
+  <option value="COLONIA LA MERCED (8105)">COLONIA LA MERCED (8105)</option>
+  <option value="COLONIA SAN MARTIN (8164)">COLONIA SAN MARTIN (8164)</option>
+  <option value="COLONIA SERE (6459)">COLONIA SERE (6459)</option>
+  <option value="COMANDANTE NICANOR OTAMENDI (7603)">COMANDANTE NICANOR OTAMENDI (7603)</option>
+  <option value="COPETONAS (7511)">COPETONAS (7511)</option>
+  <option value="CORONEL BRANDSEN (1980)">CORONEL BRANDSEN (1980)</option>
+  <option value="CORONEL CHARLONE (6223)">CORONEL CHARLONE (6223)</option>
+  <option value="CORONEL DORREGO (8150)">CORONEL DORREGO (8150)</option>
+  <option value="CORONEL GRANADA (6062)">CORONEL GRANADA (6062)</option>
+  <option value="CORONEL PRINGLES (7530)">CORONEL PRINGLES (7530)</option>
+  <option value="CORONEL SUAREZ (7540)">CORONEL SUAREZ (7540)</option>
+  <option value="CORONEL VIDAL (7174)">CORONEL VIDAL (7174)</option>
+  <option value="CORTINES (6712)">CORTINES (6712)</option>
+  <option value="CURARU (6451)">CURARU (6451)</option>
+  <option value="DAIREAUX (6555)">DAIREAUX (6555)</option>
+  <option value="DARREGUEIRA (8183)">DARREGUEIRA (8183)</option>
+  <option value="DE LA GARMA (7515)">DE LA GARMA (7515)</option>
+  <option value="DEL CARRIL (7265)">DEL CARRIL (7265)</option>
+  <option value="DEL VISO (1669)">DEL VISO (1669)</option>
+  <option value="DIQUE LUJAN (1623)">DIQUE LUJAN (1623)</option>
+  <option value="DOCK SUD (1871)">DOCK SUD (1871)</option>
+  <option value="DOLORES (7100)">DOLORES (7100)</option>
+  <option value="DON BOSCO (1876)">DON BOSCO (1876)</option>
+  <option value="DON TORCUATO (1611)">DON TORCUATO (1611)</option>
+  <option value="DUDIGNAC (6505)">DUDIGNAC (6505)</option>
+  <option value="EL DORADO (6031)">EL DORADO (6031)</option>
+  <option value="EL JAGUEL (1842)">EL JAGUEL (1842)</option>
+  <option value="EL PARAISO (2916)">EL PARAISO (2916)</option>
+  <option value="EL SOCORRO (7215)">EL SOCORRO (7215)</option>
+  <option value="EL TALAR (1617)">EL TALAR (1617)</option>
+  <option value="EL TRIUNFO (6073)">EL TRIUNFO (6073)</option>
+  <option value="EMILIO BUNGE (6241)">EMILIO BUNGE (6241)</option>
+  <option value="EMPALME LOBOS (7249)">EMPALME LOBOS (7249)</option>
+  <option value="ENERGIA (7641)">ENERGIA (7641)</option>
+  <option value="ENSENADA (1925)">ENSENADA (1925)</option>
+  <option value="ESCALADA (2801)">ESCALADA (2801)</option>
+  <option value="ESPARTILLAR (8171)">ESPARTILLAR (8171)</option>
+  <option value="ESPORA (6601)">ESPORA (6601)</option>
+  <option value="EXALTACION DE LA CRUZ (2812)">EXALTACION DE LA CRUZ (2812)</option>
+  <option value="EZEIZA (1804)">EZEIZA (1804)</option>
+  <option value="EZPELETA (1882)">EZPELETA (1882)</option>
+  <option value="FELIPE SOLA (8129)">FELIPE SOLA (8129)</option>
+  <option value="FERRE (6003)">FERRE (6003)</option>
+  <option value="FLORENCIO VARELA (1888)">FLORENCIO VARELA (1888)</option>
+  <option value="FLORENTINO AMEGHINO (6064)">FLORENTINO AMEGHINO (6064)</option>
+  <option value="FLORIDA (1602)">FLORIDA (1602)</option>
+  <option value="FORTIN OLAVARRIA (6403)">FORTIN OLAVARRIA (6403)</option>
+  <option value="FRANCISCO ALVAREZ (1746)">FRANCISCO ALVAREZ (1746)</option>
+  <option value="FRANCISCO MADERO (6472)">FRANCISCO MADERO (6472)</option>
+  <option value="GARIN (1619)">GARIN (1619)</option>
+  <option value="GARRE (6411)">GARRE (6411)</option>
+  <option value="GENERAL ALVARADO (7607)">GENERAL ALVARADO (7607)</option>
+  <option value="GENERAL ALVEAR (7263)">GENERAL ALVEAR (7263)</option>
+  <option value="GENERAL ARENALES (6005)">GENERAL ARENALES (6005)</option>
+  <option value="GENERAL BELGRANO (7223)">GENERAL BELGRANO (7223)</option>
+  <option value="GENERAL CONESA (7101)">GENERAL CONESA (7101)</option>
+  <option value="GENERAL LAMADRID (7406)">GENERAL LAMADRID (7406)</option>
+  <option value="GENERAL LAS HERAS (1741)">GENERAL LAS HERAS (1741)</option>
+  <option value="GENERAL LAVALLE (7103)">GENERAL LAVALLE (7103)</option>
+  <option value="GENERAL MADARIAGA (7163)">GENERAL MADARIAGA (7163)</option>
+  <option value="GENERAL O'BRIEN (6646)">GENERAL O'BRIEN (6646)</option>
+  <option value="GENERAL PACHECO (1617)">GENERAL PACHECO (1617)</option>
+  <option value="GENERAL PINTO (6050)">GENERAL PINTO (6050)</option>
+  <option value="GENERAL PIRAN (7172)">GENERAL PIRAN (7172)</option>
+  <option value="GENERAL RODRIGUEZ (1748)">GENERAL RODRIGUEZ (1748)</option>
+  <option value="GENERAL ROJO (2905)">GENERAL ROJO (2905)</option>
+  <option value="GENERAL SAN MARTIN (1650)">GENERAL SAN MARTIN (1650)</option>
+  <option value="GENERAL VILLEGAS (6230)">GENERAL VILLEGAS (6230)</option>
+  <option value="GERLI (1870)">GERLI (1870)</option>
+  <option value="GLEW (1856)">GLEW (1856)</option>
+  <option value="GOBERNADOR UGARTE (6621)">GOBERNADOR UGARTE (6621)</option>
+  <option value="GONZALEZ CATAN (1759)">GONZALEZ CATAN (1759)</option>
+  <option value="GONZALEZ MORENO (6239)">GONZALEZ MORENO (6239)</option>
+  <option value="GORCHS (7226)">GORCHS (7226)</option>
+  <option value="GOYENA (8175)">GOYENA (8175)</option>
+  <option value="GRAL DANIEL CERRI (8105)">GRAL DANIEL CERRI (8105)</option>
+  <option value="GRAL MANSILLA (1911)">GRAL MANSILLA (1911)</option>
+  <option value="GRAND BOURG (1615)">GRAND BOURG (1615)</option>
+  <option value="GREGORIO DE LAFERRERE (1757)">GREGORIO DE LAFERRERE (1757)</option>
+  <option value="GUAMINI (6435)">GUAMINI (6435)</option>
+  <option value="GUERNICA (1862)">GUERNICA (1862)</option>
+  <option value="GUERRICO (2717)">GUERRICO (2717)</option>
+  <option value="GUILLERMO HUDSON (1885)">GUILLERMO HUDSON (1885)</option>
+  <option value="HAEDO (1706)">HAEDO (1706)</option>
+  <option value="HENDERSON (6465)">HENDERSON (6465)</option>
+  <option value="HILARIO ASCASUBI (8142)">HILARIO ASCASUBI (8142)</option>
+  <option value="HINOJO (7318)">HINOJO (7318)</option>
+  <option value="HORNOS (1739)">HORNOS (1739)</option>
+  <option value="HUANGUELEN (7545)">HUANGUELEN (7545)</option>
+  <option value="HURLINGHAM (1686)">HURLINGHAM (1686)</option>
+  <option value="INDIO RICO (7501)">INDIO RICO (7501)</option>
+  <option value="INES INDART (2747)">INES INDART (2747)</option>
+  <option value="INGENIERO ADOLFO SOURDEAUX (1612)">INGENIERO ADOLFO SOURDEAUX (1612)</option>
+  <option value="INGENIERO MASCHWITZ (1623)">INGENIERO MASCHWITZ (1623)</option>
+  <option value="INGENIERO WHITE (8103)">INGENIERO WHITE (8103)</option>
+  <option value="IRIARTE (6042)">IRIARTE (6042)</option>
+  <option value="ISIDRO CASANOVA (1765)">ISIDRO CASANOVA (1765)</option>
+  <option value="ISLA MARTIN GARCIA (1601)">ISLA MARTIN GARCIA (1601)</option>
+  <option value="ITUZAINGO (1714)">ITUZAINGO (1714)</option>
+  <option value="JEPPENER (1986)">JEPPENER (1986)</option>
+  <option value="JOAQUIN GORINA (1896)">JOAQUIN GORINA (1896)</option>
+  <option value="JOSE A GUISASOLA (8156)">JOSE A GUISASOLA (8156)</option>
+  <option value="JOSE C. PAZ (1665)">JOSE C. PAZ (1665)</option>
+  <option value="JOSE INGENIEROS (1702)">JOSE INGENIEROS (1702)</option>
+  <option value="JOSE LEON SUAREZ (1655)">JOSE LEON SUAREZ (1655)</option>
+  <option value="JOSE MARIA JAUREGUI (6706)">JOSE MARIA JAUREGUI (6706)</option>
+  <option value="JOSE MARMOL (1846)">JOSE MARMOL (1846)</option>
+  <option value="JUAN BAUTISTA ALBERDI (6034)">JUAN BAUTISTA ALBERDI (6034)</option>
+  <option value="JUAN COUSTE (7136)">JUAN COUSTE (7136)</option>
+  <option value="JUAN JOSE PASO (6474)">JUAN JOSE PASO (6474)</option>
+  <option value="JUAN MARIA GUTIERREZ (1890)">JUAN MARIA GUTIERREZ (1890)</option>
+  <option value="JUAN N FERNANDEZ (7011)">JUAN N FERNANDEZ (7011)</option>
+  <option value="JUNIN (6000)">JUNIN (6000)</option>
+  <option value="LA DULCE (7637)">LA DULCE (7637)</option>
+  <option value="LA LUCILA (1636)">LA LUCILA (1636)</option>
+  <option value="LA PAMPA (7263)">LA PAMPA (7263)</option>
+  <option value="LA PLATA (1900)">LA PLATA (1900)</option>
+  <option value="LA REJA (1744)">LA REJA (1744)</option>
+  <option value="LA SALADA (1744)">LA SALADA (1744)</option>
+  <option value="LA TABLADA (1766)">LA TABLADA (1766)</option>
+  <option value="LA UNION (1803)">LA UNION (1803)</option>
+  <option value="LABARDEN (7161)">LABARDEN (7161)</option>
+  <option value="LANUS (1824)">LANUS (1824)</option>
+  <option value="LAPRIDA (7414)">LAPRIDA (7414)</option>
+  <option value="LAS ARMAS (7172)">LAS ARMAS (7172)</option>
+  <option value="LAS FLORES (7200)">LAS FLORES (7200)</option>
+  <option value="LAS MALVINAS (1673)">LAS MALVINAS (1673)</option>
+  <option value="LAS OSCURAS (8115)">LAS OSCURAS (8115)</option>
+  <option value="LAS TONINAS (7106)">LAS TONINAS (7106)</option>
+  <option value="LEANDRO N ALEM (6032)">LEANDRO N ALEM (6032)</option>
+  <option value="LEZAMA (7116)">LEZAMA (7116)</option>
+  <option value="LIBERTAD (1716)">LIBERTAD (1716)</option>
+  <option value="LIMA (2806)">LIMA (2806)</option>
+  <option value="LINCOLN (6070)">LINCOLN (6070)</option>
+  <option value="LISANDRO OLMOS ETCHEVERRY (1901)">LISANDRO OLMOS ETCHEVERRY (1901)</option>
+  <option value="LLAVALLOL (1836)">LLAVALLOL (1836)</option>
+  <option value="LOBERIA (7635)">LOBERIA (7635)</option>
+  <option value="LOBOS (7240)">LOBOS (7240)</option>
+  <option value="LOMA HERMOSA (1657)">LOMA HERMOSA (1657)</option>
+  <option value="LOMA NEGRA (7403)">LOMA NEGRA (7403)</option>
+  <option value="LOMA VERDE (1628)">LOMA VERDE (1628)</option>
+  <option value="LOMAS DE ZAMORA (1832)">LOMAS DE ZAMORA (1832)</option>
+  <option value="LOMAS DEL MIRADOR (1752)">LOMAS DEL MIRADOR (1752)</option>
+  <option value="LONGCHAMPS (1854)">LONGCHAMPS (1854)</option>
+  <option value="LOS BOSQUES (6018)">LOS BOSQUES (6018)</option>
+  <option value="LOS CARDALES (2814)">LOS CARDALES (2814)</option>
+  <option value="LOS POLVORINES (1613)">LOS POLVORINES (1613)</option>
+  <option value="LOS TOLDOS (6015)">LOS TOLDOS (6015)</option>
+  <option value="LUIS GUILLON (1838)">LUIS GUILLON (1838)</option>
+  <option value="LUJAN (6700)">LUJAN (6700)</option>
+  <option value="MAGDALENA (1913)">MAGDALENA (1913)</option>
+  <option value="MAIPU (7160)">MAIPU (7160)</option>
+  <option value="MALVINAS ARGENTINAS (1846)">MALVINAS ARGENTINAS (1846)</option>
+  <option value="MANUEL ALBERTI (1667)">MANUEL ALBERTI (1667)</option>
+  <option value="MANUEL B GONNET (1897)">MANUEL B GONNET (1897)</option>
+  <option value="MANUEL OCAMPO (3713)">MANUEL OCAMPO (3713)</option>
+  <option value="MAQUINISTA F SAVIO (1620)">MAQUINISTA F SAVIO (1620)</option>
+  <option value="MAR CHIQUITA (7609)">MAR CHIQUITA (7609)</option>
+  <option value="MAR DE AJO (7109)">MAR DE AJO (7109)</option>
+  <option value="MAR DE COBO (7609)">MAR DE COBO (7609)</option>
+  <option value="MAR DEL PLATA (7600)">MAR DEL PLATA (7600)</option>
+  <option value="MAR DEL SUD (7607)">MAR DEL SUD (7607)</option>
+  <option value="MAR DEL TUYU (7108)">MAR DEL TUYU (7108)</option>
+  <option value="MARCOS PAZ (1727)">MARCOS PAZ (1727)</option>
+  <option value="MARIANO ACOSTA (1723)">MARIANO ACOSTA (1723)</option>
+  <option value="MARTIN CORONADO (1682)">MARTIN CORONADO (1682)</option>
+  <option value="MARTINEZ (1640)">MARTINEZ (1640)</option>
+  <option value="MATHEU (1627)">MATHEU (1627)</option>
+  <option value="MAXIMO PAZ (1812)">MAXIMO PAZ (1812)</option>
+  <option value="MAYOR BURATOVICH (8146)">MAYOR BURATOVICH (8146)</option>
+  <option value="MECHONGUE (7605)">MECHONGUE (7605)</option>
+  <option value="MEDANOS (8132)">MEDANOS (8132)</option>
+  <option value="MELCHOR ROMERO (1903)">MELCHOR ROMERO (1903)</option>
+  <option value="MERCEDES (6600)">MERCEDES (6600)</option>
+  <option value="MERLO (1722)">MERLO (1722)</option>
+  <option value="MINISTRO RIVADAVIA (1852)">MINISTRO RIVADAVIA (1852)</option>
+  <option value="MIRAMAR (7607)">MIRAMAR (7607)</option>
+  <option value="MONES CAZON (6469)">MONES CAZON (6469)</option>
+  <option value="MONTE CHINGOLO (1825)">MONTE CHINGOLO (1825)</option>
+  <option value="MONTE GRANDE (1842)">MONTE GRANDE (1842)</option>
+  <option value="MONTE HERMOSO (8153)">MONTE HERMOSO (8153)</option>
+  <option value="MOREA (6507)">MOREA (6507)</option>
+  <option value="MORENO (1744)">MORENO (1744)</option>
+  <option value="MORON (1708)">MORON (1708)</option>
+  <option value="MORSE (6013)">MORSE (6013)</option>
+  <option value="MUNRO (1605)">MUNRO (1605)</option>
+  <option value="MUÑIZ (1663)">MUÑIZ (1663)</option>
+  <option value="NAVARRO (6605)">NAVARRO (6605)</option>
+  <option value="NECOCHEA (7630)">NECOCHEA (7630)</option>
+  <option value="NICANOR OLIVERA (7637)">NICANOR OLIVERA (7637)</option>
+  <option value="NORBERTO DE LA RIESTRA (6663)">NORBERTO DE LA RIESTRA (6663)</option>
+  <option value="O'HIGGINS (6748)">O'HIGGINS (6748)</option>
+  <option value="OLAVARRIA (7400)">OLAVARRIA (7400)</option>
+  <option value="OLIVERA (6608)">OLIVERA (6608)</option>
+  <option value="OLIVOS (1636)">OLIVOS (1636)</option>
+  <option value="OPEN DOOR (6708)">OPEN DOOR (6708)</option>
+  <option value="ORENSE (7503)">ORENSE (7503)</option>
+  <option value="ORIENTE (7509)">ORIENTE (7509)</option>
+  <option value="OSTENDE (7167)">OSTENDE (7167)</option>
+  <option value="PABLO NOGUES (1613)">PABLO NOGUES (1613)</option>
+  <option value="PABLO PODESTA (1657)">PABLO PODESTA (1657)</option>
+  <option value="PARADA ROBLES (6703)">PARADA ROBLES (6703)</option>
+  <option value="PARQUE LELOIR (1713)">PARQUE LELOIR (1713)</option>
+  <option value="PARQUE SAN MARTIN (1721)">PARQUE SAN MARTIN (1721)</option>
+  <option value="PASO DEL REY (1742)">PASO DEL REY (1742)</option>
+  <option value="PASTEUR (6077)">PASTEUR (6077)</option>
+  <option value="PEDERNALES (6665)">PEDERNALES (6665)</option>
+  <option value="PEDRO LURO (8148)">PEDRO LURO (8148)</option>
+  <option value="PEHUAJO (6450)">PEHUAJO (6450)</option>
+  <option value="PELLEGRINI (6346)">PELLEGRINI (6346)</option>
+  <option value="PEREZ MILLAN (2933)">PEREZ MILLAN (2933)</option>
+  <option value="PERGAMINO (2700)">PERGAMINO (2700)</option>
+  <option value="PIEDRITAS (6241)">PIEDRITAS (6241)</option>
+  <option value="PIGUE (8170)">PIGUE (8170)</option>
+  <option value="PILA (7116)">PILA (7116)</option>
+  <option value="PILAR (1629)">PILAR (1629)</option>
+  <option value="PINAMAR (7167)">PINAMAR (7167)</option>
+  <option value="PIPINAS (1921)">PIPINAS (1921)</option>
+  <option value="PIROVANO (6551)">PIROVANO (6551)</option>
+  <option value="PLATANOS (1885)">PLATANOS (1885)</option>
+  <option value="POBLET (1905)">POBLET (1905)</option>
+  <option value="PONTEVEDRA (1761)">PONTEVEDRA (1761)</option>
+  <option value="PRESIDENTE DERQUI (1635)">PRESIDENTE DERQUI (1635)</option>
+  <option value="PUAN (8180)">PUAN (8180)</option>
+  <option value="PUEBLO SAN JOSE (7541)">PUEBLO SAN JOSE (7541)</option>
+  <option value="PUERTO BELGRANO (8111)">PUERTO BELGRANO (8111)</option>
+  <option value="PUERTO ROSALES (8111)">PUERTO ROSALES (8111)</option>
+  <option value="PUNTA ALTA (8109)">PUNTA ALTA (8109)</option>
+  <option value="PUNTA INDIO (1917)">PUNTA INDIO (1917)</option>
+  <option value="PUNTA LARA (1931)">PUNTA LARA (1931)</option>
+  <option value="QUENUMA (6335)">QUENUMA (6335)</option>
+  <option value="QUEQUEN (7631)">QUEQUEN (7631)</option>
+  <option value="QUILMES (1878)">QUILMES (1878)</option>
+  <option value="QUILMES OESTE (1879)">QUILMES OESTE (1879)</option>
+  <option value="QUIROGA (6533)">QUIROGA (6533)</option>
+  <option value="RAFAEL CALZADA (1847)">RAFAEL CALZADA (1847)</option>
+  <option value="RAFAEL CASTILLO (1755)">RAFAEL CASTILLO (1755)</option>
+  <option value="RAMALLO (2915)">RAMALLO (2915)</option>
+  <option value="RAMOS MEJIA (1704)">RAMOS MEJIA (1704)</option>
+  <option value="RANCHOS (1987)">RANCHOS (1987)</option>
+  <option value="RANELAGH (1886)">RANELAGH (1886)</option>
+  <option value="RAUCH (7203)">RAUCH (7203)</option>
+  <option value="RAWSON (6734)">RAWSON (6734)</option>
+  <option value="REMEDIOS DE ESCALADA (1826)">REMEDIOS DE ESCALADA (1826)</option>
+  <option value="RETA (7511)">RETA (7511)</option>
+  <option value="RICARDO ROJAS (1618)">RICARDO ROJAS (1618)</option>
+  <option value="RINCON DE MILBERG (1624)">RINCON DE MILBERG (1624)</option>
+  <option value="RIVADAVIA (6237)">RIVADAVIA (6237)</option>
+  <option value="RIVERA (6441)">RIVERA (6441)</option>
+  <option value="ROBERTS (6075)">ROBERTS (6075)</option>
+  <option value="ROJAS (2705)">ROJAS (2705)</option>
+  <option value="ROQUE PEREZ (7245)">ROQUE PEREZ (7245)</option>
+  <option value="ROSAS (7205)">ROSAS (7205)</option>
+  <option value="SAAVEDRA (8174)">SAAVEDRA (8174)</option>
+  <option value="SALADILLO (7260)">SALADILLO (7260)</option>
+  <option value="SALDUNGARAY (8166)">SALDUNGARAY (8166)</option>
+  <option value="SALLIQUELO (6339)">SALLIQUELO (6339)</option>
+  <option value="SALTO (2741)">SALTO (2741)</option>
+  <option value="SAN ANDRES (1651)">SAN ANDRES (1651)</option>
+  <option value="SAN ANDRES DE GILES (6720)">SAN ANDRES DE GILES (6720)</option>
+  <option value="SAN ANTONIO DE ARECO (2760)">SAN ANTONIO DE ARECO (2760)</option>
+  <option value="SAN ANTONIO DE PADUA (1718)">SAN ANTONIO DE PADUA (1718)</option>
+  <option value="SAN BERNARDO (7111)">SAN BERNARDO (7111)</option>
+  <option value="SAN CAYETANO (7521)">SAN CAYETANO (7521)</option>
+  <option value="SAN CLEMENTE DEL TUYU (7105)">SAN CLEMENTE DEL TUYU (7105)</option>
+  <option value="SAN FERNANDO (1646)">SAN FERNANDO (1646)</option>
+  <option value="SAN FRANCISCO DE BELLOCQ (7505)">SAN FRANCISCO DE BELLOCQ (7505)</option>
+  <option value="SAN FRANCISCO SOLANO (1881)">SAN FRANCISCO SOLANO (1881)</option>
+  <option value="SAN GERMAN (8124)">SAN GERMAN (8124)</option>
+  <option value="SAN ISIDRO (1642)">SAN ISIDRO (1642)</option>
+  <option value="SAN JOSE (1834)">SAN JOSE (1834)</option>
+  <option value="SAN JUAN (6500)">SAN JUAN (6500)</option>
+  <option value="SAN JUSTO (1754)">SAN JUSTO (1754)</option>
+  <option value="SAN MANUEL (7007)">SAN MANUEL (7007)</option>
+  <option value="SAN MIGUEL (1663)">SAN MIGUEL (1663)</option>
+  <option value="SAN MIGUEL DEL MONTE (7220)">SAN MIGUEL DEL MONTE (7220)</option>
+  <option value="SAN NICOLAS DE LOS ARROYOS (2900)">SAN NICOLAS DE LOS ARROYOS (2900)</option>
+  <option value="SAN PEDRO (2930)">SAN PEDRO (2930)</option>
+  <option value="SAN VICENTE (1865)">SAN VICENTE (1865)</option>
+  <option value="SANTA CLARA DEL MAR (7609)">SANTA CLARA DEL MAR (7609)</option>
+  <option value="SANTA LUCIA (2935)">SANTA LUCIA (2935)</option>
+  <option value="SANTA ROSA (7303)">SANTA ROSA (7303)</option>
+  <option value="SANTA TERESITA (7107)">SANTA TERESITA (7107)</option>
+  <option value="SANTOS LUGARES (3403)">SANTOS LUGARES (3403)</option>
+  <option value="SARANDI (1872)">SARANDI (1872)</option>
+  <option value="SIEMPRE VERDE (7609)">SIEMPRE VERDE (7609)</option>
+  <option value="SIERRA DE LA VENTANA (8168)">SIERRA DE LA VENTANA (8168)</option>
+  <option value="SIERRA DE LOS PADRES (7601)">SIERRA DE LOS PADRES (7601)</option>
+  <option value="SIERRAS BAYAS (7403)">SIERRAS BAYAS (7403)</option>
+  <option value="SOLIS (2764)">SOLIS (2764)</option>
+  <option value="SOURIGUES (1886)">SOURIGUES (1886)</option>
+  <option value="STROEDER (6508)">STROEDER (6508)</option>
+  <option value="SUIPACHA (6612)">SUIPACHA (6612)</option>
+  <option value="TANDIL (7000)">TANDIL (7000)</option>
+  <option value="TAPALQUE (7303)">TAPALQUE (7303)</option>
+  <option value="TAPIALES (1770)">TAPIALES (1770)</option>
+  <option value="TEMPERLEY (1834)">TEMPERLEY (1834)</option>
+  <option value="TIGRE (1648)">TIGRE (1648)</option>
+  <option value="TORNQUIST (8160)">TORNQUIST (8160)</option>
+  <option value="TORRES (6703)">TORRES (6703)</option>
+  <option value="TORTUGUITAS (1667)">TORTUGUITAS (1667)</option>
+  <option value="TRENQUE LAUQUEN (6400)">TRENQUE LAUQUEN (6400)</option>
+  <option value="TRES ALGARROBOS (6231)">TRES ALGARROBOS (6231)</option>
+  <option value="TRES ARROYOS (7500)">TRES ARROYOS (7500)</option>
+  <option value="TRES LOMAS (6409)">TRES LOMAS (6409)</option>
+  <option value="TRES SARGENTOS (6727)">TRES SARGENTOS (6727)</option>
+  <option value="TRISTAN SUAREZ (1806)">TRISTAN SUAREZ (1806)</option>
+  <option value="TRONCOS DEL TALAR (1608)">TRONCOS DEL TALAR (1608)</option>
+  <option value="TROPEZON (6501)">TROPEZON (6501)</option>
+  <option value="TRUJUI (1664)">TRUJUI (1664)</option>
+  <option value="TURDERA (1834)">TURDERA (1834)</option>
+  <option value="URDAMPILLETA (6553)">URDAMPILLETA (6553)</option>
+  <option value="URIBELARREA (1815)">URIBELARREA (1815)</option>
+  <option value="VALDEZ (6667)">VALDEZ (6667)</option>
+  <option value="VALENTIN ALSINA (1822)">VALENTIN ALSINA (1822)</option>
+  <option value="VALERIA DEL MAR (7167)">VALERIA DEL MAR (7167)</option>
+  <option value="VEDIA (6030)">VEDIA (6030)</option>
+  <option value="VELA (7003)">VELA (7003)</option>
+  <option value="VERONICA (1917)">VERONICA (1917)</option>
+  <option value="VICENTE CASARES (1808)">VICENTE CASARES (1808)</option>
+  <option value="VICENTE LOPEZ (1638)">VICENTE LOPEZ (1638)</option>
+  <option value="VICTORIA (1644)">VICTORIA (1644)</option>
+  <option value="VILLA ADELINA (1607)">VILLA ADELINA (1607)</option>
+  <option value="VILLA BALLESTER (1653)">VILLA BALLESTER (1653)</option>
+  <option value="VILLA BOSCH (1682)">VILLA BOSCH (1682)</option>
+  <option value="VILLA DE MAYO (1613)">VILLA DE MAYO (1613)</option>
+  <option value="VILLA DOMINICO (1874)">VILLA DOMINICO (1874)</option>
+  <option value="VILLA ELISA (1894)">VILLA ELISA (1894)</option>
+  <option value="VILLA ESPAÑA (1884)">VILLA ESPAÑA (1884)</option>
+  <option value="VILLA FRANCIA (6062)">VILLA FRANCIA (6062)</option>
+  <option value="VILLA GESELL (7165)">VILLA GESELL (7165)</option>
+  <option value="VILLA HARDING GREEN (8101)">VILLA HARDING GREEN (8101)</option>
+  <option value="VILLA INSUPERABLE (1752)">VILLA INSUPERABLE (1752)</option>
+  <option value="VILLA IRIS (8126)">VILLA IRIS (8126)</option>
+  <option value="VILLA LIA (2761)">VILLA LIA (2761)</option>
+  <option value="VILLA LUZURIAGA (1754)">VILLA LUZURIAGA (1754)</option>
+  <option value="VILLA LYNCH (1672)">VILLA LYNCH (1672)</option>
+  <option value="VILLA MARTELLI (1603)">VILLA MARTELLI (1603)</option>
+  <option value="VILLA MAZA (6343)">VILLA MAZA (6343)</option>
+  <option value="VILLA MITRE (1884)">VILLA MITRE (1884)</option>
+  <option value="VILLA MOQUEHUA (6625)">VILLA MOQUEHUA (6625)</option>
+  <option value="VILLA RAMALLO (2914)">VILLA RAMALLO (2914)</option>
+  <option value="VILLA ROSA (1631)">VILLA ROSA (1631)</option>
+  <option value="VILLA ROSAS (8103)">VILLA ROSAS (8103)</option>
+  <option value="VILLA SANTOS TESEI (1688)">VILLA SANTOS TESEI (1688)</option>
+  <option value="VILLA SARMIENTO (1706)">VILLA SARMIENTO (1706)</option>
+  <option value="VILLALONGA (8512)">VILLALONGA (8512)</option>
+  <option value="VILLARS (1731)">VILLARS (1731)</option>
+  <option value="VIÑA (2754)">VIÑA (2754)</option>
+  <option value="VIRREY DEL PINO (1763)">VIRREY DEL PINO (1763)</option>
+  <option value="VIRREYES (1646)">VIRREYES (1646)</option>
+  <option value="WILDE (1875)">WILDE (1875)</option>
+  <option value="ZARATE (2800)">ZARATE (2800)</option>
+    </optgroup>
+    <optgroup label="Si no es de Bs As.">
+  <option value="PCIA. CATAMARCA">PCIA. CATAMARCA</option>
+  <option value="PCIA. CHACO">PCIA. CHACO</option>
+  <option value="PCIA. CHUBUT">PCIA. CHUBUT</option>
+  <option value="PCIA. CORDOBA">PCIA. CORDOBA</option>
+  <option value="PCIA. CORRIENTES">PCIA. CORRIENTES</option>
+  <option value="PCIA. ENTRE RIOS">PCIA. ENTRE RIOS</option>
+  <option value="PCIA. JUJUY">PCIA. JUJUY</option>
+  <option value="PCIA. LA PAMPA">PCIA. LA PAMPA</option>
+  <option value="PCIA. LA RIOJA">PCIA. LA RIOJA</option>
+  <option value="PCIA. MENDOZA">PCIA. MENDOZA</option>
+  <option value="PCIA. MISIONES">PCIA. MISIONES</option>
+  <option value="PCIA. NEUQUEN">PCIA. NEUQUEN</option>
+  <option value="PCIA. RIO NEGRO">PCIA. RIO NEGRO</option>
+  <option value="PCIA. SALTA">PCIA. SALTA</option>
+  <option value="PCIA. SAN JUAN">PCIA. SAN JUAN</option>
+  <option value="PCIA. SAN LUIS">PCIA. SAN LUIS</option>
+  <option value="PCIA. SANTA CRUZ">PCIA. SANTA CRUZ</option>
+  <option value="PCIA. SANTA FE">PCIA. SANTA FE</option>
+  <option value="PCIA. SANTIAGO DEL ESTERO">PCIA. SANTIAGO DEL ESTERO</option>
+  <option value="PCIA. TIERRA DEL FUEGO">PCIA. TIERRA DEL FUEGO</option>
+  <option value="PCIA. TUCUMAN">PCIA. TUCUMAN</option>
+    </optgroup>
+                  </select>
+  
+              </div>
+              </div>
+            </div>
+  
+            <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="wpp" class="form-label mt-1">Whatsapp</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="number" class="form-control form-control-sm" id="wpp" name="wpp" placeholder="10 digitos" pattern="\d{10}" required>
+            
+              </div>
+              </div>
+                        <div class="col-2">
+              <div class="mb-1">
+            <label for="wpp" class="form-label mt-1">Enviar:</label>
+              </div>
+            </div>
+  
+            <div class="col-4">
+              <div class="mb-1">
+            <button style='width: 32px;height:32px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button>
+              </div>
+              </div>
+            </div>
+  
+             <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="nombreCompleto" class="form-label mt-1">Mail:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="mail" name="mail" placeholder="mail: xxxx@xxx.xxx">
+              </div>
+              </div>
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="nombreCompleto" class="form-label mt-1">F. Pago:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+             <select class="form-select form-select-sm" id="fpago" name="fpago" placeholder="" required>
+  <option value="CUPONES">CUPONES</option>
+  <option value="TARJETA CREDITO">TARJETA CREDITO</option>
+  <option value="DEBITO CBU">DEBITO CBU</option>
+                  </select>
+              </div>
+              </div>
+            </div>
+  
+            <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="notas" class="form-label mt-1">NotasCte:</label>
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notascte" name="notascte" placeholder="Notas sobre el cliente">
+              </div>
+              </div>
+            </div>
+  
+  </div>
+  
+  <br>
+  
+  
+  <!----- FIN SECTOR FORM CLIENTE ------->
+  
+  
+  <!----- SECTOR VEHICULO ------->
+            <div class="row m-0" style="border-bottom: 2px solid #000000; padding: 5px 0px 5px 0px;">
+              <div class="col-3 p-0 text-sm" style="margin: auto;" >
+                <input type="text" class="form-control-xs  m-0 p-0 pt-1 bg-transparent border-0 text-dark fs-5"
+                  style='text-align: center; border: 2px solid black;border-radius:5px; box-shadow: 0px 0px 2px 0px #000000;padding: 1px; background-image: url("https://drive.google.com/uc?id=19QdP6YcZkkXV0ogbAb8XwqQdITPWwIuf"); background-size: contain; background-repeat: no-repeat; width: 140px; height: 45px;'
+                  id="patente" name="patente" placeholder="" readonly>
+                  </div>
+              <div class="col-9 m-0 p-0 text-sm">
+                <div><input type="text" class="form-control-xs  m-0 p-0 bg-transparent border-0 text-dark fs-6"
+                  style="font-weight: 500;" id="marca" name="marca" placeholder="" readonly></div>
+                <div>MOTOR : || CHASIS:</div>
+              </div>
+            </div>
+  <!----- FIN SECTOR VEHICULO ------->
+  
+  <!----- SECTOR FORM VEH ------->
+  
+  
+  
+  
+     <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+  
+             <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="marca" class="form-label mt-1">Marca:</label>
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="marca_v" name="marca_v" placeholder="Marca y Modelo del vehiculo.">
+              </div>
+              </div>
+            </div>
+  
+             <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="marca" class="form-label mt-1">Motor:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="motor" name="motor" placeholder="N° Motor">
+              </div>
+              </div>
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="marca" class="form-label mt-1">Chasis:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="chasis" name="chasis" placeholder="N° Chasis">
+              </div>
+              </div>
+            </div>
+  
+  
+                      <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+                  <label for="cnia" class="form-label mt-1">Compañia:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+                  <select class="form-select form-select-sm" id="cnia" name="cnia" placeholder="" required>
+                    <option value="">""</option>
+                    <option value="AGROSALTA">AGROSALTA</option>
+                    <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
+                    <option value="RIVADAVIA">RIVADAVIA</option>
+                    <option value="FED PAT">FED PAT</option>
+                    <option value="PROVIDENCIA">PROVIDENCIA</option>
+                    <option value="RIO URUGUAY">RIO URUGUAY</option>
+                    <option value="ATM">ATM</option>
+                    <option value="LA CAJA">LA CAJA</option>
+                    <option value="NIVEL">NIVEL</option>
+                    <option value="MAPFRE">MAPFRE</option>
+                    <option value="BENEFICIO">BENEFICIO</option>
+                    <option value="MERCANTIL">MERCANTIL</option>
+                    <option value="LIBRA">LIBRA</option>
+                    <option value="GRUA">GRUA</option>
+                    <option value="AGRO (V)">AGRO (V)</option>
+                    <option value="ALLIANZ">ALLIANZ</option>
+                    <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
+                  </select>
+              </div>
+              </div>
+            <div class="col-2">
+              <div class="mb-1">
+                  <label for="cnia" class="form-label mt-1">Cobertura:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+                  <select class="form-select form-select-sm" id="cobertura" name="cobertura" placeholder="" required>
+  <option value="">""</option>
+  <option value="A">A</option>
+  <option value="B1">B1</option>
+  <option value="B1 - COBRE">B1 - COBRE</option>
+  <option value="B">B</option>
+  <option value="B - PLATA">B - PLATA</option>
+  <option value="C1">C1</option>
+  <option value="C">C</option>
+  <option value="ORO PLUS">ORO PLUS</option>
+  <option value="C - PLUS">C - PLUS</option>
+  <option value="M - MEGA PLAN">M - MEGA PLAN</option>
+  <option value="C - FULL">C - FULL</option>
+  <option value="COB - M BASE">COB - M BASE</option>
+  <option value="COB - M15">COB - M15</option>
+  <option value="C3-80">C3-80</option>
+  <option value="S- CERO">S- CERO</option>
+  <option value="SIGMA">SIGMA</option>
+  <option value="M - PREMIUM">M - PREMIUM</option>
+  <option value="P - MEGA PREMIUM">P - MEGA PREMIUM</option>
+  <option value="MX - MEGA MAX">MX - MEGA MAX</option>
+  <option value="C - MAXIMA">C - MAXIMA</option>
+  <option value="ORO MAX">ORO MAX</option>
+  <option value="PREMIUM">PREMIUM</option>
+  <option value="TR - FRANQUICIA 50000">TR - FRANQUICIA 50000</option>
+  <option value="TR - FRANQUICIA 54000">TR - FRANQUICIA 54000</option>
+  <option value="TR - FRANQUICIA 60000">TR - FRANQUICIA 60000</option>
+  <option value="TR - FRANQUICIA 75000">TR - FRANQUICIA 75000</option>
+  <option value="TR - FRANQUICIA 80000">TR - FRANQUICIA 80000</option>
+  <option value="TR - FRANQUICIA 85000">TR - FRANQUICIA 85000</option>
+  <option value="TR - FRANQUICIA 90000">TR - FRANQUICIA 90000</option>
+  <option value="TR - FRANQUICIA 95000">TR - FRANQUICIA 95000</option>
+  <option value="TR - FRANQUICIA 100000">TR - FRANQUICIA 100000</option>
+  <option value="TR - FRANQUICIA 1%">TR - FRANQUICIA 1%</option>
+  <option value="TR - FRANQUICIA 1,5%">TR - FRANQUICIA 1,5%</option>
+  <option value="TR - FRANQUICIA 2%">TR - FRANQUICIA 2%</option>
+  <option value="TR - FRANQUICIA 3%">TR - FRANQUICIA 3%</option>
+  <option value="TR - FRANQUICIA 4%">TR - FRANQUICIA 4%</option>
+  <option value="TR - SIN FRANQUICIA">TR - SIN FRANQUICIA</option>
+  <option value="E - CUARENTENA">E - CUARENTENA</option>
+  <option value="AP">AP</option>
+  <option value="COMBINADO FAMILIAR">COMBINADO FAMILIAR</option>
+  <option value="GRUA">GRUA</option>
+                  </select>
+              </div>
+              </div>
+            </div>
+                      <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="importe" class="form-label mt-1">Importe:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="importe" name="importe" placeholder="">
+              </div>
+              </div>
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="poliza" class="form-label mt-1">Poliza:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="poliza" name="poliza" placeholder="">
+              </div>
+              </div>
+            </div>
+                      <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="vto" class="form-label mt-1">Vigencia:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="vigencia" name="vigencia" placeholder="dd/mm/aa"  required>
+              </div>
+              </div>
+            <div class="col-2">
+              <div class="mb-1">
+            <div class="mt-1 ml-0">Hasta:</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="hasta" name="hasta" placeholder="dd/mm/aa" required>
+              </div>
+              </div>
+            </div>
+                                <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="poliza" class="form-label mt-1">Operación:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+                <select class="form-select form-select-sm mt-1" id="operacion" name="operacion" placeholder="">
+                  <option value=""></option>
+                  <option value="PENDIENTE">PENDIENTE</option>
+  <option value="SEGURO NUEVO">SEGURO NUEVO</option>
+  <option value="RENOVACION">RENOVACION</option>
+  <option value="ANULACION">ANULACION</option>
+                </select>
+              </div>
+              </div>
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="nombreCompleto" class="form-label mt-1">Sucursal:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+                           <select class="form-select form-select-sm" id="sucursal" name="sucursal" placeholder="" required>
+  <option value="">""</option>
+  <option value="MARCOS PAZ">MARCOS PAZ</option>
+  <option value="MARIANO ACOSTA">MARIANO ACOSTA</option>
+                  </select>
+              </div>
+              </div>
+            </div>
+  
+            <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="poliza" class="form-label mt-1">Daños:</label>
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="danios" name="danios" placeholder="Daños existentes">
+              </div>
+              </div>
+            </div>
+  
+            <div class="row">
+            <div class="col-2">
+              <div class="mb-1">
+            <label for="poliza" class="form-label mt-1">NotasVeh:</label>
+              </div>
+            </div>
+            <div class="col-10">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="notas" name="notas" placeholder="Observaciones">
+              </div>
+              </div>
+            </div>
+  
+  
+  
+  
+            </div>
+  <br>
+            <div class="row">
+            <div class="col-8">
+              <div class="mb-1">
+              </div>
+              </div>
+            <div class="col-4">
+              <div class="mb-1">
+                
+                 <button class="btn btn-success mx-5" id="bt-modificar-datos" style="border-radius: 30px;">Modificar<span id="spinner5" class="spinner-border spinner-border-sm" style="display:none;"></span></button>
+  
+              </div>
+              </div>
+            </div>
+  
+  <!------- FIN SECTOR FORM VEH ------>
+  
+            <hr style="margin-bottom: 0px;">
+  
+  
+  
+        </form>
+        <br>
+        <!------------ NUEVA MODIFICACION A LA POLIZA --------------->
+        <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+  
+          <div class="row  m-0 p-0 bg-light py-2">GESTIONAR POLIZA:</div>
+          <form id="nuevo_estado_form">
+            <div class="row">
+              <div class="col-2  m-0 p-0"> 
+              </div>
+  
+              <div class="col-4  m-0 p-0"> Novedad:<br>
+                <select class="form-select form-select-sm mt-1" style='border-radius: 30px' id="novedad_sn"
+                  name="novedad_sn" placeholder="">
+                  <option value=""> </option>
+                  <option value="ALTA DE POLIZA">ALTA DE POLIZA</option>
+                  <option value="BAJA DE POLIZA">BAJA DE POLIZA</option>
+                  <option value="PROBLEMAS DE EMISION">PROBLEMAS DE EMISION</option>
+                  <option value="OTROS">OTROS</option>
+                </select>
+              </div>
+              <div class="col-3  m-0 p-0" id="operacion_sn2" style="display: none;">Operación:<br>
+              <select class="form-select form-select-sm mt-1" id="operacion_sn" name="operacion_sn" placeholder="" style="border-radius: 30px;">
+  <option value="SEGURO NUEVO">SEGURO NUEVO</option>
+  <option value="ANULACION">ANULACION</option>
+                </select>
+              </div>
+              <div class="col-3  m-0 p-0" id="poliza_sn2" style="display: none;">Póliza:<br>
+                <input type="number" class="form-control form-control-sm mt-1" style="border-radius: 30px;"
+                  id="poliza_sn" name="poliza_sn" placeholder="">
+              </div>
+            </div>
+  
+            <div class="row m-0">
+              <label for="estado">Observaciones / Motivos:</label>
+              <input type="text" class="form-control" style="height:80px" id="notas_sn" name="notas_sn" placeholder="">
+            </div>
+  
+            <div class="row  m-0 p-0 bg-light py-2">
+  
+  
+              <div class="col-9">
+              </div>
+  
+              <div class="col-3">
+  
+                <button id="bt-actualizar_nota" class="btn btn-success" style="border-radius: 30px;">Gestionar</button>
+              </div>
+            </div>
+      </form>
+        </div>
+    <!------------ FIN NUEVA MODIFICACION A LA POLIZA --------------->
+  
+              <!------------ MAILS DEL CASO --------------->
+        <div class="visor bg-light shadow p-3" style="border-radius: 10px;">    
+          <form id="ver_mails_form">
+  <div class="row">
+          <div class="col-8 m-0 p-0">MAILS REFERIDOS AL CASO:</div>
+          <div class="col-4 m-0 p-0">
+             <button id="bt-ver-mails" class="btn btn-success" style="border-radius: 30px;" type="submit">Ver Emails</button>
+              </div>
+              </div>
+  </form>
+  
+  <div id="emails"></div>
+        </div>
+        <!------------ FIN MAILS DEL CASO --------------->
+  
+  
       </div>
     </div>
-    <div class="row pt-0 mt-0 mb-2">
-      <!-- <div class="col-4  m-0"> Fecha Gestion:<br>
-        <input type="text" class="form-control form-control-sm" id="gestionSelect" name="gestionSelect"
-          placeholder="D/M (ej: 3/4)">
-      </div> -->
-      <div class="col-6  m-0"> Compañía:<br>
-        <select class="form-select form-select-sm" id="companiaSelect" name="companiaSelect" placeholder="">
-          <option value="">Todas</option>
-          <option value="AGROSALTA">AGROSALTA</option>
-          <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
-          <option value="RIVADAVIA">RIVADAVIA</option>
-          <option value="FED PAT">FED PAT</option>
-          <option value="PROVIDENCIA">PROVIDENCIA</option>
-          <option value="RIO URUGUAY">RIO URUGUAY</option>
-          <option value="ATM">ATM</option>
-          <option value="LA CAJA">LA CAJA</option>
-          <option value="NIVEL">NIVEL</option>
-          <option value="MAPFRE">MAPFRE</option>
-          <option value="BENEFICIO">BENEFICIO</option>
-          <option value="MERCANTIL">MERCANTIL</option>
-          <option value="LIBRA">LIBRA</option>
-          <option value="GRUA">GRUA</option>
-          <option value="AGRO (V)">AGRO (V)</option>
-          <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
-        </select>
+    <!---------- AREA DE POLIZAS PENDIENTES ------------>
+  
+    <div class="col-6 container" id="miDiv" style="width: 700px">
+      FILTRAR POLIZAS:
+      <div class="row">
+        <div class="col-4  m-0"> Patente:<br>
+          <input type="text" class="form-control form-control-sm" id="patenteSelect" name="patenteSelect"
+            placeholder="Ingrese patente" oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="col-4  m-0"> DNI:<br>
+          <input type="text" class="form-control form-control-sm" id="dniSelect" name="dniSelect"
+            placeholder="Ingrese DNI">
+        </div>
+        <div class="col-4  m-0"> Cliente:<br>
+          <input type="text" class="form-control form-control-sm" id="nombreSelect" name="nombreSelect"
+            placeholder="Apellido y Nombre" oninput="this.value=this.value.toUpperCase()">
+        </div>
       </div>
-      <div class="col-6 m-0"> Operación:<br>
-        <select class="form-select form-select-sm" id="estadoSelect" name="estadoSelect" placeholder="">
-                <option value="PENDIENTE">PENDIENTE</option>
-<option value="SEGURO NUEVO">SEGURO NUEVO</option>
-<option value="RENOVACION">RENOVACION</option>
-<option value="ANULACION">ANULACION</option>
-        </select>
-
-      </div>
-
-      <div class="row pt-0 m-0">
-        <div class="col-7  m-0 p-2">
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="polizas-vigentes">
-            <label class="form-check-label" for="polizas-activas">
-              Polizas vigentes
-              <span class="form-check-input-indicator"></span>
-            </label>
+      <div class="row pt-0 mt-0 mb-2">
+        <!-- <div class="col-4  m-0"> Fecha Gestion:<br>
+          <input type="text" class="form-control form-control-sm" id="gestionSelect" name="gestionSelect"
+            placeholder="D/M (ej: 3/4)">
+        </div> -->
+        <div class="col-6  m-0"> Compañía:<br>
+          <select class="form-select form-select-sm" id="companiaSelect" name="companiaSelect" placeholder="">
+            <option value="">Todas</option>
+            <option value="AGROSALTA">AGROSALTA</option>
+            <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
+            <option value="RIVADAVIA">RIVADAVIA</option>
+            <option value="FED PAT">FED PAT</option>
+            <option value="PROVIDENCIA">PROVIDENCIA</option>
+            <option value="RIO URUGUAY">RIO URUGUAY</option>
+            <option value="ATM">ATM</option>
+            <option value="LA CAJA">LA CAJA</option>
+            <option value="NIVEL">NIVEL</option>
+            <option value="MAPFRE">MAPFRE</option>
+            <option value="BENEFICIO">BENEFICIO</option>
+            <option value="MERCANTIL">MERCANTIL</option>
+            <option value="LIBRA">LIBRA</option>
+            <option value="GRUA">GRUA</option>
+            <option value="AGRO (V)">AGRO (V)</option>
+            <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
+          </select>
+        </div>
+        <div class="col-6 m-0"> Operación:<br>
+          <select class="form-select form-select-sm" id="estadoSelect" name="estadoSelect" placeholder="">
+                  <option value="PENDIENTE">PENDIENTE</option>
+  <option value="SEGURO NUEVO">SEGURO NUEVO</option>
+  <option value="RENOVACION">RENOVACION</option>
+  <option value="ANULACION">ANULACION</option>
+          </select>
+  
+        </div>
+  
+        <div class="row pt-0 m-0">
+          <div class="col-7  m-0 p-2">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="polizas-vigentes">
+              <label class="form-check-label" for="polizas-activas">
+                Polizas vigentes
+                <span class="form-check-input-indicator"></span>
+              </label>
+            </div>
+          </div>
+          <div class="col-2  m-0 p-2">
+            <button class="btn btn-danger btn-sm" id="bt-reset">Reset</button>
+          </div>
+          <div class="col-3  m-0 p-2">
+  
+                      <button id="bt-buscar" class="btn btn-primary btn-sm">Filtrar Poliza
+            <span id="spinner_filtrar" class="spinner-border spinner-border-sm" style="display:none"></span></button>
           </div>
         </div>
-        <div class="col-2  m-0 p-2">
-          <button class="btn btn-danger btn-sm" id="bt-reset">Reset</button>
-        </div>
-        <div class="col-3  m-0 p-2">
-
-                    <button id="bt-buscar" class="btn btn-primary btn-sm">Filtrar Poliza
-          <span id="spinner_filtrar" class="spinner-border spinner-border-sm" style="display:none"></span></button>
-        </div>
+  
+  
       </div>
-
-
+  
+      <div class="p-2" style="height: 940px; overflow-y: scroll;">
+        <div id="sinPendientes"></div>
+      </div>
     </div>
-
-    <div class="p-2" style="height: 940px; overflow-y: scroll;">
-      <div id="sinPendientes"></div>
-    </div>
-  </div>
-  <!---------- FIN AREA DE POLIZAS PENDIENTES ------------>
+    <!---------- FIN AREA DE POLIZAS PENDIENTES ------------>
 
   </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

@@ -95,7 +95,7 @@ function getData(cnia_filter = "", patente_filter = "", dni_filter = "", estado_
       sinPend.push(data[i][2]); // NOMBRE
       sinPend.push(data[i][3]); // SUCURSAL
       sinPend.push(data[i][5]); // IMPORTE
-      sinPend.push(data[i][6]); // COMPAÑIA
+      sinPend.push(data[i][6]); // COMPAÃ‘IA
       sinPend.push(data[i][7]); // POLIZA
       sinPend.push(data[i][8]); // DESDE
       sinPend.push(data[i][9]); // HASTA
@@ -104,7 +104,7 @@ function getData(cnia_filter = "", patente_filter = "", dni_filter = "", estado_
       sinPend.push(data[i][12]); // MARCA
       sinPend.push(data[i][13]); // F PAGO
       sinPend.push(data[i][14]); // OBSERVACIONES
-      sinPend.push(data[i][15]); // DAÑOS
+      sinPend.push(data[i][15]); // DAÃ‘OS
       sinPend.push(data[i][17]); // MOTOR
       sinPend.push(data[i][18]); // CHASIS
       
@@ -141,7 +141,7 @@ console.log(poliza_sn, operacion_sn, novedad_sn, usuario_sn, notas_sn, patente_s
   var modificacionEstado = "";
 
   if (operacion_sn !== "") {
-    modificacionEstado = "\nSe modificó el estado de la poliza N°: " + poliza_sn + " a: " + novedad_sn + "\n";
+    modificacionEstado = "\nSe modificÃ³ el estado de la poliza NÂ°: " + poliza_sn + " a: " + novedad_sn + "\n";
   }
 
   var dataConcatenada = "[" + fechaActual + ": " + novedad + "]\n" + usuario + ": " + notas + modificacionEstado + notas_old;
@@ -163,14 +163,14 @@ console.log(poliza_sn, operacion_sn, novedad_sn, usuario_sn, notas_sn, patente_s
 }
 
 function mostrarCorreos(patente) {
-  // Busca los correos electrónicos que contienen el número 820005104 en el asunto
+  // Busca los correos electrÃ³nicos que contienen el nÃºmero 820005104 en el asunto
   var query = "subject:" + patente;
   var threads = GmailApp.search(query);
 
-  // Crea una variable para almacenar el contenido HTML de los correos electrónicos
+  // Crea una variable para almacenar el contenido HTML de los correos electrÃ³nicos
   var emailsHTML = "";
 
-  // Recorre los primeros diez correos electrónicos que contienen el número 820005104 en el asunto y agrega su contenido HTML a la variable
+  // Recorre los primeros diez correos electrÃ³nicos que contienen el nÃºmero 820005104 en el asunto y agrega su contenido HTML a la variable
   for (var i = 0; i < threads.length && i < 10; i++) {
     var thread = threads[i];
     var messages = thread.getMessages();
@@ -188,12 +188,12 @@ function mostrarCorreos(patente) {
         emailsHTML += "<p class='card-text'>" + body.substring(0, 200) + "...</p>";
         emailsHTML += "</div>";
         emailsHTML += "</div>";
-        break; // Detiene el bucle si se encuentra un correo electrónico que contiene el número 820005104 en el asunto
+        break; // Detiene el bucle si se encuentra un correo electrÃ³nico que contiene el nÃºmero 820005104 en el asunto
       }
     }
   }
 
-  // Devuelve el contenido HTML de los correos electrónicos que contienen el número 820005104 en el asunto
+  // Devuelve el contenido HTML de los correos electrÃ³nicos que contienen el nÃºmero 820005104 en el asunto
   return "<div class='container'>" + emailsHTML + "</div>";
 }
 
@@ -289,7 +289,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o Contraseña!");
+  return alert("Error de Usuario o ContraseÃ±a!");
 }
 
 ///////////////////////////////  CAMBIAR CLAVE DE USUARIO  ////////////////////////////////////////
@@ -355,7 +355,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de cálculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de cÃ¡lculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];
@@ -371,8 +371,3 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 }
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
-
-
-
-/////////////////////// EVENT LISTENERS //////////////////////////////
-
