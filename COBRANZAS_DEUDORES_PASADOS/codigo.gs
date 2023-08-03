@@ -93,23 +93,30 @@ if (cuota_div === 10) {
       deudor.push(""); // PASADO
 
 
-      let patente = deudoresData[i][3];
-            for (var j = 1; j < cobranzasData.length; j++) {
+let patente = deudoresData[i][3];
 
-          if (valor_cuota == 1 && deudor[10] == "❌") {
-            deudor[11] = ""; // IMPORTE
-          }
-          if (valor_cuota == 0 && deudor[10] == "❌") {
-            deudor[11] = "DESCANSO"; //
-          }
+for (var j = cobranzasData.length - 1; j >= 1; j--) {
+    if (valor_cuota == 1 && deudor[10] == "❌") {
+        deudor[11] = ""; // IMPORTE
+    } else if (valor_cuota == 0 && deudor[10] == "❌") {
+        deudor[11] = "DESCANSO"; //
+    } else {
+      var vto_month2 = parseInt(cobranzasData[j][5].split("/")[1], 10);
+    var vto_year2 = parseInt(cobranzasData[j][5].split("/")[2], 10);
+    var ct_year2 = parseInt(String(currentYear2).slice(-2), 10);
 
-        if (cobranzasData[j][1] === patente && ((paymentMonth === currentMonth - 1 && paymentYear === currentYear) || 
-                    (paymentMonth === 12 && currentMonth === 1 && paymentYear === currentYear - 1))) {
-          deudor[13] = cobranzasData[j][4]; // WPP
-          deudor[14] = cobranzasData[j][9]; // POLIZA
-          deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
-          }
-        } 
+    if (cobranzasData[j][1] === patente && ((vto_month2 === currentMonth - 1 && vto_year2 === ct_year2) || 
+        (vto_month2 === 12 && currentMonth === 1 && vto_year2 === ct_year2 - 1))) {
+        console.log("vto mes: " + vto_month2 + ", mes actual: " + (currentMonth - 1) + ", ya está: " + (vto_year2 + ct_year2));
+        deudor[13] = cobranzasData[j][4]; // WPP
+        deudor[14] = cobranzasData[j][9]; // POLIZA
+        deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
+    }
+
+    }
+
+    
+}
 
       for (var j = 1; j < cobranzasData.length; j++) {
 
