@@ -170,6 +170,7 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
    result[i][5] === 'AGRO (V)' ? "background-color: #FD964D;" :
    result[i][5] === 'AGROSALTA C/GRUA' ? "background-color: #FD964D;" :
    result[i][5] === 'AGRO (V) C/GRUA' ? "background-color: #FD964D;" :
+   result[i][5] === 'AGRO MOTO' ? "background-color: #FD964D;" :
    result[i][5] === 'RIVADAVIA' ? "background-color: #28BEF5;" :
    result[i][5] === 'MAPFRE' ? "background-color: #CB3234;" :
    result[i][5] === 'RIO URUGUAY' ? "background-color: #5AC4C3;" :
