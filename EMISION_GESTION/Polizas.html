@@ -165,6 +165,7 @@
   </nav>
 
 
+
   <br>
 
   <div id="myModal" class="modal">
@@ -846,10 +847,20 @@
              <div class="row">
             <div class="col-2">
               <div class="mb-1">
+            <label for="patente" class="form-label mt-1">Patente:</label>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="patente_v" name="patente_v" placeholder="Patente">
+              </div>
+              </div>
+              <div class="col-2">
+              <div class="mb-1">
             <label for="marca" class="form-label mt-1">Marca:</label>
               </div>
             </div>
-            <div class="col-10">
+            <div class="col-4">
               <div class="mb-1">
             <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="marca_v" name="marca_v" placeholder="Marca y Modelo del vehiculo.">
               </div>
@@ -1245,7 +1256,6 @@
       </div>
     </div>
     <!---------- FIN AREA DE POLIZAS PENDIENTES ------------>
-
   </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>

@@ -246,6 +246,7 @@ var fecha = new Date();
 
   // Si la Patente ya existe, actualizar los datos del Vehiculo
   if (patenteIndex !== -1) {
+  LISTADO.getRange(patenteIndex, 1).setValue(infoPatente);
   LISTADO.getRange(patenteIndex, 2).setValue(infoDNI);
   LISTADO.getRange(patenteIndex, 3).setValue(infoCliente);
   LISTADO.getRange(patenteIndex, 4).setValue(infoSucursal);
@@ -371,3 +372,4 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 }
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
+
