@@ -1,4 +1,3 @@
-
   // Obtén una referencia al botón
   const navbarToggler = document.getElementById('navbar-toggler');
 
@@ -66,15 +65,20 @@
       let infoVigencia =  document.getElementById("vigencia").value;
       let infoHasta =  document.getElementById("hasta").value;
       let infoDanios =  document.getElementById("danios").value;
+      let infoRefa =  document.getElementById("refac").value;
       let infoNotasVeh =  document.getElementById("notasveh").value;
       let infoNotasVehold =  document.getElementById("notasvehold").value;
       let infoUsuario =  sessionStorage.getItem("magi-usuario");
       let infoNotasFull = "//" + infoUsuario + " [" + infoVigencia + "] " + infoOperacion + " (" + infoNotasVeh + ") " + infoNotasVehold;
       let infoMotor =  document.getElementById("motor").value;
       let infoChasis =  document.getElementById("chasis").value;
+      let fechaHoy = new Date();
+      let dia = fechaHoy.getDate();
+      let mes = fechaHoy.getMonth() + 1; // Agregar 1 ya que los meses se cuentan desde 0 (enero) hasta 11 (diciembre)
+      let anio = fechaHoy.getFullYear();
+      let infoHoy = dia + '/' + mes + '/' + anio;
   
-  
-    google.script.run.seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasFull, infoMotor, infoChasis, infoUsuario);
+    google.script.run.seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasFull, infoMotor, infoChasis, infoUsuario, infoHoy);
     event.target.reset();
   alert('Póliza ingresada correctamente');
     
@@ -87,12 +91,14 @@
   infoFpago =  "";
   infoSucursal =  "";
   infoNotascte =  "";
+  infoRefa = "";
   infoPatente =  "";
   infoMarca =  "";
   infoCnia =  "";
   infoCobertura =  "";
   infoImporte =  "";
   infoPoliza =  "";
+  infoHoy =  "";
   infoOperacion =  "SEGURO NUEVO";
   var today = new Date();
   infoVigencia.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
@@ -164,16 +170,10 @@
   document.getElementById("nombreCompletoValor").textContent = "";
   document.getElementById("whatsappValor").textContent = "";
   document.getElementById("statCte").textContent = "";
-  document.getElementById("patenteValor").textContent =  "";
-  document.getElementById("marcaValor").textContent =  "";
-  document.getElementById("cniaValor").textContent =  "";
-  document.getElementById("statVeh").textContent =  "";
   document.getElementById("sinPendientes").textContent =  "";
-  document.getElementById("sinPendientes2").textContent =  "";
   document.getElementById('valoresContainer').style.display = 'none';
-  document.getElementById('valoresContainer_veh').style.display = 'none';
   document.getElementById('formContainer').style.display = 'none';
-  document.getElementById('formContainer_veh').style.display = 'none';
+  
   
     const mostrarValores = (info) => {
       if (info.length > 0) {
@@ -190,6 +190,7 @@
         document.getElementById('dniValor').textContent = infoDNI.value;
         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
         document.getElementById('logoValor').innerHTML = "<img src='https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh' style='width: 100%;height: auto;'>";
+        document.getElementById("statCte").textContent = infoNotascte.value;
         document.getElementById('whatsappValor').textContent = infoWpp.value;
       } else {
         alert("No se encontraron valores");
@@ -272,16 +273,9 @@
   document.getElementById("nombreCompletoValor").textContent = "";
   document.getElementById("whatsappValor").textContent = "";
   document.getElementById("statCte").textContent = "";
-  document.getElementById("patenteValor").textContent =  "";
-  document.getElementById("marcaValor").textContent =  "";
-  document.getElementById("cniaValor").textContent =  "";
-  document.getElementById("statVeh").textContent =  "";
   document.getElementById("sinPendientes").textContent =  "";
-  document.getElementById("sinPendientes2").textContent =  "";
   document.getElementById('valoresContainer').style.display = 'none';
-  document.getElementById('valoresContainer_veh').style.display = 'none';
   document.getElementById('formContainer').style.display = 'none';
-  document.getElementById('formContainer_veh').style.display = 'none';
   
     const mostrarValores = (info) => {
       if (info.length > 0) {
@@ -298,6 +292,7 @@
         document.getElementById('dniValor').textContent = infoDNI.value;
         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
         document.getElementById('logoValor').innerHTML = "<img src='https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh' style='width: 100%;height: auto;'>";
+        document.getElementById("statCte").textContent = infoNotascte.value;
         document.getElementById('whatsappValor').textContent = infoWpp.value;
       } else {
         alert("No se encontraron valores");
@@ -385,28 +380,21 @@
       let infoOperacion =  document.getElementById("operacion");
       let infoVigencia =  document.getElementById("vigencia");
       let infoHasta =  document.getElementById("hasta");
+      let infoRefa =  document.getElementById("refa");
       let infoDanios =  document.getElementById("danios");
       let infoNotasVeh =  document.getElementById("notasvehold");
       let infoMotor =  document.getElementById("motor");
       let infoChasis =  document.getElementById("chasis");
-  document.getElementById("dniValor").textContent = "";
-  document.getElementById("nombreCompletoValor").textContent = "";
-  document.getElementById("whatsappValor").textContent = "";
-  document.getElementById("statCte").textContent = "";
   document.getElementById("patenteValor").textContent =  "";
   document.getElementById("marcaValor").textContent =  "";
   document.getElementById("cniaValor").textContent =  "";
   document.getElementById("statVeh").textContent =  "";
-  document.getElementById("sinPendientes").textContent =  "";
   document.getElementById("sinPendientes2").textContent =  "";
-  document.getElementById('valoresContainer').style.display = 'none';
   document.getElementById('valoresContainer_veh').style.display = 'none';
-  document.getElementById('formContainer').style.display = 'none';
   document.getElementById('formContainer_veh').style.display = 'none';
   
       google.script.run.withSuccessHandler(info => {
         if (info.length > 0) {
-          console.log("vehiculo info: " + info)
           infoPatente.value = info[0][0];
           infoMarca.value = info[0][12];
           infoCnia.value = info[0][6];
@@ -429,6 +417,7 @@
    document.getElementById('cniaValor').textContent = document.getElementById('cnia').value;
    document.getElementById('statVeh').textContent = document.getElementById('cobertura').value;
           buscarModelo()
+          buscarRefa()
         } else {
           alert("No se encontraron valores");
    document.getElementById('valoresContainer_veh').style.display = 'block';
@@ -439,6 +428,7 @@
   infoVigencia.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
   infoHasta.value = new Date(today.getFullYear(), today.getMonth() + 12, today.getDate()).toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
           buscarModelo()
+          buscarRefa()
   infoMarca.value =  "";
   infoMotor.value =  "";
   infoChasis.value =  "";
@@ -506,6 +496,7 @@
         document.getElementsByName("motor")[0].value = document.getElementById("motor_" + id).textContent;
         document.getElementsByName("chasis")[0].value = document.getElementById("chasis_" + id).textContent;
           buscarModelo()
+          buscarRefa()
            document.getElementById('valoresContainer_veh').style.display = 'block';
    document.getElementById('patenteValor').textContent = document.getElementById('patente_sn').value;
    document.getElementById('marcaValor').textContent = document.getElementById('marca').value;
@@ -750,6 +741,26 @@
     }
   
     document.getElementById("modelo").value = ano;
+  }
+  
+  ////////////////////////// VER REFACTURACION ////////////////////////
+  
+  
+  function buscarRefa() {
+    let cnia = document.getElementById("cnia").value;
+    var valor = "";
+  
+    if (["FED PAT", "RIVADAVIA", "MAPFRE", "PROVIDENCIA", "ALLIANZ","MERCANTIL", "NIVEL", "ORBIS"].includes(cnia)) {
+      valor = 4;
+    } else if (["LA CAJA", "RIO URUGUAY", "ATM", "LIBRA"].includes(cnia)) {
+      valor = 3;
+    } else if (["AGROSALTA", "AGROSALTA C/GRUA", "AGRO MOTO", "AGRO (V)", "AGRO (V) C/GRUA", "GRUA", "SAN PATRICIO"].includes(cnia)) {
+      valor = 6;
+    } else {
+      valor = 0;
+    }
+  
+    document.getElementById("refac").value = valor;
   }
   
   
@@ -1110,6 +1121,7 @@
       let infoOperacion =  document.getElementById("operacion").value;
       let infoVigencia =  document.getElementById("vigencia").value;
       let infoHasta =  document.getElementById("hasta").value;
+      let infoRefa =  document.getElementById("refa").value;
       let infoDanios =  document.getElementById("danios").value;
       let infoNotasVeh =  document.getElementById("notasveh").value;
       let infoNotasVehold =  document.getElementById("notasvehold").value;
@@ -1144,6 +1156,7 @@
   infoNotascte =  "";
   infoPatente =  "";
   infoMarca =  "";
+  infoRefa =  "";
   infoCnia =  "";
   infoCobertura =  "";
   infoImporte =  "";
@@ -1186,134 +1199,133 @@
   }
   
   
-/////////////////////////////////////////////////////////////////
-//////////////////// SESION DE USUARIOS /////////////////////////
-/////////////////////////////////////////////////////////////////
-
-//////////////////// INICIAR SESION ////////////////////////
-
-// Obtener el modal
-var modal = document.getElementById("myModal");
-var tiempoRestanteDiv = document.getElementById("tiempo-restante");
-
-// Función para realizar el inicio de sesión
-var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
-var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
-var colorAlmacenado = sessionStorage.getItem("magi-color");
-
-if (usuarioAlmacenado) {
-  // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
-  document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
-  user.style.display = "block";
-  close_session.style.display = "block";
-  modal.style.display = "none";
-
-  // Establecer el color de fondo almacenado
-  if (colorAlmacenado) {
-    document.body.style.backgroundColor = colorAlmacenado;
-  } else {
-    // Si no hay un color almacenado, solicitarlo al servidor
-    google.script.run.withSuccessHandler(function (color) {
-      if (color) {
-        console.log("este es el color: " + color)
-        sessionStorage.setItem("magi-color", color);
-        document.body.style.backgroundColor = color;
-      }
-    }).buscarColorAlmacenado(usuarioAlmacenado);
-  }
-
-  // Calcular el tiempo restante
-  var tiempoRestante = calcularTiempoRestante();
-  mostrarTiempoRestante(tiempoRestante);
-  iniciarContadorTiempo(tiempoRestante);
-} else {
   
-  // Función para abrir el modal
-  modal.style.display = "block";
-
-  // Función para cerrar el modal
-  function closeModal() {
-    modal.style.display = "none";
+  
+  /////////////////////////////////////////////////////////////////
+  //////////////////// SESION DE USUARIOS /////////////////////////
+  /////////////////////////////////////////////////////////////////
+  
+  //////////////////// INICIAR SESION ////////////////////////
+  
+  
+  // Obtener el modal
+  var modal = document.getElementById("myModal");
+  var tiempoRestanteDiv = document.getElementById("tiempo-restante");
+  
+  // Función para realizar el inicio de sesión
+  // var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
+  // var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
+  // var colorAlmacenado = sessionStorage.getItem("magi-color");
+  
+  // Función para calcular el tiempo restante en milisegundos
+  function calcularTiempoRestante() {
+    var horaInicio = parseInt(sessionStorage.getItem("magi-horaInicio"));
+    var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
+    var tiempoRestante = horaExpiracion - new Date().getTime();
+    return tiempoRestante;
   }
-
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
-  document.getElementById("inicio-sesion").addEventListener("click", function (event) {
-    event.preventDefault();
-
-    // Obtener el usuario y la contraseña del formulario
-    var usuario = document.getElementById("usuario").value;
-    var contrasena = document.getElementById("contrasena").value;
-
-    // Obtener el valor seleccionado del color
-    var colorPicker = document.getElementById("colorPicker");
-    var colorSeleccionado = colorPicker.value;
-
-// Hacer una solicitud al servidor para verificar el usuario y la contraseña
-
-
-google.script.run.withSuccessHandler(function (color) {
-  if (color) {
-    document.getElementById("usuario_sp").innerHTML = usuario;
-    modal.style.display = "none";
+  
+  // Función para mostrar el tiempo restante en el div correspondiente
+  function mostrarTiempoRestante(tiempoRestante) {
+    if (tiempoRestante <= 0) {
+        sessionStorage.removeItem("magi-usuario");
+        sessionStorage.removeItem("magi-horaInicio");
+        sessionStorage.removeItem("magi-color");
+        tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+        document.getElementById("usuario_sp").innerHTML = "Desconocido";
+        modal.style.display = "block";
+    } else {
+      var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
+      var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+      var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
+      tiempoRestanteDiv.innerHTML = "Sesion: " + horas + ":" + minutos + ":" + segundos;
+    }
+  }
+  
+  // Función para iniciar el contador de tiempo
+  function iniciarContadorTiempo(tiempoRestante) {
+    var intervalo = setInterval(function () {
+      tiempoRestante -= 1000;
+  
+      if (tiempoRestante <= 0) {
+        clearInterval(intervalo);
+        sessionStorage.removeItem("magi-usuario");
+        sessionStorage.removeItem("magi-horaInicio");
+        sessionStorage.removeItem("magi-color");
+        tiempoRestanteDiv.innerHTML = "Tiempo expirado";
+        document.getElementById("usuario_sp").innerHTML = "Desconocido";
+        modal.style.display = "block";
+      } else {
+        mostrarTiempoRestante(tiempoRestante);
+      }
+    }, 1000);
+  }
+  
+  
+  if (sessionStorage.getItem("magi-usuario")) {
+    document.getElementById("usuario_sp").innerHTML = sessionStorage.getItem("magi-usuario");
     user.style.display = "block";
     close_session.style.display = "block";
-
-    // Guardar el usuario y el color en sessionStorage
-    sessionStorage.setItem("magi-usuario", usuario);
-    sessionStorage.setItem("magi-horaInicio", new Date().getTime());
-    sessionStorage.setItem("magi-color", color);
-    
-    document.body.style.backgroundColor = color;
+    modal.style.display = "none";
   
-  } else {
-    // El color no fue encontrado, manejar el error adecuadamente
-    console.log("Color no encontrado");
-  }
-
-    // Calcular el tiempo restante
+    if (sessionStorage.getItem("magi-color")) {
+      document.body.style.backgroundColor = sessionStorage.getItem("magi-color");
+    } else {
+      google.script.run.withSuccessHandler(function (color) {
+        if (color) {
+          sessionStorage.setItem("magi-color", color);
+          document.body.style.backgroundColor = color;
+        }
+      }).buscarColorAlmacenado(sessionStorage.getItem("magi-usuario"));
+    }
+  
     var tiempoRestante = calcularTiempoRestante();
     mostrarTiempoRestante(tiempoRestante);
     iniciarContadorTiempo(tiempoRestante);
-}).verificarCredenciales(usuario, contrasena);
-  });
-}
-
-
-
-// Función para calcular el tiempo restante en milisegundos
-function calcularTiempoRestante() {
-  var horaInicio = parseInt(horaInicioAlmacenada);
-  var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
-  var tiempoRestante = horaExpiracion - new Date().getTime();
-
-  return tiempoRestante;
-}
-
-// Función para mostrar el tiempo restante en el div correspondiente
-function mostrarTiempoRestante(tiempoRestante) {
-  if (tiempoRestante <= 0) {
-      sessionStorage.removeItem("magi-usuario");
-      sessionStorage.removeItem("magi-horaInicio");
-      sessionStorage.removeItem("magi-color");
-      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
-      modal.style.display = "block";
   } else {
-    var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
-    var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
-    var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
-
-    tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+    modal.style.display = "block";
+  
+    function closeModal() {
+      modal.style.display = "none";
+    }
+  
+    document.getElementById("inicio-sesion").addEventListener("click", function (event) {
+      event.preventDefault();
+  
+      var usuario = document.getElementById("usuario").value;
+      var contrasena = document.getElementById("contrasena").value;
+      var colorPicker = document.getElementById("colorPicker");
+      var colorSeleccionado = colorPicker.value;
+  
+      google.script.run.withSuccessHandler(function (color) {
+        if (color) {
+          document.getElementById("usuario_sp").innerHTML = usuario;
+          modal.style.display = "none";
+          user.style.display = "block";
+          close_session.style.display = "block";
+  
+          sessionStorage.setItem("magi-usuario", usuario);
+          sessionStorage.setItem("magi-horaInicio", new Date().getTime());
+          sessionStorage.setItem("magi-color", color);
+  
+          document.body.style.backgroundColor = color;
+        } else {
+          console.log("Color no encontrado");
+        }
+  
+        var tiempoRestante = calcularTiempoRestante();
+        mostrarTiempoRestante(tiempoRestante);
+        iniciarContadorTiempo(tiempoRestante);
+      }).verificarCredenciales(usuario, contrasena);
+    });
   }
-}
-
-// Función para iniciar el contador de tiempo
-function iniciarContadorTiempo(tiempoRestante) {
-  var intervalo = setInterval(function () {
-    tiempoRestante -= 1000;
-
+  
+  
+  
+  function verificarSesionVencida() {
+    var tiempoRestante = calcularTiempoRestante();
+  
     if (tiempoRestante <= 0) {
-      clearInterval(intervalo);
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
       sessionStorage.removeItem("magi-color");
@@ -1321,81 +1333,89 @@ function iniciarContadorTiempo(tiempoRestante) {
       document.getElementById("usuario_sp").innerHTML = "Desconocido";
       modal.style.display = "block";
     } else {
-      mostrarTiempoRestante(tiempoRestante);
+      var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
+      var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+      var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
+      console.log("Sesión vigente, quedan: " + horas + " hs, " + minutos + " min, " + segundos + " seg.");
     }
-  }, 1000);
-}
-
-
-////////////////////// CAMBIAR LA CLAVE DE USUARI ////////////////////////
-
-document.getElementById("cambiar_clave").addEventListener("click", function() {
-    event.preventDefault();
-    
-  document.getElementById("modal2").style.display = "block";
-});
-
-document.getElementById("guardar_clave").addEventListener("click", function() {
-    event.preventDefault();
-
-  var usuario_pass = sessionStorage.getItem("magi-usuario");
-  var antiguaClave = document.getElementById("antigua_clave").value;
-  var nuevaClave = document.getElementById("nueva_clave").value;
-  google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
-    modal2.style.display = "none";
-alert('Clave cambiada correctamente');
-
-});
-
-////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////// CERRAR SESION //////////////////////
-
-function close_sessionok(event) {
-    event.preventDefault();
-
-    // Eliminar el valor almacenado en sessionStorage
-    sessionStorage.removeItem("magi-usuario");
-      sessionStorage.removeItem("magi-horaInicio");
-      tiempoRestanteDiv.innerHTML = "";    
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la página
-      modal.style.display = "block";
-
-}
-
-
-//////////// CAMBIAR COLOR DE FONDO //////////////////////////
-            function changeColor() {
-                var colorPicker = document.getElementById("colorPicker");
-                var color = colorPicker.value;
-                var usuario = sessionStorage.getItem("magi-usuario");
-        sessionStorage.setItem("magi-color", color);
-        document.body.style.backgroundColor = color;
-
-                google.script.run
-                    .withSuccessHandler(onSuccess)
-                    .withFailureHandler(onFailure)
-                    .changeBackgroundColor(color, usuario);
-
-            }
-
-            function onSuccess() {
-                console.log("Color de fondo almacenado correctamente.");
-
-                
-            }
-
-            function onFailure(error) {
-                console.error("Error al almacenar el color de fondo:", error);
-            }
-
-            
-////////////////////////////////////////////////////////////////////////////////
+  }
   
+  setInterval(verificarSesionVencida, 10000);
+  
+  
+  ////////////////////// CAMBIAR LA CLAVE DE USUARI ////////////////////////
+  
+  document.getElementById("cambiar_clave").addEventListener("click", function() {
+      event.preventDefault();
+      
+    document.getElementById("modal2").style.display = "block";
+  });
+  
+  document.getElementById("guardar_clave").addEventListener("click", function() {
+      event.preventDefault();
+  
+    var usuario_pass = sessionStorage.getItem("magi-usuario");
+    var antiguaClave = document.getElementById("antigua_clave").value;
+    var nuevaClave = document.getElementById("nueva_clave").value;
+    google.script.run.cambioClave(antiguaClave, nuevaClave, usuario_pass);
+      modal2.style.display = "none";
+  alert('Clave cambiada correctamente');
+  
+  });
+  
+  ////////////////////////////////////////////////////////////////////////////////
+  
+  ////////////////////////// CERRAR SESION //////////////////////
+  
+  function close_sessionok(event) {
+      event.preventDefault();
+  
+      // Eliminar el valor almacenado en sessionStorage
+      sessionStorage.removeItem("magi-usuario");
+        sessionStorage.removeItem("magi-horaInicio");
+        sessionStorage.removeItem("magi-color");
+        tiempoRestanteDiv.innerHTML = "";    
+        document.getElementById("usuario_sp").innerHTML = "Desconocido";
+    // Recargar la página
+        modal.style.display = "block";
+  
+  }
+  
+  
+  //////////// CAMBIAR COLOR DE FONDO //////////////////////////
+              function changeColor() {
+                  var colorPicker = document.getElementById("colorPicker");
+                  var color = colorPicker.value;
+                  var usuario = sessionStorage.getItem("magi-usuario");
+          sessionStorage.setItem("magi-color", color);
+          document.body.style.backgroundColor = color;
+  
+                  google.script.run
+                      .withSuccessHandler(onSuccess)
+                      .withFailureHandler(onFailure)
+                      .changeBackgroundColor(color, usuario);
+  
+              }
+  
+              function onSuccess() {
+                  console.log("Color de fondo almacenado correctamente.");
+  
+                  
+              }
+  
+              function onFailure(error) {
+                  console.error("Error al almacenar el color de fondo:", error);
+              }
+  
+  
+    
+  ////////////////////////////////////////////////////////////////////////////////
   
   
   /// EVENT LISTENERS ////
+  document.getElementById("cnia").addEventListener("change", function() {
+  buscarRefa()
+  });
   document.getElementById('bt-capturePhoto').addEventListener('click', capturePhoto);
   document.getElementById('bt-switchCamera').addEventListener('click', switchCamera);
   document.getElementById('bt-sendPhotos').addEventListener('click', sendPhotos);

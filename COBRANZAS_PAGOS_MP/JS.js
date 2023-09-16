@@ -188,6 +188,47 @@
     alert('Recibi ingresado correctamente');
     }
     
+    //////////// SCRIPT DECIDIR BOTON BUSCAR PATENTE ////////////////
+      function decidir_patente() {
+      const boton = document.getElementById('buscarRegistrosBtn7');
+      const spinner = document.getElementById('spinner7');
+      spinner.style.display = 'inline-block';
+      boton.disabled = true;
+      const patente_value  = document.getElementById("text-box-buscarPatente").value;
+      google.script.run.withSuccessHandler(function(ultima_actu) {
+        console.log(ultima_actu)
+        console.log(ultima_actu[0][20])
+        let fechaString = ultima_actu[0][20];
+        let fechaEmi = fechaString.split('/');
+        let mesEmi = fechaEmi[1];
+        let anioEmi = fechaEmi[2];
+    
+        console.log(ultima_actu[1][5])
+        let fechaString2 = ultima_actu[1][5];
+        let fechaCob = fechaString2.split('/');
+        let mesCob = fechaCob[1];
+        let anioCob = fechaCob[2];
+    
+      if (mesCob >= mesEmi && anioCob >= anioEmi || ultima_actu[0] == "" && ultima_actu[1] !== "") {
+        alert("PAGO DE CUOTA")
+        buscarRegistros()
+      } else if(mesEmi > mesCob && anioEmi >= anioCob  || ultima_actu[0] !== "" && ultima_actu[1] == "") {
+        alert("SEGURO NUEVO / RENOVACION")
+        buscarRegistros_emision()
+      } else {
+        alert("ERROR")
+      }
+    
+      spinner.style.display = 'none';
+      boton.disabled = false;
+    
+      }).getUltimaActu(patente_value);
+    
+    
+      }
+    
+    
+    
     
      ///// SCRIPT PARA BUSCAR DATOS POR PATENTE //////////
       function buscarRegistros() {
@@ -1071,12 +1112,13 @@
     actualizarMensaje()
     });
     
+    document.getElementById('buscarRegistrosBtn1').addEventListener('click', buscarRegistros);
     document.getElementById('buscarRegistrosBtn2').addEventListener('click', buscarRegistros_emision);
     document.getElementById('buscarRegistrosBtn3').addEventListener('click', buscarRegistros_dni);
     document.getElementById('buscarRegistrosBtn4').addEventListener('click', buscarRegistros_dni_emision);
     document.getElementById('buscarRegistrosBtn5').addEventListener('click', buscarRegistros_nom);
     document.getElementById('buscarRegistrosBtn6').addEventListener('click', buscarRegistros_nom_emision);
-    document.getElementById('buscarRegistrosBtn1').addEventListener('click', buscarRegistros);
+    document.getElementById('buscarRegistrosBtn7').addEventListener('click', decidir_patente);
     document.getElementById('bt-ingreso').addEventListener('click', ingresarPago);
     document.getElementById('formularioCheque').addEventListener('submit', ingresarCheque);
     document.getElementById('formularioGasto').addEventListener('submit', ingresarGasto);

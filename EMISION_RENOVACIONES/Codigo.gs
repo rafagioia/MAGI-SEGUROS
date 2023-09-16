@@ -13,70 +13,158 @@ function include( fileName ){
 }
 
 
+function formatDateString(inputDate) {
+  var date = new Date(inputDate);
+  
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear() % 100; // Obtiene los últimos dos dígitos del año
+  
+  var formattedDate = day + '/' + month + '/' + year;
+  return formattedDate;
+}
+
+
+function renovarPol(
+  infoPatente,
+  infoImporte,
+  infoVence,
+  infoHasta,
+  infoHoy, 
+  infoRefa) {
+  const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
+  
+console.log(infoPatente, infoImporte, infoVence, infoHasta, infoRefa)
+  // Obtener los datos de la hoja
+  const data = BD_EMISION.getDataRange().getValues();
+  
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][0] == infoPatente) { // Columna A
+      // Actualizar las columnas F, I, J y E
+      BD_EMISION.getRange(i + 1, 6).setValue(infoImporte); // Columna F
+      BD_EMISION.getRange(i + 1, 9).setValue(infoVence);   // Columna I
+      BD_EMISION.getRange(i + 1, 10).setValue(infoHasta);  // Columna J
+      BD_EMISION.getRange(i + 1, 5).setValue(infoRefa);    // Columna E
+      BD_EMISION.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
+      break; // Terminar la búsqueda una vez que se encuentre una coincidencia
+    }
+  }
+}
+
 
 ////////////////// LISTADO DE RENOVACIONES //////////////////
 
-function getData() {
+function getData(mes_hoy1 = new Date().getMonth(), anio_hoy = new Date().getFullYear()) {
   const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
   const emisionData = BD_EMISION.getDataRange().getDisplayValues();
   var sinPendientes = [];
 
-  // Get the current year and month
-  var currentDate = new Date();
-  var yearActual = currentDate.getFullYear();
-  var mesActual = currentDate.getMonth() + 1; // Add 1 to get the current month (1 to 12)
+  var mes_hoy = mes_hoy1 +1;
 
   for (var j = 1; j < emisionData.length; j++) {
-  
-    var fechaString = emisionData[j][9];
-    // Obtener los componentes de la fecha
-    var dia_hasta = parseInt(fechaString.substring(0, 2));
-    var mes_hasta = parseInt(fechaString.substring(3, 5));
-    var anio_hasta = parseInt("20" + fechaString.substring(6)); // Concatenamos "20" para obtener el año completo
+    var fecha_desde = emisionData[j][8];
+    var parts3 = fecha_desde.split('/');
+    var dia_desde = parseInt(parts3[0]);
+    var mes_desde = parseInt(parts3[1]);
+    var anio_desde = parseInt(parts3[2]);
+    var anio_hasta = parseInt(parts3[2]) + 1;
 
-      var fechaHasta = dia_hasta + "/" + mes_hasta + "/" + anio_hasta;
+var fecha_mod = emisionData[j][20];
 
-    if (anio_hasta === yearActual && mes_hasta === mesActual && emisionData[j][10] !== "ANULACION") {
-      console.log("pasó la patente: " + emisionData[j][0]);
+if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
+  var parts4 = fecha_mod.split('/');
+  var mes_mod = parseInt(parts4[1]);
+  var anio_mod = parseInt(parts4[2]);
+} else {
+  var mes_mod = "";
+  var anio_mod = "";
+}
 
-      var fechaString2 = emisionData[j][8];
-      // Obtener los componentes de la fecha
-      var dia_desde = parseInt(fechaString2.substring(0, 2));
-      var mes_desde = parseInt(fechaString2.substring(3, 5));
-      var anio_desde = parseInt("20" + fechaString2.substring(6)); // Concatenamos "20" para obtener el año completo
-      var fechaDesde = dia_desde + "/" + mes_desde + "/" + anio_desde;
-      var mesesDiferencia;
 
-      if (mes_desde === mes_hasta && anio_desde === anio_hasta) {
-        // Dates are the same, set mesesDiferencia to 1
-        mesesDiferencia = 1;
+    var vig = parseInt(emisionData[j][4]);
+    var rf = parseInt(12 / vig);
+
+    for (var i = 1; i <= rf; i++) {
+      let fecha_refa = new Date("20" + anio_desde, mes_desde - 1, dia_desde);
+      fecha_refa.setMonth(fecha_refa.getMonth() + (i * vig));
+      let refa = fecha_refa.toLocaleDateString('es-ES');
+
+      var part = refa.split("/");
+      var refacturaciones = [];
+
+      // Verificar si ha pasado un año desde la fecha de inicio de refacturación
+      if ((anio_hoy > anio_desde && mes_hoy === mes_desde) && (mes_mod !== mes_hoy && anio_mod !== anio_hoy)) {
+        // Renovación
+        var fecha_hasta_ren = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
+        var nuevaFecha3 = fecha_hasta_ren.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha3);
+        refacturaciones.push(emisionData[j][2]); // cliente
+        refacturaciones.push(emisionData[j][0]); // patente
+        refacturaciones.push(emisionData[j][12]); // marca
+        refacturaciones.push(emisionData[j][6]); // cnia
+        refacturaciones.push(1); // cuota
+        refacturaciones.push(vig); // cuotaHasta
+        fecha_refa.setMonth(fecha_refa.getMonth() + vig);
+        var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha);
+        refacturaciones.push("");
+        refacturaciones.push(emisionData[j][13]); // fpago
+        refacturaciones.push("RENOVACION");
+        refacturaciones.push(nuevaFecha3);
+        let fecha_hasta = new Date("20" + (anio_hasta + 1), mes_desde - 1, dia_desde);
+        var nuevaFecha2 = fecha_hasta.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha2);
+        refacturaciones.push("");
+      } else if (mes_mod == mes_hoy && anio_mod == anio_hoy) {
+        // Renovadas
+        var fecha_hasta_ren = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
+        var nuevaFecha3 = fecha_hasta_ren.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha3);
+        refacturaciones.push(emisionData[j][2]); // cliente
+        refacturaciones.push(emisionData[j][0]); // patente
+        refacturaciones.push(emisionData[j][12]); // marca
+        refacturaciones.push(emisionData[j][6]); // cnia
+        refacturaciones.push(1); // cuota
+        refacturaciones.push(vig); // cuotaHasta
+        fecha_refa.setMonth(fecha_refa.getMonth() + vig);
+        var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha);
+        refacturaciones.push("");
+        refacturaciones.push(emisionData[j][13]); // fpago
+        refacturaciones.push("ACTUALIZADA: " + emisionData[j][20]);
+        refacturaciones.push(nuevaFecha3);
+        let fecha_hasta = new Date("20" + (anio_hasta + 1), mes_desde - 1, dia_desde);
+        var nuevaFecha2 = fecha_hasta.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha2);
+        refacturaciones.push(emisionData[j][5]);
       } else {
-        // Calculate the difference in months
-        mesesDiferencia = calcularMeses(mes_desde, mes_hasta, anio_desde, anio_hasta);
+        // Refacturación normal
+        refacturaciones.push(refa); // desde
+        refacturaciones.push(emisionData[j][2]); // cliente
+        refacturaciones.push(emisionData[j][0]); // patente
+        refacturaciones.push(emisionData[j][12]); // marca
+        refacturaciones.push(emisionData[j][6]); // cnia
+        refacturaciones.push(1); // cuota
+        refacturaciones.push(vig); // cuotaHasta
+        fecha_refa.setMonth(fecha_refa.getMonth() + vig);
+        var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha);
+        refacturaciones.push("");
+        refacturaciones.push(emisionData[j][13]); // fpago
+        refacturaciones.push("REFA" + (i + 1));
+        refacturaciones.push(fecha_desde);
+        let fecha_hasta = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
+        var nuevaFecha2 = fecha_hasta.toLocaleDateString('es-ES');
+        refacturaciones.push(nuevaFecha2);
+        refacturaciones.push("");
       }
-      console.log("fecha desde: " + fechaDesde + ", fecha Hasta: " + fechaHasta + ", Diferencia de meses: " + mesesDiferencia);
-
-      var renovaciones = [];
-      renovaciones.push(emisionData[j][8]); // desde
-      renovaciones.push(emisionData[j][2]); // cliente
-      renovaciones.push(emisionData[j][0]); // patente
-      renovaciones.push(emisionData[j][12]); // marca
-      renovaciones.push(emisionData[j][6]); // cnia
-      renovaciones.push(1); // cuota
-      renovaciones.push(mesesDiferencia); // cuotaHasta
-      var fechaVencimiento = new Date(fechaHasta);
-      fechaVencimiento.setMonth(fechaVencimiento.getMonth() + mesesDiferencia);
-      renovaciones.push(fechaVencimiento.toLocaleDateString());
-      renovaciones.push(parseInt(emisionData[j][5].replace("$", "").replace(",", ""))); // importe
-      renovaciones.push(emisionData[j][13]); // fpago
-
-      if (!isNaN(fechaVencimiento.getTime())) {
-        sinPendientes.push(renovaciones);
+      
+      if (parseInt(part[1]) === mes_hoy && parseInt(part[2]) === anio_hoy && emisionData[j][7] !== "ANULACION") {
+        sinPendientes.push(refacturaciones);
       }
     }
   }
 
-  console.log("listado terminado: " + sinPendientes);
   return sinPendientes;
 }
 

@@ -296,7 +296,7 @@
             </div>
             <div class="col-4">
               <div class="mb-1">
-            <input type="number" class="form-control form-control-sm" id="dni" name="dni" placeholder="Ingrese el DNI" required>
+            <input type="number" class="form-control form-control-sm" id="dni" name="dni" placeholder="Ingrese el DNI" required  pattern="[0-9]+">
               </div>
               </div>
              <div class="col-2">
@@ -325,7 +325,7 @@
             </div>
             <div class="col-9">
               <div class="mb-1">
-            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="nombreCompleto" name="nombreCompleto" placeholder="Nombre completo" required>
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="nombreCompleto" name="nombreCompleto" placeholder="Nombre completo" required pattern="[a-zA-ZñÑ\s']{7,104}">
               </div>
               </div>
             </div>
@@ -1072,7 +1072,7 @@
                   <label for="cnia" class="form-label mt-1">Compañia:</label>
               </div>
             </div>
-            <div class="col-9">
+            <div class="col-5">
               <div class="mb-1">
                   <select class="form-select form-select-sm" id="cnia" name="cnia" placeholder="" required>
                     <option value="AGROSALTA">""</option>
@@ -1095,6 +1095,17 @@
                     <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
                     <option value="AGRO MOTO">AGRO MOTO</option>
                   </select>
+              </div>
+              </div>
+                          <div class="col-2">
+              <div class="mb-1">
+                  <label for="refa" class="form-label mt-1">REFA:</label>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="mb-1">
+     <input type="number" class="form-control form-control-sm p-0" id="refac" name="refac" placeholder="N°">
+  
               </div>
               </div>
             </div><div class="row">
@@ -1369,7 +1380,6 @@
   
   <!----- FIN DEL SECTOR #3 POLIZAS VIGENTES ---->
   <br><br><br>
-  
   
 
 

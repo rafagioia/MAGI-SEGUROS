@@ -80,7 +80,7 @@ while (numCuota > 1) {
 // Obtener la nueva fecha de vencimiento
 var nuevaFechaVence = fecha2.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' })
 
-var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte, infoCnia, infoPoliza , nuevaFechaVence, , "SEGURO NUEVO", , infoMarca, "CUPONES", , , , , ]
+var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte, infoCnia, infoPoliza , nuevaFechaVence, , "SEGURO NUEVO", , infoMarca, "CUPONES", , , , , , nuevaFechaVence]
     LISTADO.insertRowBefore(2).getRange(2, 1, 1, vehVals.length).setValues([vehVals]);
   }
 
@@ -131,8 +131,85 @@ var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte,
   }
 }
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////// VER LA ULTIMA ACTUALIZACION PARA DECIDIR DATOS /////////////////////////////////////////
+function getUltimaActu(patente_value) {
+  let actualizaciones = [];
+  let actualizacion_cob = [];
+  let actualizacion_emi = [];
+  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const mantenimientos3 = LISTADO.getDataRange().getDisplayValues();
+  console.log(patente_value)
+  let encontrado1 = false; // Variable para rastrear si se encontró una coincidencia
 
+  for (let i = 0; i < mantenimientos3.length; i++) {
+    if (patente_value === mantenimientos3[i][0]) {
+      actualizacion_emi.push(mantenimientos3[i][0]);
+      actualizacion_emi.push(mantenimientos3[i][1]);
+      actualizacion_emi.push(mantenimientos3[i][2]);
+      actualizacion_emi.push(mantenimientos3[i][3]);
+      actualizacion_emi.push(mantenimientos3[i][4]);
+      actualizacion_emi.push(mantenimientos3[i][5]);
+      actualizacion_emi.push(mantenimientos3[i][6]);
+      actualizacion_emi.push(mantenimientos3[i][7]);
+      actualizacion_emi.push(mantenimientos3[i][8]);
+      actualizacion_emi.push(mantenimientos3[i][9]);
+      actualizacion_emi.push(mantenimientos3[i][10]);
+      actualizacion_emi.push(mantenimientos3[i][11]);
+      actualizacion_emi.push(mantenimientos3[i][12]);
+      actualizacion_emi.push(mantenimientos3[i][13]);
+      actualizacion_emi.push(mantenimientos3[i][14]);
+      actualizacion_emi.push(mantenimientos3[i][15]);
+      actualizacion_emi.push(mantenimientos3[i][16]);
+      actualizacion_emi.push(mantenimientos3[i][17]);
+      actualizacion_emi.push(mantenimientos3[i][18]);
+      actualizacion_emi.push(mantenimientos3[i][19]);
+      actualizacion_emi.push(mantenimientos3[i][20]);
+      encontrado1 = true; // Se encontró una coincidencia
+      break;
+    }
+  }
+
+  if (!encontrado1) {
+    actualizacion_emi.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "listado"
+  }
+
+  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS")
+  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
+  encontrado2 = false; // Restablecer la variable encontrado
+
+  for (let i = 0; i < mantenimientos.length; i++) {
+    if (patente_value === mantenimientos[i][1]) {
+      actualizacion_cob.push(mantenimientos[i][0]);
+      actualizacion_cob.push(mantenimientos[i][1]);
+      actualizacion_cob.push(mantenimientos[i][2]);
+      actualizacion_cob.push(mantenimientos[i][3]);
+      actualizacion_cob.push(mantenimientos[i][4]);
+      actualizacion_cob.push(mantenimientos[i][5]);
+      actualizacion_cob.push(mantenimientos[i][6]);
+      actualizacion_cob.push(mantenimientos[i][7]);
+      actualizacion_cob.push(mantenimientos[i][8]);
+      actualizacion_cob.push(mantenimientos[i][9]);
+      actualizacion_cob.push(mantenimientos[i][10]);
+      actualizacion_cob.push(mantenimientos[i][11]);
+      actualizacion_cob.push(mantenimientos[i][12]);
+      actualizacion_cob.push(mantenimientos[i][13]);
+      actualizacion_cob.push(mantenimientos[i][14]);
+      actualizacion_cob.push(mantenimientos[i][15]);
+      actualizacion_cob.push(mantenimientos[i][16]);
+      actualizacion_cob.push(mantenimientos[i][17]);
+      encontrado2 = true; // Se encontró una coincidencia
+      break;
+    }
+  }
+
+  if (!encontrado2) {
+    actualizacion_cob.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "BD COBRANZAS"
+  }
+
+      actualizaciones.push(actualizacion_emi);
+      actualizaciones.push(actualizacion_cob);
+  return actualizaciones;
+}
 
 ////////////// INGESAMOS NO MOVE A LA BD CHEQUES //////////////////
 

@@ -30,85 +30,188 @@
        )
     })()
     
-      // Función para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
-      // function convertToDate(dateString) {
-      //   var parts = dateString.split('/');
-      //   return new Date(parts[2], parts[1] - 1, parts[0]); // Restamos 1 al mes ya que en Date() los meses van de 0 a 11
-      // }
     
-      // // Ordenar el arreglo result de menor a mayor según las fechas (result[i][2])
-      // result.sort(function(a, b) {
-      //   var dateA = convertToDate(a[7]);
-      //   var dateB = convertToDate(b[7]);
-      //   return dateA - dateB;
-      // });
-    
-      // var idDeudores = []; // Nuevo array para almacenar los id_deudor distintos
     
     ////////////// LISTA DE PAGOS ///////////////////////
     function updateSinPendientes(result) {
-      
       console.log("Result length:", result.length);
+    
+      function convertToDate(dateString) {
+        var parts = dateString.split('/');
+        return new Date(parts[2], parts[1] - 1, parts[0]);
+      }
+    
+      result.sort(function(a, b) {
+        var dateA = convertToDate(a[0]); // Posición 7 en base 0
+        var dateB = convertToDate(b[0]); // Posición 7 en base 0
+        return dateA - dateB;
+      });
     
       var sinPendientesDiv = document.getElementById("sinPendientes");
       var pendientesHtml = "";
     
       for (var i = 0; i < result.length; i++) {
-    pendientesHtml += "<div class='border mb-0 bg-white' style='box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>";
-    pendientesHtml += "<div class='row' style='padding: 5px;'>";
-    pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
+        pendientesHtml += "<div class='border mb-0 bg-white' style='box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>";
+        pendientesHtml += "<div class='row' style='padding: 5px;'>";
+        pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
     
-    // Columna de deudor
-    pendientesHtml += "<div class='col-1 text-sm' style='font-size: 8px;' id='_deudor" + i + "'>" + result[i][0] + "</div>";
+        // Columna de cliente
+        pendientesHtml += "<div class='col-4  m-0 p-1 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>";
     
-    // Columna de cliente
-    pendientesHtml += "<div class='col-4 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>";
+        // Columna de vencimiento
+        pendientesHtml += "<div class='col-2  m-0 p-1 planilla'><input type='text' class='form-control planilla' id='_vto" + i + "' value='" + result[i][11] + "'></div>";
+        pendientesHtml += "<div class='col-2  m-0 p-1 planilla'><input type='text' class='form-control planilla' id='_hasta" + i + "' value='" + result[i][12] + "'></div>";
     
-    // Columna de vencimiento
-    pendientesHtml += "<div class='col-2  m-0 p-1 planilla'><input type='text' class='form-control planilla'  id='_vto" + i + "' value='" + result[i][7] + "'></div>";
-    pendientesHtml += "<div class='col-2  m-0 p-1 planilla'><input type='text' class='form-control planilla'  id='_hasta" + i + "' value='" + result[i][7] + "'></div>";
+        // Columna de CNIA
+        pendientesHtml += "<div class='col-3   m-0 p-1 text-sm planilla' style='padding-top: 10px;' id='_cnia" + i + "'>" + result[i][4] + "</div>";
     
-    // Columna de CNIA
-    pendientesHtml += "<div class='col-3 text-sm planilla' style='padding-top: 10px;' id='_cnia" + i + "'>" + result[i][4] + "</div>";
+        // Columna de REFA
+        pendientesHtml += "<div class='col-1  m-0 p-1 planilla'><input type='text' class='form-control planilla p-1 ' id='_refa" + i + "' value='" + result[i][6] + "'></div>";
     
+        pendientesHtml += "</div></div>";
+        pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
     
-    pendientesHtml += "</div></div>";
-    pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
-    // Columna de importe
-    pendientesHtml += "<div class='col-3 planilla'><div class='input-group'><div class='input-group-prepend'><span class='input-group-text planilla'>$</span></div>";
-    pendientesHtml += "<input type='text' class='form-control planilla'  id='_imp" + i + "' value='" + result[i][11] + "'></div></div>";
+        // Columna de importe
+        pendientesHtml += "<div class='col-3 planilla'><div class='input-group'><div class='input-group-prepend'><span class='input-group-text planilla'>$</span></div>";
+        pendientesHtml += "<input type='text' class='form-control planilla' id='_imp" + i + "' value='" + result[i][13] + "'></div></div>";
     
-    // Columna de patente
-    pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' id='_pat" + i + "'>" + result[i][2] + "</div>";
+        // Columna de patente
+        pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' id='_pat" + i + "'>" + result[i][2] + "</div>";
     
-    // Columna de marca
-    pendientesHtml += "<div class='col-3 text-sm text-truncate  planilla'  id='_marca" + i + "'>" + result[i][3] + "</div>";
+        // Columna de marca
+        pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' id='_marca" + i + "'>" + result[i][3] + "</div>";
     
-    // Columna de pasados
-    pendientesHtml += "<div class='col-4 row planilla'>";
+        // Establecer el estilo según el valor de result[i][10]
+        if (result[i][10] == "RENOVACION") {
+          // Columna de REFA
+          pendientesHtml += "<div class='col-3 m-0 p-0 text-sm text-truncate planilla'>";
+          pendientesHtml += "<div class='row m-0 p-0'>";
+          pendientesHtml += "<div class='col-12 m-0 p-0' id='_estado'>" + result[i][10] + "</div>";
+          pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde'>" + result[i][0] + "</div>";
+          pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta'>" + result[i][7] + "</div>";
+          pendientesHtml += "</div>";
+          pendientesHtml += "</div>";
     
-    // Columna de verificación
-    pendientesHtml += "<div class='col-2 p-1 planilla' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; height: 32px;'";
+          pendientesHtml += "<div class='col-1 p-1 planilla' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; width: 32px; height: 32px;'";
+          pendientesHtml += "id='_ver" + i + "'>❌</div>";
+          pendientesHtml += "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;'><button class='btn btn-success btn-sm' id='_btn_ren" + i + "'>REN</button></div>";
+        } else if (result[i][10].indexOf("REFA") !== -1) {
+          // Columna de REFA
+          pendientesHtml += "<div class='col-3 m-0 p-0 text-sm text-truncate planilla'>";
+          pendientesHtml += "<div class='row m-0 p-0'>";
+          pendientesHtml += "<div class='col-12 m-0 p-0 text-sm planilla' id='_estado'>" + result[i][10] + "</div>";
+          pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde'>" + result[i][0] + "</div>";
+          pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta'>" + result[i][7] + "</div>";
+          pendientesHtml += "</div>";
+          pendientesHtml += "</div>";
     
-    // Establecer el estilo según el valor de result[i][9]
-    // if (result[i][10] === "✔️") {
-    //   pendientesHtml += "id='_ver" + i + "'>✔️</div>";
-    //   pendientesHtml += "<div class='col-2 m-0 p-0' style='padding: 2px 0px 0px 5px;'><button class='btn btn-success btn-sm' style='display: none;' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm planilla' style='margin-top: 2px' id='_print" + i + "'>🖨️</button></div>";
-    //   pendientesHtml += "<div class='col-1 m-0 p-0' style=''><input type='checkbox' class='form-check-input planilla' style='margin: 10px;' id='_check" + i + "'";
-    // if (result[i][16] === "TRUE") {
-    //   pendientesHtml += " checked='checked'"; // Elimina el atributo checked aquí
-    // }
-    //   pendientesHtml += "></div><div class='col-1 m-0 planilla' style='padding-top: 7px;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
-    // } else if (result[i][10] === "❌") {
-    //   pendientesHtml += "id='_ver" + i + "'>❌</div>";
-    //   pendientesHtml += "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;'><button style='margin-top: 2px;' class='btn btn-success btn-sm' id='_btn_cob" + i + "'>COBRAR</button><button class='btn btn-secondary btn-sm planilla' style='display: none;' style='margin-top: 2px'  id='_print" + i + "'>🖨️</button></div>";
-    //   pendientesHtml += "<div class='col-1 m-0 p-0' style=''><input type='checkbox' class='form-check-input planilla' style='display: none;margin: 10px;' id='_check" + i + "'></div><div class='col-1 m-0 planilla' style='padding-top: 7px;' id='_num_rec" + i + "'>" + result[i][15] + "</div>";
-    // }
+          pendientesHtml += "<div class='col-1 p-1 planilla' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; width: 32px;  height: 32px;'";
+          pendientesHtml += "id='_ver" + i + "'>❌</div>";
+      pendientesHtml += "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;'><button class='btn btn-success btn-sm' id='_btn_ren" + i + "'>REF</button></div>";
+    } else if (result[i][10].indexOf("ACTUALIZADA") !== -1) {
+          // Columna de REFA
+          pendientesHtml += "<div class='col-3 m-0 p-0 text-sm text-truncate planilla'>";
+          pendientesHtml += "<div class='row m-0 p-0'>";
+          pendientesHtml += "<div class='col-12 m-0 p-0 text-sm planilla' id='_estado'>" + result[i][10] + "</div>";
+          pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde'>" + result[i][0] + "</div>";
+          pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta'>" + result[i][7] + "</div>";
+          pendientesHtml += "</div>";
+          pendientesHtml += "</div>";
+    
+          pendientesHtml += "<div class='col-1 p-1 planilla' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; width: 32px;  height: 32px;'";
+          pendientesHtml += "id='_ver" + i + "'>✔️</div>";
+      pendientesHtml += "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;'></div>";
+    }
+    
     
     pendientesHtml += "</div></div></div></div>";
     pendientesHtml += "</div></div></div>";
       }
         sinPendientesDiv.innerHTML = pendientesHtml;
+    
+    
+    var idCniaSelect = document.getElementById("id_cnia_select");
+    var idEstadoSelect = document.getElementById("id_estado_select");
+    var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
+    var resetFiltroBtn = document.getElementById("bt-reset-filtro");
+    
+    actualizarListaBtn.addEventListener("click", function () {
+      var seleccionadoCnia = idCniaSelect.value;
+      var seleccionadoEstado = idEstadoSelect.value;
+    
+      // Filtrar los elementos basados en los valores seleccionados
+      var divs = document.querySelectorAll("#sinPendientes > div");
+    
+      for (var i = 0; i < divs.length; i++) {
+        var div = divs[i];
+        var cniaElement = div.querySelector(".text-sm[id^='_cnia']");
+        var estadoElement = div.querySelector(".text-sm[id^='_estado']");
+    
+        // Verificar si los elementos existen y tienen contenido de texto
+        var cnia = cniaElement ? cniaElement.textContent : "";
+        var estado = estadoElement ? estadoElement.textContent : "";
+    
+        var mostrar = false;
+    
+        if (
+          (seleccionadoCnia === "" || cnia === seleccionadoCnia || seleccionadoCnia === "todos") &&
+          (seleccionadoEstado === "" || estado.indexOf(seleccionadoEstado) !== -1 || seleccionadoEstado === "todos")
+        ) {
+          mostrar = true;
+        }
+    
+        div.style.display = mostrar ? "block" : "none";
+      }
+    });
+    //////////////////// BOTON DE RESETEAR FILTRO ///////////////////
+    
+    resetFiltroBtn.addEventListener("click", function() {
+      var divs = document.querySelectorAll("#sinPendientes > div");
+    
+      for (var i = 0; i < divs.length; i++) {
+        var div = divs[i];
+        div.style.display = "block"; // Mostrar todos los elementos
+      }
+    
+      // Restablecer la selección del select
+      idCniaSelect.selectedIndex = 0;
+      idEstadoSelect.selectedIndex = 0;
+    
+    });
+        /////////////// BOTON PARA RENOVAR POLIZAS //////////////////
+    
+      var divs = document.querySelectorAll("[id^='_btn_ren']");
+      divs.forEach(function(_btn_ren) {
+        _btn_ren.addEventListener("click", function() {
+          var id = _btn_ren.id.slice(8); // Obtener el índice del div
+    
+      let infoPatente = document.getElementById("_pat" + id).textContent;
+      let infoImporte = document.getElementById("_imp" + id).value;
+      let infoVence = document.getElementById("_vto" + id).value;
+      let infoHasta = document.getElementById("_hasta" + id).value;
+      let infoRefa = document.getElementById("_refa" + id).value;
+      let fechaHoy = new Date();
+      let dia = fechaHoy.getDate();
+      let mes = fechaHoy.getMonth() + 1; // Agregar 1 ya que los meses se cuentan desde 0 (enero) hasta 11 (diciembre)
+      let anio = fechaHoy.getFullYear();
+      let infoHoy = dia + '/' + mes + '/' + anio;
+    
+    console.log(infoPatente, infoImporte, infoVence, infoHasta, infoRefa)
+      document.getElementById("_ver" + id).textContent = "✔️";
+        // Ocultar el botón
+        _btn_ren.style.display = "none";
+    
+        google.script.run.withSuccessHandler().renovarPol(
+        infoPatente,
+        infoImporte,
+        infoVence,
+        infoHasta, 
+        infoHoy,
+        infoRefa
+      );
+    
+        });
+      });
       }
     
       // Llamar a la función getData() del lado del servidor
@@ -325,6 +428,14 @@
     
                 
     /////////////////////// EVENT LISTENERS ////////////////////////////
+    
+    
+    document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
+      var mes = parseInt(document.getElementById("mes_sn").value, 10);
+      var anio = parseInt(document.getElementById("anio_sn").value, 10);
+    
+     google.script.run.withSuccessHandler(updateSinPendientes).getData(mes, anio)
+    });
     
     document.getElementById('close_session').addEventListener('click', close_sessionok);
     //////////////////////////////////////////////////////////////////
