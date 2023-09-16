@@ -195,26 +195,144 @@
       spinner.style.display = 'inline-block';
       boton.disabled = true;
       const patente_value  = document.getElementById("text-box-buscarPatente").value;
+            let infoDNI =  document.getElementById("dni");
+            let infoCliente =  document.getElementById("nombreCompleto");
+            let infoWpp =  document.getElementById("wpp");
+            let infoPatente =  document.getElementById("patente");
+            let infoMarca =  document.getElementById("marca");
+            let infoPoliza =  document.getElementById("poliza");
+            let infoCnia =  document.getElementById("cnia");
+            let infoCuota =  document.getElementById("cuota");
+            let infoVigencia =  document.getElementById("vigencia");
+            let infoImporte =  document.getElementById("importe");
+            let infoVence =  document.getElementById("vto");
+            let infoColor =  document.getElementById("color");
+            let infoNotas =  document.getElementById("notas");
+    
       google.script.run.withSuccessHandler(function(ultima_actu) {
-        console.log(ultima_actu)
-        console.log(ultima_actu[0][20])
-        let fechaString = ultima_actu[0][20];
-        let fechaEmi = fechaString.split('/');
-        let mesEmi = fechaEmi[1];
-        let anioEmi = fechaEmi[2];
     
-        console.log(ultima_actu[1][5])
-        let fechaString2 = ultima_actu[1][5];
-        let fechaCob = fechaString2.split('/');
-        let mesCob = fechaCob[1];
-        let anioCob = fechaCob[2];
+    let fechaString = ultima_actu[0][20];
+    let fechaEmi, mesEmi, anioEmi;
     
+    if (fechaString) {
+      let fechaEmiArray = fechaString.split('/');
+      if (fechaEmiArray.length === 3) {
+        mesEmi = fechaEmiArray[1];
+        anioEmi = fechaEmiArray[2];
+      }
+    }
+    
+        
+    let fechaString2 = ultima_actu[1][0][5];
+    let fechaCob, mesCob, anioCob;
+    
+    if (fechaString2) {
+      let fechaCobArray = fechaString2.split('/');
+      if (fechaCobArray.length === 3) {
+        mesCob = fechaCobArray[1];
+        anioCob = fechaCobArray[2];
+      }
+    }
+    
+        /////////// INGRESA POR COBRANZAS NORMAL
       if (mesCob >= mesEmi && anioCob >= anioEmi || ultima_actu[0] == "" && ultima_actu[1] !== "") {
         alert("PAGO DE CUOTA")
-        buscarRegistros()
+        // buscarRegistros()
+    
+              let tableBody = document.getElementById("mantenimientosTableBody");
+              tableBody.innerHTML = "";
+              if (ultima_actu[1].length > 0) {
+                
+            infoDNI.value = ultima_actu[1][0][2];
+            infoCliente.value = ultima_actu[1][0][3];
+            infoWpp.value = ultima_actu[1][0][4];
+            infoPatente.value = ultima_actu[1][0][1];
+            infoMarca.value = ultima_actu[1][0][13];
+            infoPoliza.value = ultima_actu[1][0][9];
+            infoCnia.value = ultima_actu[1][0][10];
+            infoImporte.value = ultima_actu[1][0][11];
+    
+    let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
+    let importeNumero = parseInt(importeSinSignos);
+    
+    infoImporte.value = importeNumero
+    
+    
+            infoCuota.value = parseInt(ultima_actu[1][0][7])+1;
+            infoVigencia.value = parseInt(ultima_actu[1][0][8]);
+            if(infoCuota.value > infoVigencia.value) {
+              infoCuota.value = 1;
+              infoImporte.value = "";
+            } else {}
+            let fechaString = ultima_actu[1][0][5];
+            let partesFecha = fechaString.split('/');
+            let dia = partesFecha[0];
+            let mes = partesFecha[1];
+            let anio = partesFecha[2].slice(-2);
+            let fecha = new Date(anio, mes - 1, dia);
+            fecha.setMonth(fecha.getMonth() + 1)
+            infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+            infoColor.value = ultima_actu[1][15];
+    
+    let rowCount = 0;
+    ultima_actu[1].forEach(mantenimiento => {
+      if (rowCount < 6) { // solo agrega filas si el número actual de filas es menor que 6
+    
+        const template = document.getElementById("mantenimientosRow");
+        const templateRow = template.content;
+        let tr = templateRow.cloneNode(true);
+        let colFecha = tr.querySelector(".PagoCuota")
+        let colDescripcion = tr.querySelector(".PagoFecha")
+        let colAtendio = tr.querySelector(".PagoVto")
+        let colAtendios = tr.querySelector(".PagoImporte")
+        
+        colFecha.textContent = mantenimiento[7];
+        colDescripcion.textContent = mantenimiento[5];
+        colAtendio.textContent = mantenimiento[6];
+        colAtendios.textContent = "$" + mantenimiento[11].replace("$", "").replace(".", "");
+        
+        tableBody.appendChild(tr);
+        rowCount++;
+      }
+    });
+    
+              } else {
+                alert("No se encontraron valores")
+              }
+    
+        /////////// INGRESA POR SEGURO NUEVO O RENOVACION
       } else if(mesEmi > mesCob && anioEmi >= anioCob  || ultima_actu[0] !== "" && ultima_actu[1] == "") {
         alert("SEGURO NUEVO / RENOVACION")
-        buscarRegistros_emision()
+        // buscarRegistros_emision()
+        if (ultima_actu[0].length > 0) {
+                
+            infoDNI.value = ultima_actu[0][1]; //
+            infoCliente.value = ultima_actu[0][2]; ///
+            infoWpp.value = ultima_actu[0][15];
+            infoPatente.value = ultima_actu[0][0];  ///
+            infoMarca.value = ultima_actu[0][12]; //
+            infoPoliza.value = ultima_actu[0][7]; //
+            infoCnia.value = ultima_actu[0][6]; //
+            infoImporte.value = ultima_actu[0][5]; //
+            infoVigencia.value = ultima_actu[0][4]; //
+    
+    let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
+    let importeNumero = parseInt(importeSinSignos);
+    infoImporte.value = importeNumero
+            infoCuota.value = 1;
+            let fechaString = ultima_actu[0][8];  ///
+            let partesFecha = fechaString.split('/');
+            let dia = partesFecha[0];
+            let mes = partesFecha[1];
+            let anio = partesFecha[2].slice(-2);
+            let fecha = new Date(anio, mes - 1, dia);
+            infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+            infoColor.value = "";
+            infoNotas.value = "";
+    
+              } else {
+                alert("No se encontraron valores")
+              }
       } else {
         alert("ERROR")
       }
@@ -223,7 +341,6 @@
       boton.disabled = false;
     
       }).getUltimaActu(patente_value);
-    
     
       }
     

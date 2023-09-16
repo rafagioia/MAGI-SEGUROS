@@ -138,11 +138,15 @@ function getUltimaActu(patente_value) {
   let actualizacion_emi = [];
   const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
   const mantenimientos3 = LISTADO.getDataRange().getDisplayValues();
+  const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
+  const mantenimientos8 = BD_CLIENTES.getDataRange().getDisplayValues();
+
   console.log(patente_value)
   let encontrado1 = false; // Variable para rastrear si se encontró una coincidencia
 
   for (let i = 0; i < mantenimientos3.length; i++) {
     if (patente_value === mantenimientos3[i][0]) {
+
       actualizacion_emi.push(mantenimientos3[i][0]);
       actualizacion_emi.push(mantenimientos3[i][1]);
       actualizacion_emi.push(mantenimientos3[i][2]);
@@ -158,7 +162,14 @@ function getUltimaActu(patente_value) {
       actualizacion_emi.push(mantenimientos3[i][12]);
       actualizacion_emi.push(mantenimientos3[i][13]);
       actualizacion_emi.push(mantenimientos3[i][14]);
-      actualizacion_emi.push(mantenimientos3[i][15]);
+        for (let j = 0; j < mantenimientos8.length; j++) {
+        if (mantenimientos8[j][0] === mantenimientos3[i][1]) {
+          let wpp_value = mantenimientos8[j][4];
+          actualizacion_emi.push(wpp_value);
+          break;
+        }
+      }
+
       actualizacion_emi.push(mantenimientos3[i][16]);
       actualizacion_emi.push(mantenimientos3[i][17]);
       actualizacion_emi.push(mantenimientos3[i][18]);
@@ -177,30 +188,11 @@ function getUltimaActu(patente_value) {
   const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
   encontrado2 = false; // Restablecer la variable encontrado
 
-  for (let i = 0; i < mantenimientos.length; i++) {
-    if (patente_value === mantenimientos[i][1]) {
-      actualizacion_cob.push(mantenimientos[i][0]);
-      actualizacion_cob.push(mantenimientos[i][1]);
-      actualizacion_cob.push(mantenimientos[i][2]);
-      actualizacion_cob.push(mantenimientos[i][3]);
-      actualizacion_cob.push(mantenimientos[i][4]);
-      actualizacion_cob.push(mantenimientos[i][5]);
-      actualizacion_cob.push(mantenimientos[i][6]);
-      actualizacion_cob.push(mantenimientos[i][7]);
-      actualizacion_cob.push(mantenimientos[i][8]);
-      actualizacion_cob.push(mantenimientos[i][9]);
-      actualizacion_cob.push(mantenimientos[i][10]);
-      actualizacion_cob.push(mantenimientos[i][11]);
-      actualizacion_cob.push(mantenimientos[i][12]);
-      actualizacion_cob.push(mantenimientos[i][13]);
-      actualizacion_cob.push(mantenimientos[i][14]);
-      actualizacion_cob.push(mantenimientos[i][15]);
-      actualizacion_cob.push(mantenimientos[i][16]);
-      actualizacion_cob.push(mantenimientos[i][17]);
-      encontrado2 = true; // Se encontró una coincidencia
-      break;
+  mantenimientos.forEach(mantenimiento =>{
+    if(mantenimiento[1] === patente_value) {
+      actualizacion_cob.push(mantenimiento);
     }
-  }
+  })
 
   if (!encontrado2) {
     actualizacion_cob.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "BD COBRANZAS"
@@ -696,4 +688,3 @@ function convertHtmlToPdfM(htmlContent) {
 
   return encodedPdfContent;
 }
-
