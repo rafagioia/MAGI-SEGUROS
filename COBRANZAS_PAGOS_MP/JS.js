@@ -1,4 +1,3 @@
-
 //////////////// BOTON DEL MENU ///////////////////////
     // Obtén una referencia al botón
     const navbarToggler = document.getElementById('navbar-toggler');
@@ -235,7 +234,8 @@
     }
     
         /////////// INGRESA POR COBRANZAS NORMAL
-      if (mesCob >= mesEmi && anioCob >= anioEmi || ultima_actu[0] == "" && ultima_actu[1] !== "") {
+    if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "")) {
+      // if (mesCob >= mesEmi && anioCob >= anioEmi || ultima_actu[0] == "" && ultima_actu[1] !== "") {
         alert("PAGO DE CUOTA")
         // buscarRegistros()
     
@@ -301,7 +301,9 @@
               }
     
         /////////// INGRESA POR SEGURO NUEVO O RENOVACION
-      } else if(mesEmi > mesCob && anioEmi >= anioCob  || ultima_actu[0] !== "" && ultima_actu[1] == "") {
+          } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
+      
+    // if ((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
         alert("SEGURO NUEVO / RENOVACION")
         // buscarRegistros_emision()
         if (ultima_actu[0].length > 0) {
@@ -1275,7 +1277,4 @@
     document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
     document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
     document.getElementById('close_session').addEventListener('click', close_sessionok);
-    
-    
-    
     
