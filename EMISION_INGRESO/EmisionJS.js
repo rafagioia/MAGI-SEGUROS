@@ -1,3 +1,4 @@
+
   // Obtén una referencia al botón
   const navbarToggler = document.getElementById('navbar-toggler');
 
@@ -80,7 +81,14 @@
   
     google.script.run.seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasFull, infoMotor, infoChasis, infoUsuario, infoHoy);
     event.target.reset();
-  alert('Póliza ingresada correctamente');
+  
+  
+    const successAlert = document.getElementById('success-alert');
+    successAlert.style.display = 'block';
+  
+    setTimeout(function() {
+      successAlert.style.display = 'none';
+    }, 3000);
     
   infoDNI =  "";
   infoCliente =  "";
@@ -149,8 +157,7 @@
   }
   
   
-    ///// SCRIPT PARA BUSCAR DATOS POR DNI EN BD EMISION//////////
-  
+  ///// SCRIPT PARA BUSCAR DATOS POR DNI EN BD EMISION//////////
   
   function buscarRegistros_dni_emision() {
     const boton = document.getElementById('buscarRegistrosBtn4');
@@ -166,24 +173,23 @@
     const infoMail = document.getElementById("mail");
     const infoNotascte = document.getElementById("notascte");
     const infoSucursal = document.getElementById("sucursal");
-  document.getElementById("dniValor").textContent = "";
-  document.getElementById("nombreCompletoValor").textContent = "";
-  document.getElementById("whatsappValor").textContent = "";
-  document.getElementById("statCte").textContent = "";
-  document.getElementById("sinPendientes").textContent =  "";
-  document.getElementById('valoresContainer').style.display = 'none';
-  document.getElementById('formContainer').style.display = 'none';
-  
+    document.getElementById("dniValor").textContent = "";
+    document.getElementById("nombreCompletoValor").textContent = "";
+    document.getElementById("whatsappValor").textContent = "";
+    document.getElementById("statCte").textContent = "";
+    document.getElementById("sinPendientes").textContent = "";
+    document.getElementById('valoresContainer').style.display = 'none';
+    document.getElementById('formContainer').style.display = 'none';
   
     const mostrarValores = (info) => {
-      if (info.length > 0) {
-        infoDNI.value = info[0][0];
-        infoCliente.value = info[0][1];
-        infoDomicilio.value = info[0][2];
-        infoLocalidad.value = info[0][3];
-        infoWpp.value = info[0][4];
-        infoMail.value = info[0][6];
-        infoNotascte.value = info[0][7];
+      if (info[0].length > 0) {
+        infoDNI.value = info[0][0][0];
+        infoCliente.value = info[0][0][1];
+        infoDomicilio.value = info[0][0][2];
+        infoLocalidad.value = info[0][0][3];
+        infoWpp.value = info[0][0][4];
+        infoMail.value = info[0][0][6];
+        infoNotascte.value = info[0][0][7];
         infoSucursal.value = "MARCOS PAZ";
   
         document.getElementById('valoresContainer').style.display = 'block';
@@ -192,33 +198,69 @@
         document.getElementById('logoValor').innerHTML = "<img src='https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh' style='width: 100%;height: auto;'>";
         document.getElementById("statCte").textContent = infoNotascte.value;
         document.getElementById('whatsappValor').textContent = infoWpp.value;
+  
+        const tableBody2 = document.getElementById("mantenimientosTableBody2");
+        tableBody2.innerHTML = ""; // Limpia la tabla antes de agregar nuevos datos
+  
+        let rowCount = 0;
+        let processed = new Set();
+      if (info[1] && info[1].length > 0) { // Verifica si info[1] está definido y tiene elementos
+        info[1].forEach(mantenimiento2 => {
+          if (rowCount < 10) {
+            if (!processed.has(mantenimiento2[1])) {
+              const template2 = document.getElementById("mantenimientosRow2");
+              const templateRow2 = template2.content;
+              let tr = templateRow2.cloneNode(true);
+              let PolPatente = tr.querySelector(".PolPatente");
+              let PolVehiculo = tr.querySelector(".PolVehiculo");
+              let PolCnia = tr.querySelector(".PolCnia");
+              let PolVtos = tr.querySelector(".PolVtos");
+  
+              PolPatente.textContent = mantenimiento2[0];
+              PolVehiculo.textContent = mantenimiento2[1];
+              PolCnia.textContent = mantenimiento2[2];
+              PolVtos.textContent = mantenimiento2[3];
+  
+              tableBody2.appendChild(tr);
+              rowCount++;
+              processed.add(mantenimiento2[1]); // Agregar valor al conjunto de valores procesados
+            }
+          }
+        });
       } else {
+        // Maneja el caso en que info[1] no tiene elementos
+        alert("No se encontraron valores de mantenimiento.");
+      }
+    } else {
         alert("No se encontraron valores");
         document.getElementById('valoresContainer').style.display = 'block';
         document.getElementById('mail').textContent = "";
         document.getElementById('statCte').textContent = "NUEVO CLIENTE";
         document.getElementById("notascte").textContent = "";
-  document.getElementById("nombreCompletoValor").value =  "";
-  document.getElementById("whatsappValor").value =  "";
-  infoCliente =  "";
-  infoDomicilio.value =  "";
-  infoLocalidad.value =  "";
-  infoWpp.value =  "";
-  infoMail.value =  "";
-  infoSucursal.value =  "";
-  infoNotascte.value =  "";
+        document.getElementById("nombreCompletoValor").value = "";
+        document.getElementById("whatsappValor").value = "";
+        document.getElementById("dniValor").textContent = "";
+        infoCliente.textContent = "";
+        infoDomicilio.value = "";
+        infoLocalidad.value = "";
+        infoWpp.value = "";
+        infoMail.value = "";
+        infoSucursal.value = "";
+        infoNotascte.value = "";
       }
       spinner.style.display = 'none';
       boton.disabled = false;
     };
   
     google.script.run.withSuccessHandler((info) => {
-      if (info.length > 0) {
+      if (info[0].length > 0) {
         mostrarValores(info);
       } else {
+        // Si no encuentra valores en buscarMantenimientos4, llama a buscarMantenimientos11
         google.script.run.withSuccessHandler((info) => {
           if (info.length > 0) {
-            const modifiedInfo = [[info[0][0], info[0][1], info[0][2]]]; // Modificar la estructura de resultado de buscarMantenimientos11
+            console.log("mante11: " + info)
+            const modifiedInfo = [[info[0], info[1], info[2]]]; // Modificar la estructura de resultado de buscarMantenimientos11
             document.getElementById('statCte').textContent = "FALTAN DATOS!";
             document.getElementById('mail').textContent = "";
             document.getElementById("notascte").textContent = "";
@@ -228,16 +270,16 @@
             alert("No se encontraron valores");
             document.getElementById('valoresContainer').style.display = 'block';
             document.getElementById('statCte').textContent = "NUEVO CLIENTE";
-  document.getElementById("nombreCompletoValor").value =  "";
-  document.getElementById("whatsappValor").value =  "";
-          infoDNI.value = numeroInventario2;
-        infoCliente.value =  "";
-  infoDomicilio.value =  "";
-  infoLocalidad.value =  "";
-  infoWpp.value =  "";
-  infoMail.value =  "";
-  infoSucursal.value =  "";
-  infoNotascte.value =  "";
+            document.getElementById("nombreCompletoValor").value = "";
+            document.getElementById("whatsappValor").value = "";
+            infoDNI.value = numeroInventario2;
+            infoCliente.value = "";
+            infoDomicilio.value = "";
+            infoLocalidad.value = "";
+            infoWpp.value = "";
+            infoMail.value = "";
+            infoSucursal.value = "";
+            infoNotascte.value = "";
           }
           spinner.style.display = 'none';
           boton.disabled = false;

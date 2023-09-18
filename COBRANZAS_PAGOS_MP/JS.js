@@ -337,6 +337,36 @@
         alert("ERROR")
       }
     
+    let rowCount = 0;
+    let processed = new Set(); // conjunto para almacenar los valores ya procesados
+    const tableBody2 = document.getElementById("mantenimientosTableBody2");
+    tableBody2.innerHTML = ""; // Mover la línea de aquí
+    
+    ultima_actu[2].forEach(mantenimiento2 => {
+      if (rowCount < 10) {
+        // solo agrega filas si el número actual de filas es menor que 10 y el valor no está en el conjunto
+        if (!processed.has(mantenimiento2[1])) {
+          const template2 = document.getElementById("mantenimientosRow2");
+          const templateRow2 = template2.content;
+          let tr = templateRow2.cloneNode(true);
+          let PolPatente = tr.querySelector(".PolPatente")
+          let PolVehiculo = tr.querySelector(".PolVehiculo")
+          let PolCnia = tr.querySelector(".PolCnia")
+          let PolVtos = tr.querySelector(".PolVtos")
+    
+          PolPatente.textContent = mantenimiento2[0];
+          PolVehiculo.textContent = mantenimiento2[1];
+          PolCnia.textContent = mantenimiento2[2];
+          PolVtos.textContent = mantenimiento2[3];
+    
+          tableBody2.appendChild(tr);
+          rowCount++;
+          processed.add(mantenimiento2[1]); // agregar valor al conjunto de valores procesados
+        }
+      }
+    });
+    
+    
       spinner.style.display = 'none';
       boton.disabled = false;
     
@@ -1229,8 +1259,8 @@
     actualizarMensaje()
     });
     
-    document.getElementById('buscarRegistrosBtn1').addEventListener('click', buscarRegistros);
-    document.getElementById('buscarRegistrosBtn2').addEventListener('click', buscarRegistros_emision);
+    // document.getElementById('buscarRegistrosBtn1').addEventListener('click', buscarRegistros);
+    // document.getElementById('buscarRegistrosBtn2').addEventListener('click', buscarRegistros_emision);
     document.getElementById('buscarRegistrosBtn3').addEventListener('click', buscarRegistros_dni);
     document.getElementById('buscarRegistrosBtn4').addEventListener('click', buscarRegistros_dni_emision);
     document.getElementById('buscarRegistrosBtn5').addEventListener('click', buscarRegistros_nom);

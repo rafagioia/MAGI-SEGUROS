@@ -121,6 +121,7 @@ function buscarMantenimientos3(patente = "1192774") {
 
 //////////////// BUSCAR DNI EN BD EMISION ////////////////
 function buscarMantenimientos4(numeroInventario2 = "1192774") {
+  let mantenimientosRealizados10 = [];
   let mantenimientosRealizados4 = [];
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
   const mantenimientos7 = BD_CLIENTES.getDataRange().getDisplayValues();
@@ -135,9 +136,38 @@ function buscarMantenimientos4(numeroInventario2 = "1192774") {
     }
   });
 
-  //////////// RETORNAMOS MANTENIMIENTOSREALIZADOS ////////////
+let mantenimientosRealizados9 = [];   
+  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const mantenimientos8 = LISTADO.getDataRange().getDisplayValues();
 
-  return mantenimientosRealizados4;
+  //   /////////// USAMOS UN FOREACH PARA RECORRER MANTENIMIENTOS ///////
+  // mantenimientos8.forEach(mantenimiento8 =>{
+
+  //   /////// SI EL VALOR DE LA COLUMNA A EN MANTENIMIENTO ES IGUAL AL NUMERO DE INVENTARIO TRAIDO COMO ARGUMENTO, ENTONCES... ///////////
+  //   if(mantenimiento8[1] === numeroInventario2) {
+  //     /////////// HACEMOS PUSH PARA INCORPORARLO A MANTENIMIENTOSREALIZADOS /////////////
+  //     mantenimientosRealizados9.push(mantenimiento8);
+  //   }
+  // });
+
+
+mantenimientos8.forEach(mantenimiento2 => {
+  if (mantenimiento2[1] === numeroInventario2 && mantenimiento2[10] !== "ANULACION") {
+    let actualizacion_pol2 = []; // Crear un nuevo arreglo para cada vehículo
+
+    actualizacion_pol2.push(mantenimiento2[0]);
+    actualizacion_pol2.push(mantenimiento2[12]);
+    actualizacion_pol2.push(mantenimiento2[6]);
+    actualizacion_pol2.push(mantenimiento2[8]);
+
+    mantenimientosRealizados9.push(actualizacion_pol2);
+  }
+});
+
+mantenimientosRealizados10.push(mantenimientosRealizados4)
+mantenimientosRealizados10.push(mantenimientosRealizados9)
+console.log(mantenimientosRealizados10)
+  return mantenimientosRealizados10;
 }
 
 //////////////////// BUSCAR DNI EN BD MARCOS PAZ ////////////////

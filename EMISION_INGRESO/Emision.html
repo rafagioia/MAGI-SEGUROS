@@ -162,6 +162,7 @@
     <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="100px" alt="logo"> v1.2&nbsp;&nbsp;</div>
   </nav>
 
+
   <br>
 
   <div id="myModal" class="modal">
@@ -212,6 +213,9 @@
   </div>
   
   
+  <div id="success-alert" class="alert alert-success position-fixed fw-bold top-0 end-0 m-3 alert-dismissible fade show" role="alert" style="display: none; background-color: #F7FEEFDD; color: #287233; box-shadow: 0px 0px 7px 0px #2D572C;">
+    ✓ Póliza ingresada correctamente
+  </div>
   
           <form id="formularioEmision" name="formularioEmision" class="needs-validation">
   <div class="row">
@@ -1311,6 +1315,32 @@
   <!----- INICIO DE SECTOR #3  ???? ---->
   <!----- SECTOR: #3 ??? ---->
   <div class="col-4 container">
+  <div style="margin-bottom: 25px;">POLIZAS VIGENTES DEL CLIENTE:<hr>
+  
+  <table id="mantenimientosTable2" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Patente</th>
+        <th>Vehiculo</th>
+        <th>Compañia</th>
+        <th>Vencimiento</th>
+      </tr>
+    </thead>
+    <tbody id="mantenimientosTableBody2">
+  
+    </tbody>
+  </table>
+  
+  <template id="mantenimientosRow2">
+    <tr>
+      <td class="PolPatente"></td>
+      <td  class="PolVehiculo overflow-hidden text-truncate" style="max-width: 120px;"></td>
+      <td class="PolCnia"></td>
+      <td class="PolVtos"></td>
+    </tr>
+  </template>
+   <hr>
+  
   <div id="take_pict_menu">
       <!-- <button type="button" id="bt-fotos" class="btn btn-success btn-sm ml-0 mr-0">TOMAR FOTOS</button> -->
   <div class="row">
@@ -1380,8 +1410,6 @@
   
   <!----- FIN DEL SECTOR #3 POLIZAS VIGENTES ---->
   <br><br><br>
-  
-
 
 <!---- FIN DE LOS TRES SECTORES --->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

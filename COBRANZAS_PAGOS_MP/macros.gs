@@ -136,19 +136,22 @@ function getUltimaActu(patente_value) {
   let actualizaciones = [];
   let actualizacion_cob = [];
   let actualizacion_emi = [];
+  let actualizacion_pol = [];
+  let dni_value = "";
   const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
   const mantenimientos3 = LISTADO.getDataRange().getDisplayValues();
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
   const mantenimientos8 = BD_CLIENTES.getDataRange().getDisplayValues();
 
-  console.log(patente_value)
   let encontrado1 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado2 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado3 = false; // Variable para rastrear si se encontró una coincidencia
 
   for (let i = 0; i < mantenimientos3.length; i++) {
     if (patente_value === mantenimientos3[i][0]) {
-
       actualizacion_emi.push(mantenimientos3[i][0]);
       actualizacion_emi.push(mantenimientos3[i][1]);
+      dni_value = mantenimientos3[i][1];
       actualizacion_emi.push(mantenimientos3[i][2]);
       actualizacion_emi.push(mantenimientos3[i][3]);
       actualizacion_emi.push(mantenimientos3[i][4]);
@@ -184,6 +187,9 @@ function getUltimaActu(patente_value) {
     actualizacion_emi.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "listado"
   }
 
+
+
+
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS")
   const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
   encontrado2 = false; // Restablecer la variable encontrado
@@ -191,6 +197,7 @@ function getUltimaActu(patente_value) {
   mantenimientos.forEach(mantenimiento =>{
     if(mantenimiento[1] === patente_value) {
       actualizacion_cob.push(mantenimiento);
+      encontrado2 = true;
     }
   })
 
@@ -198,8 +205,29 @@ function getUltimaActu(patente_value) {
     actualizacion_cob.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "BD COBRANZAS"
   }
 
+mantenimientos3.forEach(mantenimiento2 => {
+  if (mantenimiento2[1] === dni_value && mantenimiento2[10] !== "ANULACION") {
+    let actualizacion_pol2 = []; // Crear un nuevo arreglo para cada vehículo
+
+    actualizacion_pol2.push(mantenimiento2[0]);
+    actualizacion_pol2.push(mantenimiento2[12]);
+    actualizacion_pol2.push(mantenimiento2[6]);
+
+    for (let i = 0; i < mantenimientos.length; i++) {
+      if (mantenimiento2[0] === mantenimientos[i][1]) {
+        actualizacion_pol2.push(mantenimientos[i][5]);
+        break;
+      }
+    }
+
+    encontrado3 = true; // Se encontró una coincidencia
+    actualizacion_pol.push(actualizacion_pol2);
+  }
+});
+
       actualizaciones.push(actualizacion_emi);
       actualizaciones.push(actualizacion_cob);
+      actualizaciones.push(actualizacion_pol);
   return actualizaciones;
 }
 
