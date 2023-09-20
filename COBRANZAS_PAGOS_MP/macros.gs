@@ -131,7 +131,7 @@ var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte,
   }
 }
 
-/////////////////////////// VER LA ULTIMA ACTUALIZACION PARA DECIDIR DATOS /////////////////////////////////////////
+/////////////////////////// VER LA ULTIMA ACTUALIZACION PARA DECIDIR DATOS PATENTE /////////////////////////////////////////
 function getUltimaActu(patente_value) {
   let actualizaciones = [];
   let actualizacion_cob = [];
@@ -169,6 +169,9 @@ function getUltimaActu(patente_value) {
         if (mantenimientos8[j][0] === mantenimientos3[i][1]) {
           let wpp_value = mantenimientos8[j][4];
           actualizacion_emi.push(wpp_value);
+          break;
+        } else {
+          actualizacion_emi.push("");
           break;
         }
       }
@@ -230,6 +233,116 @@ mantenimientos3.forEach(mantenimiento2 => {
       actualizaciones.push(actualizacion_pol);
   return actualizaciones;
 }
+
+/////////////////////////////// FIN DE VER ULTIMA ACT PARA DATOS PATENTE ////////////////////////////
+
+
+
+/////////////////////////// VER LA ULTIMA ACTUALIZACION PARA DECIDIR DATOS DNI /////////////////////////////////////////
+function getUltimaActuDNI(dni_value1) {
+  let actualizaciones = [];
+  let actualizacion_cob = [];
+  let actualizacion_emi = [];
+  let actualizacion_pol = [];
+  let dni_value = "";
+  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const mantenimientos3 = LISTADO.getDataRange().getDisplayValues();
+  const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
+  const mantenimientos8 = BD_CLIENTES.getDataRange().getDisplayValues();
+
+  let encontrado1 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado2 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado3 = false; // Variable para rastrear si se encontró una coincidencia
+
+  for (let i = 0; i < mantenimientos3.length; i++) {
+    if (dni_value1 === mantenimientos3[i][1]) {
+      actualizacion_emi.push(mantenimientos3[i][0]);
+      actualizacion_emi.push(mantenimientos3[i][1]);
+      // dni_value = mantenimientos3[i][1];
+      actualizacion_emi.push(mantenimientos3[i][2]);
+      actualizacion_emi.push(mantenimientos3[i][3]);
+      actualizacion_emi.push(mantenimientos3[i][4]);
+      actualizacion_emi.push(mantenimientos3[i][5]);
+      actualizacion_emi.push(mantenimientos3[i][6]);
+      actualizacion_emi.push(mantenimientos3[i][7]);
+      actualizacion_emi.push(mantenimientos3[i][8]);
+      actualizacion_emi.push(mantenimientos3[i][9]);
+      actualizacion_emi.push(mantenimientos3[i][10]);
+      actualizacion_emi.push(mantenimientos3[i][11]);
+      actualizacion_emi.push(mantenimientos3[i][12]);
+      actualizacion_emi.push(mantenimientos3[i][13]);
+      actualizacion_emi.push(mantenimientos3[i][14]);
+        for (let j = 0; j < mantenimientos8.length; j++) {
+        if (mantenimientos8[j][0] === dni_value1) {
+          let wpp_value = mantenimientos8[j][4];
+          actualizacion_emi.push(wpp_value);
+          break;
+        }
+      }
+
+      actualizacion_emi.push(mantenimientos3[i][16]);
+      actualizacion_emi.push(mantenimientos3[i][17]);
+      actualizacion_emi.push(mantenimientos3[i][18]);
+      actualizacion_emi.push(mantenimientos3[i][19]);
+      actualizacion_emi.push(mantenimientos3[i][20]);
+      encontrado1 = true; // Se encontró una coincidencia
+      break;
+    }
+  }
+
+  if (!encontrado1) {
+    actualizacion_emi.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "listado"
+  }
+
+
+
+
+  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS")
+  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
+  encontrado2 = false; // Restablecer la variable encontrado
+
+  mantenimientos.forEach(mantenimiento =>{
+    if(mantenimiento[2] === dni_value1) {
+      actualizacion_cob.push(mantenimiento);
+      encontrado2 = true;
+    }
+  })
+
+  if (!encontrado2) {
+    actualizacion_cob.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "BD COBRANZAS"
+  }
+
+mantenimientos3.forEach(mantenimiento2 => {
+  if (mantenimiento2[1] === dni_value1 && mantenimiento2[10] !== "ANULACION") {
+    let actualizacion_pol2 = []; // Crear un nuevo arreglo para cada vehículo
+
+    actualizacion_pol2.push(mantenimiento2[0]);
+    actualizacion_pol2.push(mantenimiento2[12]);
+    actualizacion_pol2.push(mantenimiento2[6]);
+
+    for (let i = 0; i < mantenimientos.length; i++) {
+      if (mantenimiento2[0] === mantenimientos[i][1]) {
+        actualizacion_pol2.push(mantenimientos[i][5]);
+        break;
+      }
+    }
+
+    encontrado3 = true; // Se encontró una coincidencia
+    actualizacion_pol.push(actualizacion_pol2);
+  }
+});
+
+      actualizaciones.push(actualizacion_emi);
+      actualizaciones.push(actualizacion_cob);
+      actualizaciones.push(actualizacion_pol);
+  return actualizaciones;
+}
+
+/////////////////////////////// FIN DE VER ULTIMA ACT PARA DATOS DNI ////////////////////////////
+
+
+
+
 
 ////////////// INGESAMOS NO MOVE A LA BD CHEQUES //////////////////
 
