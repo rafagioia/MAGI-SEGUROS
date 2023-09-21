@@ -165,17 +165,19 @@ function getUltimaActu(patente_value) {
       actualizacion_emi.push(mantenimientos3[i][12]);
       actualizacion_emi.push(mantenimientos3[i][13]);
       actualizacion_emi.push(mantenimientos3[i][14]);
-        for (let j = 0; j < mantenimientos8.length; j++) {
-        if (mantenimientos8[j][0] === mantenimientos3[i][1]) {
-          let wpp_value = mantenimientos8[j][4];
-          actualizacion_emi.push(wpp_value);
-          break;
-        } else {
-          actualizacion_emi.push("");
-          break;
-        }
-      }
+      let dni_encontrado = false; 
 
+for (let j = 0; j < mantenimientos8.length; j++) {
+  if (mantenimientos8[j][0] === mantenimientos3[i][1]) {
+    actualizacion_emi.push(mantenimientos8[j][4]);
+    dni_encontrado = true; // Se encontró una coincidencia
+    break;
+  }
+}
+
+if (!dni_encontrado) {
+  actualizacion_emi.push("");
+}
       actualizacion_emi.push(mantenimientos3[i][16]);
       actualizacion_emi.push(mantenimientos3[i][17]);
       actualizacion_emi.push(mantenimientos3[i][18]);
@@ -272,13 +274,19 @@ function getUltimaActuDNI(dni_value1) {
       actualizacion_emi.push(mantenimientos3[i][12]);
       actualizacion_emi.push(mantenimientos3[i][13]);
       actualizacion_emi.push(mantenimientos3[i][14]);
-        for (let j = 0; j < mantenimientos8.length; j++) {
-        if (mantenimientos8[j][0] === dni_value1) {
-          let wpp_value = mantenimientos8[j][4];
-          actualizacion_emi.push(wpp_value);
-          break;
-        }
-      }
+            let dni_encontrado = false; 
+
+for (let j = 0; j < mantenimientos8.length; j++) {
+  if (mantenimientos8[j][0] === dni_value1) {
+    actualizacion_emi.push(mantenimientos8[j][4]);
+    dni_encontrado = true; // Se encontró una coincidencia
+    break;
+  }
+}
+
+if (!dni_encontrado) {
+  actualizacion_emi.push("");
+}
 
       actualizacion_emi.push(mantenimientos3[i][16]);
       actualizacion_emi.push(mantenimientos3[i][17]);

@@ -208,6 +208,16 @@
             let infoVence =  document.getElementById("vto");
             let infoColor =  document.getElementById("color");
             let infoNotas =  document.getElementById("notas");
+            
+      if (!patente_value || patente_value.trim() === "") {
+        alert("Ingrese una patente válida");
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+      }
+    
+      spinner.style.display = 'inline-block';
+      boton.disabled = true;
     
       google.script.run.withSuccessHandler(function(ultima_actu) {
     
@@ -233,9 +243,18 @@
         anioCob = fechaCobArray[2];
       }
     }
+    console.log("FECHA EMI: " + fechaString + "FECHA COB: " + fechaString2)
     
-        ////INGRESA POR COBRANZAS NORMAL
-    if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "")) {
+    ///// ERROR, NO HAY NINGUN DATO
+    
+    if (ultima_actu[0] == "" && ultima_actu[1] == "") {
+        alert("NO HAY DATOS ENCONTRADOS.") 
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    
+    }  ////INGRESA POR COBRANZAS NORMAL
+    else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "")) {
         alert("PAGO DE CUOTA")
     
               let tableBody = document.getElementById("mantenimientosTableBody");
@@ -264,6 +283,7 @@
               infoImporte.value = "";
             } else {}
             let fechaString = ultima_actu[1][0][5];
+            if (fechaString) {
             let partesFecha = fechaString.split('/');
             let dia = partesFecha[0];
             let mes = partesFecha[1];
@@ -271,6 +291,14 @@
             let fecha = new Date(anio, mes - 1, dia);
             fecha.setMonth(fecha.getMonth() + 1)
             infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+    } else {
+        alert("Fecha en BD COBRANZAS inválida: " + ultima_actu[1][0][5]);
+        console.log("FECHA BD COB: " + ultima_actu[1][0][5])
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    }
+    
             infoColor.value = ultima_actu[1][0][15];
     
     let rowCount = 0;
@@ -299,9 +327,9 @@
                 alert("No se encontraron valores")
               }
     
-        ///// INGRESA POR SEGURO NUEVO O RENOVACION
+    ///// INGRESA POR SEGURO NUEVO O RENOVACION
           } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
-      
+      console.log(ultima_actu[0])
         alert("SEGURO NUEVO / RENOVACION")
         if (ultima_actu[0].length > 0) {
                 
@@ -319,13 +347,23 @@
     let importeNumero = parseInt(importeSinSignos);
     infoImporte.value = importeNumero
             infoCuota.value = 1;
-            let fechaString = ultima_actu[0][8];  ///
+    
+            let fechaString = ultima_actu[0][8];
+            if (fechaString) {
             let partesFecha = fechaString.split('/');
             let dia = partesFecha[0];
             let mes = partesFecha[1];
             let anio = partesFecha[2].slice(-2);
             let fecha = new Date(anio, mes - 1, dia);
             infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+    } else {
+        alert("Fecha en BD EMISION inválida: " + ultima_actu[1][0][5]);
+        console.log("FECHA BD EMISION: " + ultima_actu[1][0][5])
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    }
+    
             infoColor.value = "";
             infoNotas.value = "";
     
@@ -508,7 +546,7 @@
     
       google.script.run.withSuccessHandler(function(ultima_actu) {
     
-    let fechaString = ultima_actu[0][19];
+    let fechaString = ultima_actu[0][20];
     let fechaEmi, mesEmi, anioEmi;
     
     if (fechaString) {
@@ -531,8 +569,20 @@
       }
     }
     
-        ////INGRESA POR COBRANZAS NORMAL
-    if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "")) {
+    console.log("FECHA EMI: " + fechaString + "FECHA COB: " + fechaString2)
+    console.log("FECHA EMI 19: " + fechaString + "FECHA EMI 20: " + fechaString2)
+    console.log("FECHA EMI: " + ultima_actu[0] + "FECHA COB: " + ultima_actu[1])
+    
+    ///// ERROR, NO HAY NINGUN DATO
+    
+    if (ultima_actu[0] == "" && ultima_actu[1] == "") {
+        alert("NO HAY DATOS ENCONTRADOS.") 
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    
+    }  ////INGRESA POR COBRANZAS NORMAL
+    else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "")) {
         alert("PAGO DE CUOTA")
     
               let tableBody = document.getElementById("mantenimientosTableBody");
@@ -1486,4 +1536,6 @@
     document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
     document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
     document.getElementById('close_session').addEventListener('click', close_sessionok);
+    
+    
     
