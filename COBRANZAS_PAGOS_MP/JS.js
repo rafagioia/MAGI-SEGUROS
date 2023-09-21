@@ -243,8 +243,6 @@
         anioCob = fechaCobArray[2];
       }
     }
-    console.log("FECHA EMI: " + fechaString + "FECHA COB: " + fechaString2)
-    
     ///// ERROR, NO HAY NINGUN DATO
     
     if (ultima_actu[0] == "" && ultima_actu[1] == "") {
@@ -329,7 +327,7 @@
     
     ///// INGRESA POR SEGURO NUEVO O RENOVACION
           } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
-      console.log(ultima_actu[0])
+    
         alert("SEGURO NUEVO / RENOVACION")
         if (ultima_actu[0].length > 0) {
                 
@@ -419,108 +417,6 @@
       }).getUltimaActu(patente_value);
     
       }
-    
-    //////////////////////////////// FIN DE BUSCAR PATENTE (COB + EMI) //////////////////////////////////////
-    // <!-- 
-    
-    
-    //  ///// SCRIPT PARA BUSCAR DATOS POR PATENTE //////////
-    //   function buscarRegistros() {
-    //   const boton = document.getElementById('buscarRegistrosBtn1');
-    //   const spinner = document.getElementById('spinner1');
-    //   spinner.style.display = 'inline-block';
-    //   boton.disabled = true;
-    //         const numeroInventario = document.getElementById("text-box-buscarPatente").value;
-    //         let infoDNI =  document.getElementById("dni");
-    //         let infoCliente =  document.getElementById("nombreCompleto");
-    //         let infoWpp =  document.getElementById("wpp");
-    //         let infoPatente =  document.getElementById("patente");
-    //         let infoMarca =  document.getElementById("marca");
-    //         let infoPoliza =  document.getElementById("poliza");
-    //         let infoCnia =  document.getElementById("cnia");
-    //         let infoCuota =  document.getElementById("cuota");
-    //         let infoVigencia =  document.getElementById("vigencia");
-    //         let infoImporte =  document.getElementById("importe");
-    //         let infoVence =  document.getElementById("vto");
-    //         let infoColor =  document.getElementById("color");
-    //         let infoNotas =  document.getElementById("notas");
-    
-    //         google.script.run
-    //         .withSuccessHandler( info => {
-    //           let tableBody = document.getElementById("mantenimientosTableBody");
-    //           tableBody.innerHTML = "";
-    //           if (info.length > 0) {
-                
-    //         infoDNI.value = info[0][2];
-    //         infoCliente.value = info[0][3];
-    //         infoWpp.value = info[0][4];
-    //         infoPatente.value = info[0][1];
-    //         infoMarca.value = info[0][13];
-    //         infoPoliza.value = info[0][9];
-    //         infoCnia.value = info[0][10];
-    //         infoImporte.value = info[0][11];
-    
-    // let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
-    // let importeNumero = parseInt(importeSinSignos);
-    
-    // infoImporte.value = importeNumero
-    
-    
-    //         infoCuota.value = parseInt(info[0][7])+1;
-    //         infoVigencia.value = parseInt(info[0][8]);
-    //         if(infoCuota.value > infoVigencia.value) {
-    //           infoCuota.value = 1;
-    //           infoImporte.value = "";
-    //         } else {}
-    //         let fechaString = info[0][5];
-    //         let partesFecha = fechaString.split('/');
-    //         let dia = partesFecha[0];
-    //         let mes = partesFecha[1];
-    //         let anio = partesFecha[2].slice(-2);
-    //         let fecha = new Date(anio, mes - 1, dia);
-    //         fecha.setMonth(fecha.getMonth() + 1)
-    //         infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-    //         infoColor.value = info[0][15];
-    // const valorRecuperado = info[0][18];
-    // const inicio = valorRecuperado.indexOf("(") + 1;
-    // const fin = valorRecuperado.indexOf(")");
-    // const contenido = valorRecuperado.substring(inicio, fin);
-    // infoNotas.value = contenido;
-    
-    // let rowCount = 0;
-    // info.forEach(mantenimiento => {
-    //   if (rowCount < 6) { // solo agrega filas si el número actual de filas es menor que 6
-    
-    //     const template = document.getElementById("mantenimientosRow");
-    //     const templateRow = template.content;
-    //     let tr = templateRow.cloneNode(true);
-    //     let colFecha = tr.querySelector(".PagoCuota")
-    //     let colDescripcion = tr.querySelector(".PagoFecha")
-    //     let colAtendio = tr.querySelector(".PagoVto")
-    //     let colAtendios = tr.querySelector(".PagoImporte")
-        
-    //     colFecha.textContent = mantenimiento[7];
-    //     colDescripcion.textContent = mantenimiento[5];
-    //     colAtendio.textContent = mantenimiento[6];
-    //     colAtendios.textContent = "$" + mantenimiento[11].replace("$", "").replace(".", "");
-        
-    //     tableBody.appendChild(tr);
-    //     rowCount++;
-    //   }
-    // });
-    
-    //           } else {
-    //             alert("No se encontraron valores")
-    //           }
-    //     spinner.style.display = 'none';
-    //     boton.disabled = false;
-    
-    // actualizarMensaje()
-    //         })
-    //         .buscarMantenimientos(numeroInventario)
-    //       }
-    //             ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR PATENTE //////// -->
-    
     
     
     //////////////////////////////// BUSCAR DNI (COB + EMI) //////////////////////////////////////
@@ -721,16 +617,6 @@
       }
     
     //////////////////////////////// FIN DE BUSCAR DNI (COB + EMI) //////////////////////////////////////
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -997,68 +883,6 @@
                 ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR NOMBRE EN BD EMISION //////////
     
     
-      ///// SCRIPT PARA BUSCAR DATOS POR PATENTE EMISION //////////
-    //       function buscarRegistros_emision() {
-    //   const boton = document.getElementById('buscarRegistrosBtn2');
-    //   const spinner = document.getElementById('spinner2');
-    //   spinner.style.display = 'inline-block';
-    //   boton.disabled = true;
-    //         const numeroInventario = document.getElementById("text-box-buscarPatente").value;
-    //         let infoDNI =  document.getElementById("dni");
-    //         let infoCliente =  document.getElementById("nombreCompleto");
-    //         let infoWpp =  document.getElementById("wpp");
-    //         let infoPatente =  document.getElementById("patente");
-    //         let infoMarca =  document.getElementById("marca");
-    //         let infoPoliza =  document.getElementById("poliza");
-    //         let infoCnia =  document.getElementById("cnia");
-    //         let infoCuota =  document.getElementById("cuota");
-    //         let infoVigencia =  document.getElementById("vigencia");
-    //         let infoImporte =  document.getElementById("importe");
-    //         let infoVence =  document.getElementById("vto");
-    //         let infoColor =  document.getElementById("color");
-    //         let infoNotas =  document.getElementById("notas");
-    
-    //         google.script.run
-    //         .withSuccessHandler( info => {
-    //           // let tableBody3 = document.getElementById("mantenimientosTableBody3");
-    //           // tableBody3.innerHTML = "";
-    //           if (info.length > 0) {
-                
-    //         infoDNI.value = info[0][1]; //
-    //         infoCliente.value = info[0][2]; ///
-    //         infoWpp.value = info[0][4];
-    //         infoPatente.value = info[0][0];  ///
-    //         infoMarca.value = info[0][12]; //
-    //         infoPoliza.value = info[0][7]; //
-    //         infoCnia.value = info[0][6]; //
-    //         infoImporte.value = info[0][5]; //
-    
-    // let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
-    // let importeNumero = parseInt(importeSinSignos);
-    // infoImporte.value = importeNumero
-    //         infoCuota.value = 1;
-    //         infoVigencia.value = ""
-    //         let fechaString = info[0][8];  ///
-    //         let partesFecha = fechaString.split('/');
-    //         let dia = partesFecha[0];
-    //         let mes = partesFecha[1];
-    //         let anio = partesFecha[2].slice(-2);
-    //         let fecha = new Date(anio, mes - 1, dia);
-    //         infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-    //         infoColor.value = "";
-    //         infoNotas.value = "";
-    
-    //           } else {
-    //             alert("No se encontraron valores")
-    //           }
-    //     spinner.style.display = 'none';
-    //     boton.disabled = false;
-    
-    // actualizarMensaje()
-    //         })
-    //         .buscarMantenimientos3(numeroInventario)
-    //       }
-                ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR DNI //////////
     
     
       ///// SCRIPT PARA BUSCAR DATOS POR DNI BD EMISION//////////
@@ -1157,6 +981,15 @@
       window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendá%20nuestro%20número%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
     }
     
+    /////////////// ACTUALIZAR NUMERO WHATSAPP /////////////
+    function updateWhatsapp() {
+      event.preventDefault();
+      var whatsapp = document.getElementById("wpp").value;
+      var dni = document.getElementById("dni").value;
+      google.script.run.updWhatsapp(whatsapp, dni);
+    alert('N° Whatsapp actualizado correctamente!');
+    }
+    
     
     //////////////////// REIMPRIMIR RECIBO SIMPLE //////////////////
     function reimprimirRecibo(event) {
@@ -1166,7 +999,6 @@
         var newWindow = window.open();
         newWindow.document.write(content);
       }).getValuesFromSheet(numRecibo);
-      console.log(numRecibo);
     }
     
     
@@ -1535,7 +1367,7 @@
     document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
     document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
     document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
+    document.getElementById('bt-upd-wpp').addEventListener('click', updateWhatsapp);
     document.getElementById('close_session').addEventListener('click', close_sessionok);
-    
     
     

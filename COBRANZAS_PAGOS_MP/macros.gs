@@ -417,6 +417,23 @@ sheetRegistro2.insertRowBefore(3).getRange(3, 1, 1, sourceVals.length).setValues
 }
 
 
+function updWhatsapp(whatsapp, dni) {
+  const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit");
+  var sheetRegistro2 = BD_CLIENTES.getSheetByName("BD CLIENTES");
+  
+  const data = sheetRegistro2.getDataRange().getDisplayValues();
+  
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][0] === dni) {
+      // Actualizar el número de WhatsApp en la columna E (índice 4)
+      data[i][4] = whatsapp;
+      sheetRegistro2.getRange(i + 1, 5).setValue(whatsapp); // Actualizar la celda en la hoja de cálculo (Equivale a la columna E)
+      console.log("Número de WhatsApp actualizado a: " + whatsapp);
+    } else {
+      console.log("Error al actualizar los datos.")
+    }
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////
 

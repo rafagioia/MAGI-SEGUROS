@@ -163,757 +163,761 @@
   </nav>
 
 
-<br>
 
-<div id="myModal" class="modal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
-          </div>
-          <div class="form-group">
-            <label for="contraseña" class=" mt-3">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
-          </div>
-          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
-        </form>
+  <br>
+
+  <div id="myModal" class="modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Usuario:</label>
+              <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+            </div>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Contraseña:</label>
+              <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+            </div>
+            <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-<div id="modal2" style="display: none;">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
-  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
-          </div>
-          <div class="form-group">
-            <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
-  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
-          </div>
-  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
-        </form>
+  
+  
+  <div id="modal2" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+    <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
+            </div>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+    <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
+            </div>
+    <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-<div class="row">
-<!----------------------- INGRESO DE DATOS ----------------->
-
-           <div class="col-4 container"  style="margin-bottom: 25px;">
-    INGRESAR PAGO - BUSCAR:
-    <hr>
-    <div class="row mb-1">
-        <div class="col-3 justify-content-center">
-            <label for="buscar" class="form-label m-0">PATENTE:</label>
-        </div>
-        <div class="col-3 text-center m-0 p-0">
-            <input type="text" class="form-control form-control-sm m-0" oninput="this.value=this.value.toUpperCase()" id="text-box-buscarPatente" name="buscar" placeholder="Buscar por patente">
-        </div>
-        <div class="col-4 text-center m-0 p-0">
-            <button id="buscarRegistrosBtn7" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;BUSCAR&nbsp;&nbsp;
-                <span id="spinner7" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button>
-        </div>
-        <!-- <div class="col-1 text-center m-0 p-0">
-            <button id="buscarRegistrosBtn1" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;C&nbsp;&nbsp;
-                <span id="spinner1" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button>
-        </div>
-        <div class="col-1 text-center m-0 p-0">
-            <button id="buscarRegistrosBtn2" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;E&nbsp;&nbsp;
-                <span id="spinner2" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button>
-        </div> -->
-    </div>
-    <div class="row mb-1">
-        <div class="col-3 justify-content-center">
-            <label for="buscar_dni" class="form-label mr-0">DNI:</label>
-        </div>
-        <div class="col-3  text-center m-0 p-0">
-            <input type="number" class="form-control form-control-sm ml-0 mr-0" id="text-box-numeroInventario_dni" name="buscar_dni" placeholder="Buscar por DNI">
-        </div>
-         <div class="col-4 text-center m-0 p-0">
-            <button id="buscarRegistrosBtn8" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;BUSCAR&nbsp;&nbsp;
-                <span id="spinner8" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button>
-        </div>
-                <div class="col-2  text-center m-0 p-0">
-            <button id="buscarRegistrosBtn3" class="btn btn-primary btn-sm mr-0">&nbsp;&nbsp;COB&nbsp;&nbsp;
-                <span id="spinner3" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button> 
-        </div>
-        <!--<div class="col-2  text-center m-0 p-0">
-             <button id="buscarRegistrosBtn4" class="btn btn-success btn-sm ml-0 mr-0">&nbsp;&nbsp;EMI&nbsp;&nbsp;
-                <span id="spinner4" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button> 
-        </div>-->
-
-    </div>
-    <div class="row mb-1">
-        <div class="col-3 justify-content-center">
-            <label for="buscar" style='width:80px;' class="form-label mr-0">NOMBRE:</label>
-        </div>
-        <div class="col-3  text-center m-0 p-0">
-            <input type="text" class="form-control form-control-sm ml-1 mr-1"  oninput="this.value=this.value.toUpperCase()" id="text-box-buscarNombre" name="buscar" placeholder="Buscar por nombre">
-        </div>
-        <div class="col-3 text-center m-0 p-0">
-            <button id="buscarRegistrosBtn5" class="btn btn-primary btn-sm mr-0">&nbsp;&nbsp;BD COB&nbsp;&nbsp;
-                <span id="spinner5" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button>
-        </div>
-        <div class="col-3 text-center m-0 p-0">
-            <button id="buscarRegistrosBtn6" class="btn btn-primary btn-sm">&nbsp;&nbsp;BD EMI&nbsp;&nbsp;
-                <span id="spinner6" class="spinner-border spinner-border-sm" style="display:none"></span>
-            </button>
-        </div>
-    </div>
-
-<!----------------------- FIN INGRESO DE DATOS ----------------->
-<hr>
-
-   
-        <form id="formularioRegistro" name="formularioRegistro" class="needs-validation">
-        
-<div style="display: none">
-            <input type="text" id="userName_hide"  name="userName_hide">
-  </div>
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="dni" class="form-label mt-1">DNI:</label>
-            </div>
+  
+  
+  <div class="row">
+  <!----------------------- INGRESO DE DATOS ----------------->
+  
+             <div class="col-4 container"  style="margin-bottom: 25px;">
+      INGRESAR PAGO - BUSCAR:
+      <hr>
+      <div class="row mb-1">
+          <div class="col-3 justify-content-center">
+              <label for="buscar" class="form-label m-0">PATENTE:</label>
           </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="number" class="form-control form-control-sm" id="dni" name="dni" placeholder="Ingrese el DNI" required>
-            </div>
-            </div>
+          <div class="col-3 text-center m-0 p-0">
+              <input type="text" class="form-control form-control-sm m-0" oninput="this.value=this.value.toUpperCase()" id="text-box-buscarPatente" name="buscar" placeholder="Buscar por patente">
           </div>
+          <div class="col-4 text-center m-0 p-0">
+              <button id="buscarRegistrosBtn7" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;BUSCAR&nbsp;&nbsp;
+                  <span id="spinner7" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button>
+          </div>
+          <!-- <div class="col-1 text-center m-0 p-0">
+              <button id="buscarRegistrosBtn1" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;C&nbsp;&nbsp;
+                  <span id="spinner1" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button>
+          </div>
+          <div class="col-1 text-center m-0 p-0">
+              <button id="buscarRegistrosBtn2" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;E&nbsp;&nbsp;
+                  <span id="spinner2" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button>
+          </div> -->
+      </div>
+      <div class="row mb-1">
+          <div class="col-3 justify-content-center">
+              <label for="buscar_dni" class="form-label mr-0">DNI:</label>
+          </div>
+          <div class="col-3  text-center m-0 p-0">
+              <input type="number" class="form-control form-control-sm ml-0 mr-0" id="text-box-numeroInventario_dni" name="buscar_dni" placeholder="Buscar por DNI">
+          </div>
+           <div class="col-4 text-center m-0 p-0">
+              <button id="buscarRegistrosBtn8" class="btn btn-success btn-sm m-0">&nbsp;&nbsp;BUSCAR&nbsp;&nbsp;
+                  <span id="spinner8" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button>
+          </div>
+                  <div class="col-2  text-center m-0 p-0">
+              <button id="buscarRegistrosBtn3" class="btn btn-primary btn-sm mr-0">&nbsp;&nbsp;COB&nbsp;&nbsp;
+                  <span id="spinner3" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button> 
+          </div>
+          <!--<div class="col-2  text-center m-0 p-0">
+               <button id="buscarRegistrosBtn4" class="btn btn-success btn-sm ml-0 mr-0">&nbsp;&nbsp;EMI&nbsp;&nbsp;
+                  <span id="spinner4" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button> 
+          </div>-->
+  
+      </div>
+      <div class="row mb-1">
+          <div class="col-3 justify-content-center">
+              <label for="buscar" style='width:80px;' class="form-label mr-0">NOMBRE:</label>
+          </div>
+          <div class="col-3  text-center m-0 p-0">
+              <input type="text" class="form-control form-control-sm ml-1 mr-1"  oninput="this.value=this.value.toUpperCase()" id="text-box-buscarNombre" name="buscar" placeholder="Buscar por nombre">
+          </div>
+          <div class="col-3 text-center m-0 p-0">
+              <button id="buscarRegistrosBtn5" class="btn btn-primary btn-sm mr-0">&nbsp;&nbsp;BD COB&nbsp;&nbsp;
+                  <span id="spinner5" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button>
+          </div>
+          <div class="col-3 text-center m-0 p-0">
+              <button id="buscarRegistrosBtn6" class="btn btn-primary btn-sm">&nbsp;&nbsp;BD EMI&nbsp;&nbsp;
+                  <span id="spinner6" class="spinner-border spinner-border-sm" style="display:none"></span>
+              </button>
+          </div>
+      </div>
+  
+  <!----------------------- FIN INGRESO DE DATOS ----------------->
+  <hr>
+  
+     
+          <form id="formularioRegistro" name="formularioRegistro" class="needs-validation">
           
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="nombreCompleto" class="form-label mt-1">Cliente:</label>
+  <div style="display: none">
+              <input type="text" id="userName_hide"  name="userName_hide">
+    </div>
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="dni" class="form-label mt-1">DNI:</label>
+              </div>
             </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="nombreCompleto" name="nombreCompleto" placeholder="Nombre completo" required>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="number" class="form-control form-control-sm" id="dni" name="dni" placeholder="Ingrese el DNI" required>
+              </div>
+              </div>
             </div>
+            
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="nombreCompleto" class="form-label mt-1">Cliente:</label>
+              </div>
             </div>
-          </div>
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="wpp" class="form-label mt-1">Whatsapp</label>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="nombreCompleto" name="nombreCompleto" placeholder="Nombre completo" required>
+              </div>
+              </div>
             </div>
-          </div>
-          <div class="col-7">
-            <div class="mb-1">
-          <input type="number" class="form-control form-control-sm" id="wpp" name="wpp" placeholder="Whatsapp: XX XXXX XXXX" minlength="10" maxlength="10" required>
-          
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="wpp" class="form-label mt-1">Whatsapp</label>
+              </div>
             </div>
+            <div class="col-6">
+              <div class="mb-1">
+            <input type="number" class="form-control form-control-sm" id="wpp" name="wpp" placeholder="Whatsapp: XX XXXX XXXX" minlength="10" maxlength="10" required>
+            
+              </div>
+              </div>
+  <div class="col-3 row">
+      <div class="col-6">
+          <button id="bt-upd-wpp" class="btn btn-primary btn fs-4 p-0" style="border-radius: 50%; width: 32px; height: 32px; text-align: center; line-height: 2px;">+</button>
+      </div>
+      <div class="col-6">
+          <button style='width: 32px; height: 32px; padding: 0px; background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border: none; border-radius: 50%; padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button>
+      </div>
+  </div>
             </div>
-          <div class="col-2">
-            <div class="mb-1">
-              <button style='width: 32px;height:32px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button>
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="patente" class="form-label mt-1">Patente:</label>
+              </div>
             </div>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="patente" name="patente" placeholder="Ingrese patente" required>
+              </div>
+              </div>
             </div>
-          </div>
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="patente" class="form-label mt-1">Patente:</label>
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="marca" class="form-label mt-1">MarcaVeh:</label>
+              </div>
             </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="patente" name="patente" placeholder="Ingrese patente" required>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="marca" name="marca" placeholder="Marca y Modelo + Año" required>
+              </div>
+              </div>
             </div>
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="poliza" class="form-label mt-1">Poliza:</label>
+              </div>
             </div>
-          </div>
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="marca" class="form-label mt-1">MarcaVeh:</label>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="number" class="form-control form-control-sm" id="poliza" name="poliza" placeholder="N° de Poliza">
+              </div>
+              </div>
             </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="marca" name="marca" placeholder="Marca y Modelo + Año" required>
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+                  <label for="cnia" class="form-label mt-1">Compañia:</label>
+              </div>
             </div>
+            <div class="col-9">
+              <div class="mb-1">
+                  <select class="form-select form-select-sm" id="cnia" name="cnia" placeholder="" required>
+                    <option value="AGROSALTA">AGROSALTA</option>
+                    <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
+                    <option value="RIVADAVIA">RIVADAVIA</option>
+                    <option value="FED PAT">FED PAT</option>
+                    <option value="PROVIDENCIA">PROVIDENCIA</option>
+                    <option value="RIO URUGUAY">RIO URUGUAY</option>
+                    <option value="ATM">ATM</option>
+                    <option value="LA CAJA">LA CAJA</option>
+                    <option value="NIVEL">NIVEL</option>
+                    <option value="MAPFRE">MAPFRE</option>
+                    <option value="BENEFICIO">BENEFICIO</option>
+                    <option value="MERCANTIL">MERCANTIL</option>
+                    <option value="LIBRA">LIBRA</option>
+                    <option value="GRUA">GRUA</option>
+                    <option value="AGRO (V)">AGRO (V)</option>
+                    <option value="ALLIANZ">ALLIANZ</option>
+                    <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
+                    <option value="AGRO MOTO">AGRO MOTO</option>
+                  </select>
+              </div>
+              </div>
             </div>
-          </div>
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="poliza" class="form-label mt-1">Poliza:</label>
+  
+  
+                  <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+                <label for="cuota" class="form-label mt-1">Cuota:</label>
+              </div>
             </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="number" class="form-control form-control-sm" id="poliza" name="poliza" placeholder="N° de Poliza">
+  
+            <div class="col-4">
+              <div class="mb-1">
+                <input type="number" class="form-control form-control-sm" id="cuota" name="cuota" placeholder="Cuota" max="12" required>
+              </div>
+              </div>
+             <div class="col-1">
+              <div class="mb-1">
+                <label for="vigencia" class="form-label mt-1">De:</label>
+              </div>
             </div>
+  
+            <div class="col-4">
+              <div class="mb-1">
+                <input type="number" class="form-control form-control-sm" id="vigencia" name="vigencia" max="12" required>
+              </div>
+              </div>
             </div>
-          </div>
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-                <label for="cnia" class="form-label mt-1">Compañia:</label>
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="importe" class="form-label mt-1">Importe:</label>
+              </div>
             </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-                <select class="form-select form-select-sm" id="cnia" name="cnia" placeholder="" required>
-                  <option value="AGROSALTA">AGROSALTA</option>
-                  <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
-                  <option value="RIVADAVIA">RIVADAVIA</option>
-                  <option value="FED PAT">FED PAT</option>
-                  <option value="PROVIDENCIA">PROVIDENCIA</option>
-                  <option value="RIO URUGUAY">RIO URUGUAY</option>
-                  <option value="ATM">ATM</option>
-                  <option value="LA CAJA">LA CAJA</option>
-                  <option value="NIVEL">NIVEL</option>
-                  <option value="MAPFRE">MAPFRE</option>
-                  <option value="BENEFICIO">BENEFICIO</option>
-                  <option value="MERCANTIL">MERCANTIL</option>
-                  <option value="LIBRA">LIBRA</option>
-                  <option value="GRUA">GRUA</option>
-                  <option value="AGRO (V)">AGRO (V)</option>
-                  <option value="ALLIANZ">ALLIANZ</option>
-                  <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
-                  <option value="AGRO MOTO">AGRO MOTO</option>
-                </select>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="importe" name="importe" placeholder="Importe" minlength="3" required>
+              </div>
+              </div>
             </div>
+  
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="vto" class="form-label mt-1">Vence:</label>
+              </div>
             </div>
-          </div>
-
-
-                <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-              <label for="cuota" class="form-label mt-1">Cuota:</label>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm" id="vto" name="vto" placeholder="dd/mm/aa" required>
+              </div>
+                <div id="mensaje" style="color: black;"></div>
+              </div>
             </div>
-          </div>
-
-          <div class="col-4">
-            <div class="mb-1">
-              <input type="number" class="form-control form-control-sm" id="cuota" name="cuota" placeholder="Cuota" max="12" required>
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="color" class="form-label mt-1">Color:</label>
+              </div>
             </div>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="color" name="color" placeholder="Color del vehiculo">
+              </div>
+              </div>
             </div>
-           <div class="col-1">
-            <div class="mb-1">
-              <label for="vigencia" class="form-label mt-1">De:</label>
+  
+            <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+            <label for="notas" class="form-label mt-1">Notas:</label>
+              </div>
             </div>
-          </div>
-
-          <div class="col-4">
-            <div class="mb-1">
-              <input type="number" class="form-control form-control-sm" id="vigencia" name="vigencia" max="12" required>
+            <div class="col-9">
+              <div class="mb-1">
+            <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notas" name="notas" placeholder="Notas sobre el cliente">
+              </div>
+              </div>
             </div>
+  <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+                  <label for="multiRec" class="form-label mt-1">Medio Pago:</label>
+              </div>
             </div>
-          </div>
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="importe" class="form-label mt-1">Importe:</label>
+            <div class="col-9">
+              <div class="mb-1">
+                  <select class="form-select form-select-sm" id="mediopago" name="mediopago" required>
+                    <option value="EFECTIVO">EFECTIVO</option>
+                    <option value="DIGITAL">DIGITAL</option>
+                  </select>
+              </div>
+              </div>
             </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="importe" name="importe" placeholder="Importe" minlength="3" required>
+  
+  <div class="row">
+            <div class="col-3">
+              <div class="mb-1">
+                  <label for="multiRec" class="form-label mt-1">Multirecibos:</label>
+              </div>
             </div>
+            <div class="col-9">
+              <div class="mb-1">
+                  <select class="form-select form-select-sm" id="multiRec" name="multiRec" placeholder="1" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+              </div>
+              </div>
             </div>
-          </div>
-
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="vto" class="form-label mt-1">Vence:</label>
+  
+            <div class="row">
+            <div class="col-7">
+              <div class="mb-1">
+  
+              </div>
             </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm" id="vto" name="vto" placeholder="dd/mm/aa" required>
+            <div class="col-5">
+              <div class="mb-1">
+          <!-- <input type="submit" class="btn btn-success text-right mt-1" value="Ingresar Pago"><br> -->
+                    <button id="bt-ingreso" class="btn btn-success text-right mt-1">&nbsp;&nbsp;Ingresar Pago&nbsp;&nbsp;<span id="spinner_pago" class="spinner-border spinner-border-sm" style="display:none"></span></button>
+  
+              </div>
+              </div>
             </div>
-              <div id="mensaje" style="color: black;"></div>
-            </div>
-          </div>
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="color" class="form-label mt-1">Color:</label>
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="color" name="color" placeholder="Color del vehiculo">
-            </div>
-            </div>
-          </div>
-
-          <div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-          <label for="notas" class="form-label mt-1">Notas:</label>
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notas" name="notas" placeholder="Notas sobre el cliente">
-            </div>
-            </div>
-          </div>
-<div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-                <label for="multiRec" class="form-label mt-1">Medio Pago:</label>
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-                <select class="form-select form-select-sm" id="mediopago" name="mediopago" required>
-                  <option value="EFECTIVO">EFECTIVO</option>
-                  <option value="DIGITAL">DIGITAL</option>
-                </select>
-            </div>
-            </div>
-          </div>
-
-<div class="row">
-          <div class="col-3">
-            <div class="mb-1">
-                <label for="multiRec" class="form-label mt-1">Multirecibos:</label>
-            </div>
-          </div>
-          <div class="col-9">
-            <div class="mb-1">
-                <select class="form-select form-select-sm" id="multiRec" name="multiRec" placeholder="1" required>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                </select>
-            </div>
-            </div>
-          </div>
-
-          <div class="row">
-          <div class="col-7">
-            <div class="mb-1">
-
-            </div>
-          </div>
-          <div class="col-5">
-            <div class="mb-1">
-        <!-- <input type="submit" class="btn btn-success text-right mt-1" value="Ingresar Pago"><br> -->
-                  <button id="bt-ingreso" class="btn btn-success text-right mt-1">&nbsp;&nbsp;Ingresar Pago&nbsp;&nbsp;<span id="spinner_pago" class="spinner-border spinner-border-sm" style="display:none"></span></button>
-
-            </div>
-            </div>
-          </div>
-</form>
-<!---- FIN DE INGRESO DE PAGO ----->
-<!---- INICIO DE TABLA DE PAGOS ----->
-    <table id="mantenimientosTable" class="table table-striped">
+  </form>
+  <!---- FIN DE INGRESO DE PAGO ----->
+  <!---- INICIO DE TABLA DE PAGOS ----->
+      <table id="mantenimientosTable" class="table table-striped">
+      <thead>
+        <tr>
+            <th>Cuota</th>
+            <th>Vencimiento</th>
+            <th>F. Pago</th>
+            <th>Importe</th>
+        </tr>
+      </thead>
+      <tbody id="mantenimientosTableBody">
+  
+      </tbody>
+      </table>
+  
+      <template id="mantenimientosRow">
+        <tr>
+          <td class="PagoCuota"></td>
+          <td class="PagoFecha"></td>
+          <td class="PagoVto"></td>
+          <td class="PagoImporte"></td>
+        </tr>
+      </template>
+  
+  </div>
+  <!----- FIN DE TABLA DE PAGOS ---->
+  <br><br><br>
+  <!----- INICIO DE SECTOR #2 POLIZAS VIGENTES ---->
+  <!----- SECTOR: #2 POLIZAS VIGENTES ---->
+  <div class="col-4 container"  style="margin-bottom: 25px;">POLIZAS VIGENTES DEL CLIENTE:<hr>
+  
+  <table id="mantenimientosTable2" class="table table-striped">
     <thead>
       <tr>
-          <th>Cuota</th>
-          <th>Vencimiento</th>
-          <th>F. Pago</th>
-          <th>Importe</th>
+        <th>Patente</th>
+        <th>Vehiculo</th>
+        <th>Compañia</th>
+        <th>Vencimiento</th>
       </tr>
     </thead>
-    <tbody id="mantenimientosTableBody">
-
-    </tbody>
-    </table>
-
-    <template id="mantenimientosRow">
-      <tr>
-        <td class="PagoCuota"></td>
-        <td class="PagoFecha"></td>
-        <td class="PagoVto"></td>
-        <td class="PagoImporte"></td>
-      </tr>
-    </template>
-
-</div>
-<!----- FIN DE TABLA DE PAGOS ---->
-<br><br><br>
-<!----- INICIO DE SECTOR #2 POLIZAS VIGENTES ---->
-<!----- SECTOR: #2 POLIZAS VIGENTES ---->
-<div class="col-4 container"  style="margin-bottom: 25px;">POLIZAS VIGENTES DEL CLIENTE:<hr>
-
-<table id="mantenimientosTable2" class="table table-striped">
-  <thead>
-    <tr>
-      <th>Patente</th>
-      <th>Vehiculo</th>
-      <th>Compañia</th>
-      <th>Vencimiento</th>
-    </tr>
-  </thead>
-  <tbody id="mantenimientosTableBody2">
-
-  </tbody>
-</table>
-
-<template id="mantenimientosRow2">
-  <tr>
-    <td class="PolPatente"></td>
-    <td class="PolVehiculo"></td>
-    <td class="PolCnia"></td>
-    <td class="PolVtos"></td>
-  </tr>
-</template>
- <hr>
-<!-- POLIZAS VIGENTES BD EMISION
-
-<table id="mantenimientosTable5" class="table table-striped">
-  <thead>
-    <tr>
-      <th>Patente</th>
-      <th>Vehiculo</th>
-      <th>Compañia</th>
-      <th>Vencimiento</th>
-    </tr>
-  </thead>
-  <tbody id="mantenimientosTableBody5">
-
-  </tbody>
-</table>
-
-<template id="mantenimientosRow5">
-  <tr>
-    <td class="PolPatenteE"></td>
-    <td class="PolVehiculoE"></td>
-    <td class="PolCniaE"></td>
-    <td class="PolVtosE"></td>
-  </tr>
-</template> -->
-</div>
-<!----- FIN DEL SECTOR #2 POLIZAS VIGENTES ---->
-<br><br><br>
-
-
-<!----- INICIO DE GASTOS Y RECIBIS ---->
-<div class="col-4 container"  style="margin-bottom: 25px;">GASTOS Y RECIBIS<hr>
-
-
-
-<div class="row">
+    <tbody id="mantenimientosTableBody2">
   
-<div class="col-6">
- <form id="formularioGasto" name="formularioGasto" class="needs-validation">
-<label style="text-align: center;" class="form-label">INGRESAR GASTO</label>
-
-   <div class="row">
-     <div class="col-4">
-       <div class="mb-1">
-         <label for="g_medio" class="form-label mt-1">F.Pago:</label>
-       </div>
-     </div>
-     <div class="col-8">
-       <div class="mb-1">
-                <select class="form-select form-select-sm" id="g_mediopago" name="g_mediopago" required>
-                  <option value="EFECTIVO">EFECTIVO</option>
-                  <option value="DIGITAL">DIGITAL</option>
-                </select>
-       </div>
-     </div>
-   </div>
-
-   <div class="row">
-     <div class="col-4">
-       <div class="mb-1">
-         <label for="g_concepto" class="form-label mt-1">Detalle:</label>
-       </div>
-     </div>
-     <div class="col-8">
-       <div class="mb-1">
-         <input type="text" class="form-control form-control-sm" id="g_concepto" name="g_concepto" placeholder="En concepto de qué es">
-       </div>
-     </div>
-   </div>
-
-   <div class="row">
-     <div class="col-4">
-       <div class="mb-1">
-         <label for="g_para" class="form-label mt-1">Para:</label>
-       </div>
-     </div>
-     <div class="col-8">
-       <div class="mb-1">
-         <input type="text" class="form-control form-control-sm" id="g_para" name="g_para" placeholder="¿Para quien es?">
-       </div>
-     </div>
-   </div>
-
-   <div class="row">
-     <div class="col-4">
-       <div class="mb-1">
-         <label for="g_importe" class="form-label mt-1">Importe:</label>
-       </div>
-     </div>
-     <div class="col-8">
-       <div class="mb-1">
-         <input type="number" class="form-control form-control-sm" id="g_importe" name="g_importe" placeholder="Ingrese importe">
-       </div>
-     </div>
-   </div>
-<div class="row">
-  <div class="col-2"></div>
-<div class="col-10">
-  <div class="mb-1">
-<button id="btn-agregar-gasto"  class="btn btn-danger text-right mt-1" type="submit">Agregar Gasto</button>
-  </div></div>
-</div>
-</div>
-</form>
-
-<div class="col-6">
-
-<form id="formularioRecibi" name="formularioRecibi" class="needs-validation">
-
-<label style="text-align: center;" class="form-label">INGRESAR RECIBI</label>
-   <div class="row">
-     <div class="col-4">
-       <div class="mb-1">
-         <label for="g_medio" class="form-label mt-1">F.Pago:</label>
-       </div>
-     </div>
-     <div class="col-8">
-       <div class="mb-1">
-                <select class="form-select form-select-sm" id="r_mediopago" name="r_mediopago" required>
-                  <option value="EFECTIVO">EFECTIVO</option>
-                  <option value="DIGITAL">DIGITAL</option>
-                </select>
-       </div>
-     </div>
-   </div>
-  <div class="row">
-    <div class="col-4">
-      <div class="mb-1">
-        <label for="r_concepto" class="form-label mt-1">Detalle:</label>
-      </div>
-    </div>
-    <div class="col-8">
-      <div class="mb-1">
-        <input type="text" class="form-control form-control-sm" id="r_concepto" name="r_concepto" placeholder="En concepto de qué es">
-      </div>
-    </div>
+    </tbody>
+  </table>
+  
+  <template id="mantenimientosRow2">
+    <tr>
+      <td class="PolPatente"></td>
+      <td class="PolVehiculo"></td>
+      <td class="PolCnia"></td>
+      <td class="PolVtos"></td>
+    </tr>
+  </template>
+   <hr>
+  <!-- POLIZAS VIGENTES BD EMISION
+  
+  <table id="mantenimientosTable5" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Patente</th>
+        <th>Vehiculo</th>
+        <th>Compañia</th>
+        <th>Vencimiento</th>
+      </tr>
+    </thead>
+    <tbody id="mantenimientosTableBody5">
+  
+    </tbody>
+  </table>
+  
+  <template id="mantenimientosRow5">
+    <tr>
+      <td class="PolPatenteE"></td>
+      <td class="PolVehiculoE"></td>
+      <td class="PolCniaE"></td>
+      <td class="PolVtosE"></td>
+    </tr>
+  </template> -->
   </div>
-
+  <!----- FIN DEL SECTOR #2 POLIZAS VIGENTES ---->
+  <br><br><br>
+  
+  
+  <!----- INICIO DE GASTOS Y RECIBIS ---->
+  <div class="col-4 container"  style="margin-bottom: 25px;">GASTOS Y RECIBIS<hr>
+  
+  
+  
   <div class="row">
-    <div class="col-4">
-      <div class="mb-1">
-        <label for="r_para" class="form-label mt-1">Para:</label>
-      </div>
-    </div>
-    <div class="col-8">
-      <div class="mb-1">
-        <input type="text" class="form-control form-control-sm" id="r_para" name="r_para" placeholder="¿Para quien es?">
-      </div>
-    </div>
-  </div>
-
+    
+  <div class="col-6">
+   <form id="formularioGasto" name="formularioGasto" class="needs-validation">
+  <label style="text-align: center;" class="form-label">INGRESAR GASTO</label>
+  
+     <div class="row">
+       <div class="col-4">
+         <div class="mb-1">
+           <label for="g_medio" class="form-label mt-1">F.Pago:</label>
+         </div>
+       </div>
+       <div class="col-8">
+         <div class="mb-1">
+                  <select class="form-select form-select-sm" id="g_mediopago" name="g_mediopago" required>
+                    <option value="EFECTIVO">EFECTIVO</option>
+                    <option value="DIGITAL">DIGITAL</option>
+                  </select>
+         </div>
+       </div>
+     </div>
+  
+     <div class="row">
+       <div class="col-4">
+         <div class="mb-1">
+           <label for="g_concepto" class="form-label mt-1">Detalle:</label>
+         </div>
+       </div>
+       <div class="col-8">
+         <div class="mb-1">
+           <input type="text" class="form-control form-control-sm" id="g_concepto" name="g_concepto" placeholder="En concepto de qué es">
+         </div>
+       </div>
+     </div>
+  
+     <div class="row">
+       <div class="col-4">
+         <div class="mb-1">
+           <label for="g_para" class="form-label mt-1">Para:</label>
+         </div>
+       </div>
+       <div class="col-8">
+         <div class="mb-1">
+           <input type="text" class="form-control form-control-sm" id="g_para" name="g_para" placeholder="¿Para quien es?">
+         </div>
+       </div>
+     </div>
+  
+     <div class="row">
+       <div class="col-4">
+         <div class="mb-1">
+           <label for="g_importe" class="form-label mt-1">Importe:</label>
+         </div>
+       </div>
+       <div class="col-8">
+         <div class="mb-1">
+           <input type="number" class="form-control form-control-sm" id="g_importe" name="g_importe" placeholder="Ingrese importe">
+         </div>
+       </div>
+     </div>
   <div class="row">
-    <div class="col-4">
-      <div class="mb-1">
-        <label for="r_importe" class="form-label mt-1">Importe:</label>
-      </div>
-    </div>
-    <div class="col-8">
-      <div class="mb-1">
-        <input type="number" class="form-control form-control-sm" id="r_importe" name="r_importe" placeholder="Ingrese Importe">
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-  <div class="col-2">
-    <div class="mb-1">
-
-    </div>
-  </div>
+    <div class="col-2"></div>
   <div class="col-10">
     <div class="mb-1">
-<button id="btn-agregar-recibi"  class="btn btn-primary text-right mt-1" type="submit">Agregar Recibi</button>
-    </div>
+  <button id="btn-agregar-gasto"  class="btn btn-danger text-right mt-1" type="submit">Agregar Gasto</button>
+    </div></div>
   </div>
-</div>
-</form>
-
-</div></div><br>
-
-<!-------- FIN INGRESO CHEQUES ---------->
-
-
-<form id="formularioCheque" name="formularioCheque">
-<label style="text-align: center;" class="form-label">INGRESAR CHEQUE</label>
- <div class="row">
-   <div class="col-2">
-     <div class="mb-1">
-       <label for="c_numero" class="form-label mt-1">N°:</label>
-       </div>
-       </div>
+  </div>
+  </form>
+  
+  <div class="col-6">
+  
+  <form id="formularioRecibi" name="formularioRecibi" class="needs-validation">
+  
+  <label style="text-align: center;" class="form-label">INGRESAR RECIBI</label>
+     <div class="row">
        <div class="col-4">
          <div class="mb-1">
-           <input type="number" class="form-control form-control-sm" id="c_numero" name="c_numero" placeholder="N° de cheque">
-     </div>
-   </div>
-   <div class="col-2">
-     <div class="mb-1">
-       <label for="c_vto" class="form-label mt-1">Vence:</label>
+           <label for="g_medio" class="form-label mt-1">F.Pago:</label>
+         </div>
        </div>
-       </div>
-       <div class="col-4">
+       <div class="col-8">
          <div class="mb-1">
-           <input type="text" class="form-control form-control-sm" id="c_vto" name="c_vto" placeholder="Vencimiento">
+                  <select class="form-select form-select-sm" id="r_mediopago" name="r_mediopago" required>
+                    <option value="EFECTIVO">EFECTIVO</option>
+                    <option value="DIGITAL">DIGITAL</option>
+                  </select>
+         </div>
+       </div>
      </div>
-   </div>
- </div>
-
-  <div class="row">
-    <div class="col-2">
-      <div class="mb-1">
-        <label for="c_de" class="form-label mt-1">De:</label>
+    <div class="row">
+      <div class="col-4">
+        <div class="mb-1">
+          <label for="r_concepto" class="form-label mt-1">Detalle:</label>
         </div>
+      </div>
+      <div class="col-8">
+        <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="r_concepto" name="r_concepto" placeholder="En concepto de qué es">
         </div>
-        <div class="col-4">
-          <div class="mb-1">
-            <input type="text" class="form-control form-control-sm" id="c_de" name="c_de" placeholder="¿De quien es?">
       </div>
     </div>
+  
+    <div class="row">
+      <div class="col-4">
+        <div class="mb-1">
+          <label for="r_para" class="form-label mt-1">Para:</label>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="mb-1">
+          <input type="text" class="form-control form-control-sm" id="r_para" name="r_para" placeholder="¿Para quien es?">
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-4">
+        <div class="mb-1">
+          <label for="r_importe" class="form-label mt-1">Importe:</label>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="mb-1">
+          <input type="number" class="form-control form-control-sm" id="r_importe" name="r_importe" placeholder="Ingrese Importe">
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
     <div class="col-2">
       <div class="mb-1">
-        <label for="c_importe" class="form-label mt-1">Importe:</label>
-        </div>
-        </div>
-        <div class="col-4">
-          <div class="mb-1">
-            <input type="number" class="form-control form-control-sm" id="c_importe" name="c_importe" placeholder="Ingrese Importe">
+  
+      </div>
+    </div>
+    <div class="col-10">
+      <div class="mb-1">
+  <button id="btn-agregar-recibi"  class="btn btn-primary text-right mt-1" type="submit">Agregar Recibi</button>
       </div>
     </div>
   </div>
-<div class="row">
-     <div class="col-7">
-       <div class="mb-1">
-   
-       </div>
-     </div>
-     <div class="col-5">
-       <div class="mb-1">
-<button id="btn-agregar-cheque"  class="btn btn-secondary text-right mt-1" type="submit">Agregar cheque</button>
-       </div>
-     </div>
-   </div>
- 
-   </form>
-<hr>
-
-  <div class="row">
-    <div class="col-5">
-      <div class="mb-1">
-        <label for="numRecibo" class="form-label mt-1">REIMPRIMIR RECIBOS:</label>
-      </div>
-    </div>
-    <div class="col-3">
-      <div class="mb-1">
-        <label for="numRecibo" class="form-label mt-1">N° Recibo:</label>
-      </div>
-    </div>
-    <div class="col-4">
-      <div class="mb-1">
-        <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
-      </div>
-    </div>
-
-  </div>
-
+  </form>
+  
+  </div></div><br>
+  
+  <!-------- FIN INGRESO CHEQUES ---------->
+  
+  
+  <form id="formularioCheque" name="formularioCheque">
+  <label style="text-align: center;" class="form-label">INGRESAR CHEQUE</label>
    <div class="row">
-        <div class="col-3">
-      <div class="mb-1">
-        <button id="btn-reimprimirRecibo" class="btn btn-secondary btn-sm ml-1 mr-1" type="submit">Reimprimir X1</button>
+     <div class="col-2">
+       <div class="mb-1">
+         <label for="c_numero" class="form-label mt-1">N°:</label>
+         </div>
+         </div>
+         <div class="col-4">
+           <div class="mb-1">
+             <input type="number" class="form-control form-control-sm" id="c_numero" name="c_numero" placeholder="N° de cheque">
+       </div>
+     </div>
+     <div class="col-2">
+       <div class="mb-1">
+         <label for="c_vto" class="form-label mt-1">Vence:</label>
+         </div>
+         </div>
+         <div class="col-4">
+           <div class="mb-1">
+             <input type="text" class="form-control form-control-sm" id="c_vto" name="c_vto" placeholder="Vencimiento">
+       </div>
+     </div>
+   </div>
+  
+    <div class="row">
+      <div class="col-2">
+        <div class="mb-1">
+          <label for="c_de" class="form-label mt-1">De:</label>
+          </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-1">
+              <input type="text" class="form-control form-control-sm" id="c_de" name="c_de" placeholder="¿De quien es?">
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="mb-1">
+          <label for="c_importe" class="form-label mt-1">Importe:</label>
+          </div>
+          </div>
+          <div class="col-4">
+            <div class="mb-1">
+              <input type="number" class="form-control form-control-sm" id="c_importe" name="c_importe" placeholder="Ingrese Importe">
+        </div>
       </div>
     </div>
-        <div class="col-3">
-      <div class="mb-1">
-        <button id="bt-desc-rec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X1</button>
+  <div class="row">
+       <div class="col-7">
+         <div class="mb-1">
+     
+         </div>
+       </div>
+       <div class="col-5">
+         <div class="mb-1">
+  <button id="btn-agregar-cheque"  class="btn btn-secondary text-right mt-1" type="submit">Agregar cheque</button>
+         </div>
+       </div>
+     </div>
+   
+     </form>
+  <hr>
+  
+    <div class="row">
+      <div class="col-5">
+        <div class="mb-1">
+          <label for="numRecibo" class="form-label mt-1">REIMPRIMIR RECIBOS:</label>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="mb-1">
+          <label for="numRecibo" class="form-label mt-1">N° Recibo:</label>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="mb-1">
+          <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
+        </div>
+      </div>
+  
+    </div>
+  
+     <div class="row">
+          <div class="col-3">
+        <div class="mb-1">
+          <button id="btn-reimprimirRecibo" class="btn btn-secondary btn-sm ml-1 mr-1" type="submit">Reimprimir X1</button>
+        </div>
+      </div>
+          <div class="col-3">
+        <div class="mb-1">
+          <button id="bt-desc-rec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X1</button>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="mb-1">
+          <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1" type="submit">Reimprimir X6</button>
+        </div>
+      </div>
+          <div class="col-3">
+        <div class="mb-1">
+          <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
+        </div>
       </div>
     </div>
-    <div class="col-3">
-      <div class="mb-1">
-        <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1" type="submit">Reimprimir X6</button>
-      </div>
-    </div>
-        <div class="col-3">
-      <div class="mb-1">
-        <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
-      </div>
-    </div>
-  </div>
-<hr>
-
-
- <!---- FIN DE GASTOS Y RECIBIS ---->
-
-<!--- INICIO DE TABLA DE DEUDORES ---->
-<table id="mantenimientosTable3" class="table table-striped">
-  <thead>
+  <hr>
+  
+  
+   <!---- FIN DE GASTOS Y RECIBIS ---->
+  
+  <!--- INICIO DE TABLA DE DEUDORES ---->
+  <table id="mantenimientosTable3" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Concepto</th>
+        <th>Importe</th>
+        <th>Balance</th>
+      </tr>
+    </thead>
+    <tbody id="mantenimientosTableBody3">
+  
+    </tbody>
+  </table>
+  
+  <template id="mantenimientosRow3">
     <tr>
-      <th>Fecha</th>
-      <th>Concepto</th>
-      <th>Importe</th>
-      <th>Balance</th>
+      <td class="DeuFecha"></td>
+      <td class="DeuConcepto"></td>
+      <td class="DeuImporte"></td>
+      <td class="DeuBalance"></td>
     </tr>
-  </thead>
-  <tbody id="mantenimientosTableBody3">
-
-  </tbody>
-</table>
-
-<template id="mantenimientosRow3">
-  <tr>
-    <td class="DeuFecha"></td>
-    <td class="DeuConcepto"></td>
-    <td class="DeuImporte"></td>
-    <td class="DeuBalance"></td>
-  </tr>
-</template>
-
-</div>
-<!--- FIN DE TABLA DE DEUDORES ---->
-
-</div>
-<!---- FIN DE LOS TRES SECTORES --->
+  </template>
+  
+  </div>
+  <!--- FIN DE TABLA DE DEUDORES ---->
+  
+  </div>
+  <!---- FIN DE LOS TRES SECTORES --->
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
