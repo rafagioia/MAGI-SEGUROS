@@ -41,5 +41,5 @@ Esta sección filtra las polizas que en el mes corriente ya cumplen con su vigen
 ### Siniestros - Ingreso
 Esta sección utiliza los datos cargados en Emision para cargar casos de siniestros en una BD Siniestros, tiene adicionalmente la opcion para cargar datos de otros vehiculos que intervienen en el mismo con un div que se multiplica las veces necesarias para ingresar varios terceros.
 
--Siniestros - Gestion
+### Siniestros - Gestion
 Esta sección se ocupa de gestionar los datos cargados en Siniestros Ingreso, hace el seguimiento de los casos y va actualizando novedades. Trae por defecto los casos que están sin gestionar y desde ahi se le va poniendo fecha en agenda para gestion. Utiliza un checkbox para tildar y destildar los casos que están para gestionar en el dia y los que están para más adelante. Ademas permite filtrar segun varios criterios, y gestionar distintos tipos de tramites (Falta documentación, Reparación en curso, Esperando Respuestos, etc) según el tipo de siniestro que sea.
