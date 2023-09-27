@@ -201,7 +201,7 @@ text-align: center;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
   }
-  /* Estilos para la barra de navegaciÔøΩn */
+  /* Estilos para la barra de navegaciùn */
     .navbar-brand {
       font-weight: bold;
       font-size: 24px;
@@ -224,7 +224,7 @@ text-align: center;
     .nav-item.dropdown:hover .dropdown-menu {
       display: block;
     }
-    /* Estilos para el contenedor de pÔøΩginas */
+    /* Estilos para el contenedor de p·ginas */
     #page-container {
       margin-top: 20px;
     }

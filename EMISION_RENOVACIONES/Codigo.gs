@@ -31,10 +31,10 @@ function renovarPol(
   infoVence,
   infoHasta,
   infoHoy, 
+  infoPol,
   infoRefa) {
   const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
   
-console.log(infoPatente, infoImporte, infoVence, infoHasta, infoRefa)
   // Obtener los datos de la hoja
   const data = BD_EMISION.getDataRange().getValues();
   
@@ -45,6 +45,7 @@ console.log(infoPatente, infoImporte, infoVence, infoHasta, infoRefa)
       BD_EMISION.getRange(i + 1, 9).setValue(infoVence);   // Columna I
       BD_EMISION.getRange(i + 1, 10).setValue(infoHasta);  // Columna J
       BD_EMISION.getRange(i + 1, 5).setValue(infoRefa);    // Columna E
+      BD_EMISION.getRange(i + 1, 8).setValue(infoPol);   // Columna H
       BD_EMISION.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
       break; // Terminar la búsqueda una vez que se encuentre una coincidencia
     }
@@ -107,7 +108,7 @@ if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
         fecha_refa.setMonth(fecha_refa.getMonth() + vig);
         var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
         refacturaciones.push(nuevaFecha);
-        refacturaciones.push("");
+        refacturaciones.push(""); // poliza
         refacturaciones.push(emisionData[j][13]); // fpago
         refacturaciones.push("RENOVACION");
         refacturaciones.push(nuevaFecha3);
@@ -129,7 +130,7 @@ if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
         fecha_refa.setMonth(fecha_refa.getMonth() + vig);
         var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
         refacturaciones.push(nuevaFecha);
-        refacturaciones.push("");
+        refacturaciones.push(emisionData[j][7]); // poliza
         refacturaciones.push(emisionData[j][13]); // fpago
         refacturaciones.push("ACTUALIZADA: " + emisionData[j][20]);
         refacturaciones.push(nuevaFecha3);
@@ -149,7 +150,7 @@ if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
         fecha_refa.setMonth(fecha_refa.getMonth() + vig);
         var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
         refacturaciones.push(nuevaFecha);
-        refacturaciones.push("");
+        refacturaciones.push(emisionData[j][7]); // poliza
         refacturaciones.push(emisionData[j][13]); // fpago
         refacturaciones.push("REFA" + (i + 1));
         refacturaciones.push(fecha_desde);
@@ -533,3 +534,5 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
+
+

@@ -1,13 +1,13 @@
 //////////////// BOTON DEL MENU ///////////////////////
-    // ObtÃ©n una referencia al botÃ³n
+    // Obtén una referencia al botón
     const navbarToggler = document.getElementById('navbar-toggler');
 
-    // Agrega un evento de clic al botÃ³n
+    // Agrega un evento de clic al botón
     navbarToggler.addEventListener('click', function() {
-      // ObtÃ©n una referencia al elemento de destino
+      // Obtén una referencia al elemento de destino
       const navbarNav = document.getElementById('navbarNav');
     
-      // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegaciÃ³n
+      // Alterna la clase 'show' en el elemento de destino para mostrar u ocultar la barra de navegación
       navbarNav.classList.toggle('show');
     });
     
@@ -37,13 +37,13 @@
       var pendientesHtml = "";
       var idDeudores = []; // Nuevo array para almacenar los id_deudor distintos
     
-      // // FunciÃ³n para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
+      // // Función para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
       // function convertToDate(dateString) {
       //   var parts = dateString.split('/');
       //   return new Date(parts[2], parts[1] - 1, parts[0]); // Restamos 1 al mes ya que en Date() los meses van de 0 a 11
       // }
     
-      // // Ordenar el arreglo result de menor a mayor segÃºn las fechas (result[i][2])
+      // // Ordenar el arreglo result de menor a mayor según las fechas (result[i][2])
       // result.sort(function(a, b) {
       //   var dateA = convertToDate(a[7]);
       //   var dateB = convertToDate(b[7]);
@@ -59,14 +59,13 @@
     pendientesHtml += "<div class='col-1 text-sm' style='font-size: 8px;' id='_recibo" + i + "'>" + result[i][0] + "</div>";
     
     // Columna de cliente
-    pendientesHtml += "<div class='col-5 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>";
+    pendientesHtml += "<div class='col-4 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>";
     
     // Columna de vencimiento
     pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_vto" + i + "'>" + result[i][7] + "</div>";
     
     // Columna de cuenta
     pendientesHtml += "<div class='col-1 text-sm planilla'><div class='row p-0 m-0'>"
-    
     
     pendientesHtml += "<div class='col-4 m-0 p-1 text-sm planilla' id='_cta" + i + "'>" + result[i][5] + "</div>";
     pendientesHtml += "<div class='col-2 m-0 p-1 planilla'>/</div>";
@@ -80,12 +79,12 @@
     pendientesHtml += "</div></div>";
     pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
     // Columna de importe
-    pendientesHtml += "<div class='col-3 planilla'><div class='input-group'>";
+    pendientesHtml += "<div class='col-4 planilla'><div class='input-group'>";
     // Columna de IMPORTE
     pendientesHtml += "<div class='col-6 text-sm planilla' style='padding-top: 10px;' id='_imp" + i + "'>" + result[i][10] + "</div>";
     
     // Columna de POLIZA
-    pendientesHtml += "<div class='col-6'><input type='text' class='form-control text-sm planilla'  id='_pol" + i + "' value='" + result[i][11] + "'></div>";
+    pendientesHtml += "<div class='col-5  p-0'><input type='text' class='form-control text-sm planilla'  id='_pol" + i + "' value='" + result[i][11] + "'></div><div class='col-1' id='upd_pol" + i + "'><button class='btn btn-success  p-0 m-0' id='btn_upd_pol" + i + "'>?</button></div>";
     
     pendientesHtml += "</div></div>";
     
@@ -97,16 +96,16 @@
     
     
     
-    pendientesHtml += "<div class='col-4 row planilla'>";
+    pendientesHtml += "<div class='col-3 row planilla'>";
     
       pendientesHtml += "<div class='col-6 row planilla' id='sec_pasa" + i + "'>";
       // Comprueba si hay un valor en la columna [8]
       if (result[i][8]) {
         // Si hay un valor, agrega "Pasado:" y el valor de la columna
-        pendientesHtml += "<button class='btn btn-success' id='btnPasar" + i + "' style='display: none'>PASAR</button><div id='pas_id" + i + "'><b>Pasado: </b><div id='_fec_pas" + i + "'>" + result[i][8] + "</div></div>";
+        pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "' style='display: none'>PASAR</button><div id='pas_id" + i + "'><b>Pasado: </b><div id='_fec_pas" + i + "'>" + result[i][8] + "</div></div>";
       } else {
-        // Si no hay un valor, agrega un botÃ³n "Pasar"
-        pendientesHtml += "<button class='btn btn-success' id='btnPasar" + i + "'>PASAR</button><div id='pas_id" + i + "' style='display: none'><b>Pasado: </b><div id='_fec_pas" + i + "' ></div></div>";
+        // Si no hay un valor, agrega un botón "Pasar"
+        pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "'>PASAR</button><div id='pas_id" + i + "' style='display: none'><b>Pasado: </b><div id='_fec_pas" + i + "' ></div></div>";
       }
       pendientesHtml += "</div>";
     
@@ -114,12 +113,12 @@
       // Comprueba si hay un valor en la columna [9]
       if (result[i][8] && result[i][9]) {
         // Si hay un valor, agrega "Liquidado:" y el valor de la columna
-        pendientesHtml += "<button class='btn btn-danger' id='btnQuitar" + i + "' style='display: none'>Quitar</button><div id='liq_id'><b>Liquidado: </b><div id='pas_id" + i + "'>" + result[i][9] + "</div></div>";
+        pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "' style='display: none'>Quitar</button><div id='liq_id'><b>Liquidado: </b><div id='pas_id" + i + "'>" + result[i][9] + "</div></div>";
       } else if (result[i][8] && !result[i][9]) {
-        // Si no hay un valor en la columna [8], agrega un botÃ³n "X" de color rojo
-        pendientesHtml += "<button class='btn btn-danger' id='btnQuitar" + i + "'>Quitar</button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div id='pas_id" + i + "'></div></div>";
+        // Si no hay un valor en la columna [8], agrega un botón "X" de color rojo
+        pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "'>Quitar</button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div id='pas_id" + i + "'></div></div>";
         }  else if (!result[i][8] && !result[i][9]) {
-        // Si no hay un valor en la columna [8], agrega un botÃ³n "X" de color rojo
+        // Si no hay un valor en la columna [8], agrega un botón "X" de color rojo
         pendientesHtml += "<button class='btn btn-danger' id='btnQuitar" + i + "' style='display: none'>Quitar</button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div id='pas_id" + i + "'></div></div>";
         }
     pendientesHtml += "</div>";
@@ -190,7 +189,7 @@
       document.getElementById("fecha_actual").value = fechaFormateada;
     }
     
-    // Llamar a la funciÃ³n inicialmente y cada vez que se cambie un valor
+    // Llamar a la función inicialmente y cada vez que se cambie un valor
     calcularSuma();
     
     var impInputs = document.querySelectorAll("input[id^='_imp']");
@@ -198,6 +197,24 @@
       impInputs[j].addEventListener("input", calcularSuma);
     }
     
+    /////////////// BOTON PARA ACTUALIZAR POLIZA //////////////////
+    var divs3 = document.querySelectorAll("[id^='btn_upd_pol']");
+    
+    divs3.forEach(function (btn_upd_pol) {
+      btn_upd_pol.addEventListener("click", function () {
+        var id = btn_upd_pol.id.slice(11); // Obtener el índice del div
+        let infoRecibo = document.getElementById("_recibo" + id).textContent;
+        let infoPoliza = document.getElementById("_pol" + id).value;
+        let infoPatente = document.getElementById("_pat" + id).textContent;
+    
+        // Ocultar el botón
+        document.getElementById("btn_upd_pol" + id).style.display = "none";
+    
+        google.script.run.withSuccessHandler(function (fechaHoyPasada) {
+          document.getElementById("upd_pol" + id).textContent = "??";
+        }).updatePol(infoRecibo, infoPoliza, infoPatente);
+      });
+    });
     
     
     /////////////// BOTON PARA PASAR PAGO //////////////////
@@ -205,10 +222,12 @@
     
     divs3.forEach(function (btnPasar) {
       btnPasar.addEventListener("click", function () {
-        var id = btnPasar.id.slice(8); // Obtener el Ã­ndice del div
+        var id = btnPasar.id.slice(8); // Obtener el índice del div
         let infoRecibo = document.getElementById("_recibo" + id).textContent;
+        let infoPatente = document.getElementById("_pat" + id).textContent;
+        let infoPoliza = document.getElementById("_pol" + id).value;
     
-        // Ocultar el botÃ³n
+        // Ocultar el botón
         document.getElementById("btnPasar" + id).style.display = "none";
         document.getElementById("pas_id" + id).style.display = "block";
         document.getElementById("btnQuitar" + id).style.display = "block";
@@ -216,7 +235,7 @@
           let importe = document.getElementById("_imp" + id).textContent;
           importe = importe.replace('$', ''); // Eliminar el signo "$"
           importe = importe.replace('.', ''); // Eliminar el signo "$"
-          importe = parseInt(importe); // Convertir a nÃºmero entero
+          importe = parseInt(importe); // Convertir a número entero
     
           let totalActual = parseInt(document.getElementById("total_val").value) || 0;
           
@@ -226,7 +245,7 @@
     
         google.script.run.withSuccessHandler(function (fechaHoyPasada) {
           document.getElementById("_fec_pas" + id).textContent = fechaHoyPasada;
-        }).pasarPago(infoRecibo);
+        }).pasarPago(infoRecibo, infoPoliza, infoPatente);
       });
     });
     
@@ -236,10 +255,10 @@
     
     divs2.forEach(function (btnQuitar) {
       btnQuitar.addEventListener("click", function () {
-        var id = btnQuitar.id.slice(9); // Obtener el Ã­ndice del div
+        var id = btnQuitar.id.slice(9); // Obtener el índice del div
         let infoRecibo = document.getElementById("_recibo" + id).textContent;
     
-        // Ocultar el botÃ³n
+        // Ocultar el botón
         document.getElementById("btnPasar" + id).style.display = "block";
         document.getElementById("pas_id" + id).style.display = "none";
         document.getElementById("btnQuitar" + id).style.display = "none";
@@ -248,7 +267,7 @@
           let importe = document.getElementById("_imp" + id).textContent;
           importe = importe.replace('$', ''); // Eliminar el signo "$"
           importe = importe.replace('.', ''); // Eliminar el signo "$"
-          importe = parseInt(importe); // Convertir a nÃºmero entero
+          importe = parseInt(importe); // Convertir a número entero
     
           let totalActual = parseInt(document.getElementById("total_val").value) || 0;
           
@@ -266,7 +285,7 @@
     
     }
     
-      // Llamar a la funciÃ³n getData() del lado del servidor
+      // Llamar a la función getData() del lado del servidor
       google.script.run.withSuccessHandler(updateSinPendientes).getData();
       /////////////////////////////////////////
     
@@ -282,13 +301,13 @@
      /// OBTENER FECHA ACTUAL PARA LIQUIDAR
       const fechaActual = new Date();
     
-      // Obtiene el dÃ­a, mes y aÃ±o
+      // Obtiene el día, mes y año
       const dia = fechaActual.getDate().toString().padStart(2, '0');
       const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses comienzan en 0
-      const aÃ±o = fechaActual.getFullYear().toString().slice(-2); // Obtiene los Ãºltimos dos dÃ­gitos del aÃ±o
+      const año = fechaActual.getFullYear().toString().slice(-2); // Obtiene los últimos dos dígitos del año
     
       // Formatea la fecha en DD/MM/YY
-      const fechaFormateada = `${dia}/${mes}/${aÃ±o}`;
+      const fechaFormateada = `${dia}/${mes}/${año}`;
     
       // Asigna la fecha formateada al campo de entrada
       document.getElementById('fecha_actual').value = fechaFormateada;
@@ -302,13 +321,13 @@
         const selectedMonth = parseInt(mesSelect.value);
         const selectedYear = parseInt(anioSelect.value);
     
-        // Calcula el Ãºltimo dÃ­a del mes seleccionado
+        // Calcula el último día del mes seleccionado
         const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
     
         // Borra las opciones actuales
         diaSelect.innerHTML = '<option value=""></option>';
     
-        // Llena el select de dÃ­as
+        // Llena el select de días
         for (let i = 1; i <= lastDay; i++) {
           const option = document.createElement('option');
           option.value = i;
@@ -317,13 +336,13 @@
         }
       }
     
-      // Escucha cambios en los selects de mes y aÃ±o
+      // Escucha cambios en los selects de mes y año
       const mesSelect = document.getElementById('mes');
       const anioSelect = document.getElementById('anio');
       mesSelect.addEventListener('change', actualizarDias);
       anioSelect.addEventListener('change', actualizarDias);
     
-      // Llama a la funciÃ³n inicialmente para establecer los dÃ­as iniciales
+      // Llama a la función inicialmente para establecer los días iniciales
       actualizarDias();
     
     
@@ -331,7 +350,7 @@
     function liquidarPagos() {
       google.script.run.withSuccessHandler(function(numerosRecibos) {
         if (numerosRecibos.length > 0) {
-          // Oculta los divs completos que contienen nÃºmeros de recibo correspondientes
+          // Oculta los divs completos que contienen números de recibo correspondientes
           numerosRecibos.forEach(function(numeroRecibo) {
             var divs = document.querySelectorAll("div[id^='div']");
             divs.forEach(function(div) {
@@ -342,7 +361,7 @@
             });
           });
           document.getElementById("total_val").value = 0; 
-          alert("LiquidaciÃ³n generada correctamente.\n\nNÃºmeros de recibos liquidados: " + numerosRecibos.join(", "));
+          alert("Liquidación generada correctamente.\n\nNúmeros de recibos liquidados: " + numerosRecibos.join(", "));
         } else {
           alert("No se encontraron elementos para liquidar.");
         }
@@ -362,7 +381,7 @@
       for (var i = 0; i < divs.length; i++) {
         var div = divs[i];
         if (div.style.display === "none") {
-          continue; // Si el div estÃ¡ oculto, omitirlo y pasar al siguiente
+          continue; // Si el div está oculto, omitirlo y pasar al siguiente
         }
     
         var rowData = [];
@@ -411,7 +430,7 @@
         '<th>VTO:</th>' +
         '<th>CTA:</th>' +
         '<th>DE:</th>' +
-        '<th>COMPAÃ‘IA</th>' +
+        '<th>COMPAÑIA</th>' +
         '<th>IMPORTE:</th>' +
         '<th>PATENTE:</th>' +
         '<th>MARCA:</th>' +
@@ -459,7 +478,7 @@
       var modal = document.getElementById('modal3');
       var modal2 = document.getElementById('modal4');
     
-      // Agregamos un evento para cerrar el modal cuando se hace clic fuera de Ã©l
+      // Agregamos un evento para cerrar el modal cuando se hace clic fuera de él
       window.addEventListener('click', function(event) {
         if (event.target === modal) {
           modal.style.display = 'none';
@@ -481,7 +500,7 @@
     var modal = document.getElementById("myModal");
     var tiempoRestanteDiv = document.getElementById("tiempo-restante");
     
-    // FunciÃ³n para realizar el inicio de sesiÃ³n
+    // Función para realizar el inicio de sesión
     var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
     var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
     var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -513,19 +532,19 @@
       iniciarContadorTiempo(tiempoRestante);
     } else {
       
-      // FunciÃ³n para abrir el modal
+      // Función para abrir el modal
       modal.style.display = "block";
     
-      // FunciÃ³n para cerrar el modal
+      // Función para cerrar el modal
       function closeModal() {
         modal.style.display = "none";
       }
     
-      // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botÃ³n de inicio de sesiÃ³n
+      // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
       document.getElementById("inicio-sesion").addEventListener("click", function (event) {
         event.preventDefault();
     
-        // Obtener el usuario y la contraseÃ±a del formulario
+        // Obtener el usuario y la contraseña del formulario
         var usuario = document.getElementById("usuario").value;
         var contrasena = document.getElementById("contrasena").value;
     
@@ -533,7 +552,7 @@
         var colorPicker = document.getElementById("colorPicker");
         var colorSeleccionado = colorPicker.value;
     
-    // Hacer una solicitud al servidor para verificar el usuario y la contraseÃ±a
+    // Hacer una solicitud al servidor para verificar el usuario y la contraseña
     
     
     google.script.run.withSuccessHandler(function (color) {
@@ -565,7 +584,7 @@
     
     
     
-    // FunciÃ³n para calcular el tiempo restante en milisegundos
+    // Función para calcular el tiempo restante en milisegundos
     function calcularTiempoRestante() {
       var horaInicio = parseInt(horaInicioAlmacenada);
       var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -574,7 +593,7 @@
       return tiempoRestante;
     }
     
-    // FunciÃ³n para mostrar el tiempo restante en el div correspondiente
+    // Función para mostrar el tiempo restante en el div correspondiente
     function mostrarTiempoRestante(tiempoRestante) {
       if (tiempoRestante <= 0) {
           sessionStorage.removeItem("magi-usuario");
@@ -592,7 +611,7 @@
       }
     }
     
-    // FunciÃ³n para iniciar el contador de tiempo
+    // Función para iniciar el contador de tiempo
     function iniciarContadorTiempo(tiempoRestante) {
       var intervalo = setInterval(function () {
         tiempoRestante -= 1000;
@@ -644,7 +663,7 @@
           sessionStorage.removeItem("magi-horaInicio");
           tiempoRestanteDiv.innerHTML = "";    
           document.getElementById("usuario_sp").innerHTML = "Desconocido";
-      // Recargar la pÃ¡gina
+      // Recargar la página
           modal.style.display = "block";
     
     }

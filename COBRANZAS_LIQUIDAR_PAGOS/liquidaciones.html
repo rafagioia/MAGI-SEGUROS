@@ -8,11 +8,11 @@
   <base target="_top">
   
   <!-- Estilos en entorno de Google Appscript -->
-  <?!= include('CSS_liquidaciones'); ?>
+  <!-- <?!= include('CSS_liquidaciones'); ?> -->
   <!-- Fin de Estilos en entorno de Google Appscript -->
 
   <!-- Estilos en entorno comun -->
-  <!-- <link rel="stylesheet" href="CSS_liquidaciones.css"> -->
+  <link rel="stylesheet" href="CSS_liquidaciones.css">
   <!-- Fin de Estilos en entorno comun -->
     <title>SISTEMA DE COBRANZAS - LIQUIDACION DE PAGOS</title>
   </head>
@@ -25,7 +25,7 @@
     </button>
     <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
       <ul class="navbar-nav">
-        <!-- MenÃº principal -->
+        <!-- Menú principal -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -47,12 +47,12 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            EmisiÃ³n
+            Emisión
           </a>
           <div class="dropdown-menu" aria-labelledby="emisionDropdown">
             <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion PÃ³lizas</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbweHnLexeQEmxDbAyV7oEC9wNnt8xAaVrTSXBwJGsE_Jb6-mj3GiIBJgUULPeQyJuZ9NQ/exec" id="dropdown-item" >Renovaciones PÃ³lizas</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
+            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbweHnLexeQEmxDbAyV7oEC9wNnt8xAaVrTSXBwJGsE_Jb6-mj3GiIBJgUULPeQyJuZ9NQ/exec" id="dropdown-item" >Renovaciones Pólizas</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -71,9 +71,9 @@
         </li>
       </ul>
     </div>
-        <!-- Fin de MenÃº principal en entorno de Google Appscript-->
+        <!-- Fin de Menú principal en entorno de Google Appscript-->
 
-    <!-- MenÃº principal en entorno normal-->
+    <!-- Menú principal en entorno normal-->
     <!-- <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
@@ -102,7 +102,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            EmisiÃ³n
+            Emisión
           </a>
           <div class="dropdown-menu" aria-labelledby="emisionDropdown">
             <a class="dropdown-item"
@@ -110,7 +110,7 @@
               id="dropdown-item">Ingresar Seguro</a>
               <a class="dropdown-item"
               href="/EMISION_GESTION/Polizas.html"
-              id="dropdown-item">Gestion PÃ³lizas</a>
+              id="dropdown-item">Gestion Pólizas</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -129,8 +129,8 @@
         </li>
       </ul>
     </div> -->
-    <!-- Fin de MenÃº principal en entorno normal-->
-    <!-- MenÃº flotante en el lado derecho -->
+    <!-- Fin de Menú principal en entorno normal-->
+    <!-- Menú flotante en el lado derecho -->
     <div class="collapse navbar-collapse" id="navbarNavRight">
       <div id="tiempo-restante"></div>
 <div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
@@ -141,8 +141,8 @@
             Desconocido
           </a>
           <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
-            <a class="dropdown-item" href="#" id="close_session">Cerrar sesiÃ³n</a>
-            <a class="dropdown-item" href="#" id="cambiar_clave">Cambiar contraseÃ±a</a>
+            <a class="dropdown-item" href="#" id="close_session">Cerrar sesión</a>
+            <a class="dropdown-item" href="#" id="cambiar_clave">Cambiar contraseña</a>
             <a class="dropdown-item">
               <div class="row">
               <div class="col-7 pt-1">
@@ -160,174 +160,174 @@
         </li>
       </ul>
     </div>
-    <!-- Fin MenÃº flotante en el lado derecho -->
+    <!-- Fin Menú flotante en el lado derecho -->
     <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="100px" alt="logo"> v1.2&nbsp;&nbsp;</div>
   </nav>
 
 
-<br>
+  <br>
 
-<div id="myModal" class="modal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
-          </div>
-          <div class="form-group">
-            <label for="contraseÃ±a" class=" mt-3">ContraseÃ±a:</label>
-            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
-          </div>
-          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesiÃ³n</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div id="modal2" style="display: none;">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
-      </div>
-      <div class="modal-body">
-        <form id="formulario-login" action="#" method="post">
-          <div class="form-group">
-            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
-  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
-          </div>
-          <div class="form-group">
-            <label for="contraseÃ±a" class=" mt-3">Ingrese su nueva clave:</label>
-  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
-          </div>
-  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
-        </form>
+  <div id="myModal" class="modal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Usuario:</label>
+              <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+            </div>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Contraseña:</label>
+              <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+            </div>
+            <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-
-  <!---------- AREA DE CAJA DIARIA ------------>
-
-  <div class="col-12" id="miDiv" style="padding: 20px;">
-
-   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-<div style="font-size: 20px; margin-top: 2px;"><b>LIQUIDACION DE PAGOS:</b></div>
-
-
-          <div class="row  m-0 p-0 bg-light py-2">
-            <div class="col-4 container">
-              <div class="row">
-<div class="col-3 m-0 p-0">FECHA ACTUAL:<br>
-  <input type="text" class="form-control mt-1" id="fecha_actual" placeholder="">
-</div>
-<div class="col-3 m-0 p-0">TOTAL A LIQ:<br>
-            <div class='input-group  mt-1'><div class='input-group-prepend'><span class='input-group-text form-control'>$</span>
-      </div><input type="text" class="form-control" id="total_val"></div>
-</div>
-            <div class="col-6"><br>
-
-              <button id="bt-liquidar-pagos" class="est_not btn btn-success btn-sm  mt-1" type="submit">LIQUIDAR</button>
-              <button id="bt-reset-filtro" class="est_not btn btn-danger btn-sm mt-1" type="submit">LIMPIAR</button>
+  
+  
+  <div id="modal2" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+        </div>
+        <div class="modal-body">
+          <form id="formulario-login" action="#" method="post">
+            <div class="form-group">
+              <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+    <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
             </div>
+            <div class="form-group">
+              <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+    <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
             </div>
-            </div>
-            <div class="col-8 container">
-              <div class="row">BUSCAR LIQUIDACIONES ANTIGUAS:</div>
-              <div class="row">
-    <div class="col-2 m-0 p-0">
-      <select class="form-select form-select mt-1" id="dia" name="dia" placeholder="">
-        <option value=""></option>
-        <!-- Este select se llenarÃ¡ dinÃ¡micamente con dÃ­as segÃºn el mes y el aÃ±o seleccionados -->
-      </select>
+    <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+          </form>
+        </div>
+      </div>
     </div>
-        <div class="col-3 m-0 p-0">
-      <select class="form-select form-select mt-1" id="mes" name="mes">
-        <option value=""></option>
-        <option value="0">ENERO</option>
-        <option value="1">FEBRERO</option>
-        <option value="2">MARZO</option>
-        <option value="3">ABRIL</option>
-        <option value="4">MAYO</option>
-        <option value="5">JUNIO</option>
-        <option value="6">JULIO</option>
-        <option value="7">AGOSTO</option>
-        <option value="8">SEPTIEMBRE</option>
-        <option value="9">OCTUBRE</option>
-        <option value="10">NOVIEMBRE</option>
-        <option value="11">DICIEMBRE</option>
-      </select>
-    </div>            
-    <div class="col-2 m-0 p-0">
-      <select class="form-select form-select mt-1" id="anio" name="anio">
-        <option value=""></option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
-        <option value="2025">2025</option>
-      </select>
-    </div>
-            <div class="col-2  m-0 p-0">
-              <button id="bt-regenarar_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">BUSCAR</button>
-            </div>           
-            <div class="col-2  m-0 p-0">
-              <button id="bt-imprimir_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">IMPRIMIR</button>
-            </div>   
-            </div>   
-            
-            </div>
-            </div>        
-
-
-<div class="row p-2" style="font-weight: bold;">
-  <div class="col-1">ID:</div>
-  <div class="col-2" style="width: 220px;">CLIENTE:</div>
-  <div class="col-1" style="width: 60px;">VTO:</div>
-  <div class="col-2" style="width: 80px;">CUOTA:</div>
-  <div class="col-2" style="width: 140px;">COMPAÃ‘IA:</div>
-  <div class="col-1" style="width: 140px;">IMPORTE:</div>
-  <div class="col-1" style="width: 130px;">PATENTE:</div>
-  <div class="col-1" style="width: 120px;">MARCA:</div>
-  <div class="col-1" style="width: 120px;">PASADO:</div>
-</div>
-
- <div class="p-2" style="height: 420px; overflow-y: scroll;">
-      <div id="sinPendientes"></div>
-    </div>
-
-
-          <div class="row  m-0 p-0 bg-light py-2">
-
-            <div class="col-xl-9 col-sm-7 m-0 p-0"><br>
-            </div>
-
-            <div class="col-1  m-0 p-0"><br>
-            </div>
-          </div>
-
-
-</div>
-
   </div>
-  <!---------- FIN AREA DE DEUDORES ------------>
+  
+  
+    <!---------- AREA DE CAJA DIARIA ------------>
+  
+    <div class="col-12" id="miDiv" style="padding: 20px;">
+  
+     <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+  <div style="font-size: 20px; margin-top: 2px;"><b>LIQUIDACION DE PAGOS:</b></div>
+  
+  
+            <div class="row  m-0 p-0 bg-light py-2">
+              <div class="col-4 container">
+                <div class="row">
+  <div class="col-3 m-0 p-0">FECHA ACTUAL:<br>
+    <input type="text" class="form-control mt-1" id="fecha_actual" placeholder="">
+  </div>
+  <div class="col-3 m-0 p-0">TOTAL A LIQ:<br>
+              <div class='input-group  mt-1'><div class='input-group-prepend'><span class='input-group-text form-control'>$</span>
+        </div><input type="text" class="form-control" id="total_val"></div>
+  </div>
+              <div class="col-6"><br>
+  
+                <button id="bt-liquidar-pagos" class="est_not btn btn-success btn-sm  mt-1" type="submit">LIQUIDAR</button>
+                <button id="bt-reset-filtro" class="est_not btn btn-danger btn-sm mt-1" type="submit">LIMPIAR</button>
+              </div>
+              </div>
+              </div>
+              <div class="col-8 container">
+                <div class="row">BUSCAR LIQUIDACIONES ANTIGUAS:</div>
+                <div class="row">
+      <div class="col-2 m-0 p-0">
+        <select class="form-select form-select mt-1" id="dia" name="dia" placeholder="">
+          <option value=""></option>
+          <!-- Este select se llenará dinámicamente con días según el mes y el año seleccionados -->
+        </select>
+      </div>
+          <div class="col-3 m-0 p-0">
+        <select class="form-select form-select mt-1" id="mes" name="mes">
+          <option value=""></option>
+          <option value="0">ENERO</option>
+          <option value="1">FEBRERO</option>
+          <option value="2">MARZO</option>
+          <option value="3">ABRIL</option>
+          <option value="4">MAYO</option>
+          <option value="5">JUNIO</option>
+          <option value="6">JULIO</option>
+          <option value="7">AGOSTO</option>
+          <option value="8">SEPTIEMBRE</option>
+          <option value="9">OCTUBRE</option>
+          <option value="10">NOVIEMBRE</option>
+          <option value="11">DICIEMBRE</option>
+        </select>
+      </div>            
+      <div class="col-2 m-0 p-0">
+        <select class="form-select form-select mt-1" id="anio" name="anio">
+          <option value=""></option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+        </select>
+      </div>
+              <div class="col-2  m-0 p-0">
+                <button id="bt-regenarar_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">BUSCAR</button>
+              </div>           
+              <div class="col-2  m-0 p-0">
+                <button id="bt-imprimir_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">IMPRIMIR</button>
+              </div>   
+              </div>   
+              
+              </div>
+              </div>        
+  
+  
+  <div class="row p-2" style="font-weight: bold;">
+    <div class="col-1">ID:</div>
+    <div class="col-2" style="width: 220px;">CLIENTE:</div>
+    <div class="col-1" style="width: 60px;">VTO:</div>
+    <div class="col-2" style="width: 80px;">CUOTA:</div>
+    <div class="col-2" style="width: 140px;">COMPAÑIA:</div>
+    <div class="col-1" style="width: 140px;">IMPORTE:</div>
+    <div class="col-1" style="width: 130px;">PATENTE:</div>
+    <div class="col-1" style="width: 120px;">MARCA:</div>
+    <div class="col-1" style="width: 120px;">PASADO:</div>
+  </div>
+  
+   <div class="p-2" style="height: 420px; overflow-y: scroll;">
+        <div id="sinPendientes"></div>
+      </div>
+  
+  
+            <div class="row  m-0 p-0 bg-light py-2">
+  
+              <div class="col-xl-9 col-sm-7 m-0 p-0"><br>
+              </div>
+  
+              <div class="col-1  m-0 p-0"><br>
+              </div>
+            </div>
+  
+  
+  </div>
+  
+    </div>
+    <!---------- FIN AREA DE DEUDORES ------------>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
 <!-- Scripts en entorno de Google Appscript -->
-<?!= include('JS_liquidaciones'); ?>
+<!-- <?!= include('JS_liquidaciones'); ?> -->
 <!-- Fin de Scripts en entorno de Google Appscript -->
 
 <!-- Scripts en entorno comun -->
-<!-- <script src="JS_liquidaciones.js"></script> -->
+<script src="JS_liquidaciones.js"></script>
 <!-- Fin de Scripts en entorno comun -->
 </body>
 
