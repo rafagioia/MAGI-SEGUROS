@@ -1,7 +1,7 @@
 # MAGI-SEGUROS
 Sistema de Seguros MAGI
 
-Sistema de seguros creado dentro del entorno de Google Appscript. Presenta varias limitaciones debido al entorno.
+Sistema de seguros creado dentro del entorno de Google Appscript con HTML, CSS y JS. Al ser un servicio gratuito con una base de datos interna utilizando googlesheet, presenta varias limitaciones debido al entorno del mismo.
 
 Partes que integran este sistema:
 
