@@ -435,6 +435,7 @@ function modificarDatos(event) {
    let infoNotascte =  document.getElementById("notascte").value;
 
    let infoPatente =  document.getElementById("patente").value;
+   let infoPatentev =  document.getElementById("patente_v").value;
    let infoMarca =  document.getElementById("marca_v").value;
    let infoMotor =  document.getElementById("motor").value;
    let infoChasis =  document.getElementById("chasis").value;
@@ -449,7 +450,7 @@ function modificarDatos(event) {
    let infoDanios =  document.getElementById("danios").value;
    let infoNotasVeh =  document.getElementById("notas").value;
 
- google.script.run.modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis);
+ google.script.run.modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoPatentev);
 alert('Póliza actualizada correctamente');
  spinner.style.display = 'none';
  boton.disabled = false;

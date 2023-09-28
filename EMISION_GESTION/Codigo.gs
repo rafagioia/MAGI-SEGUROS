@@ -75,15 +75,15 @@ function modifDatos(valorMod, nuevoValor, tramite_sn) {
 
 
 
-function getData(cnia_filter = "", patente_filter = "", dni_filter = "", estado_filter = "", nombre_filter = "") {
+function getData(cnia_filter = "", patente_filter = "", dni_filter = "", estado_filter, nombre_filter = "") {
   const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
   const data = LISTADO.getDataRange().getDisplayValues();
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
   const data2 = BD_CLIENTES.getDataRange().getDisplayValues();
 
   var sinPendientes = [];
-  for (var i = 0; i < data.length; i++) {
-    if ((data[i][10] === estado_filter || data[i][10] == "PENDIENTE") && 
+  for (var i = 1; i < data.length; i++) {
+    if ((data[i][10] === estado_filter || data[i][10] == "PENDIENTE" || estado_filter === "" ) && 
     (cnia_filter === "" || data[i][6] === cnia_filter) && 
     (nombre_filter === "" || data[i][2].includes(nombre_filter)) &&
     (patente_filter === "" || data[i][0] === patente_filter) && 
@@ -201,7 +201,7 @@ function mostrarCorreos(patente) {
 
 
 ////////////// INGESAMOS POLIZA NUEVA A BD EMISION //////////////////
-function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis) {
+function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoPatentev) {
 
   const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
@@ -246,7 +246,7 @@ var fecha = new Date();
 
   // Si la Patente ya existe, actualizar los datos del Vehiculo
   if (patenteIndex !== -1) {
-  LISTADO.getRange(patenteIndex, 1).setValue(infoPatente);
+  LISTADO.getRange(patenteIndex, 1).setValue(infoPatentev);
   LISTADO.getRange(patenteIndex, 2).setValue(infoDNI);
   LISTADO.getRange(patenteIndex, 3).setValue(infoCliente);
   LISTADO.getRange(patenteIndex, 4).setValue(infoSucursal);
@@ -372,4 +372,5 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 }
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
+
 
