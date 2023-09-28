@@ -86,7 +86,7 @@ function getData(cnia_filter = "", patente_filter = "", dni_filter = "", estado_
     if ((data[i][10] === estado_filter || data[i][10] == "PENDIENTE" || estado_filter === "" ) && 
     (cnia_filter === "" || data[i][6] === cnia_filter) && 
     (nombre_filter === "" || data[i][2].includes(nombre_filter)) &&
-    (patente_filter === "" || data[i][0] === patente_filter) && 
+    (patente_filter === "" || data[i][0].includes(patente_filter)) && 
     (dni_filter === "" || data[i][1] === dni_filter))
      {
       var sinPend = [];
@@ -372,5 +372,4 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 }
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
-
 
