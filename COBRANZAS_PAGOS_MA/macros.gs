@@ -1,10 +1,11 @@
- ///////////////////////////////////// HTML /////////////////////////////////////////////
+
+///////////////////////////////////// HTML /////////////////////////////////////////////
 
 
 /////////// ABRIMOS EL HTML ///////////////
 function doGet(){
   var template = HtmlService.createTemplateFromFile('registro');
-  template.pubUrl = "https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
+  template.pubUrl = "https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
   var output = template.evaluate();
   return output;
 }
@@ -17,15 +18,12 @@ function include( fileName ){
 
 //////////////////////////// INGRESO SIN DOPOST ///////////////////////
 
-
 function pagoNuevo(infomultiRec, infoDNI, infoCliente, infoWpp, infoPatente, infoMarca, infoPoliza, infoCnia, infoCuota, infoVigencia, infoImporte, infoVence, infoColor, infoUsuario, infoNotas, infoMedio) {
 
+let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2);IF(edate(F2;1)<now(); if(month(vlookup(B2;indirect("B:F");5;false))>month(edate(now();-1));"";"Poliza con Deuda");"");"");"")';
 
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
-
-
-let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2);IF(edate(F2;1)<now(); if(month(vlookup(B2;indirect("B:F");5;false))>month(edate(now();-1));"";"Poliza con Deuda");"");"");"")';
 
 
  // Buscar si el DNI ya existe en la hoja de clientes
@@ -54,6 +52,25 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
   let patenteIndex = -1;
   for (let i = 0; i < VAL_VEH.length; i++) {
     if (VAL_VEH[i][0] === infoPatente) {
+
+var dia_emi = VAL_VEH[i][9].split('/')[0];
+var mes_emi = VAL_VEH[i][9].split('/')[1];
+var anio_emi = VAL_VEH[i][9].split('/')[2];
+var mes_cob = parseInt(infoVence.split('/')[1]);
+var anio_cob = infoVence.split('/')[2].slice(-2);
+
+if(mes_emi == mes_cob && anio_emi == anio_cob) {
+let anio_emi2 = "20" + anio_emi
+let anio_emi3 = parseInt(anio_emi2) + 1
+    LISTADO.getRange(i+1,9).setValue(dia_emi + "/" + mes_emi + "/" + anio_emi);
+    LISTADO.getRange(i+1,10).setValue(dia_emi + "/" + mes_emi + "/" + String(anio_emi3).slice(-2));
+    LISTADO.getRange(i+1,21).setValue(dia_emi + "/" + mes_emi + "/" + anio_emi);
+    LISTADO.getRange(i+1,8).setValue(infoPoliza);
+    LISTADO.getRange(i+1,6).setValue(infoImporte);
+    LISTADO.getRange(i+1,11).setValue("SEGURO NUEVO");
+    LISTADO.getRange(i+1,4).setValue("MARIANO ACOSTA");
+}
+
       patenteIndex = i + 1;
       break;
     }
@@ -61,6 +78,7 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
 
   // Si la Patente ya existe, actualizar los datos del Vehiculo
   if (patenteIndex !== -1) {
+
   }
   // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
    else {
@@ -82,10 +100,9 @@ while (numCuota > 1) {
 // Obtener la nueva fecha de vencimiento
 var nuevaFechaVence = fecha2.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' })
 
-var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte, infoCnia, infoPoliza , nuevaFechaVence, , "SEGURO NUEVO", , infoMarca, "CUPONES", , , , , ]
+var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte, infoCnia, infoPoliza , nuevaFechaVence, , "SEGURO NUEVO", , infoMarca, "CUPONES", , , , , , nuevaFechaVence]
     LISTADO.insertRowBefore(2).getRange(2, 1, 1, vehVals.length).setValues([vehVals]);
   }
-
 
   var spreadsheetId = "1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA";
   var sheetName = "BD COBRANZAS";
@@ -127,15 +144,250 @@ var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte,
     sheetRegistro2.getRange("CARGADORES!T5").setValue(numeroRecibo);
     var recibo = numeroRecibo;
 
-    var sourceVals = [recibo, infoPatente, infoDNI, infoCliente, infoWpp, infoVence, fecha, infoCuota, infoVigencia, infoPoliza, infoCnia, infoImporte, infoPatente, infoMarca, ,infoColor, sucursal, f_deudor, notas1, infoMedio];
+    var sourceVals = [recibo, infoPatente, infoDNI, infoCliente, infoWpp, infoVence, fecha, infoCuota, infoVigencia, infoPoliza, infoCnia, infoImporte, infoPatente, infoMarca, , , sucursal, f_deudor, notas1, infoMedio];
     sheetRegistro2.insertRowBefore(2).getRange(2, 1, 1, sourceVals.length).setValues([sourceVals]);
 
     return recibo;
   }
 }
 
-///////////////////////////////////////////////////////////////////////
+/////////////////////////// VER LA ULTIMA ACTUALIZACION PARA DECIDIR DATOS PATENTE /////////////////////////////////////////
+function getUltimaActu(patente_value) {
+  let actualizaciones = [];
+  let actualizacion_cob = [];
+  let actualizacion_emi = [];
+  let actualizacion_pol = [];
+  let dni_value = "";
+  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const mantenimientos3 = LISTADO.getDataRange().getDisplayValues();
+  const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
+  const mantenimientos8 = BD_CLIENTES.getDataRange().getDisplayValues();
 
+  let encontrado1 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado2 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado3 = false; // Variable para rastrear si se encontró una coincidencia
+
+  for (let i = 0; i < mantenimientos3.length; i++) {
+    if (patente_value === mantenimientos3[i][0]) {
+      actualizacion_emi.push(mantenimientos3[i][0]);
+      actualizacion_emi.push(mantenimientos3[i][1]);
+      dni_value = mantenimientos3[i][1];
+      actualizacion_emi.push(mantenimientos3[i][2]);
+      actualizacion_emi.push(mantenimientos3[i][3]);
+      actualizacion_emi.push(mantenimientos3[i][4]);
+      actualizacion_emi.push(mantenimientos3[i][5]);
+      actualizacion_emi.push(mantenimientos3[i][6]);
+      actualizacion_emi.push(mantenimientos3[i][7]);
+      actualizacion_emi.push(mantenimientos3[i][8]);
+      actualizacion_emi.push(mantenimientos3[i][9]);
+      actualizacion_emi.push(mantenimientos3[i][10]);
+      actualizacion_emi.push(mantenimientos3[i][11]);
+      actualizacion_emi.push(mantenimientos3[i][12]);
+      actualizacion_emi.push(mantenimientos3[i][13]);
+      actualizacion_emi.push(mantenimientos3[i][14]);
+      let dni_encontrado = false; 
+
+for (let j = 0; j < mantenimientos8.length; j++) {
+  if (mantenimientos8[j][0] === mantenimientos3[i][1]) {
+    actualizacion_emi.push(mantenimientos8[j][4]);
+    dni_encontrado = true; // Se encontró una coincidencia
+    break;
+  }
+}
+
+if (!dni_encontrado) {
+  actualizacion_emi.push("");
+}
+      actualizacion_emi.push(mantenimientos3[i][16]);
+      actualizacion_emi.push(mantenimientos3[i][17]);
+      actualizacion_emi.push(mantenimientos3[i][18]);
+      actualizacion_emi.push(mantenimientos3[i][19]);
+      actualizacion_emi.push(mantenimientos3[i][20]);
+      encontrado1 = true; // Se encontró una coincidencia
+      break;
+    }
+  }
+
+  if (!encontrado1) {
+    actualizacion_emi.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "listado"
+  }
+
+
+
+
+  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS")
+  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
+  encontrado2 = false; // Restablecer la variable encontrado
+
+  mantenimientos.forEach(mantenimiento =>{
+    if(mantenimiento[1] === patente_value) {
+      actualizacion_cob.push(mantenimiento);
+      encontrado2 = true;
+    }
+  })
+
+  if (!encontrado2) {
+    actualizacion_cob.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "BD COBRANZAS"
+  }
+
+mantenimientos3.forEach(mantenimiento2 => {
+  if (mantenimiento2[1] === dni_value && mantenimiento2[10] !== "ANULACION") {
+    let actualizacion_pol2 = []; // Crear un nuevo arreglo para cada vehículo
+
+    actualizacion_pol2.push(mantenimiento2[0]);
+    actualizacion_pol2.push(mantenimiento2[12]);
+    actualizacion_pol2.push(mantenimiento2[6]);
+
+    for (let i = 0; i < mantenimientos.length; i++) {
+      if (mantenimiento2[0] === mantenimientos[i][1]) {
+        actualizacion_pol2.push(mantenimientos[i][5]);
+        break;
+      }
+    }
+
+    encontrado3 = true; // Se encontró una coincidencia
+    actualizacion_pol.push(actualizacion_pol2);
+  }
+});
+
+      actualizaciones.push(actualizacion_emi);
+      actualizaciones.push(actualizacion_cob);
+      actualizaciones.push(actualizacion_pol);
+  return actualizaciones;
+}
+
+/////////////////////////////// FIN DE VER ULTIMA ACT PARA DATOS PATENTE ////////////////////////////
+
+
+
+/////////////////////////// VER LA ULTIMA ACTUALIZACION PARA DECIDIR DATOS DNI /////////////////////////////////////////
+function getUltimaActuDNI(dni_value1) {
+  let actualizaciones = [];
+  let actualizacion_cob = [];
+  let actualizacion_emi = [];
+  let actualizacion_pol = [];
+  let dni_value = "";
+  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const mantenimientos3 = LISTADO.getDataRange().getDisplayValues();
+  const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
+  const mantenimientos8 = BD_CLIENTES.getDataRange().getDisplayValues();
+
+  let encontrado1 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado2 = false; // Variable para rastrear si se encontró una coincidencia
+  let encontrado3 = false; // Variable para rastrear si se encontró una coincidencia
+
+  for (let i = 0; i < mantenimientos3.length; i++) {
+    if (dni_value1 === mantenimientos3[i][1]) {
+      actualizacion_emi.push(mantenimientos3[i][0]);
+      actualizacion_emi.push(mantenimientos3[i][1]);
+      // dni_value = mantenimientos3[i][1];
+      actualizacion_emi.push(mantenimientos3[i][2]);
+      actualizacion_emi.push(mantenimientos3[i][3]);
+      actualizacion_emi.push(mantenimientos3[i][4]);
+      actualizacion_emi.push(mantenimientos3[i][5]);
+      actualizacion_emi.push(mantenimientos3[i][6]);
+      actualizacion_emi.push(mantenimientos3[i][7]);
+      actualizacion_emi.push(mantenimientos3[i][8]);
+      actualizacion_emi.push(mantenimientos3[i][9]);
+      actualizacion_emi.push(mantenimientos3[i][10]);
+      actualizacion_emi.push(mantenimientos3[i][11]);
+      actualizacion_emi.push(mantenimientos3[i][12]);
+      actualizacion_emi.push(mantenimientos3[i][13]);
+      actualizacion_emi.push(mantenimientos3[i][14]);
+            let dni_encontrado = false; 
+
+for (let j = 0; j < mantenimientos8.length; j++) {
+  if (mantenimientos8[j][0] === dni_value1) {
+    actualizacion_emi.push(mantenimientos8[j][4]);
+    dni_encontrado = true; // Se encontró una coincidencia
+    break;
+  }
+}
+
+if (!dni_encontrado) {
+  actualizacion_emi.push("");
+}
+
+      actualizacion_emi.push(mantenimientos3[i][16]);
+      actualizacion_emi.push(mantenimientos3[i][17]);
+      actualizacion_emi.push(mantenimientos3[i][18]);
+      actualizacion_emi.push(mantenimientos3[i][19]);
+      actualizacion_emi.push(mantenimientos3[i][20]);
+      encontrado1 = true; // Se encontró una coincidencia
+      break;
+    }
+  }
+
+  if (!encontrado1) {
+    actualizacion_emi.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "listado"
+  }
+
+
+
+
+  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS")
+  const mantenimientos = BD_COBRANZAS.getDataRange().getDisplayValues();
+  encontrado2 = false; // Restablecer la variable encontrado
+
+  mantenimientos.forEach(mantenimiento =>{
+    if(mantenimiento[2] === dni_value1) {
+      actualizacion_cob.push(mantenimiento);
+      encontrado2 = true;
+    }
+  })
+
+  if (!encontrado2) {
+    actualizacion_cob.push(""); // Agregar valor vacío si no se encuentra una coincidencia en la hoja "BD COBRANZAS"
+  }
+
+mantenimientos3.forEach(mantenimiento2 => {
+  if (mantenimiento2[1] === dni_value1 && mantenimiento2[10] !== "ANULACION") {
+    let actualizacion_pol2 = []; // Crear un nuevo arreglo para cada vehículo
+
+    actualizacion_pol2.push(mantenimiento2[0]);
+    actualizacion_pol2.push(mantenimiento2[12]);
+    actualizacion_pol2.push(mantenimiento2[6]);
+
+    for (let i = 0; i < mantenimientos.length; i++) {
+      if (mantenimiento2[0] === mantenimientos[i][1]) {
+        actualizacion_pol2.push(mantenimientos[i][5]);
+        break;
+      }
+    }
+
+    encontrado3 = true; // Se encontró una coincidencia
+    actualizacion_pol.push(actualizacion_pol2);
+  }
+});
+
+      actualizaciones.push(actualizacion_emi);
+      actualizaciones.push(actualizacion_cob);
+      actualizaciones.push(actualizacion_pol);
+  return actualizaciones;
+}
+
+/////////////////////////////// FIN DE VER ULTIMA ACT PARA DATOS DNI ////////////////////////////
+
+
+
+
+
+////////////// INGESAMOS NO MOVE A LA BD CHEQUES //////////////////
+
+function agregarNomove(medio, concepto, para, importe,usuario_p) {
+const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit")
+ var sheetRegistro2 = BD_COBRANZAS.getSheetByName("SIN_MOVIMIENTO");
+var fecha = new Date();
+let concepto1 = concepto + " - //" + usuario_p;
+  var numeroRecibo = BD_COBRANZAS.getRange("CARGADORES!T9").getValue() + 1;
+  BD_COBRANZAS.getRange("CARGADORES!T9").setValue(numeroRecibo);
+var sucursal = "MARIANO ACOSTA";
+
+var sourceVals = [numeroRecibo, concepto1, medio, sucursal, importe, para, fecha];
+sheetRegistro2.insertRowBefore(3).getRange(3, 1, 1, sourceVals.length).setValues([sourceVals]);
+  Logger.log("No Move agregado: " + concepto1 + " " + medio + " " + para + " " + importe);
+
+}
 
 ////////////// INGESAMOS CHEQUE A LA BD CHEQUES //////////////////
 
@@ -185,6 +437,23 @@ sheetRegistro2.insertRowBefore(3).getRange(3, 1, 1, sourceVals.length).setValues
 }
 
 
+function updWhatsapp(whatsapp, dni) {
+  const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit");
+  var sheetRegistro2 = BD_CLIENTES.getSheetByName("BD CLIENTES");
+  
+  const data = sheetRegistro2.getDataRange().getDisplayValues();
+  
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][0] === dni) {
+      // Actualizar el número de WhatsApp en la columna E (índice 4)
+      data[i][4] = whatsapp;
+      sheetRegistro2.getRange(i + 1, 5).setValue(whatsapp); // Actualizar la celda en la hoja de cálculo (Equivale a la columna E)
+      console.log("Número de WhatsApp actualizado a: " + whatsapp);
+    } else {
+      console.log("Error al actualizar los datos.")
+    }
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////
 
@@ -340,6 +609,7 @@ function buscarMantenimientos6(numeroInventario = "1192774"){
 }
 
 
+
 ////////////////////////  SESION DE USUARIOS ////////////////////////
 
 
@@ -437,6 +707,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   // Si no se encuentra el usuario o el color, devolver un valor predeterminado o null
   return null;
 }
+
 
 
 

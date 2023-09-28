@@ -52,6 +52,26 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
   let patenteIndex = -1;
   for (let i = 0; i < VAL_VEH.length; i++) {
     if (VAL_VEH[i][0] === infoPatente) {
+
+var dia_emi = VAL_VEH[i][9].split('/')[0];
+var mes_emi = VAL_VEH[i][9].split('/')[1];
+var anio_emi = VAL_VEH[i][9].split('/')[2];
+var mes_cob = parseInt(infoVence.split('/')[1]);
+var anio_cob = infoVence.split('/')[2].slice(-2);
+
+if(mes_emi == mes_cob && anio_emi == anio_cob) {
+let anio_emi2 = "20" + anio_emi
+let anio_emi3 = parseInt(anio_emi2) + 1
+    LISTADO.getRange(i+1,9).setValue(dia_emi + "/" + mes_emi + "/" + anio_emi);
+    LISTADO.getRange(i+1,10).setValue(dia_emi + "/" + mes_emi + "/" + String(anio_emi3).slice(-2));
+    LISTADO.getRange(i+1,8).setValue(infoPoliza);
+    LISTADO.getRange(i+1,6).setValue(infoImporte);
+    LISTADO.getRange(i+1,21).setValue(dia_emi + "/" + mes_emi + "/" + anio_emi);
+    LISTADO.getRange(i+1,11).setValue("SEGURO NUEVO");
+    LISTADO.getRange(i+1,4).setValue("MARCOS PAZ");
+
+}
+
       patenteIndex = i + 1;
       break;
     }
@@ -59,6 +79,7 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
 
   // Si la Patente ya existe, actualizar los datos del Vehiculo
   if (patenteIndex !== -1) {
+
   }
   // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
    else {
@@ -124,7 +145,7 @@ var vehVals = [infoPatente, infoDNI, infoCliente, "BD COBRANZAS", , infoImporte,
     sheetRegistro2.getRange("CARGADORES!T5").setValue(numeroRecibo);
     var recibo = numeroRecibo;
 
-    var sourceVals = [recibo, infoPatente, infoDNI, infoCliente, infoWpp, infoVence, fecha, infoCuota, infoVigencia, infoPoliza, infoCnia, infoImporte, infoPatente, infoMarca, ,infoColor, sucursal, f_deudor, notas1, infoMedio];
+    var sourceVals = [recibo, infoPatente, infoDNI, infoCliente, infoWpp, infoVence, fecha, infoCuota, infoVigencia, infoPoliza, infoCnia, infoImporte, infoPatente, infoMarca, , , sucursal, f_deudor, notas1, infoMedio];
     sheetRegistro2.insertRowBefore(2).getRange(2, 1, 1, sourceVals.length).setValues([sourceVals]);
 
     return recibo;
@@ -854,3 +875,4 @@ function convertHtmlToPdfM(htmlContent) {
 
   return encodedPdfContent;
 }
+

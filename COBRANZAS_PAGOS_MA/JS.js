@@ -1,5 +1,4 @@
 
-
 //////////////// BOTON DEL MENU ///////////////////////
     // Obtén una referencia al botón
     const navbarToggler = document.getElementById('navbar-toggler');
@@ -135,7 +134,6 @@
     /////////////////////////////////////////////////////////////////////
     
     
-    
     ///////// INGRESAR NOMOVE ///////////////
     function ingresarNomove(event) {
       event.preventDefault();
@@ -190,14 +188,13 @@
     alert('Recibi ingresado correctamente');
     }
     
-    
-     ///// SCRIPT PARA BUSCAR DATOS POR PATENTE //////////
-      function buscarRegistros() {
-      const boton = document.getElementById('buscarRegistrosBtn1');
-      const spinner = document.getElementById('spinner1');
+    //////////////////////////////// BUSCAR PATENTE (COB + EMI) //////////////////////////////////////
+      function decidir_patente() {
+      const boton = document.getElementById('buscarRegistrosBtn7');
+      const spinner = document.getElementById('spinner7');
       spinner.style.display = 'inline-block';
       boton.disabled = true;
-            const numeroInventario = document.getElementById("text-box-buscarPatente").value;
+      const patente_value  = document.getElementById("text-box-buscarPatente").value;
             let infoDNI =  document.getElementById("dni");
             let infoCliente =  document.getElementById("nombreCompleto");
             let infoWpp =  document.getElementById("wpp");
@@ -211,21 +208,65 @@
             let infoVence =  document.getElementById("vto");
             let infoColor =  document.getElementById("color");
             let infoNotas =  document.getElementById("notas");
+            
+      if (!patente_value || patente_value.trim() === "") {
+        alert("Ingrese una patente válida");
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+      }
     
-            google.script.run
-            .withSuccessHandler( info => {
+      spinner.style.display = 'inline-block';
+      boton.disabled = true;
+    
+      google.script.run.withSuccessHandler(function(ultima_actu) {
+    
+    let fechaString = ultima_actu[0][20];
+    let fechaEmi, mesEmi, anioEmi;
+    
+    if (fechaString) {
+      let fechaEmiArray = fechaString.split('/');
+      if (fechaEmiArray.length === 3) {
+        mesEmi = fechaEmiArray[1];
+        anioEmi = fechaEmiArray[2];
+      }
+    }
+    
+        
+    let fechaString2 = ultima_actu[1][0][5];
+    let fechaCob, mesCob, anioCob;
+    
+    if (fechaString2) {
+      let fechaCobArray = fechaString2.split('/');
+      if (fechaCobArray.length === 3) {
+        mesCob = fechaCobArray[1];
+        anioCob = fechaCobArray[2];
+      }
+    }
+    ///// ERROR, NO HAY NINGUN DATO
+    
+    if (ultima_actu[0] == "" && ultima_actu[1] == "") {
+        alert("NO HAY DATOS ENCONTRADOS.") 
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    
+    }  ////INGRESA POR COBRANZAS NORMAL
+    else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "")) {
+        alert("PAGO DE CUOTA")
+    
               let tableBody = document.getElementById("mantenimientosTableBody");
               tableBody.innerHTML = "";
-              if (info.length > 0) {
+              if (ultima_actu[1].length > 0) {
                 
-            infoDNI.value = info[0][2];
-            infoCliente.value = info[0][3];
-            infoWpp.value = info[0][4];
-            infoPatente.value = info[0][1];
-            infoMarca.value = info[0][13];
-            infoPoliza.value = info[0][9];
-            infoCnia.value = info[0][10];
-            infoImporte.value = info[0][11];
+            infoDNI.value = ultima_actu[1][0][2];
+            infoCliente.value = ultima_actu[1][0][3];
+            infoWpp.value = ultima_actu[1][0][4];
+            infoPatente.value = ultima_actu[1][0][1];
+            infoMarca.value = ultima_actu[1][0][13];
+            infoPoliza.value = ultima_actu[1][0][9];
+            infoCnia.value = ultima_actu[1][0][10];
+            infoImporte.value = ultima_actu[1][0][11];
     
     let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
     let importeNumero = parseInt(importeSinSignos);
@@ -233,13 +274,14 @@
     infoImporte.value = importeNumero
     
     
-            infoCuota.value = parseInt(info[0][7])+1;
-            infoVigencia.value = parseInt(info[0][8]);
+            infoCuota.value = parseInt(ultima_actu[1][0][7])+1;
+            infoVigencia.value = parseInt(ultima_actu[1][0][8]);
             if(infoCuota.value > infoVigencia.value) {
               infoCuota.value = 1;
               infoImporte.value = "";
             } else {}
-            let fechaString = info[0][5];
+            let fechaString = ultima_actu[1][0][5];
+            if (fechaString) {
             let partesFecha = fechaString.split('/');
             let dia = partesFecha[0];
             let mes = partesFecha[1];
@@ -247,15 +289,18 @@
             let fecha = new Date(anio, mes - 1, dia);
             fecha.setMonth(fecha.getMonth() + 1)
             infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-            infoColor.value = info[0][15];
-    const valorRecuperado = info[0][18];
-    const inicio = valorRecuperado.indexOf("(") + 1;
-    const fin = valorRecuperado.indexOf(")");
-    const contenido = valorRecuperado.substring(inicio, fin);
-    infoNotas.value = contenido;
+    } else {
+        alert("Fecha en BD COBRANZAS inválida: " + ultima_actu[1][0][5]);
+        console.log("FECHA BD COB: " + ultima_actu[1][0][5])
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    }
+    
+            infoColor.value = ultima_actu[1][0][15];
     
     let rowCount = 0;
-    info.forEach(mantenimiento => {
+    ultima_actu[1].forEach(mantenimiento => {
       if (rowCount < 6) { // solo agrega filas si el número actual de filas es menor que 6
     
         const template = document.getElementById("mantenimientosRow");
@@ -279,18 +324,305 @@
               } else {
                 alert("No se encontraron valores")
               }
-        spinner.style.display = 'none';
-        boton.disabled = false;
     
-    actualizarMensaje()
-            })
-            .buscarMantenimientos(numeroInventario)
-          }
-                ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR PATENTE ////////
+    ///// INGRESA POR SEGURO NUEVO O RENOVACION
+          } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
+    
+        alert("SEGURO NUEVO / RENOVACION")
+        if (ultima_actu[0].length > 0) {
+                
+            infoDNI.value = ultima_actu[0][1]; //
+            infoCliente.value = ultima_actu[0][2]; ///
+            infoWpp.value = ultima_actu[0][15];
+            infoPatente.value = ultima_actu[0][0];  ///
+            infoMarca.value = ultima_actu[0][12]; //
+            infoPoliza.value = ultima_actu[0][7]; //
+            infoCnia.value = ultima_actu[0][6]; //
+            infoImporte.value = ultima_actu[0][5]; //
+            infoVigencia.value = ultima_actu[0][4]; //
+    
+    let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
+    let importeNumero = parseInt(importeSinSignos);
+    infoImporte.value = importeNumero
+            infoCuota.value = 1;
+    
+            let fechaString = ultima_actu[0][8];
+            if (fechaString) {
+            let partesFecha = fechaString.split('/');
+            let dia = partesFecha[0];
+            let mes = partesFecha[1];
+            let anio = partesFecha[2].slice(-2);
+            let fecha = new Date(anio, mes - 1, dia);
+            infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+    } else {
+        alert("Fecha en BD EMISION inválida: " + ultima_actu[1][0][5]);
+        console.log("FECHA BD EMISION: " + ultima_actu[1][0][5])
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    }
+    
+            infoColor.value = "";
+            infoNotas.value = "";
+    
+              } else {
+                alert("No se encontraron valores")
+              }
+      } else {
+        
+        alert("ERROR")
+    console.log("Valores: " + ultima_actu[0])
+    console.log("Fecha Emi 19: " + ultima_actu[0][19])
+    console.log("Fecha Emi 20: " + ultima_actu[0][20])
+    console.log("Mes Cob: " + mesCob)
+    console.log("Año Cob: " + anioCob)
+    console.log("Mes Emi: " + mesEmi)
+    console.log("Año Emi: " + anioEmi)
+    
+      }
+    
+    let rowCount = 0;
+    let processed = new Set(); // conjunto para almacenar los valores ya procesados
+    const tableBody2 = document.getElementById("mantenimientosTableBody2");
+    tableBody2.innerHTML = ""; // Mover la línea de aquí
+    
+    ultima_actu[2].forEach(mantenimiento2 => {
+      if (rowCount < 10) {
+        // solo agrega filas si el número actual de filas es menor que 10 y el valor no está en el conjunto
+        if (!processed.has(mantenimiento2[1])) {
+          const template2 = document.getElementById("mantenimientosRow2");
+          const templateRow2 = template2.content;
+          let tr = templateRow2.cloneNode(true);
+          let PolPatente = tr.querySelector(".PolPatente")
+          let PolVehiculo = tr.querySelector(".PolVehiculo")
+          let PolCnia = tr.querySelector(".PolCnia")
+          let PolVtos = tr.querySelector(".PolVtos")
+    
+          PolPatente.textContent = mantenimiento2[0];
+          PolVehiculo.textContent = mantenimiento2[1];
+          PolCnia.textContent = mantenimiento2[2];
+          PolVtos.textContent = mantenimiento2[3];
+    
+          tableBody2.appendChild(tr);
+          rowCount++;
+          processed.add(mantenimiento2[1]); // agregar valor al conjunto de valores procesados
+        }
+      }
+    });
+    
+    
+      spinner.style.display = 'none';
+      boton.disabled = false;
+    
+      }).getUltimaActu(patente_value);
+    
+      }
+    
+    
+    //////////////////////////////// BUSCAR DNI (COB + EMI) //////////////////////////////////////
+      function decidir_dni() {
+      const boton = document.getElementById('buscarRegistrosBtn8');
+      const spinner = document.getElementById('spinner8');
+      spinner.style.display = 'inline-block';
+      boton.disabled = true;
+      const dni_value1  = document.getElementById("text-box-numeroInventario_dni").value;
+            let infoDNI =  document.getElementById("dni");
+            let infoCliente =  document.getElementById("nombreCompleto");
+            let infoWpp =  document.getElementById("wpp");
+            let infoPatente =  document.getElementById("patente");
+            let infoMarca =  document.getElementById("marca");
+            let infoPoliza =  document.getElementById("poliza");
+            let infoCnia =  document.getElementById("cnia");
+            let infoCuota =  document.getElementById("cuota");
+            let infoVigencia =  document.getElementById("vigencia");
+            let infoImporte =  document.getElementById("importe");
+            let infoVence =  document.getElementById("vto");
+            let infoColor =  document.getElementById("color");
+            let infoNotas =  document.getElementById("notas");
+    
+      google.script.run.withSuccessHandler(function(ultima_actu) {
+    
+    let fechaString = ultima_actu[0][20];
+    let fechaEmi, mesEmi, anioEmi;
+    
+    if (fechaString) {
+      let fechaEmiArray = fechaString.split('/');
+      if (fechaEmiArray.length === 3) {
+        mesEmi = fechaEmiArray[1];
+        anioEmi = fechaEmiArray[2];
+      }
+    }
+    
+        
+    let fechaString2 = ultima_actu[1][0][5];
+    let fechaCob, mesCob, anioCob;
+    
+    if (fechaString2) {
+      let fechaCobArray = fechaString2.split('/');
+      if (fechaCobArray.length === 3) {
+        mesCob = fechaCobArray[1];
+        anioCob = fechaCobArray[2];
+      }
+    }
+    
+    console.log("FECHA EMI: " + fechaString + "FECHA COB: " + fechaString2)
+    console.log("FECHA EMI 19: " + fechaString + "FECHA EMI 20: " + fechaString2)
+    console.log("FECHA EMI: " + ultima_actu[0] + "FECHA COB: " + ultima_actu[1])
+    
+    ///// ERROR, NO HAY NINGUN DATO
+    
+    if (ultima_actu[0] == "" && ultima_actu[1] == "") {
+        alert("NO HAY DATOS ENCONTRADOS.") 
+        spinner.style.display = 'none'; // Ocultar el spinner
+        boton.disabled = false; // Habilitar el botón
+        return;
+    
+    }  ////INGRESA POR COBRANZAS NORMAL
+    else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "")) {
+        alert("PAGO DE CUOTA")
+    
+              let tableBody = document.getElementById("mantenimientosTableBody");
+              tableBody.innerHTML = "";
+              if (ultima_actu[1].length > 0) {
+                
+            infoDNI.value = ultima_actu[1][0][2];
+            infoCliente.value = ultima_actu[1][0][3];
+            infoWpp.value = ultima_actu[1][0][4];
+            infoPatente.value = ultima_actu[1][0][1];
+            infoMarca.value = ultima_actu[1][0][13];
+            infoPoliza.value = ultima_actu[1][0][9];
+            infoCnia.value = ultima_actu[1][0][10];
+            infoImporte.value = ultima_actu[1][0][11];
+    
+    let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
+    let importeNumero = parseInt(importeSinSignos);
+    
+    infoImporte.value = importeNumero
+    
+    
+            infoCuota.value = parseInt(ultima_actu[1][0][7])+1;
+            infoVigencia.value = parseInt(ultima_actu[1][0][8]);
+            if(infoCuota.value > infoVigencia.value) {
+              infoCuota.value = 1;
+              infoImporte.value = "";
+            } else {}
+            let fechaString = ultima_actu[1][0][5];
+            let partesFecha = fechaString.split('/');
+            let dia = partesFecha[0];
+            let mes = partesFecha[1];
+            let anio = partesFecha[2].slice(-2);
+            let fecha = new Date(anio, mes - 1, dia);
+            fecha.setMonth(fecha.getMonth() + 1)
+            infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+            infoColor.value = ultima_actu[1][0][15];
+    
+    let rowCount = 0;
+    ultima_actu[1].forEach(mantenimiento => {
+      if (rowCount < 6) { // solo agrega filas si el número actual de filas es menor que 6
+    
+        const template = document.getElementById("mantenimientosRow");
+        const templateRow = template.content;
+        let tr = templateRow.cloneNode(true);
+        let colFecha = tr.querySelector(".PagoCuota")
+        let colDescripcion = tr.querySelector(".PagoFecha")
+        let colAtendio = tr.querySelector(".PagoVto")
+        let colAtendios = tr.querySelector(".PagoImporte")
+        
+        colFecha.textContent = mantenimiento[7];
+        colDescripcion.textContent = mantenimiento[5];
+        colAtendio.textContent = mantenimiento[6];
+        colAtendios.textContent = "$" + mantenimiento[11].replace("$", "").replace(".", "");
+        
+        tableBody.appendChild(tr);
+        rowCount++;
+      }
+    });
+    
+              } else {
+                alert("No se encontraron valores")
+              }
+    
+        ///// INGRESA POR SEGURO NUEVO O RENOVACION
+          } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
+      
+        alert("SEGURO NUEVO / RENOVACION")
+        if (ultima_actu[0].length > 0) {
+                
+            infoDNI.value = ultima_actu[0][1]; //
+            infoCliente.value = ultima_actu[0][2]; ///
+            infoWpp.value = ultima_actu[0][15];
+            infoPatente.value = ultima_actu[0][0];  ///
+            infoMarca.value = ultima_actu[0][12]; //
+            infoPoliza.value = ultima_actu[0][7]; //
+            infoCnia.value = ultima_actu[0][6]; //
+            infoImporte.value = ultima_actu[0][5]; //
+            infoVigencia.value = ultima_actu[0][4]; //
+    
+    let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
+    let importeNumero = parseInt(importeSinSignos);
+    infoImporte.value = importeNumero
+            infoCuota.value = 1;
+            let fechaString = ultima_actu[0][8];  ///
+            let partesFecha = fechaString.split('/');
+            let dia = partesFecha[0];
+            let mes = partesFecha[1];
+            let anio = partesFecha[2].slice(-2);
+            let fecha = new Date(anio, mes - 1, dia);
+            infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+            infoColor.value = "";
+            infoNotas.value = "";
+    
+              } else {
+                alert("No se encontraron valores")
+              }
+      } else {
+        alert("ERROR")
+      }
+    
+    let rowCount = 0;
+    let processed = new Set(); // conjunto para almacenar los valores ya procesados
+    const tableBody2 = document.getElementById("mantenimientosTableBody2");
+    tableBody2.innerHTML = ""; // Mover la línea de aquí
+    
+    ultima_actu[2].forEach(mantenimiento2 => {
+      if (rowCount < 10) {
+        // solo agrega filas si el número actual de filas es menor que 10 y el valor no está en el conjunto
+        if (!processed.has(mantenimiento2[1])) {
+          const template2 = document.getElementById("mantenimientosRow2");
+          const templateRow2 = template2.content;
+          let tr = templateRow2.cloneNode(true);
+          let PolPatente = tr.querySelector(".PolPatente")
+          let PolVehiculo = tr.querySelector(".PolVehiculo")
+          let PolCnia = tr.querySelector(".PolCnia")
+          let PolVtos = tr.querySelector(".PolVtos")
+    
+          PolPatente.textContent = mantenimiento2[0];
+          PolVehiculo.textContent = mantenimiento2[1];
+          PolCnia.textContent = mantenimiento2[2];
+          PolVtos.textContent = mantenimiento2[3];
+    
+          tableBody2.appendChild(tr);
+          rowCount++;
+          processed.add(mantenimiento2[1]); // agregar valor al conjunto de valores procesados
+        }
+      }
+    });
+    
+    
+      spinner.style.display = 'none';
+      boton.disabled = false;
+    
+      }).getUltimaActuDNI(dni_value1);
+    
+      }
+    
+    //////////////////////////////// FIN DE BUSCAR DNI (COB + EMI) //////////////////////////////////////
+    
+    
     
     
               
-      ///// SCRIPT PARA BUSCAR DATOS POR DNI //////////
+      ///// SCRIPT PARA BUSCAR DATOS POR DNI BD COB //////////
           function buscarRegistros_dni() {
       const boton = document.getElementById('buscarRegistrosBtn3');
       const spinner = document.getElementById('spinner3');
@@ -550,68 +882,7 @@
           }
                 ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR NOMBRE EN BD EMISION //////////
     
-      ///// SCRIPT PARA BUSCAR DATOS POR PATENTE EMISION //////////
-          function buscarRegistros_emision() {
-      const boton = document.getElementById('buscarRegistrosBtn2');
-      const spinner = document.getElementById('spinner2');
-      spinner.style.display = 'inline-block';
-      boton.disabled = true;
-            const numeroInventario = document.getElementById("text-box-buscarPatente").value;
-            let infoDNI =  document.getElementById("dni");
-            let infoCliente =  document.getElementById("nombreCompleto");
-            let infoWpp =  document.getElementById("wpp");
-            let infoPatente =  document.getElementById("patente");
-            let infoMarca =  document.getElementById("marca");
-            let infoPoliza =  document.getElementById("poliza");
-            let infoCnia =  document.getElementById("cnia");
-            let infoCuota =  document.getElementById("cuota");
-            let infoVigencia =  document.getElementById("vigencia");
-            let infoImporte =  document.getElementById("importe");
-            let infoVence =  document.getElementById("vto");
-            let infoColor =  document.getElementById("color");
-            let infoNotas =  document.getElementById("notas");
     
-            google.script.run
-            .withSuccessHandler( info => {
-              // let tableBody3 = document.getElementById("mantenimientosTableBody3");
-              // tableBody3.innerHTML = "";
-              if (info.length > 0) {
-                
-            infoDNI.value = info[0][1]; //
-            infoCliente.value = info[0][2]; ///
-            infoWpp.value = info[0][4];
-            infoPatente.value = info[0][0];  ///
-            infoMarca.value = info[0][12]; //
-            infoPoliza.value = info[0][7]; //
-            infoCnia.value = info[0][6]; //
-            infoImporte.value = info[0][5]; //
-    
-    let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
-    let importeNumero = parseInt(importeSinSignos);
-    infoImporte.value = importeNumero
-            infoCuota.value = 1;
-            infoVigencia.value = ""
-            let fechaString = info[0][8];  ///
-            let partesFecha = fechaString.split('/');
-            let dia = partesFecha[0];
-            let mes = partesFecha[1];
-            let anio = partesFecha[2].slice(-2);
-            let fecha = new Date(anio, mes - 1, dia);
-            infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-            infoColor.value = "";
-            infoNotas.value = "";
-    
-              } else {
-                alert("No se encontraron valores")
-              }
-        spinner.style.display = 'none';
-        boton.disabled = false;
-    
-    actualizarMensaje()
-            })
-            .buscarMantenimientos3(numeroInventario)
-          }
-                ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR DNI //////////
     
     
       ///// SCRIPT PARA BUSCAR DATOS POR DNI BD EMISION//////////
@@ -710,6 +981,14 @@
       window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agendá%20nuestro%20número%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
     }
     
+    /////////////// ACTUALIZAR NUMERO WHATSAPP /////////////
+    function updateWhatsapp() {
+      event.preventDefault();
+      var whatsapp = document.getElementById("wpp").value;
+      var dni = document.getElementById("dni").value;
+      google.script.run.updWhatsapp(whatsapp, dni);
+    alert('N° Whatsapp actualizado correctamente!');
+    }
     
     
     //////////////////// REIMPRIMIR RECIBO SIMPLE //////////////////
@@ -720,7 +999,6 @@
         var newWindow = window.open();
         newWindow.document.write(content);
       }).getValuesFromSheet(numRecibo);
-      console.log(numRecibo);
     }
     
     
@@ -767,7 +1045,6 @@
       link.target = '_blank';
       link.click();
     }
-    
     
     
     //////////////////// MENSAJES DE VENCIMIENTO /////////////////////////////////
@@ -822,6 +1099,10 @@
     }
     
       ////////////////////////////////////////////////////////////
+    
+    
+    
+    
     
     /////////////////////////////////////////////////////////////////
     //////////////////// SESION DE USUARIOS /////////////////////////
@@ -1029,6 +1310,8 @@
     
                 
     ////////////////////////////////////////////////////////////////////////////////
+                
+    
     
     
     
@@ -1068,16 +1351,10 @@
     actualizarMensaje()
     });
     
-    
-    
-    
-    
-    document.getElementById('buscarRegistrosBtn2').addEventListener('click', buscarRegistros_emision);
-    document.getElementById('buscarRegistrosBtn3').addEventListener('click', buscarRegistros_dni);
-    document.getElementById('buscarRegistrosBtn4').addEventListener('click', buscarRegistros_dni_emision);
     document.getElementById('buscarRegistrosBtn5').addEventListener('click', buscarRegistros_nom);
     document.getElementById('buscarRegistrosBtn6').addEventListener('click', buscarRegistros_nom_emision);
-    document.getElementById('buscarRegistrosBtn1').addEventListener('click', buscarRegistros);
+    document.getElementById('buscarRegistrosBtn7').addEventListener('click', decidir_patente);
+    document.getElementById('buscarRegistrosBtn8').addEventListener('click', decidir_dni);
     document.getElementById('bt-ingreso').addEventListener('click', ingresarPago);
     document.getElementById('formularioCheque').addEventListener('submit', ingresarCheque);
     document.getElementById('formularioGasto').addEventListener('submit', ingresarGasto);
@@ -1086,6 +1363,6 @@
     document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
     document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
     document.getElementById('bt-desc-rec').addEventListener('click', descargaRecibo);
+    document.getElementById('bt-upd-wpp').addEventListener('click', updateWhatsapp);
     document.getElementById('close_session').addEventListener('click', close_sessionok);
-    
     
