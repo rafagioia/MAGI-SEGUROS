@@ -52,6 +52,22 @@ function renovarPol(
   }
 }
 
+function bajaPol(
+  infoPatente,
+  infoHoy) {
+  const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
+  
+  // Obtener los datos de la hoja
+  const data = BD_EMISION.getDataRange().getValues();
+  
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][0] == infoPatente) { // Columna A
+      BD_EMISION.getRange(i + 1, 11).setValue("ANULACION");   // Columna H
+      BD_EMISION.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
+      break; // Terminar la búsqueda una vez que se encuentre una coincidencia
+    }
+  }
+}
 
 ////////////////// LISTADO DE RENOVACIONES //////////////////
 
@@ -72,7 +88,7 @@ function getData(mes_hoy1 = new Date().getMonth(), anio_hoy = new Date().getFull
 
 var fecha_mod = emisionData[j][20];
 
-if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
+if (fecha_mod !== "" ||  emisionData[j][10] !== "ANULACION") { // Verificar si fecha_mod no es null ni undefined
   var parts4 = fecha_mod.split('/');
   var mes_mod = parseInt(parts4[1]);
   var anio_mod = parseInt(parts4[2]);
@@ -94,7 +110,7 @@ if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
       var refacturaciones = [];
 
       // Verificar si ha pasado un año desde la fecha de inicio de refacturación
-      if ((anio_hoy > anio_desde && mes_hoy === mes_desde) && (mes_mod !== mes_hoy && anio_mod !== anio_hoy)) {
+      if ((anio_hoy > anio_desde && mes_hoy === mes_desde) && (mes_mod !== mes_hoy && anio_mod !== anio_hoy) &&  emisionData[j][10] !== "ANULACION") {
         // Renovación
         var fecha_hasta_ren = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
         var nuevaFecha3 = fecha_hasta_ren.toLocaleDateString('es-ES');
@@ -116,7 +132,7 @@ if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
         var nuevaFecha2 = fecha_hasta.toLocaleDateString('es-ES');
         refacturaciones.push(nuevaFecha2);
         refacturaciones.push("");
-      } else if (mes_mod == mes_hoy && anio_mod == anio_hoy) {
+      } else if (mes_mod == mes_hoy && anio_mod == anio_hoy &&  emisionData[j][10] !== "ANULACION") {
         // Renovadas
         var fecha_hasta_ren = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
         var nuevaFecha3 = fecha_hasta_ren.toLocaleDateString('es-ES');
@@ -160,7 +176,7 @@ if (fecha_mod !== "") { // Verificar si fecha_mod no es null ni undefined
         refacturaciones.push("");
       }
       
-      if (parseInt(part[1]) === mes_hoy && parseInt(part[2]) === anio_hoy && emisionData[j][7] !== "ANULACION") {
+      if (parseInt(part[1]) === mes_hoy && parseInt(part[2]) === anio_hoy &&  emisionData[j][10] !== "ANULACION") {
         sinPendientes.push(refacturaciones);
       }
     }
@@ -534,5 +550,3 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
-
-
