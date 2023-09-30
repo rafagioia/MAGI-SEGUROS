@@ -14,12 +14,12 @@ function include( fileName ){
 
 ///////////////// LISTADO DE PAGOS ////////////////////////
 
-function getData(mes = "", anio = "") {
+function getData(dia = "", mes = "", anio = "") {
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
   const cobranzasData = BD_COBRANZAS.getDataRange().getDisplayValues();
   liq = "";
-if(mes && anio) {
-  liq = mes + "/" + anio
+if(dia && mes && anio) {
+  liq = dia + "/" + mes + "/" + anio
 }
   var sinPendientes = [];
   for (var i = 1; i < cobranzasData.length; i++) {

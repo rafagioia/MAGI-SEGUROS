@@ -102,10 +102,10 @@
       // Comprueba si hay un valor en la columna [8]
       if (result[i][8]) {
         // Si hay un valor, agrega "Pasado:" y el valor de la columna
-        pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "' style='display: none'>PASAR</button><div id='pas_id" + i + "'><b>Pasado: </b><div id='_fec_pas" + i + "'>" + result[i][8] + "</div></div>";
+        pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "' style='display: none'>PASAR</button><div id='pas_id" + i + "'><b>Pasado: </b><div class='text-sm'  id='_fec_pas" + i + "'>" + result[i][8] + "</div></div>";
       } else {
         // Si no hay un valor, agrega un botón "Pasar"
-        pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "'>PASAR</button><div id='pas_id" + i + "' style='display: none'><b>Pasado: </b><div id='_fec_pas" + i + "' ></div></div>";
+        pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "'>PASAR</button><div id='pas_id" + i + "' style='display: none'><b>Pasado: </b><div class='text-sm'  id='_fec_pas" + i + "' ></div></div>";
       }
       pendientesHtml += "</div>";
     
@@ -113,13 +113,13 @@
       // Comprueba si hay un valor en la columna [9]
       if (result[i][8] && result[i][9]) {
         // Si hay un valor, agrega "Liquidado:" y el valor de la columna
-        pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "' style='display: none'>Quitar</button><div id='liq_id'><b>Liquidado: </b><div id='pas_id" + i + "'>" + result[i][9] + "</div></div>";
+        pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "' style='display: none'>Quitar</button><div id='liq_id'><b>Liquidado: </b><div class='text-sm' id='pas_id" + i + "'>" + result[i][9] + "</div></div>";
       } else if (result[i][8] && !result[i][9]) {
         // Si no hay un valor en la columna [8], agrega un botón "X" de color rojo
-        pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "'>Quitar</button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div id='pas_id" + i + "'></div></div>";
+        pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "'>Quitar</button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div class='text-sm'  id='pas_id" + i + "'></div></div>";
         }  else if (!result[i][8] && !result[i][9]) {
         // Si no hay un valor en la columna [8], agrega un botón "X" de color rojo
-        pendientesHtml += "<button class='btn btn-danger' id='btnQuitar" + i + "' style='display: none'>Quitar</button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div id='pas_id" + i + "'></div></div>";
+        pendientesHtml += "<button class='btn btn-danger' id='btnQuitar" + i + "' style='display: none'>Quitar</button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div class='text-sm' id='pas_id" + i + "'></div></div>";
         }
     pendientesHtml += "</div>";
     
@@ -282,6 +282,55 @@
       });
     });
     
+    document.getElementById("actualizarListaBtn").addEventListener("click", function() {
+      console.log("Botón clicado"); // Verifica si este mensaje se muestra en la consola
+    
+      var seleccionado = document.getElementById("cnia_s").value;
+    
+      // Filtrar los elementos basados en el valor seleccionado
+      var divs = document.querySelectorAll("#sinPendientes > div");
+    
+      for (var i = 0; i < divs.length; i++) {
+        var div = divs[i];
+        var cnia = div.querySelector(".text-sm[id^='_cnia']").textContent;
+        var todosLosAgros = ["AGROSALTA", "AGROSALTA C/GRUA", "AGRO (V) C/GRUA", "AGRO MOTO", "AGRO (V)"];
+    
+        if (seleccionado === "todosLosAgros") {
+          if (todosLosAgros.includes(cnia)) {
+            div.style.display = "block"; // Mostrar el elemento
+          } else {
+            div.style.display = "none"; // Ocultar el elemento
+          }
+        } else if (cnia === seleccionado || seleccionado === "todos") {
+          div.style.display = "block"; // Mostrar el elemento
+        } else {
+          div.style.display = "none"; // Ocultar el elemento
+        }
+      }
+      calcularSuma();
+    });
+    
+    /// GENERAR LISTADO
+    document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
+      var dia = parseInt(document.getElementById("dia").value, 10);
+      var mes = parseInt(document.getElementById("mes").value, 10) + 1; // Sumamos 1 al mes
+      var anio = parseInt(document.getElementById("anio").value, 10);
+      var anioUltimosDosDigitos = anio % 100;
+      
+      // Función para agregar un cero delante si el número es menor a 10
+      function agregarCero(num) {
+        return num < 10 ? "0" + num : num;
+      }
+    
+      // Aplicar la función agregarCero a dia y mes
+      var diaFormateado = agregarCero(dia);
+      var mesFormateado = agregarCero(mes);
+    
+      calcularSuma();
+    
+      google.script.run.withSuccessHandler(updateSinPendientes).getData(diaFormateado, mesFormateado, anioUltimosDosDigitos);
+    });
+    
     
     }
     
@@ -289,14 +338,7 @@
       google.script.run.withSuccessHandler(updateSinPendientes).getData();
       /////////////////////////////////////////
     
-    /// GENERAR LISTADO
-    document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
-      var dia = parseInt(document.getElementById("dia").value, 10);
-      var mes = parseInt(document.getElementById("mes").value, 10);
-      var anio = parseInt(document.getElementById("anio").value, 10);
     
-     google.script.run.withSuccessHandler(updateSinPendientes).getData(dia, mes, anio)
-    });
     
      /// OBTENER FECHA ACTUAL PARA LIQUIDAR
       const fechaActual = new Date();
@@ -386,23 +428,31 @@
     
         var rowData = [];
     
-        rowData.push(div.querySelector(".text-sm[id^='_deudor']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_recibo']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_cte']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_vto']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_cta']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_ctad']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_cnia']").textContent);
-        rowData.push(div.querySelector(".form-control[id^='_imp']").value);
+        rowData.push(div.querySelector(".text-sm[id^='_imp']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_pol']").value);
         rowData.push(div.querySelector(".text-sm[id^='_pat']").textContent);
         rowData.push(div.querySelector(".text-sm[id^='_marca']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='_fec_pas']").textContent);
+        rowData.push(div.querySelector(".text-sm[id^='pas_id']").textContent);
     
         tableData.push(rowData);
     
         // Sumar el valor
-        var valor = parseFloat(rowData[6]);
-        if (!isNaN(valor)) {
-          total += valor;
-        }
+    
+    var valor = rowData[6].replace('$', ''); // Eliminar el signo "$"
+    valor = valor.replace('.', ''); // Eliminar el signo "."
+    valor = parseInt(valor); // Usar parseInt para mantener los decimales
+    if (!isNaN(valor)) {
+      total += valor;
+    }
+    console.log("valor: " + i + ": " + total)
+    
       }
     
       // Mostrar el total
@@ -415,8 +465,8 @@
     function generarPDF(tableData) {
       var ventanaImpresion = window.open('', '', 'width=800,height=600');
     
-      ventanaImpresion.document.write('<html><head><title>Lista Pendientes</title></head><body>');
-      ventanaImpresion.document.write('<center><h1>LISTADO DE DEUDA MENSUAL</h1></center><p>');
+      ventanaImpresion.document.write('<html><head><title>Lista de pagos liquidados</title></head><body>');
+      ventanaImpresion.document.write('<center><h1>LIQUIDACION GENERADA </h1></center><p>');
       ventanaImpresion.document.write('<style>' +
         'table { width: 100%; border-collapse: collapse; }' +
         'th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }' +
@@ -425,39 +475,44 @@
         '</style>');
       ventanaImpresion.document.write('<table>');
       ventanaImpresion.document.write('<thead><tr>' +
-        '<th>ID:</th>' +
+        '<th>RECIBO:</th>' +
         '<th>CLIENTE:</th>' +
         '<th>VTO:</th>' +
         '<th>CTA:</th>' +
         '<th>DE:</th>' +
         '<th>COMPAÑIA</th>' +
         '<th>IMPORTE:</th>' +
+        '<th>POLIZA:</th>' +
         '<th>PATENTE:</th>' +
         '<th>MARCA:</th>' +
         '<th>PASADO:</th>' +
+        '<th>LIQUIDADO:</th>' +
         '</tr></thead>');
       ventanaImpresion.document.write('<tbody>');
+    
+      var total = 0; // Calcula el total una sola vez
+    
     
       for (var i = 0; i < tableData.length; i++) {
         ventanaImpresion.document.write('<tr>');
     
         for (var j = 0; j < tableData[i].length; j++) {
           ventanaImpresion.document.write('<td>' + tableData[i][j] + '</td>');
+          if (j === 6) { // Columna de importe
+            var importe = parseInt(tableData[i][j].replace('$', '').replace('.', ''));
+            if (!isNaN(importe)) {
+              total += importe;
+    
+    console.log("valor: " + i + ": " + total)
+            }
+          }
         }
     
         ventanaImpresion.document.write('</tr>');
       }
     
       // Agregar fila con el total
-      var total = 0;
-      for (var i = 0; i < tableData.length; i++) {
-        var rowData = tableData[i];
-        var importe = parseFloat(rowData[6]);
-        if (!isNaN(importe)) {
-          total += importe;
-        }
-      }
-      ventanaImpresion.document.write('<tr><td colspan="8"></td><td colspan="1" class="total-label">TOTAL:</td><td class="total-value" colspan="1">$' + total.toFixed(2) + '</td></tr>');
+      ventanaImpresion.document.write('<tr><td colspan="8"></td><td colspan="1" class="total-label">TOTAL:</td><td class="total-value" colspan="1">$' + total + '</td></tr>');
     
       ventanaImpresion.document.write('</tbody>');
       ventanaImpresion.document.write('</table>');
@@ -704,4 +759,3 @@
     document.getElementById('bt-liquidar-pagos').addEventListener('click', liquidarPagos);
     document.getElementById('close_session').addEventListener('click', close_sessionok);
     //////////////////////////////////////////////////////////////////
-    
