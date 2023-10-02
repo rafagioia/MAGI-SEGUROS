@@ -32,11 +32,15 @@ function renovarPol(
   infoHasta,
   infoHoy, 
   infoPol,
-  infoRefa) {
+  infoRefa,
+  vto_antiguo) {
   const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
-  
+    const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
+
+
   // Obtener los datos de la hoja
   const data = BD_EMISION.getDataRange().getValues();
+  const data2 = BD_COBRANZAS.getDataRange().getValues();
   
   for (var i = 0; i < data.length; i++) {
     if (data[i][0] == infoPatente) { // Columna A
@@ -49,6 +53,15 @@ function renovarPol(
       BD_EMISION.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
       break; // Terminar la búsqueda una vez que se encuentre una coincidencia
     }
+  }
+  for (var i = 0; i < data2.length; i++) {
+    if (data2[i][1] == infoPatente && data2[i][7] == 1) { 
+      BD_COBRANZAS.getRange(i + 1, 10).setValue(infoPol); 
+    }
+    if (infoVence !== vto_antiguo) {
+      BD_COBRANZAS.getRange(i + 1, 6).setValue(infoVence); 
+    }
+      break; 
   }
 }
 
@@ -74,6 +87,7 @@ function bajaPol(
 function getData(mes_hoy1 = new Date().getMonth(), anio_hoy = new Date().getFullYear()) {
   const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
   const emisionData = BD_EMISION.getDataRange().getDisplayValues();
+  
   var sinPendientes = [];
 
   var mes_hoy = mes_hoy1 +1;
@@ -550,3 +564,5 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
+
+

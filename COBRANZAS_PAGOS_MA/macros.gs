@@ -52,27 +52,28 @@ let f_deudor = '=IF(vlookup(B2;indirect("B:F");5;false)=F2; IF(F2>EDATE(now();-2
   let patenteIndex = -1;
   for (let i = 0; i < VAL_VEH.length; i++) {
     if (VAL_VEH[i][0] === infoPatente) {
-
+      patenteIndex = i + 1;
 var dia_emi = VAL_VEH[i][9].split('/')[0];
 var mes_emi = VAL_VEH[i][9].split('/')[1];
 var anio_emi = VAL_VEH[i][9].split('/')[2];
+var dia_cob = parseInt(infoVence.split('/')[0]);
 var mes_cob = parseInt(infoVence.split('/')[1]);
 var anio_cob = infoVence.split('/')[2].slice(-2);
 
-if(mes_emi == mes_cob && anio_emi == anio_cob) {
+if(mes_emi == mes_cob && anio_emi == anio_cob || dia_cob !== dia_emi && infoCuota == 1) {
 let anio_emi2 = "20" + anio_emi
 let anio_emi3 = parseInt(anio_emi2) + 1
     LISTADO.getRange(i+1,9).setValue(dia_emi + "/" + mes_emi + "/" + anio_emi);
     LISTADO.getRange(i+1,10).setValue(dia_emi + "/" + mes_emi + "/" + String(anio_emi3).slice(-2));
-    LISTADO.getRange(i+1,21).setValue(dia_emi + "/" + mes_emi + "/" + anio_emi);
+    // LISTADO.getRange(i+1,21).setValue(dia_emi + "/" + mes_emi + "/" + anio_emi);
     LISTADO.getRange(i+1,8).setValue(infoPoliza);
     LISTADO.getRange(i+1,6).setValue(infoImporte);
     LISTADO.getRange(i+1,11).setValue("SEGURO NUEVO");
-    LISTADO.getRange(i+1,4).setValue("MARIANO ACOSTA");
+    LISTADO.getRange(i+1,4).setValue("BD COBRANZAS (MARIANO ACOSTA)");
+
+     break; 
 }
 
-      patenteIndex = i + 1;
-      break;
     }
   }
 

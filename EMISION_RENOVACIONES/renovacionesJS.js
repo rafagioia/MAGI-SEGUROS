@@ -76,11 +76,14 @@
         pendientesHtml += "<input type='text' class='form-control planilla' id='_imp" + i + "' value='" + result[i][13] + "'><input type='text' class='form-control planilla' id='_pol" + i + "' value='" + result[i][8] + "'></div></div>";
     
         // Columna de patente
-        pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' id='_pat" + i + "'>" + result[i][2] + "</div>";
+        // pendientesHtml += "<div class='col-2 text-sm text-truncate planilla' id='_pat" + i + "'>" + result[i][2] + "</div>";
     
         // Columna de marca
-        pendientesHtml += "<div class='col-1 text-sm text-truncate planilla' id='_marca" + i + "'>" + result[i][3] + "</div>";
-    
+        // pendientesHtml += "<div class='col-1 text-sm text-truncate planilla' id='_marca" + i + "'>" + result[i][3] + "</div>";
+    pendientesHtml += "<div class='row col-3'>";
+    pendientesHtml += "<div class='text-sm text-truncate planilla fs-5' id='_pat" + i + "'>" + result[i][2] + "</div>";
+    pendientesHtml += "<div class='text-sm text-truncate planilla' style='font-size: 0.6rem' id='_marca" + i + "'>" + result[i][3] + "</div>";
+    pendientesHtml += "</div>";
         // Establecer el estilo según el valor de result[i][10]
         if (result[i][10] == "RENOVACION") {
           // Columna de REFA
@@ -182,7 +185,7 @@
       divs.forEach(function(_btn_ren) {
         _btn_ren.addEventListener("click", function() {
           var id = _btn_ren.id.slice(8); // Obtener el índice del div
-    
+      let vto_antiguo = result[id][11]
       let infoPatente = document.getElementById("_pat" + id).textContent;
       let infoImporte = document.getElementById("_imp" + id).value;
       let infoVence = document.getElementById("_vto" + id).value;
@@ -195,7 +198,7 @@
       let anio = fechaHoy.getFullYear();
       let infoHoy = dia + '/' + mes + '/' + anio;
     
-    console.log(infoPatente, infoImporte, infoVence, infoHasta, infoRefa)
+    console.log(infoPatente, infoImporte, infoVence, infoHasta, infoRefa, "vto antiguo: ", vto_antiguo)
       // document.getElementById("_ver" + id).textContent = "??";
         // Ocultar el botón
         _btn_ren.style.display = "none";
@@ -207,7 +210,8 @@
         infoHasta, 
         infoHoy,
         infoPol,
-        infoRefa
+        infoRefa, 
+        vto_antiguo
       );
     
         });
