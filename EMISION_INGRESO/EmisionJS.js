@@ -31,7 +31,67 @@
      )
   })()
   
+  ///////// MODAL DE COTIZACIONES ///////////////////
+      var modalContainer = document.getElementById("emi_modal_container");
+      var btnShowModal = document.getElementById("emi_show_modal");
+      var closeModal = document.getElementById("emi_close");
   
+      // Abrir modal al hacer clic en el botón
+      btnShowModal.onclick = function() {
+        modalContainer.style.display = "block";
+      }
+  
+  var modalContainer = document.getElementById("emi_modal_container");
+  var btnShowModal = document.getElementById("emi_show_modal");
+  var closeModal = document.getElementById("emi_close");
+  var marcaInput = document.getElementById("marca");
+  var modeloInput = document.getElementById("modelo");
+  var modalModelo1 = document.getElementById("modalModelo1");
+  var modalMarca1 = document.getElementById("modalMarca1");
+  var imprimirModalButton = document.getElementById("imprimirModal");
+  var modalContent2 = document.getElementById("emi_modal_content2");
+  
+  // Función para abrir el modal
+  btnShowModal.onclick = function() {
+    // Obtener los valores de los inputs
+    var marca = marcaInput.value;
+    var modelo = modeloInput.value;
+  
+    // Actualizar el contenido del modal con los valores de los inputs
+    modalMarca1.textContent = marca;
+    modalModelo1.textContent = modelo;
+  
+    modalContainer.style.display = "block";
+  }
+  
+  
+      // Cerrar modal al hacer clic en la "X"
+      closeModal.onclick = function() {
+        modalContainer.style.display = "none";
+      }
+  
+      // Cerrar modal al hacer clic fuera del contenido del modal
+      window.onclick = function(event) {
+        if (event.target == modalContainer) {
+          modalContainer.style.display = "none";
+        }
+      }
+  // Función para imprimir el contenido del modal
+  imprimirModalButton.onclick = function() {
+    // Abrir una nueva ventana emergente
+    var printWindow = window.open('', '', 'width=1000,height=600');
+  
+    // Clonar el contenido del modal y agregarlo a la ventana emergente
+    var modalContentClone = modalContent2.cloneNode(true);
+    printWindow.document.body.appendChild(modalContentClone);
+  
+    // Imprimir la ventana emergente
+    printWindow.print();
+  
+    // Cerrar la ventana emergente después de la impresión
+    printWindow.close();
+  }
+      
   /////////// DESHABILITAMOS EL BOTON DE ENVIO ///////////////
     const miFormulario = document.getElementById('formularioEmision');
     miFormulario.addEventListener('submit', function() {
@@ -79,17 +139,58 @@
       let anio = fechaHoy.getFullYear();
       let infoHoy = dia + '/' + mes + '/' + anio;
   
+  
+  
+  
     google.script.run.seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasFull, infoMotor, infoChasis, infoUsuario, infoHoy);
     event.target.reset();
   
+  const successAlert = document.getElementById('success-alert');
   
-    const successAlert = document.getElementById('success-alert');
-    successAlert.style.display = 'block';
+  function fadeInAndOutElement(element) {
+    fadeInElement(element, function() {
+      setTimeout(function() {
+        fadeOutElement(element);
+      }, 6000); // Cambia la duración del "fade in" a tu preferencia
+    });
+  }
   
-    setTimeout(function() {
-      successAlert.style.display = 'none';
-    }, 3000);
-    
+  // Función para aplicar el "fade in"
+  function fadeInElement(element, callback) {
+    element.style.opacity = '0'; // Establecer la opacidad inicial a 0
+    element.style.display = 'block'; // Asegurarse de que el elemento esté visible
+  
+    let opacity = 0;
+    const fadeInInterval = setInterval(function () {
+      if (opacity < 1) {
+        opacity += 0.02; // Aumentar gradualmente la opacidad
+        element.style.opacity = opacity;
+      } else {
+        clearInterval(fadeInInterval); // Detener el intervalo una vez que la opacidad llegue a 1
+        if (typeof callback === 'function') {
+          callback(); // Llamar al callback después del "fade in"
+        }
+      }
+    }, 50); // Intervalo de actualización de la opacidad (en milisegundos)
+  }
+  
+  // Función para aplicar el "fade out"
+  function fadeOutElement(element) {
+    let opacity = 1;
+    const fadeOutInterval = setInterval(function () {
+      if (opacity > 0) {
+        opacity -= 0.05; // Reducir gradualmente la opacidad
+        element.style.opacity = opacity;
+      } else {
+        clearInterval(fadeOutInterval); // Detener el intervalo
+        element.style.display = 'none'; // Ocultar el elemento cuando la opacidad sea 0
+      }
+    }, 50); // Intervalo de actualización de la opacidad (en milisegundos)
+  }
+  
+  // Llamar a la función para mostrar el elemento con "fade in" y luego desaparecer con "fade out"
+  fadeInAndOutElement(successAlert);
+  
   infoDNI =  "";
   infoCliente =  "";
   infoDomicilio =  "";
@@ -132,6 +233,7 @@
   document.getElementById('valoresContainer_veh').style.display = 'none';
   document.getElementById('formContainer').style.display = 'none';
   document.getElementById('formContainer_veh').style.display = 'none';
+  document.getElementById("mantenimientosTableBody2").innerHTML = "";
   spinner.style.display = 'none';
   boton.disabled = false;
   
@@ -441,7 +543,7 @@
           infoMarca.value = info[0][12];
           infoCnia.value = info[0][6];
           infoImporte.value = info[0][5];
-          infoPoliza.value = info[0][7];
+          infoPoliza.value = "";
           infoOperacion.value = "SEGURO NUEVO";
           infoNotasVeh.value = info[0][14];
           infoDanios.value = info[0][15];
@@ -671,9 +773,9 @@
         ano = "VEH AÑO: 1997";
       } else if (patente.slice(0, 3) >= "BTA" && patente.slice(0, 3) <= "CKZ") {
         ano = "VEH AÑO: 1998";
-      } else if (patente.slice(0, 3) >= "CLA" && patente.slice(0, 3) <= "DAT") {
+      } else if (patente.slice(0, 3) >= "CLA" && patente.slice(0, 3) <= "DBO") {
         ano = "VEH AÑO: 1999";
-      } else if (patente.slice(0, 3) >= "DAU" && patente.slice(0, 3) <= "DNZ") {
+      } else if (patente.slice(0, 3) >= "DBQ" && patente.slice(0, 3) <= "DNZ") {
         ano = "VEH AÑO: 2000";
       } else if (patente.slice(0, 3) >= "DOA" && patente.slice(0, 3) <= "DXZ") {
         ano = "VEH AÑO: 2001";
@@ -721,9 +823,9 @@
         ano = "MOTO AÑO: 2011";
       } else if (patente.slice(3, 6) >= "HZE" && patente.slice(3, 6) <= "IZZ") {
         ano = "MOTO AÑO: 2012";
-      } else if (patente.slice(3, 6) >= "JAA" && patente.slice(3, 6) <= "JZZ") {
+      } else if (patente.slice(3, 6) >= "JAA" && patente.slice(3, 6) <= "JYU") {
         ano = "MOTO AÑO: 2013";
-      } else if (patente.slice(3, 6) >= "KAA" && patente.slice(3, 6) <= "KWQ") {
+      } else if (patente.slice(3, 6) >= "JYV" && patente.slice(3, 6) <= "KWQ") {
         ano = "MOTO AÑO: 2014";
       } else if (patente.slice(3, 6) >= "KWR" && patente.slice(3, 6) <= "LKZ") {
         ano = "MOTO AÑO: 2015";
@@ -792,9 +894,9 @@
     let cnia = document.getElementById("cnia").value;
     var valor = "";
   
-    if (["FED PAT", "RIVADAVIA", "MAPFRE", "PROVIDENCIA", "ALLIANZ","MERCANTIL", "NIVEL", "ORBIS"].includes(cnia)) {
+    if (["FED PAT", "MAPFRE", "PROVIDENCIA", "ALLIANZ","MERCANTIL", "NIVEL", "ORBIS"].includes(cnia)) {
       valor = 4;
-    } else if (["LA CAJA", "RIO URUGUAY", "ATM", "LIBRA"].includes(cnia)) {
+    } else if (["LA CAJA", "RIVADAVIA", "RIO URUGUAY", "ATM", "LIBRA"].includes(cnia)) {
       valor = 3;
     } else if (["AGROSALTA", "AGROSALTA C/GRUA", "AGRO MOTO", "AGRO (V)", "AGRO (V) C/GRUA", "GRUA", "SAN PATRICIO"].includes(cnia)) {
       valor = 6;
@@ -1135,10 +1237,30 @@
   
     ///////// LIMPIAR ///////////////
   function cleanservice() {
+    
+    if(document.getElementById("dni").value === "" || document.getElementById("patente_sn").value === "") {
+  alert("MAMAAAAAAAA!")
+  alert("SACÁ LA MANO DE AHÍ CARAJO!")
+  alert("No, estoy con el pan nada más.")
+  alert("ACABÁ DE CORTÁ LA LETRICIDÁ PORQUE")
+  alert("METISTE UN CUTU-CUCHILLO AHÍ")
+  alert("TE PODÉ QUEDA' ELETRIFICADA, LOCA!")
+  alert("Ah bueno, no importa")
+  alert("De algo hay que morir.")
+  alert("YO NO TE PO' CREER.")
+  alert("Saqué el pan, Ricardo.")
+  alert("MAMÁ, CORTASTE TODA LA LOOZ.")
+  alert("TOCASTE ALGO QUE HABÍAKJXZ")
+  alert("Vos sabés que toqué ahi")
+  alert("Eso tienen que arreglarlo porque no puede ser asi")
+  alert("SACALACAI")
+  alert("SACAL APAISAL")
+  alert("DESANCHUFALO!")
+  alert("METISTE UN CUTU-CUCHILLO AHÍ")
+  return
+  }
+  
     event.preventDefault();
-  
-  
-  
   
     const boton = document.getElementById('bt-ingreso');
       const spinner = document.getElementById('spinner_clean');
