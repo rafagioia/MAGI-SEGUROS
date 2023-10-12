@@ -230,7 +230,7 @@
           <td>
             <span style="font-size: 2rem" class="p-0 m-0"><b>PRESUPUESTO:</b></span><br>
             <span style="font-size: 1rem" class="p-0 m-0"><b>VEHICULO: </b></span><span id="modalMarca1"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<span id="modalModelo1"></span><br>
-            <span style="font-size: 1rem" class="p-0 m-0"><b>LOCALIDAD:</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp<span style="font-size: 1rem" class="p-0 m-0"><b>SUMA VEH: $</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp<b>GNC: $</b>
+            <span style="font-size: 1rem" class="p-0 m-0"><b>LOCALIDAD:</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp<span style="font-size: 1rem" class="p-0 m-0"><b>SUMA VEH: $<span id="modalSA1"></span></b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp<b>GNC: $</b>
           </td>
         </tr>
         <tr>
@@ -1232,8 +1232,8 @@
                   <label for="cnia" class="form-label mt-1">Cobertura:</label>
               </div>
             </div>
-            <div class="col-9">
-              <div class="mb-1">
+            <div class="col-4 m-0 ">
+              <div class="mb-1 m-0 ">
                   <select class="form-select form-select-sm" id="cobertura" name="cobertura" placeholder="" required>
   <option value="A">A</option>
   <option value="B1">B1</option>
@@ -1279,6 +1279,16 @@
                   </select>
               </div>
               </div>
+                        <div class="col-1 m-0 p-0">
+              <div class="mb-1">
+                  <label for="cnia" class="form-label m-0 p-0">Suma:</label>
+              </div>
+            </div>
+             <div class="col-4">
+              <div class="mb-1">
+            <input type="number" class="form-control form-control-sm" id="suma_aseg" name="suma_aseg">
+              </div>
+            </div>
             </div>
                       <div class="row">
             <div class="col-3">

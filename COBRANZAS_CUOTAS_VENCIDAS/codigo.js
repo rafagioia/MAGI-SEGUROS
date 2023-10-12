@@ -14,17 +14,37 @@ function include( fileName ){
 
 ///////////////// LISTADO DE PAGOS ////////////////////////
 
-function getData(mes = "", anio = "") {
+function getData(dia = "", mes = "", anio = "") {
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
   const cobranzasData = BD_COBRANZAS.getDataRange().getDisplayValues();
-  liq = "";
-if(mes && anio) {
-  liq = mes + "/" + anio
-}
+
   var sinPendientes = [];
+var today = new Date().toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+    var now_split = today.split('/');
+    var now_dia = now_split[0];
+    var now_mes = now_split[1];
+    var now_anio = now_split[2];
+  // for (var i = 1; i < 25; i++) {
   for (var i = 1; i < cobranzasData.length; i++) {
-   if ((liq === "" && cobranzasData[i][15] == "") || (liq !== "" && cobranzasData[i][15] === liq)) {
+    var partes = cobranzasData[i][5].split('/');
+    var dia = partes[0];
+    var mes = partes[1];
+    var anio = partes[2];
+    
       var para_pasar = [];
+      
+  var currentDate = new Date(now_anio, now_mes - 1, now_dia);
+  var dataDate = new Date(anio, mes - 1, dia);
+
+  // Calcula la diferencia en días entre las dos fechas
+  var timeDiff = currentDate - dataDate;
+  var daysDiff = timeDiff / (1000 * 3600 * 24);
+
+
+      if (daysDiff > 20 && daysDiff < 50) {
+        if (daysDiff >= 0 && daysDiff <= 20) {
+
+        } else {
       para_pasar.push(cobranzasData[i][0]); // ID DEUDOR
       para_pasar.push(cobranzasData[i][3]); // CLIENTE
       para_pasar.push(cobranzasData[i][1]); // PATENTE
@@ -33,27 +53,32 @@ if(mes && anio) {
       para_pasar.push(cobranzasData[i][7]); // CUOTA
       para_pasar.push(cobranzasData[i][8]); // VIGENCIA
       para_pasar.push(cobranzasData[i][5]); // VENCE
-      para_pasar.push(cobranzasData[i][14]); // PASADOS
       para_pasar.push(cobranzasData[i][15]); // LIQUIDADO
       para_pasar.push(cobranzasData[i][11]); // IMPORTE
-      para_pasar.push(cobranzasData[i][9]); // POLIZA 
-      para_pasar.push(""); // 
-      para_pasar.push(""); // 
-      para_pasar.push(""); //
-      para_pasar.push(""); // 
+      para_pasar.push(cobranzasData[i][4]); // WHATSAPP
+      // para_pasar.push(cobranzasData[i][9]); // POLIZA
+        para_pasar.push("DEBE UN MES");
+      para_pasar.push(cobranzasData[i][17]); // DEUDOR AVISADO
+      para_pasar.push(daysDiff-30); // Debes completar esta parte según tus necesidades
+      para_pasar.push(""); // Debes completar esta parte según tus necesidades
+      para_pasar.push(""); // Debes completar esta parte según tus necesidades
       para_pasar.push(""); // PASADO
+
       sinPendientes.push(para_pasar);
+        }
+      } 
+    
     }
-  }
   console.log(sinPendientes)
   return sinPendientes;
-}
+  }
+
 
 
 
 ////////// UPDATE POLIZA ////////////////
 
-function updatePol(infoRecibo, infoPoliza, infoPatente) {
+function updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig) {
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
   var data = BD_COBRANZAS.getDataRange().getValues();
 
@@ -63,13 +88,31 @@ function updatePol(infoRecibo, infoPoliza, infoPatente) {
 
 
 
-for(let i = 0; i < data.length; i++) {
-  if(parseInt(infoRecibo) === data[i][0]) {
-
-    BD_COBRANZAS.getRange(i+1,10).setValue(infoPoliza);
+for (let i = 0; i < data.length; i++) {
+  if (parseInt(infoRecibo) === data[i][0]) {
+    BD_COBRANZAS.getRange(i + 1, 10).setValue(infoPoliza);
+  if (parseInt(infoCta) !== data[i][7] || parseInt(infoVig) !== data[i][8]) {
+    BD_COBRANZAS.getRange(i + 1, 8).setValue(infoCta);
+    BD_COBRANZAS.getRange(i + 1, 9).setValue(infoVig);
+    // Una vez que se han modificado las cuotas y la vigencia, sal del bucle.
   }
-}
 
+  var dia_emi = parseInt(data[i][5].getDate());
+  var mes_emi = parseInt(data[i][5].getMonth() + 1); // Los meses comienzan desde 0, así que sumamos 1.
+  var anio_emi2 = data[i][5].getFullYear();
+  var anio_emi = parseInt(anio_emi2 % 100)
+  var dia_cob = parseInt(infoVto.split('/')[0]);
+  var mes_cob = parseInt(infoVto.split('/')[1]);
+  var anio_cob = parseInt(infoVto.split('/')[2]);
+
+  if (dia_emi !== dia_cob || mes_emi !== mes_cob || anio_emi !== anio_cob) {
+    BD_COBRANZAS.getRange(i + 1, 6).setValue(infoVto);
+
+  }    
+    break;
+  }
+
+}
 
 for(let i = 0; i < data2.length; i++) {
   if(infoPatente === data2[i][0]) {
@@ -84,29 +127,15 @@ for(let i = 0; i < data2.length; i++) {
 ////////// PASAR PAGO ////////////////
 
 
-function pasarPago(infoRecibo, infoPoliza, infoPatente) {
+function avisarPago(infoRecibo) {
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
   var data = BD_COBRANZAS.getDataRange().getValues();
-
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
-  const data2 = LISTADO.getDataRange().getDisplayValues();
 
 for(let i = 0; i < data.length; i++) {
   if(parseInt(infoRecibo) === data[i][0]) {
     var hoy = new Date();
     var fechaFormateada = Utilities.formatDate(hoy, "GMT", "dd/MM/yy");
-    BD_COBRANZAS.getRange(i+1,15).setValue(fechaFormateada);
-      if(parseInt(infoPoliza) !== data[i][10] && infoPoliza !== "") {
-    BD_COBRANZAS.getRange(i+1,10).setValue(infoPoliza);
-  }
-  }
-}
-
-for(let i = 0; i < data2.length; i++) {
-  if(infoPatente === data2[i][0]) {
-      if(parseInt(infoPoliza) !== data[i][8] && infoPoliza !== "") {
-    LISTADO.getRange(i+1,8).setValue(infoPoliza);
-  }
+    BD_COBRANZAS.getRange(i+1,18).setValue(fechaFormateada);
   }
 }
 

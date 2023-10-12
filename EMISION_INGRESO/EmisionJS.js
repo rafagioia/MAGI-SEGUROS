@@ -38,6 +38,7 @@
   
       // Abrir modal al hacer clic en el botón
       btnShowModal.onclick = function() {
+    event.preventDefault();
         modalContainer.style.display = "block";
       }
   
@@ -46,20 +47,26 @@
   var closeModal = document.getElementById("emi_close");
   var marcaInput = document.getElementById("marca");
   var modeloInput = document.getElementById("modelo");
+  var sumaInput = document.getElementById("suma_aseg");
   var modalModelo1 = document.getElementById("modalModelo1");
   var modalMarca1 = document.getElementById("modalMarca1");
+  var modalSA1 = document.getElementById("modalSA1");
   var imprimirModalButton = document.getElementById("imprimirModal");
   var modalContent2 = document.getElementById("emi_modal_content2");
   
   // Función para abrir el modal
   btnShowModal.onclick = function() {
+    event.preventDefault();
+    
     // Obtener los valores de los inputs
     var marca = marcaInput.value;
     var modelo = modeloInput.value;
+    var suma = sumaInput.value;
   
     // Actualizar el contenido del modal con los valores de los inputs
     modalMarca1.textContent = marca;
     modalModelo1.textContent = modelo;
+    modalSA1.textContent = suma;
   
     modalContainer.style.display = "block";
   }
@@ -67,11 +74,13 @@
   
       // Cerrar modal al hacer clic en la "X"
       closeModal.onclick = function() {
+    event.preventDefault();
         modalContainer.style.display = "none";
       }
   
       // Cerrar modal al hacer clic fuera del contenido del modal
       window.onclick = function(event) {
+    event.preventDefault();
         if (event.target == modalContainer) {
           modalContainer.style.display = "none";
         }
@@ -127,10 +136,16 @@
       let infoHasta =  document.getElementById("hasta").value;
       let infoDanios =  document.getElementById("danios").value;
       let infoRefa =  document.getElementById("refac").value;
+      let infoSumaAseg =  document.getElementById("suma_aseg").value;
+      if (infoSumaAseg == "") {
+        let sumaAseg = ""
+      } else {
+        let sumaAseg = "SA: $" + infoSumaAseg + " | "
+      }
       let infoNotasVeh =  document.getElementById("notasveh").value;
       let infoNotasVehold =  document.getElementById("notasvehold").value;
       let infoUsuario =  sessionStorage.getItem("magi-usuario");
-      let infoNotasFull = "//" + infoUsuario + " [" + infoVigencia + "] " + infoOperacion + " (" + infoNotasVeh + ") " + infoNotasVehold;
+      let infoNotasFull = "//" + infoUsuario + " [" + infoVigencia + "] " + infoOperacion + " (" + infoNotasVeh + ") " + sumaAseg + infoNotasVehold;
       let infoMotor =  document.getElementById("motor").value;
       let infoChasis =  document.getElementById("chasis").value;
       let fechaHoy = new Date();
