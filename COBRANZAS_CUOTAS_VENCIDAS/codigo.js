@@ -41,8 +41,8 @@ var today = new Date().toLocaleDateString('es-ES', {day: '2-digit', month: '2-di
   var daysDiff = timeDiff / (1000 * 3600 * 24);
 
 
-      if (daysDiff > 20 && daysDiff < 50) {
-        if (daysDiff >= 0 && daysDiff <= 20) {
+      if (daysDiff > 26 && daysDiff < 56) {
+        if (daysDiff >= 0 && daysDiff <= 26) {
 
         } else {
       para_pasar.push(cobranzasData[i][0]); // ID DEUDOR

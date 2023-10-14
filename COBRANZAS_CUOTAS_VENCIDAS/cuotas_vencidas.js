@@ -804,4 +804,3 @@
     document.getElementById('close_session').addEventListener('click', close_sessionok);
     //////////////////////////////////////////////////////////////////
     
-    

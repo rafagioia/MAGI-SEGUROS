@@ -42,9 +42,6 @@
         modalContainer.style.display = "block";
       }
   
-  var modalContainer = document.getElementById("emi_modal_container");
-  var btnShowModal = document.getElementById("emi_show_modal");
-  var closeModal = document.getElementById("emi_close");
   var marcaInput = document.getElementById("marca");
   var modeloInput = document.getElementById("modelo");
   var sumaInput = document.getElementById("suma_aseg");
@@ -73,18 +70,21 @@
   
   
       // Cerrar modal al hacer clic en la "X"
-      closeModal.onclick = function() {
+    //   closeModal.onclick = function() {
+    // event.preventDefault();
+    //     modalContainer.style.display = "none";
+    //   }
+    closeModal.addEventListener('click', function() {
     event.preventDefault();
         modalContainer.style.display = "none";
-      }
-  
+    });
       // Cerrar modal al hacer clic fuera del contenido del modal
-      window.onclick = function(event) {
-    event.preventDefault();
-        if (event.target == modalContainer) {
-          modalContainer.style.display = "none";
-        }
-      }
+    //   window.onclick = function(event) {
+    // event.preventDefault();
+    //     if (event.target == modalContainer) {
+    //       modalContainer.style.display = "none";
+    //     }
+    //   }
   // Función para imprimir el contenido del modal
   imprimirModalButton.onclick = function() {
     // Abrir una nueva ventana emergente
