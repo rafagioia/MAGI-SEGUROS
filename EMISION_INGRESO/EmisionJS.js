@@ -137,10 +137,10 @@
       let infoDanios =  document.getElementById("danios").value;
       let infoRefa =  document.getElementById("refac").value;
       let infoSumaAseg =  document.getElementById("suma_aseg").value;
-      if (infoSumaAseg == "") {
         let sumaAseg = ""
+      if (infoSumaAseg == "") {
       } else {
-        let sumaAseg = "SA: $" + infoSumaAseg + " | "
+        sumaAseg = "SA: $" + infoSumaAseg + " | "
       }
       let infoNotasVeh =  document.getElementById("notasveh").value;
       let infoNotasVehold =  document.getElementById("notasvehold").value;
