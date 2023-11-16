@@ -25,7 +25,7 @@ Esta sección recibe los pagos ingresados anteriormente y genera una preliquidac
 ### Cobranzas - Libro Mayor (seccion en construcción)
 Esta sección hace un balance general con los gastos, el dinero a favor, los pagos ingresados, las liquidaciones (los pagos que salen), entre otros, y genera un debe/haber de todo para hacer un seguimiento de valores que se van moviendo en la oficina
 
-### Cobranzas - Pagos Vencidos (seccion en construcción)
+### Cobranzas - Pagos Vencidos
 Esta sección se encarga de sacar un listado de los clientes que pagaron el mes pasado pero que aún no pagaron este mes, para enviarles un recodatorio de vencimiento ya sea por whatsapp, o por mail de manera automatica.
 
 ### Emision - Ingreso
