@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <base target="_top">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Estilos en entorno de Google Appscript -->
   <?!= include('CSS_deudores_pasados'); ?>
@@ -18,466 +20,433 @@
 </head>
 
 <body style="background-color: #03BB85">
- <nav class="navbar navbar-expand-lg navbar-light bg-light border-radius">
-    <a class="navbar-brand fs-5" id="title_menu" href="#">&nbsp;&nbsp;SISTEMA DE COBRANZAS - DEUDORES PASADOS</a>
-    <button id="navbar-toggler" class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
-      <ul class="navbar-nav">
-        <!-- Menú principal -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Cobranzas
-          </a>
-          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
-            <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
-              id="dropdown-item">Pagos Marcos Paz</a>
-              <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
-              id="dropdown-item">Pagos Mariano Acosta</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec" id="dropdown-item">Cierre Caja Diaria</a>
-            <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec">Deudores Pasados</a>
-            <a class="dropdown-item" id="dropdown-item" href="https://script.google.com/macros/s/AKfycbwo5gTWUE53KhjSllzENI3agZL5JgJquIyd1W_tzbP5V2ZnG_6tcpPhJx4uyytV5cw5/exec">Gestion Deudores</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Emisión
-          </a>
-          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec" id="dropdown-item" >Ingresar Seguro</a>
-            <a class="dropdown-item" href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec" id="dropdown-item" >Gestion Pólizas</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Siniestros
-          </a>
-          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
-            <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"
-              id="dropdown-item" >Ingresar Denuncia</a>
-            <a class="dropdown-item"
-              href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"
-              id="dropdown-item">Gestion Siniestros</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-        <!-- Fin de Menú principal en entorno de Google Appscript-->
+ <nav>
+    <div class="navbar">
+      <i class='bx bx-menu'></i>
+      <div class="logo"><a href="#">SISTEMA DE COBRANZAS<br><h6>DEUDORES PASADOS</h6></a></div>
+      <div class="nav-links">
+        <div class="sidebar-logo">
+          <span class="logo-name">SISTEMA DE COBRANZAS<br><h2><center>DEUDORES PASADOS</center></h2></span>
+          <i class='bx bx-x'></i>
+        </div>
+        <ul class="links"><div class="dropdown-divider"></div>
+          <li>
+            <a class='htmlcss-arrow'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAixJREFUaEPtWG2OgjAQnelq5Bh4ksVzLBvxJCsn0R/sORZPIsfQxDCbghJoaQvyUTT4U6CdN+/NzGsRXvyHLx4/zABsMygxgP6KbAel25+iayXmGcDYbL0/A2JGxZoQM9A3A233M7bRtgt2BdR2vxlA14x3lexgDLSVwgNI2+9mAJKEvp2ApeknIQblZ0h0TJcshOMl0cnOHgO+4yHQn6kmEDBMo8te9Z4VAMx39gT0Ywq+0LkGxPgAGmZeBEcLXNfJaXQA6K+4bLxavfM/ueY5SKIDILgmFmwAqNhvAtxAdIklOclMxRRdN9bnAH6tzuXMqqTRuD6E84jJe3WeAyIAAIgJMIQF5O3S0DatM9CoAxEkgJAg4CkFiGsldkcyeg3wfWtYMCkmpgXuJtGFskgDx8UbHcRupEVBkNASNyIIKwwUgfqOxwA8ItoW/5Vap6T3moFmF4Aq5YHjwg1ccRZkBS+00mkCeADLpXYu45QO6bbbqHYOiMOM18HvdV2Z4qMDEK0ED4phCB+QT+O7lWCUbkWLPQ0JPWnmOLY622GlBhoNM6HAVecCKwB4bBkI3j41bfOBQWn4+FAcuwYUrpMfbmSLzdgpqw2NP7IP4ElPU5wTrDPwLgBMbk71fDISmgHcMzD4iezZTFuTUN8Bm9brnQHThn0/7wOAdO/Td5Ca9WqvXiru1RhMbtakyWr8rusL3NUi7nQXAHwL47VK1ziG/n4GMHSGTeu/PAP/2ffkQNfddKMAAAAASUVORK5CYII=" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; <b style="color: #015C07">COBRANZAS</b></a>
+            <i class='bx bxs-chevron-down htmlcss-arrow-giro arrow  '></i>
+            <ul class="htmlCss-sub-menu sub-menu">
+              <li class="more">
+                <span><a class='more-arrow'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAyxJREFUaEPtmQ1OG0EMhZ2TQE8CPQn0JMBJoCcBTgI9SauH1mjw2n727IYqUlaKEimbGX/2889ODnLi1+HE7ZczwP+O4J4RuBSRWxG5EBF81tf7Aol3vF6X95c94LcCqNE3i8EdmwDzW0TuOz+y984CqOF3WzYfIjMNMgNwLSLPOxhul5iKSBcA4c68rkZA36p5RAuX5gTkBid4VxuiAwCvexu3N11gkPBR7jyJyK9KlKsAkfEPG5Mwy6USRAXAkw28Dg/tUgqXiMBJKjd1PnUQA/ASFsb/KIT3r7mH7QXjLQT2AgSi4V5s0TfjFSz4c0lQxtAF0ET3IEKHZQCedGA8kw2S82rpyiMkvAhvameOHIBIwHH2t25SZwDWg0yP1f7A1oHhcMLjQBDKNgLwvN+NViYxBuHlg/ubyCirfYQvSqSq5y0QdJ3JqRSFCKCTgF6PUL3DaBgJSEhiLJOVKNhcWOWgB2DJWUOxsFGi20ihGODe7LLOWUF7APAUIPTK5IN7rNyYNFj5Hb+3zlxBewCWmpVOC4BNxnLJymYGRKPmAXQ9yiZUzQN9GgMg6yUKZXvCqpx6AJ0E1o0sNJMJACBNFp1vA8BGyJ1ozveAqmNJ6tA9JDQaBwC8MOePMogi0i2lJQl1k5jJBd/r05jtBayUTiUxrb0Vi4N7vEEtG1FoT6o0MualTtWyHmXPFtaZq57kAdDMN961m+hDiJZKHSWQF2ODxDLMOTaBV00yCh8lHyBmhzkskTVJKx/cv7I3AihNggNEpZnZtGAVyEqzNU63nooWywBRPWJk40n5eaRTAaonEZAUDr9sU8NUi4NdPfSKipknyTBaGUB0SnDsh3r7DOBqX+nZqYSXSLuMAI77o3EklRsDwD7RwVZ6XtNsdlElY4le/ospgpg+Fi9UMNYjPpaoREBnGcjJO5necrgbnXSXjO8AqMOyeq/H6YiKfsb7eLwOqeDQKxu7qWxGeVYjYEdmO1U2Je/eXi3TX348A8Ak1YWZkeDnHrMAuoCe7zNZeFCbDK/2gY43AaMaz/5m/bPxT5FdJNQBO+q9WyV0VOMqi58BKl465j3/AENV5zEO4aBpAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; PAGOS</a>
+                  <i class='bx bxs-chevron-right more-arrow-giro arrow '></i>
+                </span>
+                <ul class="more-sub-menu sub-menu">
+                  <li><a href="https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAjNJREFUaEPtmY1NAzEMhd1NYBJgEmASYBJgEmAS2AT0oboKPiexaXptpUQ6ter5Lu/5J35JN3LmY3Pm+GUSOHYEexG4E5ErEbkWkYuVwX6JCNeriLzU5q4RAOzzFvjKuN3p3kXkfkvoj0GNwNsJgVfAkLix9DwCjyLycApudzAQhT/p5BGw3of5k4jw6Y1v82OvrqL21B2O5FMH4CGxG95kdoJLL/eKd0QB6SMZe8DjUB0UNXhSBEZ59D8EeKZJOBKBScDUSCaFZgTwwEyhtVPo0+ie1jKK5MC+HIe0Dy2jaCBEnA6aGN3ZG9hhX45FtyxuZu2tKgg1Mk9KeF71vA9WvIRm4bMcI+wXzqwVqE0jwKga5DuepM3XJPYIexvZRfq0VphTFHRuKreWSNtwKmXw+zNCTyPTstN7KgxLodZ7zsU6gkBZWETutrN7oz6UgG6aIru9vQloUTIZ3wHBds/KbLzKxVYUWy5IfhSRKr2t9hBnYM87bXT2JtDryL0UyN4PaaZMCk0CyRDMCIQ8UBSe7l97K4qe97jHJEWUQvOPqIGaRIhkTEv4rUbAir8IcLVpCcXVCGQ6tiXn6put0dEI9JbbELDeaYR6YkQNRAHpnFH7kN0kEA11dnmMvndGIOqpY0TAbisz6/to2+py20qhfRrUaAKL04jIMopE4Gi7p21Gg800u+6xof5XpjurQ4O178fzyA17RLOz63XNtQGn55sE0i4b/MCMwGCHpl939hH4Aaf0qTH7+JiVAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; PAGOS MARCOS PAZ</a></li>
+                  <li><a href="https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec" class="logo_icon" style="width: 24px; height: auto;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAbJJREFUaEPtWYtNw0AMfd0EJils0k4CTAJMApu0m4CelKuujn1/jkSypSpR6ov9nu2zkxywczns3H84gP+OYC4CJwBHAE8AHiY7ewXA3yeAD8u2BYDOvi+OT/ZbNfcN4LwAulOwAHxtyPngMEE8S3gagFcAL1ugXfGBUbhLJw2AZJ/I3wDwqMmPuJirq1J91h2J5DEInSeIm2jGpIFHLfeie5Q6FJbU6NN5EhqERU1/qgCMYrQFANckAZdEwAGIGqlJIY8AGfAUmp1CFzH3pLZRjhzUj+Uv9Yu2Uc5AHOKCsImxO2tCPerHsuqW0Z+1+nIqKGpk2iihsaqxT1/JEmcWHmMZob8i0ypQmUZ0JkyDPCeTbPPWiD1CX0Z2lT6pHWaLA52ayqktUjYcowymXVZ9dQDT+DcaqkdgjxGonY1GYRxWxA6gMSQegUBcawq1rkvabdlGWx1pXTccQGMKVz/ZSTvDasABGAzkhkePQGvq9O5eXsS9zHsEFgaqi1g+2PdEQn0gFzdM2TPXp7oj383zzUDvx73cB5KAw7KXXJ9r7z2sT1nrAKbQnDDiEfAIdDLwC1QqhzELHl8HAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; PAGOS MARIANO ACOSTA</a></li>
+                  <li><a href="https://script.google.com/macros/s/AKfycbyhvFMzRIgEUolyjVRmH-JDA3GFn8OXzcULaQ62ZUzbcuZj8FMXsn5lrIONJKAHxfPptQ/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAVJJREFUaEPtWdsRwjAMUzeBTWASYBJgEtgEmAQ2gdNd4cBN09glDaX2Tz7ysqzYieMKI5dq5PrDAZRm0Bn4RQYWALYA2A4pZwB7AGyTJXSErgBmySt8dyCVX2qWDAG4axbIMFbll5MAoLKIgRHJuGq/FAZUCzoA6F4Hk2Sgb5SSRhvcBxyAcHRnQEa+XhbxMOphFPj7I5Q7jLa5UTBfsNzEpQAQWCNfGBsAgvjQeZIADKE+OqUraET7LQw4AOVbyBmwppRt4VabDxRjwAHUvuIMWH0gNdz6PSAtJT935wBuqeY0jIvtx09m9j+FelCfl4SOxwHA+m0MX4CbjCBO4iv/uR+Vl9/8Sa/RXT3RYMzsU1g/oH5RBthZskYQS2gatYO2CEP6eJSGrtKolG8kB4HZ9IVVXbEpUbU5ArgAYBuU3DE+u1M4gOwm7tjAGXAGelrgAUumajGKSY4rAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; CIERRE DE CAJA DIARIA</a></li>
+                </ul>
+              </li>
+              <li class="cobranzasSub2">
+                <span><a  class='cobranzasSub2-arrow'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAUpJREFUaEPtWdsNwjAMvG4Cm8AkwCSISWAT2AQ2AVmiEipJeidc0lTOFx+ufQ8HcN2h8dM1jh9BoLaDYw6sABwB7CsAfQC4ATgBsM/JUyJg4O8VgA9LGvhtjkSJwLmS8inNzAkj8XVKBEx9c2EOx1xYqwSegwfG7os3Uap+CRSVwBv1Rz6qfhBYggOU1WprAKDyerQQVaglAmpX5USkhJnCgSDwViAcoBRQ+0WIp+p73AEBkxQaBCgFJE21YKq+0kJaef/oJNYg4C90NmM4EBOZ2G7u30LhwFwdoKxuaaAZazWWMBWn/JCxk5PYKdk35EGAUiDx9iAc+PdIqSrOxlMd4HGJWUBqXBCgFFBlFeKp+q0sOIy3PA9cAWwExaYMvQA4pAoseslnhG1HZivWXYV9Wb9mTSrfuzH2x2vKtnDJHQRcZPwhSfMOvAAGTGAxkiyNdQAAAABJRU5ErkJggg==" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; DEUDORES</a>
+                  <i class='bx bxs-chevron-right arrow cobranzasSub2-arrow-giro'></i>
+                </span>
+                <ul class="cobranzasSub2-sub-menu sub-menu">
+                  <li><a href="https://script.google.com/macros/s/AKfycbwJvD7VjT_d8s57KMTjuG5bAbc4TpZthNiDoC976kqwjuEEcKkgRFTk_vq2-4wSB7Yi/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAYNJREFUaEPtWdtNxDAQnHTCdQKdQCUHlUAnd50cndxpJBtFgUM7Yy8o0q4UJR/7mn3YXmfBzmnZuf8oAP+dwdEMPAA4AngEwG+FPgHweWlvRfaLdwQAHb5YVr8LHVwQIwDeATxPAvAG4NXRNQLg6hj8RcbyxRJqThSATTasYFpClYGfG8EKpiV0pxHVnphie4oSs6Sm2J6ipAAMbCiVgVXwqomdSqoSqhJy6mYlUyXUgsFhhKOlQhxiPtxJrBsazQBn4T4TK8533jMAAuHbohEApzbMW4Y3QswEgXDIl8gBwKjT+dnUbyikbDgAeBOhXqFEwdL5pygz+RwA6pFB8Uf2qQCo4Q3wS0GVmJvx3ZdQZhNzJeI1Y5icDHAZ5bXi7JXI2tQcANHobEstxVaK0ju9kmIrRWkBiBapuRNH1VcPRCKV2QPr/UJe3yPOywenqNLGtz5284QpHZOjtjIzQB/6T0Bpd406n50B6mcWSCnR/wsASjAt3uwSspxShAqAEq0M3huL5Dsx3biLqwAAAABJRU5ErkJggg==" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; DEUDORES PASADOS</a></li>
+                  <li><a href="https://script.google.com/macros/s/AKfycbwo5gTWUE53KhjSllzENI3agZL5JgJquIyd1W_tzbP5V2ZnG_6tcpPhJx4uyytV5cw5/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAASVJREFUaEPtV4ENwjAM8z6BTzgFLgEugU84BT4BBQ3Exlow6UgrudK0aWo720kzp0Pjo2scP0QgOoKKQK0RWADYAlgBsOfIcQFg16a/D7BMpZABPkciznx7OSYxReAAYF0pgT2A3Su2KQLXSsE/YA0wf0MgulKNBRUBb4alFGXf33FEpBALtLoUEgG2jKoKOU89fQbMRkT7nxRn80RmJ56jNStx7E1dloCpf6owCm/qp/4D9t5ImKmzew3pZMqbkTMSH+2088z9d3l0iXSzFQG3hM4NUhFQT+wUNrVcPfFMwlLbqqWk5CowmXaj2QUzAmI7NfXEvwaDVVopFO2XqosAm3o0AfXErMTEfPXEhFhFp6onLipnyc2ia7ybiwi4JXRu0HwEbmiLVDHwEhSkAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; GESTION DE DEUDORES</a></li>
+                </ul>
+              </li>
+              <li class="cobranzasSub3">
+                <span><a  class='cobranzasSub3-arrow'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAhNJREFUaEPtmYFNAzEMRd1JgEmASYBJgEmASYBJgElATzpLlpVrnKtzqJIjVZRr6vjb3/bd70HOfB3O3H8pAP+dwawM3IvIpYhciMiNAcU1Xd8iwov1KSIfy/96bVMsTgHwsjhrndziBEAA9GoAhu2MAsBZdTx8yMBGwDyMABkBAE1wfo/1LCJPkYOiADD22DEIBaACi0iylN9kTqmm7+/MtZbpEIgIAA78apyAcxyixRgJmN9DwWOf4LRq6apHpwiAd9dZcAKeEvHMBUU9EIJze+yQCIBfZwCDSpFMANhqUfWoj1sAzIi+BgJKkXG70gFkcL+VubUulw5AD4dGbycWMbZa3J+agVb0dJra2wVtofzV1qmd5npgik/LQHYBr9lLB0C07WDKBEJrhlJTKURE6Ba8etM0Ag6KERSGIu99207PgDeo2QAQ3LYTtXU7jZM/i7OtKT4dQM2BFV7VHFgrOM/JmgOR1mT2pHehmgMuAzUHepT0RVxzoOZAtEUt+2oO9Iqs83nNgdbtbT0P7Pk8gKxoH0z2nANMaeTF1RURtry0uKculCItttQyIrKHLtSVMSMZwNmevD5DF0qT15V/gMhQISJjIVxn0QzoodAJCdz+kBdxKLoHXUjlldB3RgFYIFm6EDaHHVdHtgKw0fG6EJ/Zn5N0r+qmPV0oFPlMAEMHZm/OyEC2T0P2CsBQuCZs/gM0Gb4xcb6SYwAAAABJRU5ErkJggg==" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; RENDICIONES</a>
+                  <i class='bx bxs-chevron-right arrow cobranzasSub3-arrow-giro'></i>
+                </span>
+                <ul class="cobranzasSub3-sub-menu sub-menu">
+                  <li><a href="https://script.google.com/macros/s/AKfycbyhfXPBBsDl0dSMv7Zr0dOvPBJcEfDjPfd4_pTMs_4-r9i3g6IuoYkyv6YDEKESQNdwnA/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAfNJREFUaEPtWNtNxDAQnOuEqwSohKMSoBK4SoBKgEpAI8WS2XPscbLOA2zpPk7xY2dndzzJATsfh53Hjw5gbQY7A52BmRn4kyV0A+AZwNXM5Hgv/wRwD+At3jjFwCsAgtjiIIhjCcD3FiOPYvqV9BQD/waAtwB8iH3nwsDL0FCe1ab2nguAW6sGDkhOg/qVtpoNgDJGAC2GwsIsAErwvD+YzetBjil9XPcFgKXH/2ODa3kH5WS8GgAP5O8dwGMh7Xz+kJnDfc7iPiEBdrtqAKraKPSHYBQmw1wr600AqA0YZ/NJYILzmwNg3VLD48FSYYCseT5nTbO0Yn+V9DaJ8msOwNb9hV8ZgmLwLLMYhMJCcwBUDZZQGHSMzHxqkAmCqOmF5gCsBaBbHJNKW25jbMXgNwWg2JRr9ICVz5zNsGqleKrmDOy+icdklDduaObwmmorRDGFzRlgUFMuspxaLdrE4TArpznbtKiV8DRzBKVcXmT0bsSVVnshaxFYtyVLzJqP3WRws6vYaVsKNfTnyij1THG0sxhQ7EJt0GG+KgQuAFqwoIqACwDFw9QysehnldrgPOe7MOAZUO1eRQCKEtQe6jX/ovdSL+zh9W9rX6jlz+te2VpkH/WTySLBTDmkA5iSNc81nQHPbE7ZqzMwJWuea34ALWiGMZQ3azkAAAAASUVORK5CYII=" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; LIQUIDAR PAGOS</a></li>
+                  <li><a href="https://script.google.com/macros/s/AKfycbwImyb1nX1M6atwIQZsk2yoIQVxPyoCdBcQFuspR1BOStAMylc91uv5ThWoCFWzJ9iI/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAvxJREFUaEPtWYFNAzEMdCcBJgEmASYBJgEmASYBJgGd9K6C/xzbyVdVpUaqqMS/47Pv7MTdyYmv3Yn7L2cAx87glhm4FJF7EbkQEXzXz/cCEn/x+RGRj+UzjX8WgDp9tzhccQhg3kTkdQFWeXf/7AyAJxF5HNr1/0sKBPbKawTAjYi8l3eKXxgCUgUQRR3c/lz4bUHeLjS7XrTiQXoWkXQ2KgDgEKJvlxe5X/Nguxe0A1ugIL7bBV08xEmTdB/wnO9FqwdAfdMiwLSUApHJAKMNoo4IgTLeygBogSBINhshnSIATLBwHnzW+r4FANiA8wwEAoVs0BUB+DJRgdNXGW6KSCUDvUx09+wBYNRB5Hu0abGNANBMIHDtcvXQA2AdCPloNh0FADM2eC5tPQAvpFZHdLPMmgHA9EAD6Dllud8VkqOJGQAwiYMhAqmLasEDMLs5Np21gSxYLaw0yABY5KmGQrIwCwAmbQNd0YgBsPwfoc8WGWBiRgVEFvaLAbCoK6VzizLa2rCNNAXAChiNK+q6TMeWQsn+131sJWSWgS24yyh0cgC8E+wskH9BZxnYikK2ms06jvdTFNpKxKjjqGjtJahyGGTNLCViW0arZ6A20qwZVfpK2JMyjWyFusgFdjCLLkO6RdiTGAAbtWraLT52MMvatBVxVdK9s5DVwWg3VjDsZhdR09KHMsEDwNKevYl5DLN0iK6mthpS7XgAZsXHQFRsstsgPRH0LinsPJ4Vn5cF1hvsWatEtx4AT3yZiYQHIOoN3mTC9TO6JrKIRdyNqqxHJYjaNj7Y6p6GIwDsTK4tfSYTrEiwEWNUqdKjRW86h/l+ehDbpMajSpu9VAPNZABGezPMkbE47GEeCoqylXIeL2YB6Ca98br+hISs6Hf8VWroRBrjdTbl1j1C2rSIqwD0hOiNxSMB9/6fGRiv3h8BEFGqCmKEgvs9RgGoAdVGRAsGaspxNTgLoHWs5Xj0M+vUL5OzGqhS5KDPb5mBgzrqGT8DOErYm03/AC+AzTEOp8xeAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; LIBRO MAYOR</a></li>
+                </ul>
+              </li>
+              <li><a  href="https://script.google.com/macros/s/AKfycbwRJ49ZJ94cIoLjao3bzXljQCZleGKY7wLiui-kkZeYaNO3gHCLm0NGVZewnaEO3aj9/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAWdJREFUaEPtWdsNwjAMvG4Ck8AmwCTAJLAJbAKbgE4KVWvSNpGjuJEcCfUnIfdw7NTt0PjoGscPJ2DtoDuwdgeOAHYA9gA2RmDfAPg7hecIxlQIEewtADfCHd12K0lMEXisEDwZXQFchtRiBDjhvCbZB1gYSnShHzECUv1nYM6nxfiITUeYYwTkgr+4q8xCTcC6VjgBd0B5ZlYRQiyMTM0lKnp2FtKGEMG/lC5Mpv6UNKolwCsJ71SlRnUHZAxriZgTyHXU/BDPAkiwwwnkWi5FdQe0t1F3YE5BP8QRBbSHTv4lrxElOxrVC1nzVwmqz/fsUi5Ud4Ah9esz8aklYkIgIdlMTjG/SmjAc60T0Fbi6g7IvN1cY0vmbbYUo61trbSJ67PPQPPNXQpTuvwnir047R6ioZ/Y0geOv9Y6WSxlGLZDDqF6aivoorwzE6g8P26QxGgsEdBsWmWtE6gi88wm7oA7oFTgC1w2WTELvsZVAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; CUOTAS VENCIDAS</a></li>
+            </ul>
+          </li><div class="dropdown-divider"></div>
+          <li>
+            <a class='emision-arrow'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAi9JREFUaEPtWEtSg0AQ7UYjbPQMyU2Sc4SUcauHMDmEbqMlOUe4SXIG3QS1aAsIJcwEppnhUygsqenP6/dmpqcRev5hz/OHAUDXDA4MDAwYVuAfSshZLJHCx6RwODYsYNbcJ8RXgAsfji8Hrl8+A85yjPS9AYAp17neOjoQjmZcEDwArSWfQuaDYAGwHHdFBCfZ6NW1qhUirMOjt1LZsQCg7VLWERK9hNZozaVZlQQ47tQK6ZYQl9m1hJcTVQw1gEQ++1/HdKBgO1EmpbEA7fk+ezAQwgyOnl/mSglAlA+XWo38wbqab7IsxEx/bu+MAIjy4VRFJ/nYxnGnSLCrIqNyBlqUT5p0VRmVAmhTPimAqjIqBdCqfFIEFWVUDKAD+ejIqBAA2m60mRpuG7jbvfhmlgG03jaYgZAAdNE2cCGcu4MkAOIxxnXe0jqfAm+Wa2vEwNLJE3jK27rJ5FX5nGEg37jRXwJg2e4TASyiiiPAWxh4D3VUv8xvbQycgtwL+ns2BaHyWxsAtN13ALgWKv5BgXdjwoLK7wAg3cQqqnVZUPmtjYEowV5vYt0Km9rVyoBpMjr2GgDyD2udoM3ZyAMFuZkTHtbNJVPdM6uZg7id/trVPPesnq1kcX6cc75Rk15jNcQ3dFHUk5W9yHLTuDR+082duGlVcQcAhsqQzAcGikYbyf/mBru6cUvmQtGckjaZ49QnhLVqWmwsqXiwxY/b6XvXGGzyMuz3NwDomr8fk0eTQHhpg40AAAAASUVORK5CYII=" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; <b style="color: #01075C">EMISION</b></a>
+            <i class='bx bxs-chevron-down arrow emision-arrow-giro'></i>
+            <ul class="emision-sub-menu sub-menu">
+              <li><a href="https://script.google.com/macros/s/AKfycbyl4LlA9L2qJOC_o7MR5mkfV1WMyZChEKvimdjq3erUtv7do57XI3grZlomnsYuofs/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAU5JREFUaEPtmOENwiAQhV830U10EnUS4yS6iW6im2gusU2KbR9c4SrN8csEKPe9B4dcg8pbU3n8cIClHdQ6sAFwBnA0AHgBeAC4AJDfvaYBkOCfBoGHS0jw+xBCA3A1Un5II3FCILqmARD1xYUlmriwnQvwzrANU+An19M44AAp8gNwB0LBtFuoyDzLM+AA363QE32VDjCrWf9Ykikyb8gBthDrrx4gBExM+z9vlOR7gCmc2u8AU/+9SpyB6rdQ9YfYAQIFzLOQO+AOkDcvu8hSLy42/m/OAAtUdXZKXGTaQB2gVYDt8SULWxIjfZExgDuAXe59Evm9G4ATq8wxgL8v7jIAEUAgpLR+MKiTtuX1nvKtC5osFOm2zTAHsNF5fJVVOmCd5zXFtc6SocnWeT47gHWezw5gneeLACydXKLXn0UfvUrBgQ5QUNyoT38Az9dwMT6hKy0AAAAASUVORK5CYII=" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; INGRESAR SEGURO</a></li>
+              <li class="emisionSub1">
+                <span><a class='emisionSub1-arrow'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAyNJREFUaEPtWYttFUEMdCoBKgEqASoBKgEqASoBKgENOktmMv7s3b6gSFnp6SLdntfjz6zt3NkjX3ePXH97AvC/PbjbA8/N7L2ZvTIz/B3XTzPD793x3IJ9JwAo/GOo1YtdIHYC+GRmb4cAPprZh+HecttOAL8XFEIowQuX1y0BsGwGuOXsLUKOcEDyxtUBQBh9vpoLUwBglTeHdt/N7NtxMGIeijPjYCvLRoIrZnIg+AbyXh7nfDnOuZwDKjmdEgFMLQB8TS+qJMd+JatN9s4DYAoOjS7xEBbgerUAQt0RlcwSRAVghdehAJSG8pNVhZ76Pr03KgBsfYQN4hK5EGMZ7j9zu0LGV5EXsDifkXohA6Cs70JiuRATcGJ5tQfegMIwEOThqUJXeiEDoKw/vXgA0NkE8Q6F4KVfi7TJrCW9kAGAayMrTOO7S3oPw0kZASMg6X0pZkv7AQbgSer8r0JBfZOFlVQmbFaGWALA6KMVVMJm+8/QY2YIGQUVC2UXDy4oWMOXSnhPSNAq3iMc+cb23iDKwj4A4JV6rLvIFF8zgGnCK9rkxFSeLPOvAwBLMBswAPZUdSBbmC3L79uy+wyArkirui0ON6VgLLtvAoAVZA917WLVF0wA/pMfZzzACjJrcIjFAznGufDbDmCSVDuTWLHQ6STO+HhKoyj8vDqFYvFWda+wrIxGl4u5VT4+c5FlllWdW1quT2shCOi6o5WxyqSUUGU7d3njWmhXMTcxhIfXpWKOrQk+Bno8u+WlA5pzr2jxHYYBK1OIS+W0J13svGIIASDe+eRgAiwD7g1NBHi5ocFhSghAcJN/paX0Jj+CU2cssxAEZj2rsqRXn1W/UF1oVViW5UR3E3cdljq4mritMJXLPj1WcQEZiGwYlTFNN9iCx3lyV82Y/urXecBBIKnxexbYBO9WRotqes1NzU1Gix1t4r2y7mS4O2nuy/OnHpiA6Mbn3fvJGff27ASQ1TAZa03nTA/mgRWGaZNz6o6dHpjeG22bOFV+hYWmMgHCywz1Tw9Y3uefU5kPFkJbFFoVsjOEVs/esv8JwBYzXhDyB1se6zGY7kf6AAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; GESTION</a>
+                  <i class='bx bxs-chevron-right arrow emisionSub1-arrow-giro'></i>
+                </span>
+                <ul class="emisionSub1-sub-menu sub-menu">
+                  <li><a href="https://script.google.com/macros/s/AKfycbyQs92TK3Z64eFV4XPaOYNlKglpftjXJRvXywQAxQFJhZcnBSAx2FxflHK42FTwDEw/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAT1JREFUaEPtV8ENwjAMPDaBTWAUJmEURoFR2AQUhEQVtTlf4jZEuN86ts/n2JcdBv92g+ePANCbwWDglxk4ArgC2ItJPgCcAdyzc97+3u5LLXQDkILWfAnEITvo7Y8CeNZkPjmTF8fb3/8BYBMrrzBjoNWfzEBrQAYw71iTfSkpk4NJVGbP/geAqgoEA8uz2tRycQdGaiF1MbM90OpP3gOtATeXEi3iKynRk6OYm/NHGUhK9FKhSEty2tMfBaC2TBd7pm+6JKUEDQBKtdawLTGwyhvWG8SWb2Lv3OkUWmXxzKAwibYl9IqYUytoHRCbAWAJ1SZSe05uoQDw6UH1bhULp9wBLwYCwHSaBAPCk3JpDMcUslZm+EU2HADvN7FaAJM9k9Pub1hTVoIRW06Cqz6mAaBP3b9Rg4FgoLECL75DZjHV5S7bAAAAAElFTkSuQmCC" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; ENDOSOS</a></li>
+                  <li><a href="https://script.google.com/macros/s/AKfycbweHnLexeQEmxDbAyV7oEC9wNnt8xAaVrTSXBwJGsE_Jb6-mj3GiIBJgUULPeQyJuZ9NQ/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAhZJREFUaEPtmOFNAzEMRt1NYBJgEmASYBLoJMAkwCbooYsUmSRnxy6oUiyd2h+J73u24yR3kDO3w5nrlwXw3xlcGVgZCEZglVAwgOHpKwMqhBciciciVyLCf57PbQy/7yLytj3h6OMgKwPXIvK8CbYIA+YoIo+WwaMxUQAi/LBFfUYLIDdVltw+IgBE/dX9xt8TgHgSkZcZX7MARP6j80KEfDXqnDm3IgK4NgCmymkGACFEnt/arOWgy25a/OwiRryOoldE6VZAT5VOiZw3A7RIuk1tXvEzpd6d4wWg7uvSoafTRbKM4LB+zOvBA9DqOogHIsMQT4Yxc1Y9AESFnl8sM/q1+OLfBOEB0Iv3ProAN6Ut8WaIFoCOtKc8vFAj8SaIXgZmIE4hfhdiVEIeiFOKH0LsrQELxF+I70LsATBxBOEV31tPeoNkd8b3rlkAehBZ4vGvN0hTC2WiFUBDZIpvbZCX1juCB6BAhA9gqi70/oJ/AEzmBTA5dQxq7QOu40kGQDl4mQ9ggx3YfTyJAtQRpHNwUd873HGaZV7rZmau/ZLlCEDvGFC+OGgQBHOl1De5osVVOhkAvaulYwn8DAWYrraXuabfSAZwOCoHC4j1Ht31FQUojtlJuSv0ykMLCH1KqZ1lARSflk+LLPbyudGSpeGYbICwIK+DBeCNWPb4lYHsiHr9rQx4I5Y9fmUgO6Jef2efgW9/EWsx1IdoWgAAAABJRU5ErkJggg==" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; RENOVACIONES</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li><div class="dropdown-divider"></div>
+          <li>
+            <a class='js-arrow'><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAzdJREFUaEPtWG1y2kAMlbbkHCUnKZwjdICTJJwkZErOgXOS0HO0XXW046VrWftlU+LMwM9Ett/T6j1Ji/DJf/jJ8cONwEef4CROYAMw/23M5mDtUywhK4AFGLOQMZMg4MAhHmdE93uAkyTxYMwzEm20/0+DgDFPQPQIAM2MaOtJrP79HQBxp53Q1Ag4oGjtySI+IsDcn8aBSMU6DQKIR+Ayiv0i2efwqRCgGHYCOL0S3Ue5XcsGndMAzGcAJylUL1IVSyL7//UEvgNsrDHfkIjrWJZHR6xM7hfiMax5T4YQ93fW7jR3uigBDxiIFhoQLbuhLXYcRwmOERmkAQbL3+AM1wCWuLi+74iWPrsPiO8J8g0Q7Q4ATfieIgLcaMiY9Riw/FEG3AMY1Lj7DuJzGMOZR2tfJHBPIktglbO4uAs0hHgy1r59AWjU5tQ+myylMSKuAe8yBfCTm9APgH3K3WSp5EopNmIkRVwiKpndUkv2s08nPiylcIRoSy/USpEGlOw3SPQSlkMpYC1OS1CnlNrpk4jWrAl5SlkNrBA73TE2iwwloXp/pN79KK2Vpypi1zUR38/NJNPOh5LQNJZrXPJbVyWQ6c5nbLFy0RKlElBE1hyIljWZ5lP8A7AY3Owy9pnUAGeKG0o4j7xau00RcM8Yw2L7Orbhtd8pSpp+AsLGtG1oyOyjJMCNB65LG7PmtTGMSfl/8gSkxbGw2PMHl4M2nCnGIMfq4QSGjw/lMlFqXJYuEm1zXb1XQtJCyxHVRfKpSl1pJ5/TXo9AboSog5mODkskstRkhdwjoM3kfqTlli5vCy5AyE2tUsClTpQnIGo1tf5dgEz3FUTL2B4QdSHZ3jUnSC7hF2KRu42IExA9QCNQsyeM4TPIRntjBOJuZu3+vFG195hjgLnGFSxAnG2+G+29c0gJ8UsUITeA+MZjQkRsWT6+Gcb2Cc08SkZ4dZTI3A4UgeWgmo2N7fu8vGQW+RBA2SyUgZzLbpbxiIDorURKqB8JWHJNXqvEunKJO4xIatWjJfdCvZvjkiGrCsWI4EEERnyv+tGcE90IVKe08oHbCVQm7OrhWQ1cHVHlB28EKhN28fC/XYUcT0dVZHIAAAAASUVORK5CYII=" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; <b style="color: #5C0101">SINIESTROS</b></a>
+            <i class='bx bxs-chevron-down arrow js-arrow-giro'></i>
+            <ul class="js-sub-menu sub-menu">
+          <li><a href="https://script.google.com/macros/s/AKfycbzNflcWWVL6bGhBuskR6MvWGrpx-SSgLRLNAJRhnbM-mEFX0aM1sClqMTdZGIrXlk1q/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAk1JREFUaEPtmeFNxDAMhX2TAJMAkwCTAJMAk8AmsAnoSbUUGTt2YjdwUvP3co0/v+ckbk905uN05vHTAfDXCh4KbAo8EdEFET0T0ddKVSoUuCeily1oBP9GRABaMioAEOyjiBYgtyvUqABA9qGCHEsgKgA+iejS8AsgHojoYy8/VQB8O8HtCpEF0Pyv8exmpyyAl/0WBjZCYZeODMA7Ed0MRgOA0nqYBYhaR/KVqzADgKwj+zMDtXCl/BHPw042vGONAmSC57i1NbmWLEAzWSMAyBD2/OyQdSCf+7opEVpnBGCmaLUgJEB7l+L54WKPAlQFjwDhc2SZh3YVCRd7BKDC960SKOL2ym2dJSEVIgCV2QdIu2bv2aFa8AA0f4aKy5jUBuWdJaEdyQOozj7v80iM7CEiBf9rTg+gattsF4UCWu9gqYoWtdvd9QCsRiVjodH/unXw3wHc7bQH0Ou0OJNYAFazOrLRjMv5biFnAbCnw2qj1+ooWArAa1bYn952GA3WmtfdKTMK8JWg+qRuQVIKeGcAw8P/e9koVcSeNVr1qk9sViG1jfasIaXd49ADROogwwMsG2ne9BSbKWZ5cx26SmByzxpaZ8W97Uyw2n+8u1roC42lgmxMEECllbTnDyvQC8ra4ioK2t0+mcSVaJtoZdbKUhYi1I3J7sjzLSCkx3vvPLX53hrDL4KjCvDCCEo2Iz25ef5d4MI39QJ4FKAFwTmBwDA4c1aGAYL51xsIX/74kxQOrKlva7MAnhWW/X4ALEu1sdChwKFAMgM/Not+MRDMSjYAAAAASUVORK5CYII=" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; INGRESAR DENUNCIA</a></li>
+          <li><a href="https://script.google.com/macros/s/AKfycbwyJgbwP9aw8XlpuIiiUMHbaFEX2BuG18aa3-ZCBdRt6bMNJyxZHfKD0_INvcALlvCi/exec"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAh1JREFUaEPtmOtNBDEMhOc6gUqASoBKgEqASqAT6AQ0Uizt5ZzEdh6wcPkD0m3i+WwncXzAzsdh5/pxBvjpCHojcAHgDsBtEv4O4AnAZxCkez0PAI09A7jOxFL8TQBiyHoegNzJX0Gvl6aFtIQmJQVngCwUIWeGJu01Atx0bwD4dzu4iS8D+2HIet4I0OhDguD/rwAeA+JlSvd6XoAOrXOm/ksApsyVcqH1uFhucndKeiJQujl7hGtzXTe7B4AnUF5GjBYv65lPNisA04anz8rxAuC+ZdAK8JGd/6xCWcCNGlKVbp1kioIFgOUzq9DtsMzzwhGCjtoOOonOKg6LEIonhAxTaL3q0/duWxaAPH2aXgmK5zQeEjwsZDTTqAWwKn1EsDuNWgDukHZ4X6a6bLYAVqaPALjSqAawOn1CaVQDWHnztjKveO9oAKtqnpbo/He1RtIA8k3kNTTze/agjh5QGkC+cWcK8q59ci9oAFq7RMi1msUrova9xc6RZgvASdhSaZHXR70gVjtuAHYc8t6ndmP2AljtDAGg2NGdOQ1As+MG0EI744FjteMGYPrIY3vmJrbaaQL8phtY21dNgBnp0bvBi4+pUimh9UBHiYiuoz5uSsXcjGMyKlzmqVpr1WjpmGy9IXqFuuz+aQDtNBrdD9Ki5bJbiwCfdmw0STuRm4idsmqfpjd/kj2z3dn5PICnvsQZYLqLGwZ2H4Fv7kZ8MUHC+okAAAAASUVORK5CYII=" class="logo_icon" style="width: 24px; height: auto;"/>&nbsp; GESTIONAR CASOS</a></li>
+            </ul>
+          </li><div class="dropdown-divider"></div>
 
-    <!-- Menú principal en entorno normal-->
-    <!-- <div class="collapse navbar-collapse mr-auto order-0" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="cobranzasDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Cobranzas
-          </a>
-          <div class="dropdown-menu border-1" aria-labelledby="cobranzasDropdown">
-            <a class="dropdown-item"
-              href="./COBRANZAS_PAGOS_MP/registro.html"
-              id="dropdown-item">Pagos Marcos Paz</a>
-            <a class="dropdown-item"
-            href="./COBRANZAS_PAGOS_MA/registro.html"
-            id="dropdown-item">Pagos Mariano Acosta</a>
-            <a class="dropdown-item"
-            href="./COBRANZAS_CIERRE_CAJA/cajadiaria.html"
-            id="dropdown-item">Cierre Caja Diaria</a>
-            <a class="dropdown-item"
-              href="./COBRANZAS_DEUDORES_PASADOS/deudores_pasados.html"
-              id="dropdown-item">Deudores Pasados</a>
-              <a class="dropdown-item"
-              href="./COBRANZAS_GESTION_DEUDORES/gestion_deudores.html"
-              id="dropdown-item">Gestion Deudores</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="emisionDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Emisión
-          </a>
-          <div class="dropdown-menu" aria-labelledby="emisionDropdown">
-            <a class="dropdown-item"
-              href="/EMISION_INGRESO/Emision.html"
-              id="dropdown-item">Ingresar Seguro</a>
-              <a class="dropdown-item"
-              href="/EMISION_GESTION/Polizas.html"
-              id="dropdown-item">Gestion Pólizas</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="siniestrosDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            Siniestros
-          </a>
-          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
-            <a class="dropdown-item"
-              href="/SINIESTROS_INGRESO/Denuncia.html"
-              id="dropdown-item">Ingresar Denuncia</a>
-              <a class="dropdown-item"
-              href="/SINIESTROS_GESTION/Gestion.html"
-              id="dropdown-item">Gestion Siniestros</a>
-          </div>
-        </li>
-      </ul>
-    </div> -->
-    <!-- Fin de Menú principal en entorno normal-->
-    <!-- Menú flotante en el lado derecho -->
-    <div class="collapse navbar-collapse" id="navbarNavRight">
-      <div id="tiempo-restante"></div>
-<div class="navbar-text ml-auto fs-6" id="user" style="display: none;">&nbsp;&nbsp;&nbsp;Usuario:&nbsp;</div>
-<ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" style="font-weight: 600;" role="button" data-toggle="dropdown"
-            aria-haspopup="true" id="usuario_sp" aria-expanded="false">
-            Desconocido
-          </a>
-          <div class="dropdown-menu" aria-labelledby="siniestrosDropdown">
-            <a class="dropdown-item" href="#" id="close_session">Cerrar sesión</a>
-            <a class="dropdown-item" href="#" id="cambiar_clave">Cambiar contraseña</a>
-            <a class="dropdown-item">
-              <div class="row">
-              <div class="col-7 pt-1">
-              
-              Color fondo: 
-              </div>
-              <div class="col-5">
-              
-              <input type="color" id="colorPicker" class="form-control form-control-sm" onchange="changeColor()" style="border-radius: 5%;">
-</div>
-              </div>
-              </a>
-            
-          </div>
-        </li>
-      </ul>
+
+          <div class="row" style="margin-left: 10px; padding: 0px;">
+      <div class="col-7" id="navbarNavRight">
+
+           <div class="profile-details">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAvdJREFUaEPtmV1y2kAMx//iIiW3gLyEnKT2SZKcxM5JQl4Ct6h7EdQRXVPH7Holrd0MM/EMD8B6rd/qWybc+EU3Lj++Ab5ag7NpYNPwegVUIPxgYI1/ny5AdgR0J8Y7gP2xpv73ojMoBrhv+JkJDwB2Rkk6Yrx+1PRsvO/TcjdAEPyp5OEXzRSAmAE2De+I0AQTmUH+yxYdMx6tpmUC2DRcBeHnFHy4l9ms1AAzmkwWnhgvWt9QAfxP4Xs6LUQWINj8W/bYFliggZgE+Erh+wjFjPpY0z51PpMA25bl5K3xfW5ddIeK7swAJRFHVH/6m233kqEl5K6AHRNceSNooY1BJDWwbfmXI9ZLLE+qXGCIIFoVKMuV1EIUwHv6IREl7VUkDhByOKYr5dBRAI/tE9B+VFRrpLpvuWEp/GzX/lDR4/iWFADb9gam7HS8lze6xTR8BVBgPnfaOmZOM7oCcKpXNKAGEI1sWzZrOWamVwAe+xeBNA7cm5JXy9IIjf0gBuAJn9JcL+3Ewn8VTmMAZtVq034Io9JPeGurRQHOJzTVlATnlWbIXZ4cpCMZXLP5wGDPc1MyZykx3HtcFy0BYE0hlvV5J/aGUYsU3rWqMFoQ4rxyqe+LZftYJpaK0VxsiQMH25eBVf8ZC7dbAWsm/HRUpNFkOUcxJ5Hn5VhTtF5PHa91PJPKM0XltCV5xUD6caSm0UkViykATeMRLW/VBh0WniEIT7nyehz/++ckO7KMM0/2qR6IqU7N1VIqsqZrFBjpDUTbU9nZ19SHuiUXkSZ74JwmND1yrsrVDLay81Bx5hPjdWp+M4TR2n1OeNkzCyCLDKPFSx0k9w3GKvK1H62ocoBmKqcGsIS7nNlo/tcKrwboH2rQhEbO6BrLcMAMMHBsz3AqB+UKCCofiIU+eaHnrWlG+5lfagzvdwH0G4S5p7SI4pjWLqtI8Gwmzuk7phWBWBEewmtWWSJQn16zgvFb+/ZFI0ORBjQPWHrNN8DSJ5zb/+Y18AeRGKZAJOG2CwAAAABJRU5ErkJggg=="/>
+          <span class="admin_name">
+            <div id="user" style="display: none; text-align: center;"></div>
+        <li>
+            <a class='user-name-arrow' style="font-weight: 600;text-align: center;" id="usuario_sp">
+              Desconocido</a>
+            <i class='bx bxs-chevron-down arrow user-name-arrow-giro'></i>
+            <ul class="user-name-sub-menu sub-menu">
+          <li><a href="#" id="close_session">Cerrar sesión</a></li>
+          <li><a href="#" id="cambiar_clave">Cambiar contraseña</a></li>
+                        <a class="dropdown-item">
+                <div class="row">
+                <div class="col-7 pt-1">
+                
+                Color fondo: 
+                </div>
+                <div class="col-5">
+                
+                <input type="color" id="colorPicker" class="form-control form-control-sm" onchange="changeColor()" style="border-radius: 5%;">
+  </div>
+                </div>
+                </a>
+            </ul>
+          </li>
+          </span>
+        </div>
+        
+      </div> 
+      <div class="col-5"  id="tiempo-restante" style="text-align: center"></div></div>
+
+      </div>
+
+      <!-- Fin Menú flotante en el lado derecho -->
+      <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="100px" alt="logo"> v1.2&nbsp;&nbsp;</div>
     </div>
-    <!-- Fin Menú flotante en el lado derecho -->
-    <div class="navbar-text ml-auto fs-6" style="font-weight: 700; color: #08A1D6">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://drive.google.com/uc?id=1ALk1JlXdisA66edOXlf53DhW64m04vCN" width="100px" alt="logo"> v1.2&nbsp;&nbsp;</div>
+    
   </nav>
 
 
+<br>
 
-  <br>
+<div id="myModal" class="modal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Usuario:</label>
+            <input type="text" id="usuario" name="usuario" class="form-control mt-1">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Contraseña:</label>
+            <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
+          </div>
+          <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <div id="myModal" class="modal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-title" style="color: #0066CC">SISTEMA DE SEGUROS MAGI</div>
-        </div>
-        <div class="modal-body">
-          <form id="formulario-login" action="#" method="post">
-            <div class="form-group">
-              <label for="usuario"class="mt-1">Usuario:</label>
-              <input type="text" id="usuario" name="usuario" class="form-control mt-1">
-            </div>
-            <div class="form-group">
-              <label for="contraseña" class=" mt-3">Contraseña:</label>
-              <input type="password" id="contrasena" name="contrasena" class="form-control mt-1">
-            </div>
-            <button id="inicio-sesion" class="btn btn-primary btn-block mt-3">Iniciar sesión</button>
-          </form>
-        </div>
+
+<div id="modal2" style="display: none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-login" action="#" method="post">
+          <div class="form-group">
+            <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
+  <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
+          </div>
+          <div class="form-group">
+            <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
+  <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
+          </div>
+  <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
+        </form>
       </div>
     </div>
   </div>
-  
-  
-  <div id="modal2" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-title" style="color: #0066CC">CAMBIO DE CLAVE DE USUARIO:</div>
-        </div>
-        <div class="modal-body">
-          <form id="formulario-login" action="#" method="post">
-            <div class="form-group">
-              <label for="usuario"class="mt-1">Ingrese su antigua clave:</label>
-    <input type="password" id="antigua_clave"  class="form-control mt-1" placeholder="Ingrese su antigua clave">
-            </div>
-            <div class="form-group">
-              <label for="contraseña" class=" mt-3">Ingrese su nueva clave:</label>
-    <input type="password" id="nueva_clave" class="form-control mt-1" placeholder="Ingrese su nueva clave">
-            </div>
-    <button id="guardar_clave" class="btn btn-primary btn-block mt-3">Guardar</button>
-          </form>
-        </div>
+</div>
+
+
+<div id="modal3" style="display: none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">ALTA DE VEHICULO DEUDOR:</div>
       </div>
-    </div>
-  </div>
-  
-  
-  <div id="modal3" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-title" style="color: #0066CC">ALTA DE VEHICULO DEUDOR:</div>
-        </div>
-        <div class="modal-body">
-          <form id="formulario-deudor" action="#" method="post">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_dni" class="mt-1">DNI:</label>
-                  <input type="number" id="alta_dni" class="form-control mt-1" placeholder="N° de Documento" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_cliente" class="mt-1">APELLIDO Y NOMBRE:</label>
-                  <input type="text" id="alta_cliente" class="form-control mt-1" placeholder="Apellido y nombre" required>
-                </div>
+      <div class="modal-body">
+        <form id="formulario-deudor" action="#" method="post">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_dni" class="mt-1">DNI:</label>
+                <input type="number" id="alta_dni" class="form-control mt-1" placeholder="N° de Documento" required>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_patente" class="mt-1">PATENTE:</label>
-                  <input type="text" id="alta_patente" class="form-control mt-1" placeholder="Patente" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_marca" class="mt-1">MARCA:</label>
-                  <input type="text" id="alta_marca" class="form-control mt-1" placeholder="Marca y Modelo completa" required>
-                </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_cliente" class="mt-1">APELLIDO Y NOMBRE:</label>
+                <input type="text" id="alta_cliente" class="form-control mt-1" placeholder="Apellido y nombre" required>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_cnia" class="mt-1">COMPAÑIA:</label>
-                    <select class="form-select form-select-sm" id="alta_cnia" name="alta_cnia" placeholder="" required>
-                    <option value="AGROSALTA">""</option>
-                    <option value="AGROSALTA">AGROSALTA</option>
-                    <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
-                    <option value="RIVADAVIA">RIVADAVIA</option>
-                    <option value="FED PAT">FED PAT</option>
-                    <option value="PROVIDENCIA">PROVIDENCIA</option>
-                    <option value="RIO URUGUAY">RIO URUGUAY</option>
-                    <option value="ATM">ATM</option>
-                    <option value="LA CAJA">LA CAJA</option>
-                    <option value="NIVEL">NIVEL</option>
-                    <option value="MAPFRE">MAPFRE</option>
-                    <option value="BENEFICIO">BENEFICIO</option>
-                    <option value="MERCANTIL">MERCANTIL</option>
-                    <option value="LIBRA">LIBRA</option>
-                    <option value="GRUA">GRUA</option>
-                    <option value="AGRO (V)">AGRO (V)</option>
-                    <option value="ALLIANZ">ALLIANZ</option>
-                    <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
-                    <option value="AGRO MOTO">AGRO  MOTO</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_vigencia" class="mt-1">VIGENCIA:</label>
-                  <input type="number" id="alta_vigencia" class="form-control mt-1" placeholder="Ej: 4" required>
-                </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_patente" class="mt-1">PATENTE:</label>
+                <input type="text" id="alta_patente" class="form-control mt-1" placeholder="Patente" required>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_id_deudor" class="mt-1">ID DEUDOR:</label>
-                <select class="form-select form-select mt-1" id="alta_id_deudor" placeholder="">
-                <option value="" data-input="true"></option>
-                </select>
-                <input type="text" id="alta_id_deudor_manual" class="form-control mt-1" placeholder="Ingrese el ID aquí" style="display: none;">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="alta_vto" class="mt-1">VTO CUOTA 1:</label>
-                  <input type="text" id="alta_vto" class="form-control mt-1" placeholder="Sin 0, ej: 5/6/2024" required>
-                </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_marca" class="mt-1">MARCA:</label>
+                <input type="text" id="alta_marca" class="form-control mt-1" placeholder="Marca y Modelo completa" required>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <button id="alta_deudor" class="btn btn-primary btn-block mt-3">Alta deudor</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div id="modal4" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="modal-title" style="color: #0066CC">BAJA DE VEHICULO DEUDOR:</div>
-        </div>
-        <div class="modal-body">
-          <form id="formulario-deudor_baja" action="#" method="post">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="baja_patente" class="mt-1">PATENTE:</label>
-                  <input type="text" id="baja_patente" class="form-control mt-1" placeholder="Patente" required>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="baja_vto" class="mt-1">FECHA DE BAJA:</label>
-                  <input type="text" id="baja_vto" class="form-control mt-1" placeholder="Ej: 2/5/2023" required>
-                </div>
-              </div>
-            </div>
-  
-            <div class="row">
-              <div class="col-md-12">
-                <button id="baja_deudor" class="btn btn-primary btn-block mt-3">Baja deudor</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  
-  
-    <!---------- AREA DE CAJA DIARIA ------------>
-  
-    <div class="col-12" id="miDiv" style="padding: 20px;">
-  
-     <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-  <div style="font-size: 20px; margin-top: 2px;"><b>DEUDORES PASADOS:</b></div>
-  
-  
-  
-           <div class="row  m-0 p-0 bg-light py-2">
-              <div class="col-8 container">
-                <div class="row">
-             <div class="col-6  m-0 p-0">ALTA DEUDOR:
-                <button id="alta_nueva" class="est_not btn btn-secondary btn-sm mt-1" type="submit">ALTA</button>
-              </div>
-             <div class="col-6  m-0 p-0">BAJA DEUDOR
-                <button id="baja_nueva" class="est_not btn btn-danger btn-sm mt-1" type="submit">BAJA</button>
-              </div>
-              </div>   
-              
-              </div>
-              <div class="col-4 container">
-                <div class="row">
-              <div class="col-5  m-0 p-0">RECIBOS X6:<br>
-          <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
-              </div>
-              <div class="col-7"><br>
-          <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X6</button>
-          <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
-              </div>
-              </div>
-              </div>
-              </div>   
-  
-  
-  
-            <div class="row  m-0 p-0 bg-light py-2">
-              <div class="col-4 container">
-                <div class="row">
-              <div class="col-6  m-0 p-0">ID DEUDOR:<br>
-                <select class="form-select form-select mt-1" id="id_deudor_select" placeholder="">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_cnia" class="mt-1">COMPAÑIA:</label>
+                  <select class="form-select form-select-sm" id="alta_cnia" name="alta_cnia" placeholder="" required>
+                  <option value="AGROSALTA">""</option>
+                  <option value="AGROSALTA">AGROSALTA</option>
+                  <option value="AGROSALTA C/GRUA">AGROSALTA C/GRUA</option>
+                  <option value="RIVADAVIA">RIVADAVIA</option>
+                  <option value="FED PAT">FED PAT</option>
+                  <option value="PROVIDENCIA">PROVIDENCIA</option>
+                  <option value="RIO URUGUAY">RIO URUGUAY</option>
+                  <option value="ATM">ATM</option>
+                  <option value="LA CAJA">LA CAJA</option>
+                  <option value="NIVEL">NIVEL</option>
+                  <option value="MAPFRE">MAPFRE</option>
+                  <option value="BENEFICIO">BENEFICIO</option>
+                  <option value="MERCANTIL">MERCANTIL</option>
+                  <option value="LIBRA">LIBRA</option>
+                  <option value="GRUA">GRUA</option>
+                  <option value="AGRO (V)">AGRO (V)</option>
+                  <option value="ALLIANZ">ALLIANZ</option>
+                  <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
+                  <option value="AGRO MOTO">AGRO MOTO</option>
                 </select>
               </div>
-              <div class="col-6"><br>
-  
-                <button id="bt-actualizar_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">FILTRAR</button>
-                <button id="bt-reset-filtro" class="est_not btn btn-danger btn-sm mt-1" type="submit">LIMPIAR</button>
-              </div>
-              </div>
-              </div>
-              <div class="col-8 container">
-                <div class="row">
-             <div class="col-3  m-0 p-0">MES:<br>
-                <select class="form-select form-select mt-1" id="mes_sn" name="mes_sn" placeholder="">
-                  <option value="0"></option>
-                  <option value="0">ENERO</option>
-                  <option value="1">FEBRERO</option>
-                  <option value="2">MARZO</option>
-                  <option value="3">ABRIL</option>
-                  <option value="4">MAYO</option>
-                  <option value="5">JUNIO</option>
-                  <option value="6">JULIO</option>
-                  <option value="7">AGOSTO</option>
-                  <option value="8">SEPTIEMBRE</option>
-                  <option value="9">OCTUBRE</option>
-                  <option value="10">NOVIEMBRE</option>
-                  <option value="11">DICIEMBRE</option>
-                </select>
-              </div>
-             <div class="col-2  m-0 p-0">AÑO:<br>
-                <select class="form-select form-select mt-1" id="anio_sn" name="anio_sn" placeholder="">
-                  <option value="2023"></option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
-                </select>
-              </div>
-              <div class="col-4  m-0 p-0"><br>
-                <button id="bt-regenarar_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">GENERAR LISTADO</button>
-              </div>           
-              <div class="col-2  m-0 p-0"><br>
-                <button id="bt-imprimir_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">IMPRIMIR</button>
-              </div>   
-              </div>   
-              
-              </div>
-              </div>        
-  
-  
-  <div class="row p-2" style="font-weight: bold;">
-    <div class="col-1">ID:</div>
-    <div class="col-2" style="width: 220px;">CLIENTE:</div>
-    <div class="col-1" style="width: 60px;">VTO:</div>
-    <div class="col-2" style="width: 80px;">CUOTA:</div>
-    <div class="col-2" style="width: 140px;">COMPAÑIA:</div>
-    <div class="col-1" style="width: 140px;">IMPORTE:</div>
-    <div class="col-1" style="width: 130px;">PATENTE:</div>
-    <div class="col-1" style="width: 120px;">MARCA:</div>
-    <div class="col-1" style="width: 120px;">PASADO:</div>
-  </div>
-  
-   <div class="p-2" style="height: 420px; overflow-y: scroll;">
-        <div id="sinPendientes"></div>
-      </div>
-  
-  
-            <div class="row  m-0 p-0 bg-light py-2">
-  
-              <div class="col-xl-9 col-sm-7 m-0 p-0"><br>
-              </div>
-  
-  
-              <div class="col-xl-2 col-sm-5 m-0 p-0">TOTAL:<br>
-              <div class='input-group'><div class='input-group-prepend'><span class='input-group-text form-control'>$</span>
-        </div><input type="text" class="form-control" id="total_val"></div>
-              </div>
-              <div class="col-1  m-0 p-0"><br>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_vigencia" class="mt-1">VIGENCIA:</label>
+                <input type="number" id="alta_vigencia" class="form-control mt-1" placeholder="Ej: 4" required>
               </div>
             </div>
-  
-  
-  </div>
-  
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_id_deudor" class="mt-1">ID DEUDOR:</label>
+              <select class="form-select form-select mt-1" id="alta_id_deudor" placeholder="">
+              <option value="" data-input="true"></option>
+              </select>
+              <input type="text" id="alta_id_deudor_manual" class="form-control mt-1" placeholder="Ingrese el ID aquí" style="display: none;">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="alta_vto" class="mt-1">VTO CUOTA 1:</label>
+                <input type="text" id="alta_vto" class="form-control mt-1" placeholder="Sin 0, ej: 5/6/2024" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button id="alta_deudor" class="btn btn-primary btn-block mt-3">Alta deudor</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    <!---------- FIN AREA DE DEUDORES ------------>
-  
+  </div>
+</div>
+
+
+<div id="modal4" style="display: none;">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #0066CC">BAJA DE VEHICULO DEUDOR:</div>
+      </div>
+      <div class="modal-body">
+        <form id="formulario-deudor_baja" action="#" method="post">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="baja_patente" class="mt-1">PATENTE:</label>
+                <input type="text" id="baja_patente" class="form-control mt-1" placeholder="Patente" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="baja_vto" class="mt-1">FECHA DE BAJA:</label>
+                <input type="text" id="baja_vto" class="form-control mt-1" placeholder="Ej: 2/5/2023" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <button id="baja_deudor" class="btn btn-primary btn-block mt-3">Baja deudor</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!---------- AREA DE CAJA DIARIA ------------>
+
+  <div class="col-12" id="miDiv" style="padding: 20px;">
+
+   <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
+<div style="font-size: 20px; margin-top: 2px;"><b>DEUDORES PASADOS:</b></div>
+
+
+
+         <div class="row  m-0 p-0 bg-light py-2">
+            <div class="col-8 container">
+              <div class="row">
+           <div class="col-6  m-0 p-0">ALTA DEUDOR:
+              <button id="alta_nueva" class="est_not btn btn-secondary btn-sm mt-1" type="submit">ALTA</button>
+            </div>
+           <div class="col-6  m-0 p-0">BAJA DEUDOR
+              <button id="baja_nueva" class="est_not btn btn-danger btn-sm mt-1" type="submit">BAJA</button>
+            </div>
+            </div>   
+            
+            </div>
+            <div class="col-4 container">
+              <div class="row">
+            <div class="col-5  m-0 p-0">RECIBOS X6:<br>
+        <input type="number" class="form-control form-control-sm" id="numRecibo" name="numRecibo" placeholder="N° Recibo">
+            </div>
+            <div class="col-7"><br>
+        <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1">Imprimir X6</button>
+        <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
+            </div>
+            </div>
+            </div>
+            </div>   
+
+
+
+          <div class="row  m-0 p-0 bg-light py-2">
+            <div class="col-4 container">
+              <div class="row">
+            <div class="col-6  m-0 p-0">ID DEUDOR:<br>
+              <select class="form-select form-select mt-1" id="id_deudor_select" placeholder="">
+              </select>
+            </div>
+            <div class="col-6"><br>
+
+              <button id="bt-actualizar_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">FILTRAR</button>
+              <button id="bt-reset-filtro" class="est_not btn btn-danger btn-sm mt-1" type="submit">LIMPIAR</button>
+            </div>
+            </div>
+            </div>
+            <div class="col-8 container">
+              <div class="row">
+           <div class="col-3  m-0 p-0">MES:<br>
+              <select class="form-select form-select mt-1" id="mes_sn" name="mes_sn" placeholder="">
+                <option value="0"></option>
+                <option value="0">ENERO</option>
+                <option value="1">FEBRERO</option>
+                <option value="2">MARZO</option>
+                <option value="3">ABRIL</option>
+                <option value="4">MAYO</option>
+                <option value="5">JUNIO</option>
+                <option value="6">JULIO</option>
+                <option value="7">AGOSTO</option>
+                <option value="8">SEPTIEMBRE</option>
+                <option value="9">OCTUBRE</option>
+                <option value="10">NOVIEMBRE</option>
+                <option value="11">DICIEMBRE</option>
+              </select>
+            </div>
+           <div class="col-2  m-0 p-0">AÑO:<br>
+              <select class="form-select form-select mt-1" id="anio_sn" name="anio_sn" placeholder="">
+                <option value="2023"></option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+              </select>
+            </div>
+            <div class="col-4  m-0 p-0"><br>
+              <button id="bt-regenarar_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">GENERAR LISTADO</button>
+            </div>           
+            <div class="col-2  m-0 p-0"><br>
+              <button id="bt-imprimir_lista" class="est_not btn btn-primary btn-sm  mt-1" type="submit">IMPRIMIR</button>
+            </div>   
+            </div>   
+            
+            </div>
+            </div>        
+
+
+<div class="row p-2" style="font-weight: bold;">
+  <div class="col-1">ID:</div>
+  <div class="col-2" style="width: 220px;">CLIENTE:</div>
+  <div class="col-1" style="width: 60px;">VTO:</div>
+  <div class="col-2" style="width: 80px;">CUOTA:</div>
+  <div class="col-2" style="width: 140px;">COMPAÑIA:</div>
+  <div class="col-1" style="width: 140px;">IMPORTE:</div>
+  <div class="col-1" style="width: 130px;">PATENTE:</div>
+  <div class="col-1" style="width: 120px;">MARCA:</div>
+  <div class="col-1" style="width: 120px;">PASADO:</div>
+</div>
+
+ <div class="p-2" style="height: 420px; overflow-y: scroll;">
+      <div id="sinPendientes"></div>
+    </div>
+
+
+          <div class="row  m-0 p-0 bg-light py-2">
+
+            <div class="col-xl-9 col-sm-7 m-0 p-0"><br>
+            </div>
+
+
+            <div class="col-xl-2 col-sm-5 m-0 p-0">TOTAL:<br>
+            <div class='input-group'><div class='input-group-prepend'><span class='input-group-text form-control'>$</span>
+      </div><input type="text" class="form-control" id="total_val"></div>
+            </div>
+            <div class="col-1  m-0 p-0"><br>
+            </div>
+          </div>
+
+
+</div>
+
+  </div>
+  <!---------- FIN AREA DE DEUDORES ------------>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>

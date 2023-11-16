@@ -27,6 +27,9 @@ function seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp
 
   const VAL_VEH = LISTADO.getDataRange().getDisplayValues();
   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
+  
+const cl_new = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte]
+const veh_new = [infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta,   infoMotor, infoChasis, infoNotasFull.slice(-20), infoDanios.slice(-20)]
 
 var fecha = new Date();
 
@@ -67,6 +70,7 @@ var fecha = new Date();
 
   // Si la Patente ya existe, actualizar los datos del Vehiculo
   if (patenteIndex !== -1) {
+
   LISTADO.getRange(patenteIndex, 2).setValue(infoDNI);
   LISTADO.getRange(patenteIndex, 3).setValue(infoCliente);
   LISTADO.getRange(patenteIndex, 4).setValue(infoSucursal);
@@ -85,18 +89,97 @@ var fecha = new Date();
   LISTADO.getRange(patenteIndex, 19).setValue(infoChasis);
   LISTADO.getRange(patenteIndex, 5).setValue(infoRefa);
   LISTADO.getRange(patenteIndex, 21).setValue(infoHoy);
+
+
+  var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
+  var folder = DriveApp.getFolderById(folderId);
+
+  var fileName = 'log_emision_ingreso_seguros.txt'; // Nombre fijo del archivo de registro
+  var files = folder.getFilesByName(fileName);
+
+  if (files.hasNext()) {
+    var file = files.next();
+    var contenidoActual = file.getBlob().getDataAsString();
+    contenidoActual += '\n' +  "[ " + infoHoy + " ] //" + infoUsuario + ": MODIFICA VEH EXISTENTE:\nCliente: " + cl_new + "\nVehiculo: " + veh_new
+    file.setContent(contenidoActual);
+  } else {
+    // Si el archivo no existe, créalo con el mensaje actual
+    folder.createFile(fileName, contenidoActual);
+  }
   }
   // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
    else {
 var vehVals = [infoPatente, infoDNI, infoCliente, infoSucursal, infoRefa, infoImporte, infoCnia, infoPoliza, infoVigencia, infoHasta, infoOperacion, infoCobertura, infoMarca, infoFpago, infoNotasFull, infoDanios, , infoMotor, infoChasis, , infoHoy]
     LISTADO.insertRowBefore(2).getRange(2, 1, 1, vehVals.length).setValues([vehVals]);
-  }
+    console.log(vehVals)
 
+  var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
+  var folder = DriveApp.getFolderById(folderId);
+
+  var fileName = 'log_emision_ingreso_seguros.txt'; // Nombre fijo del archivo de registro
+  var files = folder.getFilesByName(fileName);
+
+  if (files.hasNext()) {
+    var file = files.next();
+    var contenidoActual = file.getBlob().getDataAsString();
+    contenidoActual += '\n' +  "[ " + infoHoy + " ] //" + infoUsuario + ": ALTA VEHICULO NUEVO:\nCliente: " + cl_new + "\nVehiculo: " + veh_new
+    file.setContent(contenidoActual);
+  } else {
+    // Si el archivo no existe, créalo con el mensaje actual
+    folder.createFile(fileName, vehVals);
+  }
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////
 
 
+// function report_data() {
+//   var mensaje = "Este es un mensaje de registro.";
+//   var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
+//   var folder = DriveApp.getFolderById(folderId);
+
+//   var fileName = 'log.txt'; // Nombre fijo del archivo de registro
+//   var files = folder.getFilesByName(fileName);
+
+//   if (files.hasNext()) {
+//     var file = files.next();
+//     var contenidoActual = file.getBlob().getDataAsString();
+//     contenidoActual += '\n' + mensaje; // Agrega el nuevo mensaje al contenido actual
+//     file.setContent(contenidoActual); // Actualiza el contenido del archivo
+//   } else {
+//     // Si el archivo no existe, créalo con el mensaje actual
+//     folder.createFile(fileName, mensaje);
+//   }
+
+
+
+// }
+
+
+// function report_data() {
+//   try {
+//     var fileId = '1g6R-uFFOauPl9ahyQ5HRl2feB0xdtwny'; // Reemplaza con el ID del archivo
+//     var informe = DriveApp.getFileById(fileId);
+
+//     if (informe) {
+//       var contenidoActual = informe.getBlob().getDataAsString();
+//       var nuevaInformacion = "Nueva información para el informe"; // Reemplaza con la nueva información
+
+//       // Puedes agregar lógica para actualizar la información aquí
+
+//       // Concatena la nueva información con la información actual
+//       var informeActualizado = contenidoActual + "\n" + nuevaInformacion;
+
+//       // Guarda el informe actualizado
+//       informe.setContent(informeActualizado);
+//     } else {
+//       throw new Error('No se encontró el archivo.');
+//     }
+//   } catch (e) {
+//     Logger.log("Error: " + e);
+//   }
+// }
 //////////////// BUSCAR PATENTE EN BD EMISION ////////////////
 function buscarMantenimientos3(patente = "1192774") {
   let mantenimientosRealizados3 = [];

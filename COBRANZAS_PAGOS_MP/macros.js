@@ -69,7 +69,7 @@ let anio_emi3 = parseInt(anio_emi2) + 1
     LISTADO.getRange(i+1,8).setValue(infoPoliza);
     LISTADO.getRange(i+1,6).setValue(infoImporte);
     LISTADO.getRange(i+1,11).setValue("SEGURO NUEVO");
-    LISTADO.getRange(i+1,4).setValue("BD COBRANZAS (MARIANO ACOSTA)");
+    LISTADO.getRange(i+1,4).setValue("BD COBRANZAS (MARCOS PAZ)");
 
      break; 
 }
@@ -254,6 +254,7 @@ mantenimientos3.forEach(mantenimiento2 => {
       actualizaciones.push(actualizacion_emi);
       actualizaciones.push(actualizacion_cob);
       actualizaciones.push(actualizacion_pol);
+      console.log(actualizaciones)
   return actualizaciones;
 }
 
@@ -875,4 +876,3 @@ function convertHtmlToPdfM(htmlContent) {
 
   return encodedPdfContent;
 }
-

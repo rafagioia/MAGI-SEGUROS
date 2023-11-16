@@ -43,7 +43,7 @@ for (var i = 1; i < cobranzasData.length; i++) {
       var cnia = cobranzasData[i][10];
       var patente = cobranzasData[i][12];
       var marca = cobranzasData[i][13];
-      var importe = parseInt(cobranzasData[i][11].replace("$", "").replace(",", "")); // CorrecciÃ³n aquÃ­
+      var importe = parseInt(cobranzasData[i][11].replace("$", "").replace(",", "")); // Corrección aquí
       var fpago = cobranzasData[i][6];
 
       deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe, 0, fpago);
@@ -59,13 +59,19 @@ for (var i = 1; i < cobranzasData.length; i++) {
     var recibi_de = recibisData[i][6];
     var concepto = recibisData[i][2];
     var montoRecibi = parseInt(recibisData[i][4].replace("$", "").replace(",", ""));
-    var fpago = recibisData[i][7];
+    var fpago2 = recibisData[i][7];
+    var partes = fpago2.split('/');
+var dia = partes[0];
+var mes = partes[1];
+var anio = partes[2];
+var contenidoAntesDelEspacio = anio.split(' ')[0];
+var fpago = dia + '/' + mes + '/' + contenidoAntesDelEspacio.slice(-2);
     var blank_1 = "";
     var blank_2 = "";
     var blank_3 = "";
     var blank_4 = "";
 
-    deudor.push(idDeudor, recibi_de, blank_3, blank_1, blank_2, concepto, fpago, blank_4, 0, montoRecibi, fpago);
+    deudor.push(idDeudor, recibi_de, fpago, blank_1, blank_2, concepto, blank_3, blank_4, 0, montoRecibi, fpago2);
 
     sinPendientes.push(deudor);
   }
@@ -77,13 +83,21 @@ for (var i = 1; i < cobranzasData.length; i++) {
     var gasto_de = gastosData[i][6];
     var concepto = gastosData[i][2];
     var montoGasto = parseInt(gastosData[i][4].replace("$", "").replace(",", ""));
-    var fpago = gastosData[i][7];
+    var fpago2 = gastosData[i][7];
+
+var partes = fpago2.split('/');
+var dia = partes[0];
+var mes = partes[1];
+var anio = partes[2];
+var contenidoAntesDelEspacio = anio.split(' ')[0];
+var fpago = dia + '/' + mes + '/' + contenidoAntesDelEspacio.slice(-2);
+
     var blank_1 = "";
     var blank_2 = "";
     var blank_3 = "";
     var blank_4 = "";
 
-    deudor.push(idDeudor, gasto_de, blank_3, blank_1, blank_2, concepto, fpago, blank_4, montoGasto, 0, fpago);
+    deudor.push(idDeudor, gasto_de, fpago, blank_1, blank_2, concepto, blank_3, blank_4, montoGasto, 0, fpago2);
 
     sinPendientes.push(deudor);
   }
@@ -314,7 +328,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o Contraseï¿½a!");
+  return alert("Error de Usuario o Contrasea!");
 }
 
 ///////////////////////////////  CAMBIAR CLAVE DE USUARIO  ////////////////////////////////////////
@@ -380,7 +394,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de cï¿½lculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de clculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];
@@ -395,3 +409,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   return null;
 }
 
+
+
+
+////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////

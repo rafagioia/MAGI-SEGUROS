@@ -66,11 +66,42 @@ function modifDatos(valorMod, nuevoValor, tramite_sn) {
       break;
   }
 
+
   for (var i = 0; i < dataValues.length; i++) {
     if (dataValues[i][28] == tramite_sn) {
-      sheet.getRange(i+1, column).setValue(nuevoValor);
+      var celda = sheet.getRange(i + 1, column);
+      const valorAntiguo = celda.getValue();
+      celda.setValue(nuevoValor);
+      console.log("Campo Modificado:", valorMod, "Valor Antiguo:", valorAntiguo, "Valor Nuevo:", nuevoValor);
     }
   }
+
+
+
+  // for (var i = 0; i < dataValues.length; i++) {
+  //   if (dataValues[i][28] == tramite_sn) {
+  //     sheet.getRange(i+1, column).setValue(nuevoValor);
+  //   }
+  // }
+
+
+  var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
+  var folder = DriveApp.getFolderById(folderId);
+
+  var fileName = 'log_emision_endosos.txt'; // Nombre fijo del archivo de registro
+  var files = folder.getFilesByName(fileName);
+
+  if (files.hasNext()) {
+    var file = files.next();
+    var contenidoActual = file.getBlob().getDataAsString();
+    contenidoActual += '\n' +  "[ " + infoHoy + " ] //" + infoUsuario + ": ENDOSO:\nCampo Modificado:", valorMod, "Valor Antiguo:", valorAntiguo, "Valor Nuevo:", nuevoValor
+    file.setContent(contenidoActual);
+  } else {
+    // Si el archivo no existe, créalo con el mensaje actual
+    folder.createFile(fileName, vehVals);
+  }
+
+
 }
 
 
@@ -201,7 +232,7 @@ function mostrarCorreos(patente) {
 
 
 ////////////// INGESAMOS POLIZA NUEVA A BD EMISION //////////////////
-function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoPatentev) {
+function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoPatentev, infoUsuario) {
 
   const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
@@ -209,7 +240,15 @@ function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, i
   const VAL_VEH = LISTADO.getDataRange().getDisplayValues();
   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
 
-var fecha = new Date();
+const cl_new = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte]
+const veh_new = [infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta,   infoMotor, infoChasis]
+
+
+var fechaHoy = new Date();
+    let dia = fechaHoy.getDate();
+    let mes = fechaHoy.getMonth() + 1; // Agregar 1 ya que los meses se cuentan desde 0 (enero) hasta 11 (diciembre)
+    let anio = fechaHoy.getFullYear();
+    let infoHoy = dia + '/' + mes + '/' + anio;
 
  // Buscar si el DNI ya existe en la hoja de clientes
   let dniIndex = -1;
@@ -268,6 +307,21 @@ var fecha = new Date();
    else {
   }
 
+  var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
+  var folder = DriveApp.getFolderById(folderId);
+
+  var fileName = 'log_emision_endosos.txt'; // Nombre fijo del archivo de registro
+  var files = folder.getFilesByName(fileName);
+
+  if (files.hasNext()) {
+    var file = files.next();
+    var contenidoActual = file.getBlob().getDataAsString();
+    contenidoActual += '\n' +  "[ " + infoHoy + " ] //" + infoUsuario + ": ENDOSO:\nCliente: " + cl_new + "\nVehiculo: " + veh_new
+    file.setContent(contenidoActual);
+  } else {
+    // Si el archivo no existe, créalo con el mensaje actual
+    folder.createFile(fileName, vehVals);
+  }
 }
 
 
@@ -372,4 +426,5 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 }
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
+
 

@@ -1,13 +1,524 @@
+
+/* INICIO NUEVO MENU DE NAVEGACION */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+body{
+  min-height: 100vh;
+}
+nav {
+  position: relative; /* Cambiar a relative o quitar para flujo normal */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Ancho al 100% del viewport width (vw) */
+  height: 4.3rem;
+  background: #f8f9fa;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  /* z-index: 99; */ /* Puedes quitar esto si no necesitas control de superposición */
+}
+nav .navbar{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  /* background: red; */
+  margin: 0px;
+  padding: 0px 25px;
+}
+.navbar .logo a{
+  font-size: 28px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 700;
+  line-height: 1;
+}
+nav .navbar .nav-links{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: auto;
+  padding: 0px;
+}
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+nav .navbar .links{
+  display: flex;
+}
+nav .navbar .links li{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0 14px;
+}
+nav .navbar .links li a{
+  /* height: 100%; */
+  text-decoration: none;
+  white-space: nowrap;
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+}
+.links li:hover .htmlcss-arrow-giro,
+.links li:hover .emision-arrow-giro,
+.links li:hover .js-arrow-giro,
+.links li:hover .user-name-arrow-giro{
+  transform: rotate(180deg);
+  }
+
+nav .navbar .links li .arrow{
+  /* background: red; */
+  /* height: 60%; */
+  line-height: 10px;
+  text-align: center;
+  display: inline-block;
+  color: #000;
+  transition: all 0.3s ease;
+}
+
+nav .navbar .links li .sub-menu{
+  position: absolute;
+  top: 45px;
+  left: 0;
+  line-height: 40px;
+  background: #f8f9fa;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 4px 4px;
+  display: none;
+  z-index: 2;
+  margin: 0px;
+  padding: 0px;
+}
+
+nav .navbar .links li .user-name-sub-menu{
+  top: 22px;
+}
+
+
+.profile-details {
+    display: flex;
+    align-items: center;
+    background: #F5F6FA;
+    border: 2px solid #EFEEF1;
+    border-radius: 25px;
+    height: 50px;
+    min-width: 190px;
+    padding: 0 15px 0 2px;
+}
+
+nav .navbar .links li:hover .htmlCss-sub-menu,
+nav .navbar .links li:hover .emision-sub-menu,
+nav .navbar .links li:hover .js-sub-menu,
+nav .navbar .links li:hover .user-name-sub-menu{
+  display: block;
+}
+.navbar .links li .sub-menu li{
+  padding: 0 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.navbar .links li .sub-menu a{
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+}
+.navbar .links li .sub-menu .more-arrow{
+  line-height: 40px;
+}
+.navbar .links li .sub-menu .cobranzasSub2-arrow{
+  line-height: 40px;
+}
+.navbar .links li .sub-menu .cobranzasSub3-arrow{
+  line-height: 40px;
+}
+.navbar .links li .sub-menu .emisionSub1-arrow{
+  line-height: 40px;
+}
+.navbar .links li .htmlCss-more-sub-menu{
+  /* line-height: 40px; */
+}
+
+.navbar .links li .htmlCss-cobranzasSub2-sub-menu{
+  /* line-height: 40px; */
+}
+
+.navbar .links li .htmlCss-cobranzasSub3-sub-menu{
+  /* line-height: 40px; */
+}
+
+.navbar .links li .emision-emisionSub1-sub-menu{
+  /* line-height: 40px; */
+}
+.navbar .links li .sub-menu .more-sub-menu{
+  position: absolute;
+  top: 0;
+  left: 100%;
+  border-radius: 0 4px 4px 4px;
+  z-index: 1;
+  display: none;
+}
+.navbar .links li .sub-menu .cobranzasSub2-sub-menu{
+  position: absolute;
+  top: 0;
+  left: 100%;
+  border-radius: 0 4px 4px 4px;
+  z-index: 1;
+  display: none;
+}
+.navbar .links li .sub-menu .cobranzasSub3-sub-menu{
+  position: absolute;
+  top: 0;
+  left: 100%;
+  border-radius: 0 4px 4px 4px;
+  z-index: 1;
+  display: none;
+}
+.links li .sub-menu .more:hover .more-sub-menu{
+  display: block;
+}
+.links li .sub-menu .cobranzasSub2:hover .cobranzasSub2-sub-menu{
+  display: block;
+}
+
+.links li .sub-menu .cobranzasSub3:hover .cobranzasSub3-sub-menu{
+  display: block;
+}
+
+
+.navbar .links li .sub-menu .emisionSub1-sub-menu{
+  position: absolute;
+  top: 0;
+  left: 100%;
+  border-radius: 0 4px 4px 4px;
+  z-index: 1;
+  display: none;
+}
+.links li .sub-menu .emisionSub1:hover .emisionSub1-sub-menu{
+  display: block;
+}
+.navbar .search-box{
+  position: relative;
+   height: 40px;
+  width: 40px;
+}
+.navbar .search-box i{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  line-height: 40px;
+  text-align: center;
+  font-size: 22px;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.navbar .search-box .input-box{
+  position: absolute;
+  right: calc(100% - 40px);
+  top: 80px;
+  height: 60px;
+  width: 300px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+.navbar.showInput .search-box .input-box{
+  top: 65px;
+  opacity: 1;
+  pointer-events: auto;
+  background: #f8f9fa;
+}
+.navbar .nav-links .sidebar-logo{
+  display: none;
+}
+.navbar .bx-menu{
+  display: none;
+}
+
+
+/* MODO CELULAR */
+@media only screen and (max-width: 1200px) {
+.logo_icon {
+  width: auto!important
+}
+.dropdown-divider {
+  margin-bottom: 35px;
+}
+.profile-details {
+    display: flex;
+    align-items: center;
+    background: #F5F6FA;
+    border: 2px solid #EFEEF1;
+    border-radius: 40px;
+    height: 100px;
+    min-width: 250px;
+    padding: 0 2px 0 2px;
+}
+#user {
+  
+    padding: 24px 2px 0 2px;
+}
+
+  nav .navbar .logo a{
+    font-size: 3rem;
+  }
+nav {
+  position: relative; /* Cambiar a relative o quitar para flujo normal */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Ancho al 100% del viewport width (vw) */
+  height: 5rem;
+  background: #f8f9fa;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+nav .navbar .links li a{
+  line-height: 0px!important;
+  height: 100%;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #000;
+  font-size: 3rem;
+  font-weight: 700;
+  padding: 1rem 0 1rem 0; 
+
+}
+nav .navbar .links li {
+    padding: 16px 14px!important;
+}
+nav .navbar .links li li {
+    font-size: 2.5rem;
+    padding: 0rem 0 2rem 0;
+}
+nav .navbar .links li .arrow {
+    font-size: 2.5rem;
+    padding: 0rem 0 2rem 0;
+}
+nav .navbar .links li .sub-menu a {
+    color: #000;
+  font-size: 3rem;
+    font-weight: 700;
+    padding: 0rem 0 1rem 0;
+}
+nav .navbar .links li .sub-menu li {
+    padding: 0rem 0 0rem  2rem;
+}
+  .navbar .bx-menu{
+    display: block;
+  }
+  nav .navbar .nav-links{
+    position: fixed;
+    top: 0;
+    left: -100%;
+    display: block;
+    max-width: 75%;
+    width: 100%;
+    background:  #f8f9fa;
+    line-height: 40px;
+    font-size: 1.5rem;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s ease;
+    z-index: 1000;
+  }
+  .navbar .nav-links .sidebar-logo{
+    display: flex;
+    align-items: left;
+    font-size: 3rem;
+    font-weight: 800;
+    justify-content: space-between;
+  }
+  .sidebar-logo .logo-name{
+    /* font-size: 25px; */
+    font-size: 2.7rem;
+    color: #000;
+  }
+    .sidebar-logo  i,
+    .navbar .bx-menu{
+    /* font-size: 25px; */
+    line-height: 1!important;
+    font-size: 5rem;
+      color: #000;
+    }
+  nav .navbar .links{
+    display: block;
+    font-size: 2.5rem;
+    margin-top: 20px;
+  }
+  nav .navbar .links li .arrow{
+    line-height: 40px;
+    font-size: 2.5rem;
+  }
+nav .navbar .links li{
+    display: block;
+  }
+nav .navbar .links li .sub-menu{
+  position: relative;
+  top: 0;
+  box-shadow: none;
+  display: none;
+}
+nav .navbar .links li .sub-menu li{
+  border-bottom: none;
+
+}
+.navbar .links li .sub-menu .more-sub-menu{
+  display: none;
+  position: relative;
+  left: 0;
+}
+.navbar .links li .sub-menu .cobranzasSub2-sub-menu{
+  display: none;
+  position: relative;
+  left: 0;
+}
+.navbar .links li .sub-menu .cobranzasSub3-sub-menu{
+  display: none;
+  position: relative;
+  left: 0;
+}
+.navbar .links li .sub-menu .emisionSub1-sub-menu{
+  display: none;
+  position: relative;
+  left: 0;
+}
+.navbar .links li .sub-menu .more-sub-menu li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .links li .sub-menu .cobranzasSub2-sub-menu li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .links li .sub-menu .cobranzasSub3-sub-menu li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .links li .sub-menu .emisionSub1-sub-menu li{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.links li:hover .htmlcss-arrow-giro,
+.links li:hover .emision-arrow-giro,
+.links li:hover .js-arrow-giro,
+.links li:hover .user-name-arrow-giro{
+  transform: rotate(0deg);
+  }
+  .navbar .links li .sub-menu .more-sub-menu{
+    display: none;
+  }
+  .navbar .links li .sub-menu .cobranzasSub2-sub-menu{
+    display: none;
+  }
+  .navbar .links li .sub-menu .cobranzasSub3-sub-menu{
+    display: none;
+  }
+  .navbar .links li .sub-menu .emisionSub1-sub-menu{
+    display: none;
+  }
+  .navbar .links li .sub-menu .more span{
+    /* background: red; */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+  }
+  .navbar .links li .sub-menu .cobranzasSub2 span{
+    /* background: red; */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+  }
+  .navbar .links li .sub-menu .cobranzasSub3 span{
+    /* background: red; */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+  }
+  .navbar .links li .sub-menu .emisionSub1 span{
+    /* background: red; */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+  }
+
+
+  .links li .sub-menu .more:hover .more-sub-menu{
+    display: none;
+  }
+  .links li .sub-menu .cobranzasSub2:hover .cobranzasSub2-sub-menu{
+    display: none;
+  }
+  .links li .sub-menu .cobranzasSub3:hover .cobranzasSub3-sub-menu{
+    display: none;
+  }
+  .links li .sub-menu .emisionSub1:hover .emisionSub1-sub-menu{
+    display: none;
+  }
+  nav .navbar .links li:hover .htmlCss-sub-menu,
+  nav .navbar .links li:hover .emision-sub-menu,
+  nav .navbar .links li:hover .js-sub-menu,
+  nav .navbar .links li:hover .user-name-sub-menu{
+    display: none;
+  }
+.navbar .nav-links.show1 .links .htmlCss-sub-menu,
+.navbar .nav-links.show4 .links .emision-sub-menu,
+.navbar .nav-links.show5 .links .emisionSub1 .emisionSub1-sub-menu,
+  .navbar .nav-links.show3 .links .js-sub-menu,
+  .navbar .nav-links.show8 .links .user-name-sub-menu,
+  .navbar .nav-links.show2 .links .more .more-sub-menu,
+  .navbar .nav-links.show6 .links .cobranzasSub2 .cobranzasSub2-sub-menu,
+  .navbar .nav-links.show7 .links .cobranzasSub3 .cobranzasSub3-sub-menu{
+      font-size: 2rem;
+      display: block;
+    }
+    .navbar .nav-links.show1 .links .htmlcss-arrow-giro,
+    .navbar .nav-links.show4 .links .emision-arrow-giro,
+    .navbar .nav-links.show5 .links .emisionSub1-arrow-giro,
+    .navbar .nav-links.show3 .links .js-arrow-giro,
+    .navbar .nav-links.show8 .links .user-name-arrow-giro{
+        transform: rotate(180deg);
+}
+    .navbar .nav-links.show2 .links .more-arrow-giro{
+      transform: rotate(90deg);
+    }
+    .navbar .nav-links.show6 .links .cobranzasSub2-arrow-giro{
+      transform: rotate(90deg);
+    }
+    .navbar .nav-links.show7 .links .cobranzasSub3-arrow-giro{
+      transform: rotate(90deg);
+    }
+    .navbar .nav-links.show5 .links .emisionSub1-arrow-giro{
+      transform: rotate(90deg);
+    }
+    
+}
+
+/* FIN DEL NUEVO MENU DE NAVEGACION */
  /* Estilos para version celular */
 @media only screen and (max-width: 1080px) {
   .container {
     display: block !important;
     width: 100% !important;
-    font-size: 2.0rem;
+    font-size: 1.9rem;
       padding: 20px;
     border: 0px solid white;
     background-color: #FFFFFF;
     border-radius: 2%;
+    max-width: 100%;
   }
   .btn {
     font-size: 2.5rem;
@@ -16,7 +527,7 @@
   .form-select,
   .modal-title,
   .modal-body {
-    font-size: 2.3rem;
+    font-size: 2.0rem;
   }
     #LogoValor {
     width: 100%;
@@ -31,38 +542,11 @@
 	  margin: auto;
     text-align: center;
 }  
-#navbar-toggler {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
-  }
-#siniestrosDropdown,
-#emisionDropdown,
-#cobranzasDropdown,
-#dropdown-item {
-  font-size: 3rem;
-  text-align: right;
-}
 #magi-item {
   font-size: 1.8rem;
 	  margin: auto;
     text-align: center;
 }
-  .navbar-nav .dropdown-menu {
-    position: static;
-    display: none;
-    overflow: visible;
-    float: none;
-    padding: 0;
-  }
-  .navbar-nav .dropdown-menu > li {
-    margin-bottom: .5rem;
-  }
-  .navbar-nav .dropdown-menu > li > a {
-    margin-right: 0;
-    margin-bottom: .5rem;
-  }
     #videoElement {
       width: 100%;
       max-width: 450px;
@@ -136,6 +620,7 @@
 
      /* Estilos para version pc */
 @media (min-width: 1081px) {
+  
   .container {
       display: inline-block !important;
       border: 0px solid white;
@@ -280,31 +765,275 @@
       background-color: rgba(0, 0, 0, 0.4);
     }
 
+      /* Estilos para tarjetas */
 
-    /* Estilos para la barra de navegaci�n */
-      .navbar-brand {
-        font-weight: bold;
-        font-size: 24px;
-      }
-      .navbar-nav .nav-link {
-        color: #333;
-      }
-      .navbar-nav .nav-link:hover,
-      .navbar-nav .nav-link:focus {
-        color: #007bff;
-      }
-      .dropdown-menu {
-        border: none;
-      }
-      .dropdown-item:hover,
-      .dropdown-item:focus {
-        background-color: #f8f9fa;
-        color: #333;
-      }
-      .nav-item.dropdown:hover .dropdown-menu {
-        display: block;
-      }
-      /* Estilos para el contenedor de p�ginas */
-      #page-container {
-        margin-top: 20px;
-      }
+        .usercard {
+            box-sizing: border-box;
+            display: flex;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            background-color: #fff;
+            margin: 1rem auto;
+            width: 100%;
+            height: 70px;
+            position: relative;
+            z-index: 5;
+            border-radius: 10px;
+        }
+        .usercard_body {
+            display: flex;
+            align-items: top;
+        }
+        .gestion_st {
+            font-size: 1.2rem;
+            margin: 0px;
+            padding: 0px 10px 0 0;
+            color: black;
+            font-weight: 700;
+            display: flex;
+            justify-content: right;
+        }
+        .usercard_header {
+            padding: 0 4% 0 1%;
+            display: flex;
+            align-items: center;
+            /* background-image: linear-gradient(to right, #01a9ac, #01dbdf); */
+            border-top-left-radius: 10px;
+            border-top-right-radius: 25px;
+            border-bottom-left-radius: 10px;
+            height: 70px;
+        }
+        .usercard_header-info {
+            padding: 0 1%;
+            color: #fff;
+            display: flex;
+            height: 60px;
+            flex-direction: column;
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+        }
+            .usercard_user {
+              margin-right: 2px;
+              width: 130px;
+              height: 70px;
+              font-size: 1rem;
+              background-color: #FFF;
+              /* color: #01a9ac; */
+              border-radius: 5px;
+              display: flex;
+              align-items: center;
+              border: none;
+              box-sizing: border-box;
+              white-space: nowrap; /* Evita el salto de línea */
+              overflow: hidden; /* Oculta el contenido que sobrepase el ancho */
+              text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al final del contenido que se recorte */
+            }
+
+        .usercard_name {
+            font-size: 1.3rem;
+            height: 10px;
+            font-weight: 300;
+            margin: 0;
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        .usercard_name2 {
+            font-size: 1rem;
+            font-weight: 300;
+            margin: auto;
+            padding: 0;
+            color: #fff;
+            font-weight: 700;
+              line-height: 1.3; /* Ajusta el valor según tus necesidades */
+        }
+        .usercard_post {
+            font-size: 0.8rem;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            margin-top: 2px;
+            height: 70px;
+            font-weight: 700;
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+        }
+        .usercard_post_mar {
+            font-size: 0.8rem;
+            color: #fff;
+            padding-top: 15px;
+            margin-top: 2px;
+            font-weight: 700;
+            height: 70px;
+            max-width: 100px; /* Establece el ancho máximo que desees */
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+              line-height: 1.3; /* Ajusta el valor según tus necesidades */
+        }
+        .usercard_content {
+            width: 70%;
+        }
+        .usercard_title {
+            padding: 0 5px 0 5px;
+            margin: 0;
+            height: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #000;
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+        }
+          .gestion_st_container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 2px; 
+          }
+          .usercard_sin {
+          width: 140px;
+          }
+
+          .usercard_cliente{
+          width: 100px;
+          margin: 0px 8px;
+          }
+
+          .usercard_veh{
+            width: 105px;
+          }
+
+ /* Estilos para version celular */
+@media only screen and (max-width: 1080px) {
+        .usercard {
+            box-sizing: border-box;
+            display: flex;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            background-color: #fff;
+            margin: 1rem auto;
+            width: 100%;
+            height: 150px;
+            position: relative;
+            z-index: 5;
+            border-radius: 40px;
+        }
+        .usercard_body {
+            display: flex;
+            align-items: top;
+        }
+        .gestion_st {
+            font-size: 2.0rem;
+            margin: 0px;
+            padding: 0px 20px 0 0;
+            color: black;
+            font-weight: 700;
+            display: flex;
+            justify-content: right;
+        }
+        .usercard_header {
+            padding: 0 2% 0 2%;
+            display: flex;
+            align-items: center;
+            /* background-image: linear-gradient(to right, #01a9ac, #01dbdf); */
+            border-top-left-radius: 40px;
+            border-top-right-radius: 75px;
+            border-bottom-left-radius: 40px;
+            height: 150px;
+        }
+        .usercard_header-info {
+            padding: 0 2%;
+            color: #fff;
+            display: flex;
+            height: 120px;
+            flex-direction: column;
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+        }
+            .usercard_user {
+              margin-right: 2px;
+              width: 200px;
+              height: 100px;
+              font-size: 1.3rem;
+              background-color: #FFF;
+              /* color: #01a9ac; */
+              border-radius: 5px;
+              display: flex;
+              align-items: center;
+              border: none;
+              box-sizing: border-box;
+              white-space: nowrap; /* Evita el salto de línea */
+              overflow: hidden; /* Oculta el contenido que sobrepase el ancho */
+              text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al final del contenido que se recorte */
+            }
+
+        .usercard_name {
+            font-size: 1.8rem;
+            height: 20px;
+            font-weight: 300;
+            margin: 0;
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        .usercard_name2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin: auto;
+            padding: 0;
+            color: #fff;
+            font-weight: 700;
+              line-height: 1.3; /* Ajusta el valor según tus necesidades */
+        }
+        .usercard_post {
+            font-size: 1.3rem;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            margin-top: 2px;
+            height: 150px;
+            font-weight: 700;
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+        }
+        .usercard_post_mar {
+            font-size: 1.3rem;
+            color: #fff;
+            padding-top: 15px;
+            margin-top: 2px;
+            font-weight: 700;
+            height: 150px;
+            max-width: 100px; /* Establece el ancho máximo que desees */
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+              line-height: 1.3; /* Ajusta el valor según tus necesidades */
+        }
+        .usercard_content {
+            width: 150%;
+        }
+        .usercard_title {
+            padding: 0 5px 0 5px;
+            margin: 0;
+            height: 80px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #000;
+            text-overflow: ellipsis; /* Agrega puntos suspensivos si el contenido es demasiado largo */
+            overflow: hidden; /* Oculta cualquier texto que exceda el ancho máximo */
+        }
+          .gestion_st_container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 2px; 
+          }
+          .usercard_sin {
+          width: 200px;
+          }
+
+          .usercard_cliente{
+          width: 150px;
+          margin: 0px 8px;
+          }
+
+          .usercard_veh{
+            width: 155px;
+          }
+}

@@ -1,3 +1,4 @@
+
 (function () {
   'use strict'
 
@@ -16,6 +17,52 @@
   }
   )
 })()
+
+  ////////////// ESTILOS DE LA NAV BAR //////////////////
+let navbar = document.querySelector(".navbar");
+
+// sidebar open close js code
+let navLinks = document.querySelector(".nav-links");
+let menuOpenBtn = document.querySelector(".navbar .bx-menu");
+let menuCloseBtn = document.querySelector(".nav-links .bx-x");
+menuOpenBtn.onclick = function() {
+navLinks.style.left = "0";
+}
+menuCloseBtn.onclick = function() {
+navLinks.style.left = "-100%";
+}
+
+
+// sidebar submenu open close js code
+let htmlcssArrow = document.querySelector(".htmlcss-arrow");
+htmlcssArrow.onclick = function() {
+ navLinks.classList.toggle("show1");
+}
+let moreArrow = document.querySelector(".more-arrow");
+moreArrow.onclick = function() {
+ navLinks.classList.toggle("show2");
+}
+let jsArrow = document.querySelector(".js-arrow");
+jsArrow.onclick = function() {
+ navLinks.classList.toggle("show3");
+}
+let emisionArrow = document.querySelector(".emision-arrow");
+emisionArrow.onclick = function() {
+ navLinks.classList.toggle("show4");
+}
+let emisionsub1Arrow = document.querySelector(".emisionSub1-arrow");
+emisionsub1Arrow.onclick = function() {
+ navLinks.classList.toggle("show5");
+}
+
+let cobranzasSub2 = document.querySelector(".cobranzasSub2-arrow");
+cobranzasSub2.onclick = function() {
+ navLinks.classList.toggle("show6");
+}
+let cobranzasSub3 = document.querySelector(".cobranzasSub3-arrow");
+cobranzasSub3.onclick = function() {
+ navLinks.classList.toggle("show7");
+}
 
 
 function filtrar(event) {
@@ -433,7 +480,7 @@ function modificarDatos(event) {
    let infoMail =  document.getElementById("mail").value;
    let infoFpago =  document.getElementById("fpago").value;
    let infoNotascte =  document.getElementById("notascte").value;
-
+  let infoUsuario =  sessionStorage.getItem("magi-usuario");
    let infoPatente =  document.getElementById("patente").value;
    let infoPatentev =  document.getElementById("patente_v").value;
    let infoMarca =  document.getElementById("marca_v").value;
@@ -450,7 +497,7 @@ function modificarDatos(event) {
    let infoDanios =  document.getElementById("danios").value;
    let infoNotasVeh =  document.getElementById("notas").value;
 
- google.script.run.modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoPatentev);
+ google.script.run.modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoPatentev, infoUsuario);
 alert('Póliza actualizada correctamente');
  spinner.style.display = 'none';
  boton.disabled = false;

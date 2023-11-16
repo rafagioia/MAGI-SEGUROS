@@ -5,7 +5,7 @@
 /////////// ABRIMOS EL HTML ///////////////
 function doGet(){
   var template = HtmlService.createTemplateFromFile('registro');
-  template.pubUrl = "https://script.google.com/macros/s/AKfycbzYihjW6-4nd90DtVwmyUoPIcSjqRh1N4oow2decuJxAVmeMGamhYIyLYmvT9P5snWp/exec"
+  template.pubUrl = "https://script.google.com/macros/s/AKfycbzqmzfoDIAz5QxgOZqZceopXqFRG6kyH2gsH6biSBxATwLDsXcLC4-mtLYD1ogbvGvrQg/exec"
   var output = template.evaluate();
   return output;
 }
@@ -79,7 +79,7 @@ let anio_emi3 = parseInt(anio_emi2) + 1
 
   // Si la Patente ya existe, actualizar los datos del Vehiculo
   if (patenteIndex !== -1) {
-
+    
   }
   // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
    else {
@@ -254,6 +254,7 @@ mantenimientos3.forEach(mantenimiento2 => {
       actualizaciones.push(actualizacion_emi);
       actualizaciones.push(actualizacion_cob);
       actualizaciones.push(actualizacion_pol);
+      console.log(actualizaciones)
   return actualizaciones;
 }
 
@@ -875,4 +876,3 @@ function convertHtmlToPdfM(htmlContent) {
 
   return encodedPdfContent;
 }
-

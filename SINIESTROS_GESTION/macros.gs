@@ -142,7 +142,7 @@ if ((data[i][8] === estado_filter || data[i][8] == "PENDIENTE") &&
     (riesgo_filter === "" || data[i][7] === riesgo_filter || 
     (riesgo_filter === "TOTALES" && (data[i][7] === "DEST. TOTAL" || data[i][7] === "ROBO TOTAL" || data[i][7] === "INCENDIO TOTAL")) || 
     (riesgo_filter === "PARCIALES" && (data[i][7] === "RECLAMO 3ROS" || data[i][7] === "CLEAS" || data[i][7] === "COMERCIO"
- || data[i][7] === "DAÑO POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "NTERASEGURADOS"
+ || data[i][7] === "DAÑO POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "INTERASEGURADOS"
  || data[i][7] === "RESP. CIVIL" || data[i][7] === "ROBO PARCIAL" || data[i][7] === "TODO RIESGO" || data[i][7] === "GRANIZO"
  || data[i][7] === "CRISTALES" || data[i][7] === "CERRADURA" || data[i][7] === "ACC. PERS." || data[i][7] === "GRUA" || data[i][7] === "RILLA"))) &&
     (patente_filter === "" || data[i][0] === patente_filter) && 
@@ -260,7 +260,7 @@ if ((estado_filter === "" || data[i][8] === estado_filter) &&
     (riesgo_filter === "" || data[i][7] === riesgo_filter || 
     (riesgo_filter === "TOTALES" && (data[i][7] === "DEST. TOTAL" || data[i][7] === "ROBO TOTAL" || data[i][7] === "INCENDIO TOTAL")) || 
     (riesgo_filter === "PARCIALES" && (data[i][7] === "RECLAMO 3ROS" || data[i][7] === "CLEAS" || data[i][7] === "COMERCIO"
- || data[i][7] === "DAÑO POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "NTERASEGURADOS"
+ || data[i][7] === "DAÑO POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "INTERASEGURADOS"
  || data[i][7] === "RESP. CIVIL" || data[i][7] === "ROBO PARCIAL" || data[i][7] === "TODO RIESGO" || data[i][7] === "GRANIZO"
  || data[i][7] === "CRISTALES" || data[i][7] === "CERRADURA" || data[i][7] === "ACC. PERS." || data[i][7] === "GRUA" || data[i][7] === "RILLA"))) &&
     (patente_filter === "" || data[i][0] === patente_filter) && 

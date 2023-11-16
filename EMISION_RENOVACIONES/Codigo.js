@@ -33,21 +33,34 @@ function renovarPol(
   infoHoy, 
   infoPol,
   infoRefa,
+  infoRefa_Desde,
   vto_antiguo) {
   const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
     const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
 
+  const [day, month, year] = infoRefa_Desde.split('/').map(Number);
+  const date = new Date(2000 + year, month - 1, day); // Resta 1 al mes para que sea compatible con la indexación de JavaScript (enero es 0).
+  date.setFullYear(date.getFullYear() + 1); // Suma un año
+  const dayFormatted = date.getDate().toString().padStart(2, '0');
+  const monthFormatted = (date.getMonth() + 1).toString().padStart(2, '0');
+  const yearFormatted = date.getFullYear().toString().slice(-2);
+  date.setFullYear(date.getFullYear() + 1); // Suma un año
+  const dayFormatted2 = date.getDate().toString().padStart(2, '0');
+  const monthFormatted2 = (date.getMonth() + 1).toString().padStart(2, '0');
+  const yearFormatted2 = date.getFullYear().toString().slice(-2);
+fecha_desde_f = dayFormatted + "/" + monthFormatted + "/" + yearFormatted
+fecha_hasta_f = dayFormatted2 + "/" + monthFormatted2 + "/" + yearFormatted2
 
   // Obtener los datos de la hoja
   const data = BD_EMISION.getDataRange().getValues();
   const data2 = BD_COBRANZAS.getDataRange().getValues();
-  
   for (var i = 0; i < data.length; i++) {
-    if (data[i][0] == infoPatente) { // Columna A
+    if (data[i][0] == infoPatente && fecha_desde_f == infoHasta) { // Columna A
       // Actualizar las columnas F, I, J y E
       BD_EMISION.getRange(i + 1, 6).setValue(infoImporte); // Columna F
-      BD_EMISION.getRange(i + 1, 9).setValue(infoVence);   // Columna I
-      BD_EMISION.getRange(i + 1, 10).setValue(infoHasta);  // Columna J
+      BD_EMISION.getRange(i + 1, 9).setValue(fecha_desde_f);   // Columna I
+      BD_EMISION.getRange(i + 1, 10).setValue(fecha_hasta_f);  // Columna J
+      BD_EMISION.getRange(i + 1, 10).setValue();  // Columna J
       BD_EMISION.getRange(i + 1, 5).setValue(infoRefa);    // Columna E
       BD_EMISION.getRange(i + 1, 8).setValue(infoPol);   // Columna H
       BD_EMISION.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
@@ -58,7 +71,7 @@ function renovarPol(
     if (data2[i][1] == infoPatente && data2[i][7] == 1) { 
       BD_COBRANZAS.getRange(i + 1, 10).setValue(infoPol); 
     }
-    if (infoVence !== vto_antiguo) {
+    if (data2[i][1] == infoPatente && infoVence !== vto_antiguo) {
       BD_COBRANZAS.getRange(i + 1, 6).setValue(infoVence); 
     }
       break; 
@@ -564,5 +577,3 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
-
-
