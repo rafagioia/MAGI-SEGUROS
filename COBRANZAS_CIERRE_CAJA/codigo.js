@@ -373,7 +373,7 @@ var fechaPagoStr = data[i][6];
 
   var formattedDate = day + '/' + month + '/' + year; // Formatea la fecha como "m/d/yyyy" sin ceros innecesarios
 
-    if (formattedDate === today && "DIGITAL" === data[i][19]) {
+    if (formattedDate === today && "DIGITAL" === data[i][19].toUpperCase()) {
       listPagos4 = [];
       listPagos4.push(data[i][3]);
       listPagos4.push(data[i][5]);
@@ -409,7 +409,7 @@ var fechaPagoStr = data[i][6];
 
   var formattedDate = day + '/' + month + '/' + year; // Formatea la fecha como "m/d/yyyy" sin ceros innecesarios
 
-        if (formattedDate === today && "EFECTIVO" === data[i][19]) {
+        if (formattedDate === today && "EFECTIVO" === data[i][19].toUpperCase()) {
       listPagos = [];
       listPagos.push(data[i][3]);
       listPagos.push(data[i][5]);

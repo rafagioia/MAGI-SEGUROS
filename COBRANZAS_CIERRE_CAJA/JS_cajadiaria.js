@@ -100,10 +100,11 @@
    "</div></div>";
      }
  
-     sinPendientesDiv.innerHTML = pendientesHtml;
+     sinPendientesDiv.textContent = "";
+     sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
    }
  
-   // Llamar a la funci贸n getData() del lado del servidor
+   // Llamar a la funci髇 getData() del lado del servidor
    google.script.run.withSuccessHandler(updateSinPendientes).getData();
    /////////////////////////////////////////
  
@@ -124,10 +125,11 @@
  "</div></div></div></div></div></div>";
      }
  
-     sinPendientesDiv2.innerHTML = pendientesHtml2;
+     sinPendientesDiv2.textContent = "";
+     sinPendientesDiv2.insertAdjacentHTML('beforeend',pendientesHtml2);
    }
  
-   // Llamar a la funci贸n getData() del lado del servidor
+   // Llamar a la funci髇 getData() del lado del servidor
    google.script.run.withSuccessHandler(updateSinPendientes2).getDataGastos();
    /////////////////////////////////////////
  
@@ -149,10 +151,11 @@
  "</div></div></div></div></div></div>";
      }
  
-     sinPendientesDiv3.innerHTML = pendientesHtml3;
+     sinPendientesDiv3.textContent = "";
+     sinPendientesDiv3.insertAdjacentHTML('beforeend',pendientesHtml3);
    }
  
-   // Llamar a la funci贸n getData() del lado del servidor
+   // Llamar a la funci髇 getData() del lado del servidor
    google.script.run.withSuccessHandler(updateSinPendientes3).getDataRecibis();
    /////////////////////////////////////////
  
@@ -180,15 +183,15 @@
    // Recorre los datos recibidos y verifica los criterios
    for (var i = 0; i < data.length; i++) {
      var fila = data[i];
-     var columnaQ = fila[10]; // 脥ndice 10 corresponde a la columna Q
-     var columnaT = fila[12]; // 脥ndice 13 corresponde a la columna T
+     var columnaQ = fila[10]; // 蚽dice 10 corresponde a la columna Q
+     var columnaT = fila[12]; // 蚽dice 13 corresponde a la columna T
  
      var fechaPagoStr = fila[4];
      var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-     var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d铆a, mes y a帽o
+     var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d韆, mes y a駉
      var hora = parseInt(fechaSplit[0], 10);
  
-     var valor = fila[8]; // 脥ndice 8 corresponde a la columna Importe
+     var valor = fila[8]; // 蚽dice 8 corresponde a la columna Importe
      var valorNumerico = parseInt(valor.replace(/\D/g, ''));
  
      if (columnaQ === "MARCOS PAZ") {
@@ -247,14 +250,14 @@
    // Recorre los datos recibidos y verifica los criterios
    for (var i = 0; i < data.length; i++) {
      var fila = data[i];
-     var columnaQ = fila[3]; // 脥ndice 10 corresponde a la columna Q
-     var columnaT = fila[5]; // 脥ndice 13 corresponde a la columna T
+     var columnaQ = fila[3]; // 蚽dice 10 corresponde a la columna Q
+     var columnaT = fila[5]; // 蚽dice 13 corresponde a la columna T
      var fechaPagoStr = fila[4];
      var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-     var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d铆a, mes y a帽o
+     var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d韆, mes y a駉
      var hora = parseInt(fechaSplit[0], 10);
  
-     var valor = fila[2]; // 脥ndice 8 corresponde a la columna Importe
+     var valor = fila[2]; // 蚽dice 8 corresponde a la columna Importe
      var valorNumerico = parseInt(valor.replace(/\D/g, ''));
  
      if (columnaQ === "MARCOS PAZ") {
@@ -313,14 +316,14 @@
    // Recorre los datos recibidos y verifica los criterios
    for (var i = 0; i < data.length; i++) {
      var fila = data[i];
-     var columnaQ = fila[3]; // 脥ndice 10 corresponde a la columna Q
-     var columnaT = fila[5]; // 脥ndice 13 corresponde a la columna T
+     var columnaQ = fila[3]; // 蚽dice 10 corresponde a la columna Q
+     var columnaT = fila[5]; // 蚽dice 13 corresponde a la columna T
      var fechaPagoStr = fila[4];
      var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-     var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d铆a, mes y a帽o
+     var fechaSplit = fechaHoraSplit[1].split(":"); // Dividir la fecha en d韆, mes y a駉
      var hora = parseInt(fechaSplit[0], 10);
  
-     var valor = fila[2]; // 脥ndice 8 corresponde a la columna Importe
+     var valor = fila[2]; // 蚽dice 8 corresponde a la columna Importe
      var valorNumerico = parseInt(valor.replace(/\D/g, ''));
  
      if (columnaQ === "MARCOS PAZ") {
@@ -436,7 +439,7 @@
    google.script.run.withSuccessHandler(calcularSumaGastos).getDataGastos();
    google.script.run.withSuccessHandler(calcularSumaRecibis).getDataRecibis();
  
-   // Ocultar el spinner despu茅s de completar todas las llamadas
+   // Ocultar el spinner despu閟 de completar todas las llamadas
    Promise.all([
      new Promise((resolve, reject) => {
        google.script.run.withSuccessHandler(resolve).getData();
@@ -454,14 +457,14 @@
  
  
  function bajarXLM(downloadUrl) {
-   // L贸gica para descargar el archivo
-   alert("Env铆o de caja exitoso!");
+   // L骻ica para descargar el archivo
+   alert("Env韔 de caja exitoso!");
     const spinner = document.getElementById('spinner_send_caja');
        spinner.style.display = 'none';
  }
  
  function mostrarErrorEnvio() {
-   alert("Error en el env铆o, por favor reintente");
+   alert("Error en el env韔, por favor reintente");
     const spinner = document.getElementById('spinner_send_caja');
        spinner.style.display = 'none';
  }
@@ -501,7 +504,7 @@
      var t_gastos_ma_t_d = parseFloat(document.getElementById("t_gastos_ma_t_d").value) || 0;
      var t_recibis_ma_t_d = parseFloat(document.getElementById("t_recibis_ma_t_d").value) || 0;   
  
-   // Llamar a la funci贸n getData() del lado del servidor
+   // Llamar a la funci髇 getData() del lado del servidor
    google.script.run.withSuccessHandler(bajarXLM).withFailureHandler(mostrarErrorEnvio).generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m,t_pagos_mp_t,t_gastos_mp_t,t_recibis_mp_t, t_pagos_ma_m,t_gastos_ma_m,t_recibis_ma_m,t_pagos_ma_t,t_gastos_ma_t,t_recibis_ma_t, t_pagos_mp_m_d, t_gastos_mp_m_d, t_recibis_mp_m_d, t_pagos_mp_t_d, t_gastos_mp_t_d, t_recibis_mp_t_d,  t_pagos_ma_m_d, t_gastos_ma_m_d, t_recibis_ma_m_d, t_pagos_ma_t_d, t_gastos_ma_t_d, t_recibis_ma_t_d);
  
    
@@ -545,7 +548,7 @@
      var t_gastos_ma_t_d = parseFloat(document.getElementById("t_gastos_ma_t_d").value) || 0;
      var t_recibis_ma_t_d = parseFloat(document.getElementById("t_recibis_ma_t_d").value) || 0;   
  
-   // Llamar a la funci贸n getData() del lado del servidor
+   // Llamar a la funci髇 getData() del lado del servidor
    google.script.run.withSuccessHandler(bajarXLM).withFailureHandler(mostrarErrorEnvio).generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m,t_pagos_mp_t,t_gastos_mp_t,t_recibis_mp_t, t_pagos_ma_m,t_gastos_ma_m,t_recibis_ma_m,t_pagos_ma_t,t_gastos_ma_t,t_recibis_ma_t, t_pagos_mp_m_d, t_gastos_mp_m_d, t_recibis_mp_m_d, t_pagos_mp_t_d, t_gastos_mp_t_d, t_recibis_mp_t_d,  t_pagos_ma_m_d, t_gastos_ma_m_d, t_recibis_ma_m_d, t_pagos_ma_t_d, t_gastos_ma_t_d, t_recibis_ma_t_d, today);
  }
  
@@ -557,9 +560,9 @@
     const spinner = document.getElementById('spinner_open_caja_old');
    spinner.style.display = 'block';
  
- document.getElementById("lista_recibis").innerHTML = "";
- document.getElementById("lista_gastos").innerHTML = "";
- document.getElementById("sinPendientes").innerHTML = "";
+ document.getElementById("lista_recibis").textContent = "";
+ document.getElementById("lista_gastos").textContent = "";
+ document.getElementById("sinPendientes").textContent = "";
  
  document.getElementById("t_pagos_mp_m").value = "";
  document.getElementById("t_gastos_mp_m").value = "";
@@ -597,7 +600,7 @@
    google.script.run.withSuccessHandler(calcularSumaGastos).getDataGastos(today);
    google.script.run.withSuccessHandler(calcularSumaRecibis).getDataRecibis(today);
  
-   // Ocultar el spinner despu茅s de completar todas las llamadas
+   // Ocultar el spinner despu閟 de completar todas las llamadas
    Promise.all([
      new Promise((resolve, reject) => {
        google.script.run.withSuccessHandler(resolve).getData();
@@ -624,14 +627,14 @@
  var modal = document.getElementById("myModal");
  var tiempoRestanteDiv = document.getElementById("tiempo-restante");
  
- // Funci贸n para realizar el inicio de sesi贸n
+ // Funci髇 para realizar el inicio de sesi髇
  var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
  var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
  var colorAlmacenado = sessionStorage.getItem("magi-color");
  
  if (usuarioAlmacenado) {
    // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
-   document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
+   document.getElementById("usuario_sp").textContent = usuarioAlmacenado;
    user.style.display = "block";
    close_session.style.display = "block";
    modal.style.display = "none";
@@ -656,19 +659,19 @@
    iniciarContadorTiempo(tiempoRestante);
  } else {
    
-   // Funci贸n para abrir el modal
+   // Funci髇 para abrir el modal
    modal.style.display = "block";
  
-   // Funci贸n para cerrar el modal
+   // Funci髇 para cerrar el modal
    function closeModal() {
      modal.style.display = "none";
    }
  
-   // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot贸n de inicio de sesi贸n
+   // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot髇 de inicio de sesi髇
    document.getElementById("inicio-sesion").addEventListener("click", function (event) {
      event.preventDefault();
  
-     // Obtener el usuario y la contrase帽a del formulario
+     // Obtener el usuario y la contrase馻 del formulario
      var usuario = document.getElementById("usuario").value;
      var contrasena = document.getElementById("contrasena").value;
  
@@ -676,12 +679,12 @@
      var colorPicker = document.getElementById("colorPicker");
      var colorSeleccionado = colorPicker.value;
  
- // Hacer una solicitud al servidor para verificar el usuario y la contrase帽a
+ // Hacer una solicitud al servidor para verificar el usuario y la contrase馻
  
  
  google.script.run.withSuccessHandler(function (color) {
    if (color) {
-     document.getElementById("usuario_sp").innerHTML = usuario;
+     document.getElementById("usuario_sp").textContent = usuario;
      modal.style.display = "none";
      user.style.display = "block";
      close_session.style.display = "block";
@@ -708,7 +711,7 @@
  
  
  
- // Funci贸n para calcular el tiempo restante en milisegundos
+ // Funci髇 para calcular el tiempo restante en milisegundos
  function calcularTiempoRestante() {
    var horaInicio = parseInt(horaInicioAlmacenada);
    var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -717,25 +720,25 @@
    return tiempoRestante;
  }
  
- // Funci贸n para mostrar el tiempo restante en el div correspondiente
+ // Funci髇 para mostrar el tiempo restante en el div correspondiente
  function mostrarTiempoRestante(tiempoRestante) {
    if (tiempoRestante <= 0) {
        sessionStorage.removeItem("magi-usuario");
        sessionStorage.removeItem("magi-horaInicio");
        sessionStorage.removeItem("magi-color");
-       tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-       document.getElementById("usuario_sp").innerHTML = "Desconocido";
+       tiempoRestanteDiv.textContent = "Tiempo expirado";
+       document.getElementById("usuario_sp").textContent = "Desconocido";
        modal.style.display = "block";
    } else {
      var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
      var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
      var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
  
-     tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+     tiempoRestanteDiv.textContent = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
    }
  }
  
- // Funci贸n para iniciar el contador de tiempo
+ // Funci髇 para iniciar el contador de tiempo
  function iniciarContadorTiempo(tiempoRestante) {
    var intervalo = setInterval(function () {
      tiempoRestante -= 1000;
@@ -745,8 +748,8 @@
        sessionStorage.removeItem("magi-usuario");
        sessionStorage.removeItem("magi-horaInicio");
        sessionStorage.removeItem("magi-color");
-       tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-       document.getElementById("usuario_sp").innerHTML = "Desconocido";
+       tiempoRestanteDiv.textContent = "Tiempo expirado";
+       document.getElementById("usuario_sp").textContent = "Desconocido";
        modal.style.display = "block";
      } else {
        mostrarTiempoRestante(tiempoRestante);
@@ -785,9 +788,9 @@
      // Eliminar el valor almacenado en sessionStorage
      sessionStorage.removeItem("magi-usuario");
        sessionStorage.removeItem("magi-horaInicio");
-       tiempoRestanteDiv.innerHTML = "";    
-       document.getElementById("usuario_sp").innerHTML = "Desconocido";
-   // Recargar la p谩gina
+       tiempoRestanteDiv.textContent = "";    
+       document.getElementById("usuario_sp").textContent = "Desconocido";
+   // Recargar la p醙ina
        modal.style.display = "block";
  
  }

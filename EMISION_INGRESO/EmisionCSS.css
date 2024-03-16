@@ -1,6 +1,24 @@
 body{
   background-color: #256D7B;
 }
+.custom-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.custom-select select:focus {
+  outline: none;
+  border-color: #008cba;
+  box-shadow: 0 0 5px rgba(0, 140, 186, 0.5);
+}
 
 
 /* INICIO NUEVO MENU DE NAVEGACION */
@@ -12,6 +30,15 @@ font-family: sans-serif;
 }
 body{
 min-height: 100vh;
+}
+#sugerencias {
+  /* Agrega estilos personalizados aquí */
+  /* Por ejemplo, ancho y posición */
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
 }
 nav {
 position: relative; /* Cambiar a relative o quitar para flujo normal */
@@ -701,3 +728,30 @@ font-size: 1rem;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
   }
+
+.thumbnail-container {
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+
+.thumbnail-container img {
+  padding:  0.25rem;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.delete-icon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
+}
+
+  .img-container {
+  position: relative;
+  display: inline-block;
+}

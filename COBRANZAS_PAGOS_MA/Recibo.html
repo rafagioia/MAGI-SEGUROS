@@ -89,7 +89,7 @@
         <h6 style="font-size: 8px;font-weight: 700;">Lugar y Fecha:</h6>
     </div>
     <div class="col-5" style="height:12px; background-color: #dcdcdc;border: 1px solid black;">
-        <h6 style="padding-left:3px;font-size: 8px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>Mariano Acosta - <span id="fechaHora"></span></h6>
+        <h6 style="padding-left:3px;font-size: 8px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>M. Acosta - <span id="fechaHora"></span></h6>
     </div>       
   </div>
 
@@ -125,55 +125,67 @@ var contenidoSwitch = document.getElementById("contenido-switch");
 
 switch ("<?= sourceVals[10] ?>") {
   case "AGROSALTA":
-    contenidoSwitch.innerHTML = "NO POSEE";
+    contenidoSwitch.textContent = "NO POSEE";
     break;
   case "AGROSALTA C/GRUA":
-    contenidoSwitch.innerHTML = "0800 666 1366 (100km)";
+    contenidoSwitch.textContent = "0800 666 1366 (100km)";
     break;
   case "AGRO (V)":
-    contenidoSwitch.innerHTML = "NO POSEE";
+    contenidoSwitch.textContent = "NO POSEE";
     break;
   case "AGRO (V) C/GRUA":
-    contenidoSwitch.innerHTML = "0800 666 1366 (100km)";
+    contenidoSwitch.textContent = "0800 666 1366 (100km)";
     break;
   case "AGRO MOTO":
-    contenidoSwitch.innerHTML = "0800 666 1366 (100km)";
+    contenidoSwitch.textContent = "0800 666 1366 (100km)";
     break;
   case "RIVADAVIA":
-    contenidoSwitch.innerHTML = "0800-666-6789 / Ext: (5411)43286600";
+    contenidoSwitch.textContent = "0800-666-6789 / Ext: (5411)43286600";
     break;
   case "FED PAT":
-    contenidoSwitch.innerHTML = "0800-222-0022 0800-800-0022";
+    contenidoSwitch.textContent = "0800-222-0022 0800-800-0022";
     break;
   case "PROVIDENCIA":
-    contenidoSwitch.innerHTML = "0800-444-4442 / 0800-999-3003";
+    contenidoSwitch.textContent = "0800-444-4442 / 0800-999-3003";
     break;
   case "RIO URUGUAY":
-    contenidoSwitch.innerHTML = "0800-444-1441 0810-888-7080";
+    contenidoSwitch.textContent = "0800-444-1441 0810-888-7080";
     break;
   case "ATM":
-    contenidoSwitch.innerHTML = "0800-999-8208 / Ext:(5411)48149058";
+    contenidoSwitch.textContent = "0800-999-8208 / Ext:(5411)48149058";
     break;
   case "LA CAJA":
-    contenidoSwitch.innerHTML = "0800-666-0939";
+    contenidoSwitch.textContent = "0800-666-0939";
     break;
   case "MAPFRE":
-    contenidoSwitch.innerHTML = "0800-999-7424 / Ex:(5411)57772127";
+    contenidoSwitch.textContent = "0800-999-7424 / Ex:(5411)57772127";
     break;
   case "BENEFICIO":
-    contenidoSwitch.innerHTML = "NO POSEE";
+    contenidoSwitch.textContent = "NO POSEE";
     break;
   case "MERCANTIL":
-    contenidoSwitch.innerHTML = "0-800-777-2634";
+    contenidoSwitch.textContent = "0-800-777-2634";
     break;
   case "LIBRA":
-    contenidoSwitch.innerHTML = "0800-999-6500";
+    contenidoSwitch.textContent = "0800-999-6500";
     break;
   case "GRUA":
-    contenidoSwitch.innerHTML = "0800 666 1366 (100km)";
+    contenidoSwitch.textContent = "0800 666 1366 (100km)";
+    break;
+  case "EXPERTA":
+    contenidoSwitch.textContent = "0800 777 7278";
+    break;
+  case "DIGNA":
+    contenidoSwitch.textContent = "";
+    break;
+  case "EL TRIUNFO":
+    contenidoSwitch.textContent = "";
+    break;
+  case "BBVA":
+    contenidoSwitch.textContent = "";
     break;
   default:
-    contenidoSwitch.innerHTML = "";
+    contenidoSwitch.textContent = "";
 }
 
   var textoOriginal = "<?= sourceVals[13] ?>";
@@ -188,8 +200,8 @@ switch ("<?= sourceVals[10] ?>") {
         let fecha = new Date(anio, mes - 1, dia);
         fecha.setMonth(fecha.getMonth() + 1)
         var newDateString = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-    document.getElementById("vto-date").innerHTML = newDateString;
-    document.getElementById("vto-date2").innerHTML = newDateString;
+    document.getElementById("vto-date").textContent = newDateString;
+    document.getElementById("vto-date2").textContent = newDateString;
 
 
   function actualizarFechaHora() {
@@ -202,7 +214,7 @@ switch ("<?= sourceVals[10] ?>") {
 </script>
 
 </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
 

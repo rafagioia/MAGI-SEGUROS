@@ -91,22 +91,22 @@ function actualizarEstado(estado_sn, tramite_sn, gestion_sn, novedad_sn, usuario
   var modificacionGestion = "";
 
   if (estado_sn !== "") {
-    modificacionEstado = "se modificó el estado a " + estado_sn + "\n";
+    modificacionEstado = ". SE MODIFICÓ EL ESTADO A " + estado_sn + "\n";
   }
 
   if (tipotramite_sn !== "") {
-    modificacionTramite = "se modificó el trámite a " + tipotramite_sn + "\n";
+    modificacionTramite = ". SE MODIFICÓ EL TRÁMITE A " + tipotramite_sn + "\n";
   }
 
   if (gestion_sn !== "") {
-    modificacionGestion = "se modificó la gestión a " + gestion_sn + "\n";
+    modificacionGestion = ". SE MODIFICÓ LA GESTIÓN AL " + gestion_sn + "\n";
   }
 
   if (fechaip_sn !== "" || taller_sn !== "") {
-    agregaTaller = "Inspección para el dia: " + fechaip_sn + " en el taller: " + taller_sn + "\n";
+    agregaTaller = "INSPECCIÓN PARA EL DIA: " + fechaip_sn + " EN EL TALLER: " + taller_sn + "\n";
   }
 
-  var dataConcatenada = "[" + fechaActual + ": " + novedad + "]\n" + usuario + ": " + notas + modificacionEstado + modificacionTramite + modificacionGestion + agregaTaller + notas_old;
+  var dataConcatenada = "[" + fechaActual + ": " + novedad + "]\n" + usuario + ": " + notas + modificacionEstado + modificacionTramite + modificacionGestion + agregaTaller + notas_old + "\n";
 
   console.log(estado_sn, tramite_sn, gestion_sn, dataConcatenada, notas_old);
 

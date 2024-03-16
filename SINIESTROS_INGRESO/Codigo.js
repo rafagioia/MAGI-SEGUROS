@@ -62,7 +62,7 @@ function siniestroNuevo(infoPatente, infoNumSin, infoFechaSin, infoDNI, infoClie
   }
   // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
    else {
-var vehVals = [infoPatente, infoDNI, infoCliente, "BD SINIESTROS", , , infoCnia, , , , "SEGURO NUEVO", , infoMarca, , , infoDanos, , , ]
+var vehVals = [infoPatente, infoDNI, infoCliente, "BD SINIESTROS", , , infoCnia, ,infoFechaSin,infoFechaSin, "SEGURO NUEVO", , infoMarca, , , infoDanos, , , ]
     LISTADO.insertRowBefore(2).getRange(2, 1, 1, vehVals.length).setValues([vehVals]);
   }
 
@@ -339,4 +339,69 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   
   // Si no se encuentra el usuario o el color, devolver un valor predeterminado o null
   return null;
+}
+/////////////////////// SUBIR FOTOS A DRIVE //////////////////////
+
+
+function uploadRegToDrive(folderId, filesBase64, dni) {
+  var parentFolder = DriveApp.getFolderById(folderId);
+  var folders = parentFolder.getFoldersByName(dni);
+  var targetFolder;
+  
+  // Verifica si ya existe la carpeta con el nombre del dni
+  if (folders.hasNext()) {
+    targetFolder = folders.next();
+  } else {
+    // Si no existe, crea una nueva carpeta con el nombre del dni
+    targetFolder = parentFolder.createFolder(dni);
+  }
+  
+  // Procesa y sube cada archivo a la carpeta de la dni
+  filesBase64.forEach(function(file) {
+    var decodedBytes = Utilities.base64Decode(file.base64);
+    var blob = Utilities.newBlob(decodedBytes, file.mimeType, file.fileName);
+    targetFolder.createFile(blob);
+  });
+  
+  // alert("Fotos subidas correctamente.");
+}
+
+
+///////////////////////// MOSTRAR FOTOS DE DRIVE //////////////////////////
+
+
+function obtenerFotosPorDNI(dni) {
+  var folderId = "1CyTu6J75Nhdshmt38N79Jf9Ymxq8znYz"; // Reemplaza esto con el ID de tu carpeta raíz en Google Drive
+  var folder = DriveApp.getFolderById(folderId);
+  var subFolders = folder.getFolders();
+  var fotosBase64 = [];
+  var fotosIds = [];
+  
+  while (subFolders.hasNext()) {
+    var subFolder = subFolders.next();
+    if (subFolder.getName() === dni) {
+      var files = subFolder.getFiles();
+      while (files.hasNext()) {
+        var file = files.next();
+        var blob = file.getBlob();
+        var base64 = Utilities.base64Encode(blob.getBytes());
+        var dataUrl = 'data:' + blob.getContentType() + ';base64,' + base64;
+        fotosBase64.push(dataUrl);
+        fotosIds.push(file.getId());
+      }
+      break;
+    }
+  }
+  
+  return { fotosBase64: fotosBase64, fotosIds: fotosIds };
+}
+
+function borrarFotoEnDrive(fotoId) {
+  try {
+    DriveApp.getFileById(fotoId).setTrashed(true);
+    return true;
+  } catch (error) {
+    console.error("Error al borrar la foto:", error);
+    return false;
+  }
 }

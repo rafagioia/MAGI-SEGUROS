@@ -347,97 +347,7 @@
     </div>
   </div>
 </form>
-      <!-- <form id="visorGeneral">
-      <div class="visor bg-light shadow p-3" style="border-radius: 10px;">
-                      <div class="row  m-0 p-0 bg-light">
-            <div class="col-2  m-0 p-0" style="font-weight: 500;"> Riesgo:<br>
-              <select id="riesgo" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
-               name="riesgo" placeholder="">
-                <option value=""></option>
-                <option value="RECLAMO 3ROS">RECLAMO 3ROS</option>
-                <option value="CLEAS">CLEAS</option>
-                <option value="COMERCIO">COMERCIO</option>
-                <option value="DEST. TOTAL">DEST. TOTAL</option>
-                <option value="DAÑO POR ROBO TOTAL">DAÑO POR ROBO TOTAL</option>
-                <option value="HOGAR">HOGAR</option>
-                <option value="INCENDIO PARCIAL">INCENDIO PARCIAL</option>
-                <option value="INCENDIO TOTAL">INCENDIO TOTAL</option>
-                <option value="INTERASEGURADOS">INTERASEGURADOS</option>
-                <option value="RESP. CIVIL">RESP. CIVIL</option>
-                <option value="ROBO PARCIAL">ROBO PARCIAL</option>
-                <option value="ROBO TOTAL">ROBO TOTAL</option>
-                <option value="TODO RIESGO">TODO RIESGO</option>
-                <option value="GRANIZO">GRANIZO</option>
-                <option value="CRISTALES">CRISTALES</option>
-                <option value="CERRADURA">CERRADURA</option>
-                <option value="ACC. PERS.">ACC. PERS.</option>
-                <option value="GRUA">GRUA</option>
-                <option value="RILLA">RILLA</option>
-              </select>
 
-            </div>
-            <div class="col-2  m-0 p-0 text-sm text-truncate" style="font-weight: 500;"> Cñia:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
-                 id="cnia" name="cnia" placeholder="" readonly>
-            </div>
-            <div class="col-2  m-0 p-0 text-truncate" style="font-weight: 500;">N° Stro:            <button style='width: 17px;height:13px;background-image: url("https://drive.google.com/uc?id=1gx2-28N0e8R5m95gOthbdiz61rBnLu8x"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 20%;' id="bt-mail" onclick="enviarMail()"></button><br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
-                id="numSin" name="numSin" placeholder="" readonly>
-
-            </div>
-            <div class="col-2  m-0 p-0 text-sm text-truncate" style="font-weight: 500;">F.Declara:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
-               id="fechaDec" name="fechaDec" placeholder="" readonly>
-            </div>
-
-            <div class="col-2  m-0 p-0" style="font-weight: 500;"> F. Stro:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
-                 id="fechaSin" name="fechaSin" placeholder="" readonly>
-            </div>
-            <div class="col-2  m-0 p-0 text-truncate" style="text-align: center; font-weight: 500;">N°Tramite:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0 text-dark"
-                style="text-align: center;" id="numTramite" name="numTramite" placeholder=""
-                readonly>
-            </div>
-
-          </div>
-          <div class="row m-0 py-1" style="font-weight: 500;">Relato:</div>
-           <div class="row m-0 py-1">
-              <textarea class="input_tx form-control  bg-transparent border-0"
-                style="border: 1px solid black;" id="relato" name="relato"
-                placeholder="" readonly></textarea>
-                </div>
-          <hr style="margin-bottom: 0px;">
-          <div class="row m-0 p-0">
-            <div class="col-2 m-0 p-0" style="font-weight: 500;"> Estado:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
-                 id="estado" name="estado" placeholder="" readonly>
-            </div>
-            <div class="col-4  m-0 p-0" style="font-weight: 500;"> Tramite:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
-                 id="tramite" name="tramite" placeholder="">
-            </div>
-            <div class="col-2  m-0 p-0" style="font-weight: 500;"> Taller:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
-                 id="taller" name="taller" placeholder="" readonly>
-            </div>
-            <div class="col-2 m-0 p-0 text-sm text-truncate" style="font-weight: 500;"> Gestion:<br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
-                 id="gestion" name="gestion" placeholder="" readonly>
-            </div>
-            <div class="col-2  m-0 p-0 text-truncate" style="font-weight: 500;">Whatsapp:              <button style='width: 22px;height:22px;padding: 0px;background-image: url("https://drive.google.com/uc?id=1JyM7APlNWzFD38ndFwd20EDcGHQVLybh"); background-size: contain; background-repeat: no-repeat; border:none; border-radius: 50%;padding: 5px;' id="bt-whatsapp" onclick="enviarMensajeWPP()"></button><br>
-              <input type="text" class="input_tx form-control-xs  m-0 p-0 bg-transparent border-0"
-               id="wpp" name="wpp" placeholder="" readonly>
-
-            </div>
-            <div class="row m-0 p-0" style="font-weight: 500;">Novedades / Seguimiento de Tareas:
-              <textarea class="input_tx form-control" style="height: 250px" id="notas" name="notas" placeholder=""
-                readonly></textarea>
-
-            </div>
-          </div>
-      </form>
-  </div> -->
   </div>
   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">      
     <!------------ NUEVO ESTADO AL SINIESTRO --------------->
@@ -445,9 +355,9 @@
 
         <div class="row  m-0 p-0 bg-light py-2">INGRESAR NUEVO ESTADO AL SINIESTRO:</div>
         <form id="nuevo_estado_form">
-          <div class="row">
+          <div class="row m-0">
             <div class="col-8  m-0 p-0"> Novedad:<br>
-              <select class="form-select form-select-sm mt-1" style='border-radius: 30px' id="novedad_sn"
+              <select class="form-select form-select-sm mt-1" id="novedad_sn"
                 name="novedad_sn" placeholder="">
                 <option value=""> </option>
                 <option value="RECEPCION DE DOCUMENTACION">RECEPCION DE DOCUMENTACION</option>
@@ -464,11 +374,14 @@
                 id="fechaip_sn" name="fechaip_sn" placeholder="DD/MM/AA">
             </div>
           </div>
-          <div class="row m-0">
+          <!-- <div class="row m-0">
             <label for="estado">Novedades / Seguimiento de Tareas:</label>
             <input type="text" class="form-control" style="height:80px" id="notas_sn" name="notas_sn" placeholder="">
+          </div> -->
+          <div class="row m-0">
+            <label for="estado">Novedades / Seguimiento de Tareas:</label>
+            <textarea class="form-control" style="height:80px; text-transform: uppercase; overflow-y: auto;" id="notas_sn" name="notas_sn" placeholder=""></textarea>
           </div>
-
           <div class="row  m-0 p-0 bg-light py-2">
 
             <div class="col-2  m-0 p-0"> Estado:<br>
@@ -486,7 +399,7 @@
 
             <div class="col-3 m-0 p-0">Prox Gestion:<br>
               <input type="text" class="form-control  mt-1" id="gestion_sn"
-                name="gestion_sn" placeholder="DD/MM/AA">
+                name="gestion_sn" placeholder="DD/MM/AAAA">
             </div>
             <div class="col-3"><br>
 
@@ -584,7 +497,7 @@
     <div class="row pt-0 mt-0 mb-2">
       <div class="col-3  m-0"> Fecha Gestion:<br>
         <input type="text" class="form-control form-control-sm" id="gestionSelect" name="gestionSelect"
-          placeholder="D/M (ej: 3/4)">
+          placeholder="DD/MM/AAAA">
       </div>
       <div class="col-3  m-0"> Compañía:<br>
         <select class="form-select form-select-sm" id="companiaSelect" name="companiaSelect" placeholder="">
@@ -651,6 +564,13 @@
             <input class="form-check-input" type="checkbox" id="gestiones-activas">
             <label class="form-check-label" for="gestiones-activas">
               Gestiones activas
+              <span class="form-check-input-indicator"></span>
+            </label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="gestiones-ordenar">
+            <label class="form-check-label" for="gestiones-ordenar">
+              Ordenar Gestiones
               <span class="form-check-input-indicator"></span>
             </label>
           </div>

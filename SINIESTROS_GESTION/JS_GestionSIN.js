@@ -18,6 +18,22 @@
   )
 })()
 
+
+/////////////////// TEXT AREA DE MODIFICAR /////////////////
+
+// Obtener el elemento textarea
+const notasTextarea = document.getElementById('notas_sn');
+
+// Agregar un event listener para controlar el texto ingresado
+notasTextarea.addEventListener('input', function(event) {
+ // Convertir el texto a mayúsculas y actualizar el valor del textarea
+ this.value = this.value.toUpperCase();
+ 
+ // Hacer que el scroll se mueva hacia abajo al escribir
+ this.scrollTop = this.scrollHeight;
+});
+
+
 ////////////////// VALORES DE MODIFICADOR ///////////////////
 // Obtén referencias a los elementos select
 var tipoValorSelect = document.getElementById("mod_datos");
@@ -29,7 +45,7 @@ tipoValorSelect.addEventListener("change", function() {
  var selectedValue = tipoValorSelect.value;
 
  // Limpia las opciones actuales del segundo select
- valorModSelect.innerHTML = "";
+ valorModSelect.textContent = "";
 
  // Crea y añade las nuevas opciones según la selección
  if (selectedValue === "riesgo") {
@@ -54,6 +70,7 @@ tipoValorSelect.addEventListener("change", function() {
    addOption(valorModSelect, "ACC. PERS.", "ACC. PERS.");
    addOption(valorModSelect, "GRUA", "GRUA");
    addOption(valorModSelect, "RILLA", "RILLA");
+   addOption(valorModSelect, "BICICLETA", "BICICLETA");
  } else if (selectedValue === "compania") {
    valorModSelect.style.display = "block";
    valorMod.style.display = "none";
@@ -76,6 +93,9 @@ tipoValorSelect.addEventListener("change", function() {
    addOption(valorModSelect, "AGRO (V) C/GRUA", "AGRO (V) C/GRUA");
    addOption(valorModSelect, "AGRO MOTO", "AGRO MOTO");
    addOption(valorModSelect, "DIGNA", "DIGNA");
+   addOption(valorModSelect, "EXPERTA", "EXPERTA");
+   addOption(valorModSelect, "EL TRIUNFO", "EL TRIUNFO");
+   addOption(valorModSelect, "BBVA", "BBVA");
  } else {
    valorModSelect.style.display = "none";
    valorMod.style.display = "block";
@@ -154,7 +174,7 @@ function modificarDatos(event) {
  event.target.reset();
 alert('Modificación de datos exitosa.');
 
-document.getElementById("sinPendientes").innerHTML = "";
+document.getElementById("sinPendientes").textContent = "";
 document.getElementById("nombre").value = "";
 document.getElementById("riesgo").value = "";
 document.getElementById("dni").value = "";
@@ -183,7 +203,7 @@ document.getElementById("valorMod").value = "";
  function cleanService() {
  event.preventDefault();
 
-document.getElementById("sinPendientes").innerHTML = "";
+document.getElementById("sinPendientes").textContent = "";
 document.getElementById("nombre").value = "";
 document.getElementById("riesgo").value = "";
 document.getElementById("dni").value = "";
@@ -224,7 +244,7 @@ function actualiEstado(event) {
  google.script.run.actualizarEstado(estado_sn, tramite_sn, gestion_sn, novedad_sn, usuario_sn, notas_sn,tipotramite_sn, fechaip_sn, taller_sn, notas_old);
  event.target.reset();
 
-document.getElementById("sinPendientes").innerHTML = "";
+document.getElementById("sinPendientes").textContent = "";
 document.getElementById("nombre").value = "";
 document.getElementById("riesgo").value = "";
 document.getElementById("dni").value = "";
@@ -270,16 +290,26 @@ var pendientesHtml = "";
 
 var  bgColor2 = "";
 var dateParts = result[i][9].split("/");
-var month = parseInt(dateParts[1], 10) - 1; // Restar 1 al mes para que sea de 0 a 11
+var month = parseInt(dateParts[1], 10); // Restar 1 al mes para que sea de 0 a 11
 var day = parseInt(dateParts[0], 10);
-var year = new Date().getFullYear(); // Obtener el año actual
+var year =  parseInt(dateParts[2], 10); // Obtener el año actual
 var date = new Date(year, month, day);
 var today = new Date();
+
+var dia = today.getDate();
+var mes = today.getMonth() + 1; // Los meses comienzan desde 0 (enero)
+var anio = today.getFullYear();
 
 if (result[i][7] == "TERMINADO") {
    bgColor2 = "#E1FDD9";
    name = "on";
-} else if (date > today) {
+// } else if (date > today) {
+
+} else if (year > anio ||
+   (year === anio && month > mes) ||
+   (year === anio && month === mes && day > dia)) {
+     
+     // } else if (day >= dia && month >= mes && year >= anio) {
    bgColor2 = "#EBEEFF"
    name = "off";
 } else if (result[i][7] == "ESTADO:") {
@@ -309,6 +339,7 @@ var bgColor = result[i][6] === 'TODO RIESGO' ? "#823131, #D65050" :
              result[i][6] === 'ACC. PERS.' ? "#4E5B32, #6F8049" :
              result[i][6] === 'GRUA' ? "#445629, #88A55C" :
              result[i][6] === 'RILLA' ? "#253B4C, #6088A9" :
+             result[i][6] === 'BICICLETA' ? "#5F365D, #9E5A9B" :
              result[i][6] === '' ? "#FFFFFF" :
              // Color de fondo predeterminado si no coincide con ninguna condición
              "#FFFFFF";
@@ -332,6 +363,7 @@ var ftColor = result[i][6] === 'TODO RIESGO' ? "#823131" :
              result[i][6] === 'ACC. PERS.' ? "#4E5B32" :
              result[i][6] === 'GRUA' ? "#445629" :
              result[i][6] === 'RILLA' ? "#253B4C" :
+             result[i][6] === 'BICICLETA' ? "#5F365D" :
              result[i][6] === '' ? "#000000" :
              // Color de fondo predeterminado si no coincide con ninguna condición
              "#000000";
@@ -361,38 +393,6 @@ pendientesHtml += "<article class='usercard' name='" + name + "' id='div" + i + 
  "</div>" +
 "</article>"+
 
-// pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5px; padding: 5px 10px 5px 10px; border: 2px solid #000; box-shadow: 0px 0px 5px 0px #000;background-color: " + bgColor + "' name='" + name + "' id='div" + i + "'><div class='row m-0 p-0'>" + 
-//       "<div class='col-4 cnia_border m-0 text-sm text-truncate' style='" +
-//    (result[i][6] === 'TODO RIESGO' ? "background-color: #D65050;" :
-//     result[i][6] === 'RECLAMO 3ROS' ? "background-color: #D881C8;" :
-//     result[i][6] === 'CLEAS' ? "background-color: #37C38D;" :
-//     result[i][6] === 'COMERCIO' ? "background-color: #AB3F6C;" :
-//     result[i][6] === 'DEST. TOTAL' ? "background-color: #4C9223;" :
-//     result[i][6] === 'DAÑO POR ROBO TOTAL' ? "background-color: #CF8F5E;" :
-//     result[i][6] === 'HOGAR' ? "background-color: #534F84;" :
-//     result[i][6] === 'INCENDIO PARCIAL' ? "background-color: #FD964D;" :
-//     result[i][6] === 'INCENDIO TOTAL' ? "background-color: #C6621A;" :
-//     result[i][6] === 'INTERASEGURADOS' ? "background-color: #7498EC;" :
-//     result[i][6] === 'RESP. CIVIL' ? "background-color: #969297;" :
-//     result[i][6] === 'ROBO PARCIAL' ? "background-color: #966CA7;" :
-//     result[i][6] === 'ROBO TOTAL' ? "background-color: #9E5A9B;" :
-//     result[i][6] === 'GRANIZO' ? "background-color: #9EBAD1;" :
-//     result[i][6] === 'CRISTALES' ? "background-color: #68C1C8;" :
-//     result[i][6] === 'CERRADURA' ? "background-color: #C8C560;" :
-//     result[i][6] === 'ACC. PERS.' ? "background-color: #6F8049;" :
-//     result[i][6] === 'GRUA' ? "background-color: #88A55C;" :
-//     result[i][6] === 'RILLA' ? "background-color: #6088A9;" : "") + 
-//   "' id='riesgo_" + i + "'>" + result[i][6] + 
-//       "</div><div class='col-5 modulo text-truncate' id='nombre_" + i + "'>" + result[i][4] +
-//       "</div><div class='col-2 modulo'>GESTION:</div><div class='col-1 modulo' id='gestion_" + i + "'>" + result[i][9] + 
-//       "</div></div><div class='row p-0 m-0'><div class='col-2 m-0 modulo-sm-pat' id='patente_" + i + "'>" + result[i][0] +
-//       "</div><div class='col-2 modulo-sm text-truncate' id='marca_" + i + "'>" + result[i][13] + 
-//       "</div><div class='col-2 modulo-sm text-truncate' id='cnia_" + i + "'>" + result[i][5] + 
-//       "</div><div class='col-2 modulo-sm text-truncate' id='numSin_" + i + "'>" + result[i][1] + 
-//       "</div><div class='col-4 modulo-sm text-truncate' id='tramite_" + i + "'>" + result[i][8] +
-//       "</div></div></div>"+
-
-
    "<div style='display: none;' id='fechaSin_" + i + "'>" + result[i][2] + "</div>"+
    "<div style='display: none;' id='dni_" + i + "'>" + result[i][3] + "</div>"+
    "<div style='display: none;' id='estado_" + i + "'>" + result[i][7] + "</div>"+
@@ -406,10 +406,11 @@ pendientesHtml += "<article class='usercard' name='" + name + "' id='div" + i + 
    
    "</div>";
    }
-   sinPendientesDiv.innerHTML = pendientesHtml;
+   sinPendientesDiv.textContent = "";
+   sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
 if (result.length === 0) {
- sinPendientesDiv.innerHTML = "No se encontró ningún valor.";
+ sinPendientesDiv.textContent = "No se encontró ningún valor.";
  spinner.style.display = 'none';
 }
 
@@ -435,7 +436,14 @@ if (result.length === 0) {
      document.getElementsByName("notas")[0].value = document.getElementById("notas_" + id).textContent;
      document.getElementsByName("taller")[0].value = document.getElementById("taller_" + id).textContent;
      document.getElementsByName("numTramite")[0].value = document.getElementById("numTramite_" + id).textContent;
-mostrarOpciones();
+     document.getElementById("notas_sn").value = "";
+     document.getElementById("gestion_sn").value = "";
+     document.getElementById("novedad_sn").value = "";
+     document.getElementById("tipoTramite_sn").value = "";
+     document.getElementById("taller_sn").value = "";
+     document.getElementById("fechaip_sn").value = "";
+
+     mostrarOpciones();
    });
      spinner.style.display = 'none';
  });
@@ -450,18 +458,29 @@ function updateSinPendientes(result) {
 var pendientesHtml = "";
  for (var i = 0; i < result.length; i++) {
 
-var  bgColor = "";
+
+var  bgColor2 = "";
 var dateParts = result[i][9].split("/");
-var month = parseInt(dateParts[1], 10) - 1; // Restar 1 al mes para que sea de 0 a 11
+var month = parseInt(dateParts[1], 10); // Restar 1 al mes para que sea de 0 a 11
 var day = parseInt(dateParts[0], 10);
-var year = new Date().getFullYear(); // Obtener el año actual
+var year =  parseInt(dateParts[2], 10); // Obtener el año actual
 var date = new Date(year, month, day);
 var today = new Date();
+
+var dia = today.getDate();
+var mes = today.getMonth() + 1; // Los meses comienzan desde 0 (enero)
+var anio = today.getFullYear();
 
 if (result[i][7] == "TERMINADO") {
    bgColor2 = "#E1FDD9";
    name = "on";
-} else if (date > today) {
+// } else if (date > today) {
+
+} else if (year > anio ||
+   (year === anio && month > mes) ||
+   (year === anio && month === mes && day > dia)) {
+     
+     // } else if (day >= dia && month >= mes && year >= anio) {
    bgColor2 = "#EBEEFF"
    name = "off";
 } else if (result[i][7] == "ESTADO:") {
@@ -471,6 +490,7 @@ if (result[i][7] == "TERMINADO") {
    bgColor2 = "#FFFFFF";
    name = "on";
 }
+
 
 var bgColor = result[i][6] === 'TODO RIESGO' ? "#823131, #D65050" :
              result[i][6] === 'RECLAMO 3ROS' ? "#824E78, #D881C8" :
@@ -491,6 +511,7 @@ var bgColor = result[i][6] === 'TODO RIESGO' ? "#823131, #D65050" :
              result[i][6] === 'ACC. PERS.' ? "#4E5B32, #6F8049" :
              result[i][6] === 'GRUA' ? "#445629, #88A55C" :
              result[i][6] === 'RILLA' ? "#253B4C, #6088A9" :
+             result[i][6] === 'BICICLETA' ? "#5F365D, #9E5A9B" :
              result[i][6] === '' ? "#FFFFFF" :
              // Color de fondo predeterminado si no coincide con ninguna condición
              "#FFFFFF";
@@ -514,6 +535,7 @@ var ftColor = result[i][6] === 'TODO RIESGO' ? "#823131" :
              result[i][6] === 'ACC. PERS.' ? "#4E5B32" :
              result[i][6] === 'GRUA' ? "#445629" :
              result[i][6] === 'RILLA' ? "#253B4C" :
+             result[i][6] === 'BICICLETA' ? "#5F365D" :
              result[i][6] === '' ? "#000000" :
              // Color de fondo predeterminado si no coincide con ninguna condición
              "#000000";
@@ -541,38 +563,7 @@ pendientesHtml += "<article class='usercard' name='" + name + "' id='div" + i + 
      "<span class='gestion_st' id='gestion_" + i + "'>" + result[i][9] + "</span>" +
    "</div></div>" +
  "</div>" +
-"</article>"+
 
-// pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5px; padding: 5px 10px 5px 10px; border: 2px solid #000; box-shadow: 0px 0px 5px 0px #000;background-color: " + bgColor + "' id='div" + i + "'><div class='row m-0 p-0'>" + 
-//       "<div class='col-4 cnia_border m-0 text-sm text-truncate' style='" +
-//   (result[i][6] === 'TODO RIESGO' ? "background-color: #D65050;" :
-//     result[i][6] === 'RECLAMO 3ROS' ? "background-color: #D881C8;" :
-//     result[i][6] === 'CLEAS' ? "background-color: #37C38D;" :
-//     result[i][6] === 'COMERCIO' ? "background-color: #AB3F6C;" :
-//     result[i][6] === 'DEST. TOTAL' ? "background-color: #4C9223;" :
-//     result[i][6] === 'DAÑO POR ROBO TOTAL' ? "background-color: #CF8F5E;" :
-//     result[i][6] === 'HOGAR' ? "background-color: #534F84;" :
-//     result[i][6] === 'INCENDIO PARCIAL' ? "background-color: #FD964D;" :
-//     result[i][6] === 'INCENDIO TOTAL' ? "background-color: #C6621A;" :
-//     result[i][6] === 'INTERASEGURADOS' ? "background-color: #7498EC;" :
-//     result[i][6] === 'RESP. CIVIL' ? "background-color: #969297;" :
-//     result[i][6] === 'ROBO PARCIAL' ? "background-color: #966CA7;" :
-//     result[i][6] === 'ROBO TOTAL' ? "background-color: #9E5A9B;" :
-//     result[i][6] === 'GRANIZO' ? "background-color: #9EBAD1;" :
-//     result[i][6] === 'CRISTALES' ? "background-color: #68C1C8;" :
-//     result[i][6] === 'CERRADURA' ? "background-color: #C8C560;" :
-//     result[i][6] === 'ACC. PERS.' ? "background-color: #6F8049;" :
-//     result[i][6] === 'GRUA' ? "background-color: #88A55C;" :
-//     result[i][6] === 'RILLA' ? "background-color: #6088A9;" : "") + 
-//   "' id='riesgo_" + i + "'>" + result[i][6] + 
-//       "</div><div class='col-5 modulo text-truncate' id='nombre_" + i + "'>" + result[i][4] +
-//       "</div><div class='col-2 modulo'>GESTION:</div><div class='col-1 modulo' id='gestion_" + i + "'>" + result[i][9] + 
-//       "</div></div><div class='row p-0 m-0'><div class='col-2 m-0 modulo-sm-pat' id='patente_" + i + "'>" + result[i][0] +
-//       "</div><div class='col-2 modulo-sm text-truncate' id='marca_" + i + "'>" + result[i][13] + 
-//       "</div><div class='col-2 modulo-sm text-truncate' id='cnia_" + i + "'>" + result[i][5] + 
-//       "</div><div class='col-2 modulo-sm text-truncate' id='numSin_" + i + "'>" + result[i][1] + 
-//       "</div><div class='col-4 modulo-sm text-truncate' id='tramite_" + i + "'>" + result[i][8] +
-//       "</div></div></div>"+
    "<div style='display: none;' id='fechaSin_" + i + "'>" + result[i][2] + "</div>"+
    "<div style='display: none;' id='dni_" + i + "'>" + result[i][3] + "</div>"+
    "<div style='display: none;' id='estado_" + i + "'>" + result[i][7] + "</div>"+
@@ -584,11 +575,86 @@ pendientesHtml += "<article class='usercard' name='" + name + "' id='div" + i + 
    "<div style='display: none;' id='fechaDec_" + i + "'>" + result[i][18] + "</div>"+
    "<div style='display: none;' id='numTramite_" + i + "'>" + result[i][21] + "</div>"+
    
+"</article>"+
    "</div>";
  }
- sinPendientesDiv.innerHTML = pendientesHtml;
+   sinPendientesDiv.textContent = "";
+   sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
+function sortAndDisplayElements() {
+ var checkbox = document.getElementById("gestiones-ordenar");
+ if (checkbox.checked) {
+   var sinPendientesDiv = document.getElementById("sinPendientes");
+   var divs = sinPendientesDiv.querySelectorAll("[id^='div']");
+   var elementsWithDates = [];
 
+   divs.forEach(function (div, index) {
+     var fecha = document.getElementById("gestion_" + index).textContent;
+
+     var day, month, year;
+     if (fecha.trim() !== "") {
+       var dateParts = fecha.split('/');
+       day = parseInt(dateParts[0]) || 0;
+       month = parseInt(dateParts[1]) || 0;
+       year = parseInt(dateParts[2]) || 0;
+     } else {
+       day = 0;
+       month = 0;
+       year = 0;
+     }
+
+     var date = new Date(year, month - 1, day);
+     elementsWithDates.push({ index: index, date: date });
+   });
+
+   elementsWithDates.sort(function (a, b) {
+     return b.date - a.date;
+   });
+
+   // Crear un HTML ordenado basado en los elementos ordenados
+   var orderedHtml = elementsWithDates.map(function (element) {
+     var i = element.index;
+     return sinPendientesDiv.querySelector("#div" + i).outerHTML;
+   }).join("");
+
+   // Actualizar el contenido del contenedor con el HTML reordenado
+   sinPendientesDiv.innerHTML = orderedHtml;
+ }
+ 
+   // Agregar evento de click a los divs dinámicos
+ var divs = document.querySelectorAll("[id^='div']");
+ divs.forEach(function(div) {
+   div.addEventListener("click", function() {
+     var id = div.id.slice(3); // Obtener el índice del div
+     document.getElementsByName("nombre")[0].value = document.getElementById("nombre_" + id).textContent;
+     document.getElementsByName("riesgo")[0].value = document.getElementById("riesgo_" + id).textContent;
+     document.getElementsByName("dni")[0].value = document.getElementById("dni_" + id).textContent;
+     document.getElementsByName("patente")[0].value = document.getElementById("patente_" + id).textContent;
+     document.getElementsByName("cnia")[0].value = document.getElementById("cnia_" + id).textContent;
+     document.getElementsByName("tramite")[0].value = document.getElementById("tramite_" + id).textContent;
+     document.getElementsByName("numSin")[0].value = document.getElementById("numSin_" + id).textContent;
+     document.getElementsByName("fechaSin")[0].value = document.getElementById("fechaSin_" + id).textContent;
+     document.getElementsByName("estado")[0].value = document.getElementById("estado_" + id).textContent;
+     document.getElementsByName("gestion")[0].value = document.getElementById("gestion_" + id).textContent;
+     document.getElementsByName("fechaDec")[0].value = document.getElementById("fechaDec_" + id).textContent;
+     document.getElementsByName("marca")[0].value = document.getElementById("marca_" + id).textContent;
+     document.getElementsByName("wpp")[0].value = document.getElementById("wpp_" + id).textContent;
+     document.getElementsByName("relato")[0].value = document.getElementById("relato_" + id).textContent;
+     document.getElementsByName("notas")[0].value = document.getElementById("notas_" + id).textContent;
+     document.getElementsByName("taller")[0].value = document.getElementById("taller_" + id).textContent;
+     document.getElementsByName("numTramite")[0].value = document.getElementById("numTramite_" + id).textContent;
+     document.getElementById("notas_sn").value = "";
+     document.getElementById("gestion_sn").value = "";
+     document.getElementById("novedad_sn").value = "";
+     document.getElementById("tipoTramite_sn").value = "";
+     document.getElementById("taller_sn").value = "";
+     document.getElementById("fechaip_sn").value = "";
+
+mostrarOpciones()
+    
+   });
+ });
+}
  // Agregar evento de click a los divs dinámicos
  var divs = document.querySelectorAll("[id^='div']");
  divs.forEach(function(div) {
@@ -611,172 +677,294 @@ pendientesHtml += "<article class='usercard' name='" + name + "' id='div" + i + 
      document.getElementsByName("notas")[0].value = document.getElementById("notas_" + id).textContent;
      document.getElementsByName("taller")[0].value = document.getElementById("taller_" + id).textContent;
      document.getElementsByName("numTramite")[0].value = document.getElementById("numTramite_" + id).textContent;
+     document.getElementById("notas_sn").value = "";
+     document.getElementById("gestion_sn").value = "";
+     document.getElementById("novedad_sn").value = "";
+     document.getElementById("tipoTramite_sn").value = "";
+     document.getElementById("taller_sn").value = "";
+     document.getElementById("fechaip_sn").value = "";
+
 mostrarOpciones()
     
    });
  });
+
+
+
+
+// Asociar evento de cambio al checkbox para ordenar elementos
+document.getElementById("gestiones-ordenar").addEventListener('change', sortAndDisplayElements);
+
 }
 google.script.run.withSuccessHandler(updateSinPendientes).getData();
 
 
+
+
+
+
 function mostrarOpciones() {
- console.log("hola")
  var riesgo = document.getElementById("riesgo").value;
  var subRiesgo = document.getElementById("tipoTramite_sn");
- subRiesgo.innerHTML = "";
+ subRiesgo.textContent = "";
  
+   var tramitesPorDefecto = subRiesgo.appendChild(document.createElement("optgroup"));
+ tramitesPorDefecto.label = "Trámites por defecto";
+
+ // Opciones comunes para las posiciones 7 en adelante
+ tramitesPorDefecto.appendChild(new Option("FALTAN DATOS"));
+ tramitesPorDefecto.appendChild(new Option("PARA CARGAR"));
+ tramitesPorDefecto.appendChild(new Option("NO RECLAMA"));
+ tramitesPorDefecto.appendChild(new Option("CON PROBLEMA"));
+ tramitesPorDefecto.appendChild(new Option("SIN COBERTURA"));
+ tramitesPorDefecto.appendChild(new Option("TRAMITANDO ALFREDO"));
+ tramitesPorDefecto.appendChild(new Option("LEGALES"));
+ tramitesPorDefecto.appendChild(new Option("PIDEN AMPLIACIÓN"));
+ tramitesPorDefecto.appendChild(new Option("RESUELTO"));
+ tramitesPorDefecto.appendChild(new Option("VER COMO GESTIONA"));
+
+
+ var tramitesSegunRiesgo = subRiesgo.appendChild(document.createElement("optgroup"));
+tramitesSegunRiesgo.label = "Trámites para " + riesgo.toLowerCase();
 switch (riesgo) {
  case "CLEAS":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("CL-1 RESOLUCIÓN CLEAS");
-   subRiesgo.options[9] = new Option("CL-2 ESPERANDO ELIJA TALLER");
-   subRiesgo.options[10] = new Option("CL-3 INSPECCIÓN EN CURSO");
-   subRiesgo.options[11] = new Option("CL-4 ESPERANDO CARTA FCIA");
-   subRiesgo.options[12] = new Option("CL-5 EN COTIZACIÓN");
-   subRiesgo.options[13] = new Option("CL-6 ESPERANDO REPUESTOS");
-   subRiesgo.options[14] = new Option("CL-7 PAGO EN CURSO");
+     tramitesSegunRiesgo.appendChild(new Option("CL-1 ESPERANDO DOCUMENTACION"));
+     tramitesSegunRiesgo.appendChild(new Option("CL-2 RESOLUCIÓN CLEAS"));
+     tramitesSegunRiesgo.appendChild(new Option("CL-3 ESPERANDO ELIJA TALLER"));
+     tramitesSegunRiesgo.appendChild(new Option("CL-4 INSPECCIÓN EN CURSO"));
+     tramitesSegunRiesgo.appendChild(new Option("CL-5 ESPERANDO CARTA FCIA"));
+     tramitesSegunRiesgo.appendChild(new Option("CL-6 EN COTIZACIÓN"));
+     tramitesSegunRiesgo.appendChild(new Option("CL-7 ESPERANDO REPUESTOS"));
+     tramitesSegunRiesgo.appendChild(new Option("CL-8 PAGO EN CURSO"));
    break;
  case "DAÑO POR ROBO TOTAL":
  case "INTERASEGURADOS":
  case "TODO RIESGO":
  case "GRANIZO":
  case "INCENDIO PARCIAL":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("DT-1 ESPERANDO DOCUMENTACION");
-   subRiesgo.options[9] = new Option("DP-2 ESPERANDO CNIA HABILITE");
-   subRiesgo.options[10] = new Option("DP-3 ESPERANDO ELIJA TALLER");
-   subRiesgo.options[11] = new Option("DP-4 INSPECCIÓN EN CURSO");
-   subRiesgo.options[12] = new Option("DP-5 ESPERANDO CARTA FCIA");
-   subRiesgo.options[13] = new Option("DP-6 EN COTIZACIÓN");
-   subRiesgo.options[14] = new Option("DP-7 ESPERANDO REPUESTOS");
-   subRiesgo.options[15] = new Option("DP-8 PAGO EN CURSO");
+     tramitesSegunRiesgo.appendChild(new Option("DP-1 ESPERANDO DOCUMENTACION"));
+     tramitesSegunRiesgo.appendChild(new Option("DP-2 ESPERANDO CNIA HABILITE"));
+     tramitesSegunRiesgo.appendChild(new Option("DP-3 ESPERANDO ELIJA TALLER"));
+     tramitesSegunRiesgo.appendChild(new Option("DP-4 INSPECCIÓN EN CURSO"));
+     tramitesSegunRiesgo.appendChild(new Option("DP-5 ESPERANDO CARTA FCIA"));
+     tramitesSegunRiesgo.appendChild(new Option("DP-6 EN COTIZACIÓN"));
+     tramitesSegunRiesgo.appendChild(new Option("DP-7 ESPERANDO REPUESTOS"));
+     tramitesSegunRiesgo.appendChild(new Option("DP-8 PAGO EN CURSO"));
    break;
  case "DEST. TOTAL":
  case "INCENDIO TOTAL":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("DT-1 ESPERANDO DOCUMENTACION (CAUSA PENAL / INFORME BOMBEROS)");
-   subRiesgo.options[9] = new Option("DT-2 INSPECCIÓN EN CURSO");
-   subRiesgo.options[10] = new Option("DT-3 COTIZANDO SI ES DT");
-   subRiesgo.options[11] = new Option("DT-4 ACUERDO DE PAGO");
-   subRiesgo.options[12] = new Option("DT-5 BAJA Y RETIRO DE UNIDAD");
-   subRiesgo.options[13] = new Option("DT-6 PAGO EN CURSO");
+     tramitesSegunRiesgo.appendChild(new Option("DT-1 ESPERANDO DOCUMENTACION (CAUSA PENAL / INFORME BOMBEROS)"));
+     tramitesSegunRiesgo.appendChild(new Option("DT-2 INSPECCIÓN EN CURSO"));
+     tramitesSegunRiesgo.appendChild(new Option("DT-3 COTIZANDO SI ES DT"));
+     tramitesSegunRiesgo.appendChild(new Option("DT-4 ACUERDO DE PAGO"));
+     tramitesSegunRiesgo.appendChild(new Option("DT-5 BAJA Y RETIRO DE UNIDAD"));
+     tramitesSegunRiesgo.appendChild(new Option("DT-6 PAGO EN CURSO"));
    break;
  case "ROBO TOTAL":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("RT-1 ESPERANDO CNIA HABILITE");
-   subRiesgo.options[9] = new Option("RT-2 ESPERANDO APARICIÓN");
-   subRiesgo.options[10] = new Option("RT-3 HACIENDO BAJA");
-   subRiesgo.options[11] = new Option("RT-4 ACUERDO DE PAGO");
-   subRiesgo.options[12] = new Option("RT-5 FORMULARIO 15");
-   subRiesgo.options[13] = new Option("RT-6 PAGO EN CURSO");
+     tramitesSegunRiesgo.appendChild(new Option("RT-1 ESPERANDO CNIA HABILITE"));
+     tramitesSegunRiesgo.appendChild(new Option("RT-2 ESPERANDO APARICIÓN"));
+     tramitesSegunRiesgo.appendChild(new Option("RT-3 HACIENDO BAJA"));
+     tramitesSegunRiesgo.appendChild(new Option("RT-4 ACUERDO DE PAGO"));
+     tramitesSegunRiesgo.appendChild(new Option("RT-5 FORMULARIO 15"));
+     tramitesSegunRiesgo.appendChild(new Option("RT-6 PAGO EN CURSO"));
    break;
-   case "HOGAR":
+     case "HOGAR":
    case "COMERCIO":
    case "BICICLETA":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("HC-1 ESPERANDO DOCUMENTACION (PRE-EXISTENCIAS/INFORME TECNICO)");
-   subRiesgo.options[9] = new Option("HC-2 INSPECCIÓN EN CURSO");
-   subRiesgo.options[10] = new Option("HC-3 ACUERDO DE PAGO");
-   subRiesgo.options[11] = new Option("HC-4 ENVIAR CBU, DNI Y ACUERDO");
-   subRiesgo.options[12] = new Option("HC-5 PAGO EN CURSO");
+     tramitesSegunRiesgo.appendChild(new Option("HC-1 ESPERANDO DOCUMENTACION (PRE-EXISTENCIAS/INFORME TECNICO)"));
+     tramitesSegunRiesgo.appendChild(new Option("HC-2 INSPECCIÓN EN CURSO"));
+     tramitesSegunRiesgo.appendChild(new Option("HC-3 ACUERDO DE PAGO"));
+     tramitesSegunRiesgo.appendChild(new Option("HC-4 ENVIAR CBU, DNI Y ACUERDO"));
+     tramitesSegunRiesgo.appendChild(new Option("HC-5 PAGO EN CURSO"));
      break;
    case "CRISTALES":
    case "CERRADURA":
    case "ROBO PARCIAL":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("CR-1 ESPERANDO DOCUMENTACION");
-   subRiesgo.options[9] = new Option("CR-2 ESPERANDO CNIA HABILITE");
-   subRiesgo.options[10] = new Option("CR-3 INSPECCIÓN EN CURSO");
-   subRiesgo.options[11] = new Option("CR-4 ELEGIENDO PROVEEDOR");
-   subRiesgo.options[12] = new Option("CR-5 ESPERANDO VOUCHER");
-   subRiesgo.options[13] = new Option("CR-6 ESPERANDO REPOSICIÓN");
-   subRiesgo.options[14] = new Option("CR-7 PAGO EN CURSO");
-   subRiesgo.options[15] = new Option("CR-8 REPARANDO");
+     tramitesSegunRiesgo.appendChild(new Option("CR-1 ESPERANDO DOCUMENTACION"));
+     tramitesSegunRiesgo.appendChild(new Option("CR-2 ESPERANDO CNIA HABILITE"));
+     tramitesSegunRiesgo.appendChild(new Option("CR-3 INSPECCIÓN EN CURSO"));
+     tramitesSegunRiesgo.appendChild(new Option("CR-4 ELEGIENDO PROVEEDOR"));
+     tramitesSegunRiesgo.appendChild(new Option("CR-5 ESPERANDO VOUCHER"));
+     tramitesSegunRiesgo.appendChild(new Option("CR-6 ESPERANDO REPOSICIÓN"));
+     tramitesSegunRiesgo.appendChild(new Option("CR-7 PAGO EN CURSO"));
+     tramitesSegunRiesgo.appendChild(new Option("CR-8 REPARANDO"));
      break;
    case "ACC. PERS.":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("LEGALES");
-   subRiesgo.options[8] = new Option("AP-1 ESPERANDO DOCUMENTACION");
-   subRiesgo.options[9] = new Option("AP-2 ESPERANDO CNIA HABILITE");
-   subRiesgo.options[10] = new Option("AP-3 EN ANALISIS");
-   subRiesgo.options[11] = new Option("AP-7 PAGO EN CURSO");
+     tramitesSegunRiesgo.appendChild(new Option("AP-1 ESPERANDO DOCUMENTACION"));
+     tramitesSegunRiesgo.appendChild(new Option("AP-2 ESPERANDO CNIA HABILITE"));
+     tramitesSegunRiesgo.appendChild(new Option("AP-3 EN ANALISIS"));
+     tramitesSegunRiesgo.appendChild(new Option("AP-7 PAGO EN CURSO"));
      break;
    case "RECLAMO 3ROS":
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("R3-1 ESPERANDO DOCUMENTACION");
-   subRiesgo.options[9] = new Option("R3-2 ESPERANDO OFRECIMIENTO");
-   subRiesgo.options[10] = new Option("R3-3 SE PIDIO RECONSIDERACION");
-   subRiesgo.options[11] = new Option("R3-4 PAGO EN CURSO");
+   case "GRUA":
+     tramitesSegunRiesgo.appendChild(new Option("R3-1 ESPERANDO DOCUMENTACION"));
+     tramitesSegunRiesgo.appendChild(new Option("R3-2 ESPERANDO OFRECIMIENTO"));
+     tramitesSegunRiesgo.appendChild(new Option("R3-3 SE PIDIO RECONSIDERACION"));
+     tramitesSegunRiesgo.appendChild(new Option("R3-4 PAGO EN CURSO"));
      break;
    default:
-   subRiesgo.options[0] = new Option("");
-   subRiesgo.options[1] = new Option("NO RECLAMA");
-   subRiesgo.options[2] = new Option("CON PROBLEMA");
-   subRiesgo.options[3] = new Option("SIN COBERTURA");
-   subRiesgo.options[4] = new Option("PARA CARGAR");
-   subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
-   subRiesgo.options[6] = new Option("RESUELTO");
-   subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
-   subRiesgo.options[8] = new Option("ESPERANDO DOCUMENTACION");
-   subRiesgo.options[9] = new Option("VER COMO GESTIONA");
-   subRiesgo.options[10] = new Option("LEGALES");
  }
 }
+
+
+// function mostrarOpciones() {
+//   var riesgo = document.getElementById("riesgo").value;
+//   var subRiesgo = document.getElementById("tipoTramite_sn");
+//   subRiesgo.textContent = "";
+ 
+// switch (riesgo) {
+//   case "CLEAS":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("CL-1 RESOLUCIÓN CLEAS");
+//     subRiesgo.options[9] = new Option("CL-2 ESPERANDO ELIJA TALLER");
+//     subRiesgo.options[10] = new Option("CL-3 INSPECCIÓN EN CURSO");
+//     subRiesgo.options[11] = new Option("CL-4 ESPERANDO CARTA FCIA");
+//     subRiesgo.options[12] = new Option("CL-5 EN COTIZACIÓN");
+//     subRiesgo.options[13] = new Option("CL-6 ESPERANDO REPUESTOS");
+//     subRiesgo.options[14] = new Option("CL-7 PAGO EN CURSO");
+//     break;
+//   case "DAÑO POR ROBO TOTAL":
+//   case "INTERASEGURADOS":
+//   case "TODO RIESGO":
+//   case "GRANIZO":
+//   case "INCENDIO PARCIAL":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("DT-1 ESPERANDO DOCUMENTACION");
+//     subRiesgo.options[9] = new Option("DP-2 ESPERANDO CNIA HABILITE");
+//     subRiesgo.options[10] = new Option("DP-3 ESPERANDO ELIJA TALLER");
+//     subRiesgo.options[11] = new Option("DP-4 INSPECCIÓN EN CURSO");
+//     subRiesgo.options[12] = new Option("DP-5 ESPERANDO CARTA FCIA");
+//     subRiesgo.options[13] = new Option("DP-6 EN COTIZACIÓN");
+//     subRiesgo.options[14] = new Option("DP-7 ESPERANDO REPUESTOS");
+//     subRiesgo.options[15] = new Option("DP-8 PAGO EN CURSO");
+//     break;
+//   case "DEST. TOTAL":
+//   case "INCENDIO TOTAL":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("DT-1 ESPERANDO DOCUMENTACION (CAUSA PENAL / INFORME BOMBEROS)");
+//     subRiesgo.options[9] = new Option("DT-2 INSPECCIÓN EN CURSO");
+//     subRiesgo.options[10] = new Option("DT-3 COTIZANDO SI ES DT");
+//     subRiesgo.options[11] = new Option("DT-4 ACUERDO DE PAGO");
+//     subRiesgo.options[12] = new Option("DT-5 BAJA Y RETIRO DE UNIDAD");
+//     subRiesgo.options[13] = new Option("DT-6 PAGO EN CURSO");
+//     break;
+//   case "ROBO TOTAL":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("RT-1 ESPERANDO CNIA HABILITE");
+//     subRiesgo.options[9] = new Option("RT-2 ESPERANDO APARICIÓN");
+//     subRiesgo.options[10] = new Option("RT-3 HACIENDO BAJA");
+//     subRiesgo.options[11] = new Option("RT-4 ACUERDO DE PAGO");
+//     subRiesgo.options[12] = new Option("RT-5 FORMULARIO 15");
+//     subRiesgo.options[13] = new Option("RT-6 PAGO EN CURSO");
+//     break;
+//     case "HOGAR":
+//     case "COMERCIO":
+//     case "BICICLETA":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("HC-1 ESPERANDO DOCUMENTACION (PRE-EXISTENCIAS/INFORME TECNICO)");
+//     subRiesgo.options[9] = new Option("HC-2 INSPECCIÓN EN CURSO");
+//     subRiesgo.options[10] = new Option("HC-3 ACUERDO DE PAGO");
+//     subRiesgo.options[11] = new Option("HC-4 ENVIAR CBU, DNI Y ACUERDO");
+//     subRiesgo.options[12] = new Option("HC-5 PAGO EN CURSO");
+//       break;
+//     case "CRISTALES":
+//     case "CERRADURA":
+//     case "ROBO PARCIAL":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("CR-1 ESPERANDO DOCUMENTACION");
+//     subRiesgo.options[9] = new Option("CR-2 ESPERANDO CNIA HABILITE");
+//     subRiesgo.options[10] = new Option("CR-3 INSPECCIÓN EN CURSO");
+//     subRiesgo.options[11] = new Option("CR-4 ELEGIENDO PROVEEDOR");
+//     subRiesgo.options[12] = new Option("CR-5 ESPERANDO VOUCHER");
+//     subRiesgo.options[13] = new Option("CR-6 ESPERANDO REPOSICIÓN");
+//     subRiesgo.options[14] = new Option("CR-7 PAGO EN CURSO");
+//     subRiesgo.options[15] = new Option("CR-8 REPARANDO");
+//       break;
+//     case "ACC. PERS.":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("LEGALES");
+//     subRiesgo.options[8] = new Option("AP-1 ESPERANDO DOCUMENTACION");
+//     subRiesgo.options[9] = new Option("AP-2 ESPERANDO CNIA HABILITE");
+//     subRiesgo.options[10] = new Option("AP-3 EN ANALISIS");
+//     subRiesgo.options[11] = new Option("AP-7 PAGO EN CURSO");
+//       break;
+//     case "RECLAMO 3ROS":
+//     case "GRUA":
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("R3-1 ESPERANDO DOCUMENTACION");
+//     subRiesgo.options[9] = new Option("R3-2 ESPERANDO OFRECIMIENTO");
+//     subRiesgo.options[10] = new Option("R3-3 SE PIDIO RECONSIDERACION");
+//     subRiesgo.options[11] = new Option("R3-4 PAGO EN CURSO");
+//       break;
+//     default:
+//     subRiesgo.options[0] = new Option("");
+//     subRiesgo.options[1] = new Option("NO RECLAMA");
+//     subRiesgo.options[2] = new Option("CON PROBLEMA");
+//     subRiesgo.options[3] = new Option("SIN COBERTURA");
+//     subRiesgo.options[4] = new Option("PARA CARGAR");
+//     subRiesgo.options[5] = new Option("PIDEN AMPLIACIÓN");
+//     subRiesgo.options[6] = new Option("RESUELTO");
+//     subRiesgo.options[7] = new Option("TRAMITANDO ALFREDO");
+//     subRiesgo.options[8] = new Option("ESPERANDO DOCUMENTACION");
+//     subRiesgo.options[9] = new Option("VER COMO GESTIONA");
+//     subRiesgo.options[10] = new Option("LEGALES");
+//   }
+// }
 
 //////////////// CARGAR CORREOS  ///////////////
 function cargarCorreos() {
@@ -789,7 +977,8 @@ google.script.run.withSuccessHandler(function(emailsHTML) {
  // Muestra el contenido HTML de los correos electrónicos en el div con ID "emails"
  var div2 = document.getElementById("emails");
  console.log(emailsHTML)
- div2.innerHTML = emailsHTML;
+   div2.textContent = "";
+   div2.insertAdjacentHTML('beforeend',emailsHTML);
 }).mostrarCorreos(numSin);
 }
 
@@ -847,7 +1036,7 @@ var colorAlmacenado = sessionStorage.getItem("magi-color");
 
 if (usuarioAlmacenado) {
  // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
- document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
+ document.getElementById("usuario_sp").textContent = usuarioAlmacenado;
  user.style.display = "block";
  close_session.style.display = "block";
  modal.style.display = "none";
@@ -897,7 +1086,7 @@ if (usuarioAlmacenado) {
 
 google.script.run.withSuccessHandler(function (color) {
  if (color) {
-   document.getElementById("usuario_sp").innerHTML = usuario;
+   document.getElementById("usuario_sp").textContent = usuario;
    modal.style.display = "none";
    user.style.display = "block";
    close_session.style.display = "block";
@@ -939,15 +1128,15 @@ function mostrarTiempoRestante(tiempoRestante) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
  } else {
    var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
    var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
    var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
 
-   tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+   tiempoRestanteDiv.textContent = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
  }
 }
 
@@ -961,8 +1150,8 @@ function iniciarContadorTiempo(tiempoRestante) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
    } else {
      mostrarTiempoRestante(tiempoRestante);
@@ -1001,8 +1190,8 @@ function close_sessionok(event) {
    // Eliminar el valor almacenado en sessionStorage
    sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
-     tiempoRestanteDiv.innerHTML = "";    
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "";    
+     document.getElementById("usuario_sp").textContent = "Desconocido";
  // Recargar la página
      modal.style.display = "block";
 
@@ -1041,7 +1230,7 @@ function close_sessionok(event) {
 
 /////////////////////// EVENT LISTENERS //////////////////////////////
 
-
+//////////////////// GESTIONES ACTIVAS //////////////////////////////////////
 document.getElementById("gestiones-activas").addEventListener('change', function() {
  var checkbox = document.getElementById("gestiones-activas");
  var elements = document.querySelectorAll("[name='off']");

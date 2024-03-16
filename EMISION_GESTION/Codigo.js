@@ -241,7 +241,7 @@ function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, i
   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
 
 const cl_new = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte]
-const veh_new = [infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta,   infoMotor, infoChasis]
+const veh_new = [infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoMotor, infoChasis]
 
 
 var fechaHoy = new Date();

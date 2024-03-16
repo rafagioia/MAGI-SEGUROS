@@ -157,7 +157,10 @@ pendientesHtml += "<div style='display: none;' id='_dni" + i + "'>" + result[i][
    }
  }
 
-   sinPendientesDiv.innerHTML = pendientesHtml;
+   sinPendientesDiv.textContent = "";
+
+   sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
+
 
 var idDeudorSelect = document.getElementById("id_deudor_select");
 var idDeudorSelectAlta = document.getElementById("alta_id_deudor");
@@ -595,6 +598,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
  
 
+
 /////////////////////////////////////////////////////////////////
 //////////////////// SESION DE USUARIOS /////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -612,7 +616,7 @@ var colorAlmacenado = sessionStorage.getItem("magi-color");
 
 if (usuarioAlmacenado) {
  // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
- document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
+ document.getElementById("usuario_sp").textContent = usuarioAlmacenado;
  user.style.display = "block";
  close_session.style.display = "block";
  modal.style.display = "none";
@@ -641,7 +645,7 @@ if (usuarioAlmacenado) {
  modal.style.display = "block";
 
  // Función para cerrar el modal
- function closeModal() {
+ function closeModal2() {
    modal.style.display = "none";
  }
 
@@ -662,7 +666,7 @@ if (usuarioAlmacenado) {
 
 google.script.run.withSuccessHandler(function (color) {
  if (color) {
-   document.getElementById("usuario_sp").innerHTML = usuario;
+   document.getElementById("usuario_sp").textContent = usuario;
    modal.style.display = "none";
    user.style.display = "block";
    close_session.style.display = "block";
@@ -704,15 +708,15 @@ function mostrarTiempoRestante(tiempoRestante) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
  } else {
    var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
    var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
    var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
 
-   tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+   tiempoRestanteDiv.textContent = "Tiempo restante:<br>" + horas + ":" + minutos + ":" + segundos;
  }
 }
 
@@ -726,8 +730,8 @@ function iniciarContadorTiempo(tiempoRestante) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
    } else {
      mostrarTiempoRestante(tiempoRestante);
@@ -766,8 +770,8 @@ function close_sessionok(event) {
    // Eliminar el valor almacenado en sessionStorage
    sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
-     tiempoRestanteDiv.innerHTML = "";    
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "";    
+     document.getElementById("usuario_sp").textContent = "Desconocido";
  // Recargar la página
      modal.style.display = "block";
 
@@ -801,6 +805,8 @@ function close_sessionok(event) {
 
            
 ////////////////////////////////////////////////////////////////////////////////
+           
+
 
            
 /////////////////////// EVENT LISTENERS ////////////////////////////

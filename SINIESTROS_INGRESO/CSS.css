@@ -647,3 +647,30 @@ text-align: center;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
   }
+  
+.thumbnail-container {
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+
+.thumbnail-container img {
+  padding:  0.25rem;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.delete-icon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
+}
+
+  .img-container {
+  position: relative;
+  display: inline-block;
+}

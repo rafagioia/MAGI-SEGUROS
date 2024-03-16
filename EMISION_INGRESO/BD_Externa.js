@@ -18,9 +18,8 @@ function include( fileName ){
   .getContent();
 }
 
-
 ////////////// INGESAMOS POLIZA NUEVA A BD EMISION //////////////////
-function seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasFull, infoMotor, infoChasis, infoUsuario, infoHoy) {
+function seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoHistoricoFull, infoNotasVeh, infoMotor, infoChasis, infoUsuario, infoHoy, infoNotifica, infoCalifica) {
   
   const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
@@ -28,9 +27,17 @@ function seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp
   const VAL_VEH = LISTADO.getDataRange().getDisplayValues();
   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
   
-const cl_new = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte]
-const veh_new = [infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta,   infoMotor, infoChasis, infoNotasFull.slice(-20), infoDanios.slice(-20)]
 
+
+const cl_new = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, , infoCalifica]
+const veh_new = [infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta,   infoMotor, infoChasis, infoHistoricoFull.slice(-20), infoDanios.slice(-20), infoNotasVeh]
+
+  if (infoNotifica = true) {
+    infoNotifica = "SI"
+  } else {
+    infoNotifica = ""
+  }
+  
 var fecha = new Date();
 
  // Buscar si el DNI ya existe en la hoja de clientes
@@ -51,10 +58,11 @@ var fecha = new Date();
     BD_CLIENTES.getRange(dniIndex, 7).setValue(infoMail);
     BD_CLIENTES.getRange(dniIndex, 8).setValue(infoNotascte);
     BD_CLIENTES.getRange(dniIndex, 9).setValue(new Date());
+    BD_CLIENTES.getRange(dniIndex, 10).setValue(infoCalifica);
   }
   // Si el DNI no existe, agregar una nueva fila a la hoja de clientes
   else {
-    var ctesVals = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, , infoMail, infoNotascte, new Date()];
+    var ctesVals = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, , infoMail, infoNotascte, new Date(), infoCalifica];
     BD_CLIENTES.insertRowBefore(2).getRange(2, 1, 1, ctesVals.length).setValues([ctesVals]);
   }
 
@@ -74,6 +82,7 @@ var fecha = new Date();
   LISTADO.getRange(patenteIndex, 2).setValue(infoDNI);
   LISTADO.getRange(patenteIndex, 3).setValue(infoCliente);
   LISTADO.getRange(patenteIndex, 4).setValue(infoSucursal);
+  LISTADO.getRange(patenteIndex, 5).setValue(infoRefa);
   LISTADO.getRange(patenteIndex, 6).setValue(infoImporte);
   LISTADO.getRange(patenteIndex, 7).setValue(infoCnia);
   LISTADO.getRange(patenteIndex, 8).setValue(infoPoliza);
@@ -83,11 +92,12 @@ var fecha = new Date();
   LISTADO.getRange(patenteIndex, 12).setValue(infoCobertura);
   LISTADO.getRange(patenteIndex, 13).setValue(infoMarca);
   LISTADO.getRange(patenteIndex, 14).setValue(infoFpago);
-  LISTADO.getRange(patenteIndex, 15).setValue(infoNotasFull);
+  LISTADO.getRange(patenteIndex, 15).setValue(infoNotasVeh);
   LISTADO.getRange(patenteIndex, 16).setValue(infoDanios);
+  LISTADO.getRange(patenteIndex, 17).setValue(infoNotifica);
   LISTADO.getRange(patenteIndex, 18).setValue(infoMotor);
   LISTADO.getRange(patenteIndex, 19).setValue(infoChasis);
-  LISTADO.getRange(patenteIndex, 5).setValue(infoRefa);
+  LISTADO.getRange(patenteIndex, 20).setValue(infoHistoricoFull);
   LISTADO.getRange(patenteIndex, 21).setValue(infoHoy);
 
 
@@ -96,6 +106,7 @@ var fecha = new Date();
 
   var fileName = 'log_emision_ingreso_seguros.txt'; // Nombre fijo del archivo de registro
   var files = folder.getFilesByName(fileName);
+
 
   if (files.hasNext()) {
     var file = files.next();
@@ -109,7 +120,7 @@ var fecha = new Date();
   }
   // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
    else {
-var vehVals = [infoPatente, infoDNI, infoCliente, infoSucursal, infoRefa, infoImporte, infoCnia, infoPoliza, infoVigencia, infoHasta, infoOperacion, infoCobertura, infoMarca, infoFpago, infoNotasFull, infoDanios, , infoMotor, infoChasis, , infoHoy]
+var vehVals = [infoPatente, infoDNI, infoCliente, infoSucursal, infoRefa, infoImporte, infoCnia, infoPoliza, infoVigencia, infoHasta, infoOperacion, infoCobertura, infoMarca, infoFpago, infoNotasVeh, infoDanios, infoNotifica, infoMotor, infoChasis, infoHistoricoFull, infoHoy]
     LISTADO.insertRowBefore(2).getRange(2, 1, 1, vehVals.length).setValues([vehVals]);
     console.log(vehVals)
 
@@ -131,55 +142,76 @@ var vehVals = [infoPatente, infoDNI, infoCliente, infoSucursal, infoRefa, infoIm
   }
 }
 
+///////////////////////// SUBIDA DE FOTOS //////////////////////////////
+
+function uploadFilesToDrive(folderId, filesBase64, patente) {
+  var parentFolder = DriveApp.getFolderById(folderId);
+  var folders = parentFolder.getFoldersByName(patente);
+  var targetFolder;
+  
+  // Verifica si ya existe la carpeta con el nombre de la patente
+  if (folders.hasNext()) {
+    targetFolder = folders.next();
+  } else {
+    // Si no existe, crea una nueva carpeta con el nombre de la patente
+    targetFolder = parentFolder.createFolder(patente);
+  }
+  
+  // Procesa y sube cada archivo a la carpeta de la patente
+  filesBase64.forEach(function(file) {
+    var decodedBytes = Utilities.base64Decode(file.base64);
+    var blob = Utilities.newBlob(decodedBytes, file.mimeType, file.fileName);
+    targetFolder.createFile(blob);
+  });
+  
+  // alert("Fotos subidas correctamente.");
+}
+
+function uploadRegToDrive(folderId, filesBase64, dni) {
+  var parentFolder = DriveApp.getFolderById(folderId);
+  var folders = parentFolder.getFoldersByName(dni);
+  var targetFolder;
+  
+  // Verifica si ya existe la carpeta con el nombre del dni
+  if (folders.hasNext()) {
+    targetFolder = folders.next();
+  } else {
+    // Si no existe, crea una nueva carpeta con el nombre del dni
+    targetFolder = parentFolder.createFolder(dni);
+  }
+  
+  // Procesa y sube cada archivo a la carpeta de la dni
+  filesBase64.forEach(function(file) {
+    var decodedBytes = Utilities.base64Decode(file.base64);
+    var blob = Utilities.newBlob(decodedBytes, file.mimeType, file.fileName);
+    targetFolder.createFile(blob);
+  });
+  
+  // alert("Fotos subidas correctamente.");
+}
 ///////////////////////////////////////////////////////////////////////
 
 
-// function report_data() {
-//   var mensaje = "Este es un mensaje de registro.";
-//   var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
-//   var folder = DriveApp.getFolderById(folderId);
+///////////////// BUSCADOR DE DATOS DE VEHICULO AUTOMATICO ///////////////////
 
-//   var fileName = 'log.txt'; // Nombre fijo del archivo de registro
-//   var files = folder.getFilesByName(fileName);
+function obtenerDatos(inputDato) {
+  const spreadsheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1PEmYkBVg-eeoYWAcnvDE6Fky3dj8rl9BKD55x8Z-aXs/edit");
+  const hoja = spreadsheet.getSheetByName("MARCAS");
 
-//   if (files.hasNext()) {
-//     var file = files.next();
-//     var contenidoActual = file.getBlob().getDataAsString();
-//     contenidoActual += '\n' + mensaje; // Agrega el nuevo mensaje al contenido actual
-//     file.setContent(contenidoActual); // Actualiza el contenido del archivo
-//   } else {
-//     // Si el archivo no existe, créalo con el mensaje actual
-//     folder.createFile(fileName, mensaje);
-//   }
+  var datoBusqueda = inputDato.toLowerCase();
 
+  var datos = hoja.getRange("A2:A" + hoja.getLastRow()).getValues();
+  
+  var sugerencias = datos.filter(function(dato) {
+    var texto = dato[0].toString().toLowerCase();
+    return texto.includes(datoBusqueda);
+  });
 
-
-// }
+  return sugerencias;
+}
 
 
-// function report_data() {
-//   try {
-//     var fileId = '1g6R-uFFOauPl9ahyQ5HRl2feB0xdtwny'; // Reemplaza con el ID del archivo
-//     var informe = DriveApp.getFileById(fileId);
 
-//     if (informe) {
-//       var contenidoActual = informe.getBlob().getDataAsString();
-//       var nuevaInformacion = "Nueva información para el informe"; // Reemplaza con la nueva información
-
-//       // Puedes agregar lógica para actualizar la información aquí
-
-//       // Concatena la nueva información con la información actual
-//       var informeActualizado = contenidoActual + "\n" + nuevaInformacion;
-
-//       // Guarda el informe actualizado
-//       informe.setContent(informeActualizado);
-//     } else {
-//       throw new Error('No se encontró el archivo.');
-//     }
-//   } catch (e) {
-//     Logger.log("Error: " + e);
-//   }
-// }
 //////////////// BUSCAR PATENTE EN BD EMISION ////////////////
 function buscarMantenimientos3(patente = "1192774") {
   let mantenimientosRealizados3 = [];
@@ -298,7 +330,7 @@ let mantenimientosRealizados9 = [];
 }
 
 //////////////// BUSCAR NOMBRE EN BD EMISION ////////////////
-function buscarMantenimientos6(numeroInventario = "1192774"){
+function buscarNom_BD_EMI(numeroInventario = "1192774"){
   let mantenimientosRealizados6 = [];
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
   const mantenimientos8 = BD_CLIENTES.getDataRange().getDisplayValues();
@@ -314,7 +346,7 @@ for (let i = 0; i < mantenimientos8.length; i++) {
 /////////////////////////////////////////////////////////////////
 
 //////////////////// BUSCAR NOMBRE EN BD MARCOS PAZ ////////////////
-function buscarMantenimientos12(numeroInventario = "1192774") {
+function buscarNom_BD_MP(numeroInventario = "1192774") {
   const BD_MPAZ = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1qeFnZ0_mBy8cyV1GFpF5a09LRVD-7bfDcTnSMcDMUjA/edit").getSheetByName("BD MARCOS PAZ");
   const mantenimientos7 = BD_MPAZ.getDataRange().getDisplayValues();
 
@@ -322,7 +354,7 @@ function buscarMantenimientos12(numeroInventario = "1192774") {
 
 for (let i = 0; i < mantenimientos7.length; i++) {
   if (mantenimientos7[i][1].includes(numeroInventario)) {
-    mantenimientosRealizados12.push(mantenimientos7);
+    mantenimientosRealizados12.push(mantenimientos7[i]);
   }
 }
 
@@ -423,6 +455,90 @@ function sendEmail(photos, pat_len, mar_len, mot_len, cha_len) {
 }
 
 
+
+/////////////////////////// MOSTRAR FOTOS CARGADAS ///////////////////////////////
+
+
+function obtenerFotosPorPatente(patente) {
+  var folderId = "18rVebn9nL-lK6qWT6t0TwfoazQkwCIMn"; // Reemplaza esto con el ID de tu carpeta raíz en Google Drive
+  var folder = DriveApp.getFolderById(folderId);
+  var subFolders = folder.getFolders();
+  var fotosBase64 = [];
+  var fotosIds = [];
+  
+  while (subFolders.hasNext()) {
+    var subFolder = subFolders.next();
+    if (subFolder.getName() === patente) {
+      var files = subFolder.getFiles();
+      while (files.hasNext()) {
+        var file = files.next();
+        var blob = file.getBlob();
+        var base64 = Utilities.base64Encode(blob.getBytes());
+        var dataUrl = 'data:' + blob.getContentType() + ';base64,' + base64;
+        fotosBase64.push(dataUrl);
+        fotosIds.push(file.getId());
+      }
+      break;
+    }
+  }
+  
+  return { fotosBase64: fotosBase64, fotosIds: fotosIds };
+}
+
+
+function obtenerFotosPorDNI(dni) {
+  var folderId = "1CyTu6J75Nhdshmt38N79Jf9Ymxq8znYz"; // Reemplaza esto con el ID de tu carpeta raíz en Google Drive
+  var folder = DriveApp.getFolderById(folderId);
+  var subFolders = folder.getFolders();
+  var fotosBase64 = [];
+  var fotosIds = [];
+  
+  while (subFolders.hasNext()) {
+    var subFolder = subFolders.next();
+    if (subFolder.getName() === dni) {
+      var files = subFolder.getFiles();
+      while (files.hasNext()) {
+        var file = files.next();
+        var blob = file.getBlob();
+        var base64 = Utilities.base64Encode(blob.getBytes());
+        var dataUrl = 'data:' + blob.getContentType() + ';base64,' + base64;
+        fotosBase64.push(dataUrl);
+        fotosIds.push(file.getId());
+      }
+      break;
+    }
+  }
+  
+  return { fotosBase64: fotosBase64, fotosIds: fotosIds };
+}
+
+function borrarFotoEnDrive(fotoId) {
+  try {
+    DriveApp.getFileById(fotoId).setTrashed(true);
+    return true;
+  } catch (error) {
+    console.error("Error al borrar la foto:", error);
+    return false;
+  }
+}
+
+////////////////////////// BLACK LIST /////////////////////////////
+
+function searchBlacklist(patente) {
+  var sheet = SpreadsheetApp.openById("1u7HmWpLi7VZMHZrRjmhdOUtIjLQZWUuzkduGWL1DRCE").getSheetByName("BLACK LIST");
+  
+  var dataValues = sheet.getDataRange().getDisplayValues();
+    
+    for (var i = 1; i < dataValues.length; i++) {
+    if (dataValues[i][0] === patente) {
+      return dataValues[i][1];
+    }
+  }
+}
+
+
+
+
 ////////////////////////////////////////////////////////////////////
 ////////////////////////  SESION DE USUARIOS (A)////////////////////////
 /////////////////////////////////////////////////////////////////////
@@ -436,7 +552,7 @@ function verificarCredenciales(usuario, contrasena) {
 
   // Verificar las credenciales del usuario y obtener el color
   var color = buscarColorAlmacenado(usuario);
-  
+  console.log(color)
   // Devolver el color al cliente
   return color;
 

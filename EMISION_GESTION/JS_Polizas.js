@@ -143,10 +143,11 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
    "<div style='display: none;' id='notascte_" + i + "'>" + result[i][21] + "</div>"+
    "</div>";
    }
-   sinPendientesDiv.innerHTML = pendientesHtml;
+   sinPendientesDiv.textContent = "";
+    sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
 if (result.length === 0) {
- sinPendientesDiv.innerHTML = "No se encontró ningún valor.";
+ sinPendientesDiv.textContent = "No se encontró ningún valor.";
  spinner.style.display = 'none';
 }
 
@@ -263,7 +264,9 @@ pendientesHtml += "<div class='border' style=' margin-bottom: 0;border-radius:5p
    "<div style='display: none;' id='notascte_" + i + "'>" + result[i][21] + "</div>"+
    "</div>";
  }
- sinPendientesDiv.innerHTML = pendientesHtml;
+   sinPendientesDiv.textContent = "";
+    sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
+
 
  // Agregar evento de click a los divs dinámicos
  var divs = document.querySelectorAll("[id^='div']");
@@ -318,7 +321,9 @@ google.script.run.withSuccessHandler(function(emailsHTML) {
  // Muestra el contenido HTML de los correos electrónicos en el div con ID "emails"
  var div2 = document.getElementById("emails");
  console.log(emailsHTML)
- div2.innerHTML = emailsHTML;
+ div2.textContent = "";
+ div2.insertAdjacentHTML('beforeend',emailsHTML);
+
 }).mostrarCorreos(patente);
 }
 
@@ -369,7 +374,7 @@ document.getElementById("novedad_sn").addEventListener("change", function() {
  function cleanService() {
  event.preventDefault();
 
-document.getElementById("sinPendientes").innerHTML = "";
+document.getElementById("sinPendientes").textContent = "";
 document.getElementById("nombre").value = "";
 document.getElementById("dni").value = "";
 document.getElementById("domicilio").value = "";
@@ -427,7 +432,7 @@ console.log(poliza_sn, operacion_sn, novedad_sn, usuario_sn, notas_sn, patente_s
 
 alert('Ingreso de estado exitoso.');
 
-document.getElementById("sinPendientes").innerHTML = "";
+document.getElementById("sinPendientes").textContent = "";
 document.getElementById("nombre").value = "";
 document.getElementById("dni").value = "";
 document.getElementById("domicilio").value = "";
@@ -522,7 +527,7 @@ var colorAlmacenado = sessionStorage.getItem("magi-color");
 
 if (usuarioAlmacenado) {
   // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
-  document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
+  document.getElementById("usuario_sp").textContent = usuarioAlmacenado;
   user.style.display = "block";
   close_session.style.display = "block";
   modal.style.display = "none";
@@ -572,7 +577,7 @@ if (usuarioAlmacenado) {
 
 google.script.run.withSuccessHandler(function (color) {
   if (color) {
-    document.getElementById("usuario_sp").innerHTML = usuario;
+    document.getElementById("usuario_sp").textContent = usuario;
     modal.style.display = "none";
     user.style.display = "block";
     close_session.style.display = "block";
@@ -614,15 +619,15 @@ function mostrarTiempoRestante(tiempoRestante) {
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
       sessionStorage.removeItem("magi-color");
-      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      tiempoRestanteDiv.textContent = "Tiempo expirado";
+      document.getElementById("usuario_sp").textContent = "Desconocido";
       modal.style.display = "block";
   } else {
     var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
     var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
     var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
 
-    tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+    tiempoRestanteDiv.textContent = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
   }
 }
 
@@ -636,8 +641,8 @@ function iniciarContadorTiempo(tiempoRestante) {
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
       sessionStorage.removeItem("magi-color");
-      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      tiempoRestanteDiv.textContent = "Tiempo expirado";
+      document.getElementById("usuario_sp").textContent = "Desconocido";
       modal.style.display = "block";
     } else {
       mostrarTiempoRestante(tiempoRestante);
@@ -676,8 +681,8 @@ function close_sessionok(event) {
     // Eliminar el valor almacenado en sessionStorage
     sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
-      tiempoRestanteDiv.innerHTML = "";    
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      tiempoRestanteDiv.textContent = "";    
+      document.getElementById("usuario_sp").textContent = "Desconocido";
   // Recargar la página
       modal.style.display = "block";
 

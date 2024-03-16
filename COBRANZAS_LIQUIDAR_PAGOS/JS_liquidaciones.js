@@ -1,3 +1,4 @@
+
 (function () {
   'use strict'
 
@@ -173,7 +174,7 @@ pendientesHtml += "</div>";
 
 pendientesHtml += "</div></div>";
 pendientesHtml += "<div style='display: none;' id='_dni" + i + "'>" + result[i][12] + "</div>" +
- "<div style='display: none;' id='_wpp" + i + "'>" + result[i][13] + "</div>" +
+ "<div style='display: none;' class='text-sm planilla' id='_pago" + i + "'>" + result[i][13] + "</div>" +
  "<div style='display: none;' id='_poliza" + i + "'>" + result[i][14] + "</div>" +
  "<div style='display: none;' id='_recibo" + i + "'>" + result[i][15] + "</div>" +
  "</div></div></div>";
@@ -185,15 +186,66 @@ pendientesHtml += "<div style='display: none;' id='_dni" + i + "'>" + result[i][
    }
  }
 
-   sinPendientesDiv.innerHTML = pendientesHtml;
+   sinPendientesDiv.textContent = "";
+   sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
 // var idDeudorSelect = document.getElementById("id_deudor_select");
 // var idDeudorSelectAlta = document.getElementById("alta_id_deudor");
 var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
 var totalValInput = document.getElementById("total_val");
+var totalValInput2 = document.getElementById("total_val2");
 var totalCountInput = document.getElementById("total_count");
 var resetFiltroBtn = document.getElementById("bt-reset-filtro");
 
+///////////////////// SUMAR TOTAL DE VALORES ////////////////
+function calcularSumaTotal() {
+ var suma2 = 0;
+ var count2 = 0; // Variable para contar los elementos sumados
+
+ var divs = document.querySelectorAll("#sinPendientes > div");
+
+ for (var i = 0; i < divs.length; i++) {
+   var div = divs[i];
+   var input = div.querySelector("div[id^='_imp']");
+
+   if (input !== null) {
+     var valor = input.textContent.replace('$', ''); // Eliminar el signo "$"
+     valor = valor.replace('.', ''); // Eliminar el signo "."
+
+     console.log("Valor antes de convertir a número:", valor); // Mostrar el valor antes de convertir a número
+
+     if (valor !== "") {
+       valor = parseInt(valor); // Usar parseInt para mantener los decimales
+
+       console.log("Valor después de convertir a número:", valor); // Mostrar el valor después de convertir a número
+
+       if (!isNaN(valor) && result[i][8] === "") {
+         suma2 += valor;
+         count2++;
+         console.log("Suma parcial:", suma2); // Mostrar la suma parcial en cada iteración
+       }
+     }
+   } else {
+     console.log("No se encontró ningún div[id^='_imp'] dentro del div actual");
+   }
+ }
+
+ console.log("Total de elementos sumados:", count2); // Mostrar el total de elementos sumados
+ console.log("Suma total:", suma2.toFixed(2)); // Mostrar la suma total con dos decimales
+
+ if (totalValInput2) {
+   totalValInput2.value = suma2.toFixed(2);
+ }
+}
+
+
+// Llamar a la función inicialmente y cada vez que se cambie un valor
+calcularSumaTotal();
+
+var impInputs2 = document.querySelectorAll("input[id^='_imp']");
+for (var j = 0; j < impInputs2.length; j++) {
+ impInputs2[j].addEventListener("input", calcularSumaTotal);
+}
 
 ///////////////////// SUMAR VALORES ////////////////
 
@@ -262,9 +314,23 @@ divs3.forEach(function (btn_upd_pol) {
    // Ocultar el botón
    document.getElementById("btn_upd_pol" + id).style.display = "none";
 
-   google.script.run.withSuccessHandler(function (fechaHoyPasada) {
+
+google.script.run.withSuccessHandler(function (fechaHoyPasada) {
      document.getElementById("upd_pol" + id).textContent = "??";
-   }).updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
+
+}).withFailureHandler(function (error) {
+ 
+ console.error("Error al actualizar datos:", error);
+ console.log("Hubo un problema al actualizar datos del recibo N°: " + infoRecibo + ", patente: " + infoPatente + " y N° de Poliza: " + infoPoliza);
+ alert("Hubo un problema al actualizar datos del recibo N°: " + infoRecibo + ", patente: " + infoPatente + " y N° de Poliza: " + infoPoliza + ". Por favor, inténtalo de nuevo más tarde.");
+
+ document.getElementById("btn_upd_pol" + id).style.display = "block";
+
+}).updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
+
+   // google.script.run.withSuccessHandler(function (fechaHoyPasada) {
+   //   document.getElementById("upd_pol" + id).textContent = "??";
+   // }).updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
  });
 });
 
@@ -298,19 +364,23 @@ google.script.run.withSuccessHandler(function (fechaHoyPasada) {
      importe = parseInt(importe); // Convertir a número entero
 
      let totalActual = parseInt(document.getElementById("total_val").value) || 0;
+     let totalActual2 = parseInt(document.getElementById("total_val2").value) || 0;
      let totalCount = parseInt(document.getElementById("total_count").value) || 0;
      
      let total = totalActual + importe;
+     let total2 = totalActual2 - importe;
      let totalCount2 = totalCount + 1;
 
      document.getElementById("total_val").value = total;
+     document.getElementById("total_val2").value = total2;
      document.getElementById("total_count").value = totalCount2; 
 
  document.getElementById("_fec_pas" + id).textContent = fechaHoyPasada;
 }).withFailureHandler(function (error) {
  
  console.error("Error al pasar el pago:", error);
- alert("Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo más tarde.");
+ console.log("Hubo un problema al procesar el pago del recibo N°: " + infoRecibo + ", patente: " + infoPatente + " y N° de Poliza: " + infoPoliza);
+ alert("Hubo un problema al procesar el pago del recibo N°: " + infoRecibo + ", patente: " + infoPatente + " y N° de Poliza: " + infoPoliza + ". Por favor, inténtalo de nuevo más tarde.");
    document.getElementById("btnPasar" + id).style.display = "block";
 }).pasarPago(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
 
@@ -329,6 +399,8 @@ divs2.forEach(function (btnQuitar) {
  btnQuitar.addEventListener("click", function () {
    var id = btnQuitar.id.slice(9); // Obtener el índice del div
    let infoRecibo = document.getElementById("_recibo" + id).textContent;
+   let infoPatente = document.getElementById("_pat" + id).textContent;
+   let infoPoliza = document.getElementById("_pol" + id).value;
 
    // Ocultar el botón
    document.getElementById("pas_id" + id).style.display = "none";
@@ -348,12 +420,15 @@ google.script.run.withSuccessHandler(function (fechaHoyPasada) {
      importe = parseInt(importe); // Convertir a número entero
 
      let totalActual = parseInt(document.getElementById("total_val").value) || 0;
+     let totalActual2 = parseInt(document.getElementById("total_val2").value) || 0;
      let totalCount = parseInt(document.getElementById("total_count").value) || 0;
      
      let total = totalActual - importe;
+     let total2 = totalActual2 + importe;
      let totalCount2 = totalCount - 1;
 
      document.getElementById("total_val").value = total;
+     document.getElementById("total_val2").value = total2;
      document.getElementById("total_count").value = totalCount2; 
 
      document.getElementById("_fec_pas" + id).textContent = "";
@@ -361,7 +436,9 @@ google.script.run.withSuccessHandler(function (fechaHoyPasada) {
 }).withFailureHandler(function (error) {
  
  console.error("Error al quitar el pago:", error);
- alert("Hubo un problema al quitar el pago. Por favor, inténtalo de nuevo más tarde.");
+ console.log("Hubo un problema al quitar el pago pasado del recibo N°: " + infoRecibo + ", patente: " + infoPatente + " y N° de Poliza: " + infoPoliza);
+ alert("Hubo un problema al quitar el pago pasado del recibo N°: " + infoRecibo + ", patente: " + infoPatente + " y N° de Poliza: " + infoPoliza + ". Por favor, inténtalo de nuevo más tarde.");
+
    document.getElementById("btnQuitar" + id).style.display = "block";
 }).quitarPago(infoRecibo);
 
@@ -373,9 +450,20 @@ google.script.run.withSuccessHandler(function (fechaHoyPasada) {
  });
 });
 
-document.getElementById("actualizarListaBtn").addEventListener("click", function() {
- console.log("Botón clicado"); // Verifica si este mensaje se muestra en la consola
 
+///////////////////// FILTRO GENERALIZADO /////////////////////////////
+
+document.getElementById("actualizarListaBtn").addEventListener("click", function() {
+
+ var suma2 = 0;
+
+ var dia_desde = parseInt(document.getElementById("dia_desde").value) || 1;
+ var mes_desde = parseInt(document.getElementById("mes_desde").value) || 1;
+ var anio_desde = parseInt(document.getElementById("anio_desde").value) || 1970;
+ var dia_hasta = parseInt(document.getElementById("dia_hasta").value) || 31;
+ var mes_hasta = parseInt(document.getElementById("mes_hasta").value) || 12;
+ var anio_hasta = parseInt(document.getElementById("anio_hasta").value) || (new Date()).getFullYear();
+ var filtro_patente = document.getElementById("filtro_patente").value || "";
  var seleccionado = document.getElementById("cnia_s").value;
 
  // Filtrar los elementos basados en el valor seleccionado
@@ -384,22 +472,114 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
  for (var i = 0; i < divs.length; i++) {
    var div = divs[i];
    var cnia = div.querySelector(".text-sm[id^='_cnia']").textContent;
+   var patente = div.querySelector(".text-sm[id^='_pat']").textContent;
+   var input = div.querySelector("div[id^='_imp']");
+   var fechaPagoString = div.querySelector(".text-sm[id^='_pago']").textContent; 
+
+   var partesFecha = fechaPagoString.split(' ');
+   var partesFechaSeparadas = partesFecha[0].split('/'); // Tomar la parte de la fecha (antes del espacio) y separarla por las barras
+
+   // Obtener día, mes y año de la fecha de pago
+   var diaPago = parseInt(partesFechaSeparadas[0]);
+   var mesPago = parseInt(partesFechaSeparadas[1]);
+   var anioPago = parseInt(partesFechaSeparadas[2]);
+
    var todosLosAgros = ["AGROSALTA", "AGROSALTA C/GRUA", "AGRO (V) C/GRUA", "AGRO MOTO", "AGRO (V)"];
 
-   if (seleccionado === "todosLosAgros") {
-     if (todosLosAgros.includes(cnia)) {
+   if (filtro_patente === "") {
+         if (seleccionado === "todosLosAgros") {
+     if (todosLosAgros.includes(cnia) && (anioPago > anio_desde || (anioPago === anio_desde && mesPago > mes_desde) || (anioPago === anio_desde && mesPago === mes_desde && diaPago >= dia_desde)) &&
+     (anioPago < anio_hasta || (anioPago === anio_hasta && mesPago < mes_hasta) || (anioPago === anio_hasta && mesPago === mes_hasta && diaPago <= dia_hasta))) {
        div.style.display = "block"; // Mostrar el elemento
+     var valor = input.textContent.replace('$', ''); // Eliminar el signo "$"
+     valor = valor.replace('.', ''); // Eliminar el signo "."
+
+     if (valor !== "") {
+       valor = parseInt(valor); // Usar parseInt para mantener los decimales
+
+       if (!isNaN(valor)) {
+         suma2 += valor;
+       }
+     }
+
      } else {
        div.style.display = "none"; // Ocultar el elemento
      }
-   } else if (cnia === seleccionado || seleccionado === "todos") {
+   } else if ((cnia === seleccionado || seleccionado === "todos") && (anioPago > anio_desde || (anioPago === anio_desde && mesPago > mes_desde) || (anioPago === anio_desde && mesPago === mes_desde && diaPago >= dia_desde)) &&
+     (anioPago < anio_hasta || (anioPago === anio_hasta && mesPago < mes_hasta) || (anioPago === anio_hasta && mesPago === mes_hasta && diaPago <= dia_hasta))) {
      div.style.display = "block"; // Mostrar el elemento
+     var valor = input.textContent.replace('$', ''); // Eliminar el signo "$"
+     valor = valor.replace('.', ''); // Eliminar el signo "."
+
+     if (valor !== "") {
+       valor = parseInt(valor); // Usar parseInt para mantener los decimales
+
+       if (!isNaN(valor)) {
+         suma2 += valor;
+       }
+     }
    } else {
      div.style.display = "none"; // Ocultar el elemento
    }
+   } else {
+         if (seleccionado === "todosLosAgros") {
+     if (todosLosAgros.includes(cnia) && (anioPago > anio_desde || (anioPago === anio_desde && mesPago > mes_desde) || (anioPago === anio_desde && mesPago === mes_desde && diaPago >= dia_desde)) &&
+     (anioPago < anio_hasta || (anioPago === anio_hasta && mesPago < mes_hasta) || (anioPago === anio_hasta && mesPago === mes_hasta && diaPago <= dia_hasta)) && (patente === filtro_patente)) {
+       div.style.display = "block"; // Mostrar el elemento
+     var valor = input.textContent.replace('$', ''); // Eliminar el signo "$"
+     valor = valor.replace('.', ''); // Eliminar el signo "."
+
+     if (valor !== "") {
+       valor = parseInt(valor); // Usar parseInt para mantener los decimales
+
+       if (!isNaN(valor)) {
+         suma2 += valor;
+       }
+     }
+
+     } else {
+       div.style.display = "none"; // Ocultar el elemento
+     }
+   } else if ((cnia === seleccionado || seleccionado === "todos") && (anioPago > anio_desde || (anioPago === anio_desde && mesPago > mes_desde) || (anioPago === anio_desde && mesPago === mes_desde && diaPago >= dia_desde)) &&
+     (anioPago < anio_hasta || (anioPago === anio_hasta && mesPago < mes_hasta) || (anioPago === anio_hasta && mesPago === mes_hasta && diaPago <= dia_hasta)) && (patente === filtro_patente)) {
+     div.style.display = "block"; // Mostrar el elemento
+     var valor = input.textContent.replace('$', ''); // Eliminar el signo "$"
+     valor = valor.replace('.', ''); // Eliminar el signo "."
+
+     if (valor !== "") {
+       valor = parseInt(valor); // Usar parseInt para mantener los decimales
+
+       if (!isNaN(valor)) {
+         suma2 += valor;
+       }
+     }
+   } else {
+     div.style.display = "none"; // Ocultar el elemento
+   }
+   }
+
+ }
+ if (totalValInput2) {
+   totalValInput2.value = suma2.toFixed(2);
  }
  calcularSuma();
 });
+
+/////////////////// LIMPIAR FILTRO //////////////////////////
+
+document.getElementById("limpiar_filtro").addEventListener("click", function() {
+ // Restablecer los valores predeterminados de los selects
+ document.getElementById("dia_desde").value = "";
+ document.getElementById("mes_desde").value = "";
+ document.getElementById("anio_desde").value = "";
+ document.getElementById("dia_hasta").value = "";
+ document.getElementById("mes_hasta").value = "";
+ document.getElementById("anio_hasta").value = "";
+ document.getElementById("filtro_patente").value = "";
+ document.getElementById("cnia_s").value = "";
+ 
+});
+
 
 /// GENERAR LISTADO
 document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
@@ -458,7 +638,8 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
    const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
 
    // Borra las opciones actuales
-   diaSelect.innerHTML = '<option value=""></option>';
+   diaSelect.textContent = "";
+   diaSelect.insertAdjacentHTML('beforeend','<option value=""></option>');
 
    // Llena el select de días
    for (let i = 1; i <= lastDay; i++) {
@@ -659,7 +840,7 @@ var colorAlmacenado = sessionStorage.getItem("magi-color");
 
 if (usuarioAlmacenado) {
  // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
- document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
+ document.getElementById("usuario_sp").textContent = usuarioAlmacenado;
  user.style.display = "block";
  close_session.style.display = "block";
  modal.style.display = "none";
@@ -709,7 +890,7 @@ if (usuarioAlmacenado) {
 
 google.script.run.withSuccessHandler(function (color) {
  if (color) {
-   document.getElementById("usuario_sp").innerHTML = usuario;
+   document.getElementById("usuario_sp").textContent = usuario;
    modal.style.display = "none";
    user.style.display = "block";
    close_session.style.display = "block";
@@ -751,15 +932,15 @@ function mostrarTiempoRestante(tiempoRestante) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
  } else {
    var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
    var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
    var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
 
-   tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+   tiempoRestanteDiv.textContent = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
  }
 }
 
@@ -773,8 +954,8 @@ function iniciarContadorTiempo(tiempoRestante) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
    } else {
      mostrarTiempoRestante(tiempoRestante);
@@ -813,8 +994,8 @@ function close_sessionok(event) {
    // Eliminar el valor almacenado en sessionStorage
    sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
-     tiempoRestanteDiv.innerHTML = "";    
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "";    
+     document.getElementById("usuario_sp").textContent = "Desconocido";
  // Recargar la página
      modal.style.display = "block";
 
@@ -856,4 +1037,3 @@ function close_sessionok(event) {
 document.getElementById('bt-liquidar-pagos').addEventListener('click', liquidarPagos);
 document.getElementById('close_session').addEventListener('click', close_sessionok);
 //////////////////////////////////////////////////////////////////
-

@@ -38,7 +38,7 @@ if(dia && mes && anio) {
       para_pasar.push(cobranzasData[i][11]); // IMPORTE
       para_pasar.push(cobranzasData[i][9]); // POLIZA 
       para_pasar.push(cobranzasData[i][20]); // ACTU_DATOS 
-      para_pasar.push(""); // 
+      para_pasar.push(cobranzasData[i][6]); // PAGO
       para_pasar.push(""); //
       para_pasar.push(""); // 
       para_pasar.push(""); // PASADO

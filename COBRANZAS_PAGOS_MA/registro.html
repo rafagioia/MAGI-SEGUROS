@@ -391,6 +391,9 @@
                   <option value="AGRO (V) C/GRUA">AGRO (V) C/GRUA</option>
                   <option value="AGRO MOTO">AGRO MOTO</option>
                   <option value="DIGNA">DIGNA</option>
+                  <option value="EXPERTA">EXPERTA</option>
+                  <option value="EL TRIUNFO">EL TRIUNFO</option>
+                  <option value="BBVA">BBVA</option>
                 </select>
             </div>
             </div>
@@ -467,19 +470,55 @@
           <div class="row">
           <div class="col-3">
             <div class="mb-1">
-          <label for="notas" class="form-label mt-1">Notas:</label>
+          <label for="notas" class="form-label mt-1">Notas Cte:</label>
             </div>
           </div>
           <div class="col-9">
             <div class="mb-1">
-          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notas" name="notas" placeholder="Notas sobre el cliente">
+          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notascte" name="notascte" placeholder="Notas sobre el cliente" readonly>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="notas" class="form-label mt-1">Notas Veh:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notasveh" name="notasveh" placeholder="Notas del vehiculo" readonly>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="notas" class="form-label mt-1">Notas Cob:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="notascob" name="notascob" placeholder="Notas de cobranza">
+            </div>
+            </div>
+          </div>          
+          <div class="row">
+          <div class="col-3">
+            <div class="mb-1">
+          <label for="notas" class="form-label mt-1">Historico:</label>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="mb-1">
+          <input type="text" class="form-control form-control-sm"  oninput="this.value=this.value.toUpperCase()" id="historico" name="historico" placeholder="Historico de cobranzas" readonly>
             </div>
             </div>
           </div>
 <div class="row">
           <div class="col-3">
             <div class="mb-1">
-                <label for="multiRec" class="form-label mt-1">Medio Pago:</label>
+                <label for="multiRec" class="form-label mt-1">F.Pago:</label>
             </div>
           </div>
           <div class="col-9">
@@ -835,14 +874,17 @@
     </div>
     <div class="col-3">
       <div class="mb-1">
-        <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1" type="submit">Reimprimir X6</button>
+        <button id="btn-reimprimirReciboMulti" class="btn btn-secondary btn-sm ml-1 mr-1" type="submit">Reimprimir Mutiples</button>
       </div>
     </div>
         <div class="col-3">
       <div class="mb-1">
-        <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar X6</button>
+        <button id="bt-desc-multirec" class="btn btn-secondary btn-sm ml-1 mr-1">Descargar Multiples</button>
       </div>
     </div>
+  </div>
+  <div class="row">
+    Recuerde que para imprimir multiples recibos debe colocar el numero del último recibo y la cantidad de ahi para atras en "Multirecibos" y luego presionar el boton "Reimprimir Multiple"
   </div>
 <hr>
 
@@ -878,7 +920,7 @@
 
 </div>
 <!---- FIN DE LOS TRES SECTORES --->
-
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
