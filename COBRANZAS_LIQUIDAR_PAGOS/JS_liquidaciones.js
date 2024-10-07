@@ -70,13 +70,13 @@ function updateSinPendientes(result) {
  var pendientesHtml = "";
  var idDeudores = []; // Nuevo array para almacenar los id_deudor distintos
 
- // FunciÛn para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
+ // Funci√≥n para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
  function convertToDate(dateString) {
    var parts = dateString.split('/');
    return new Date(parts[2], parts[1] - 1, parts[0]); // Restamos 1 al mes ya que en Date() los meses van de 0 a 11
  }
 
- // Ordenar el arreglo result de menor a mayor seg˙n las fechas (result[i][2])
+ // Ordenar el arreglo result de menor a mayor seg√∫n las fechas (result[i][2])
  result.sort(function(a, b) {
    var dateA = convertToDate(a[7]);
    var dateB = convertToDate(b[7]);
@@ -97,10 +97,6 @@ pendientesHtml += "<div class='col-3 text-sm text-truncate planilla' style=' pad
 // Columna de vencimiento
 pendientesHtml += "<div class='col-2'><input type='text' class='form-control text-sm planilla'  id='_vto" + i + "' value='" + result[i][7] + "'></div>";
 
-
-
-// <div class='col-2 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_vto" + i + "'>" + result[i][7] + "</div>";
-
 // Columna de cuenta
 pendientesHtml += "<div class='col-2 text-sm planilla'><div class='row p-0 m-0'>"
 
@@ -109,12 +105,8 @@ pendientesHtml += "<div class='col-4 m-0 p-0'><input type='text' class='form-con
 pendientesHtml += "<div class='col-2 m-0 p-1 planilla'>/</div>";
 pendientesHtml += "<div class='col-4 m-0 p-0'><input type='text' class='form-control text-sm planilla p-0'  id='_ctad" + i + "' value='" + result[i][6] + "'></div></div></div>"
 
-// pendientesHtml += "<div class='col-4 m-0 p-1 text-sm planilla' id='_cta" + i + "'>" + result[i][5] + "</div>";
-// pendientesHtml += "<div class='col-2 m-0 p-1 planilla'>/</div>";
-// pendientesHtml += "<div class='col-4 m-0 p-1 text-sm planilla'  id='_ctad" + i + "'>" + result[i][6] + "</div></div></div>";
-
 // Columna de CNIA
-pendientesHtml += "<div class='col-3 text-sm planilla' style='padding-top: 10px;' id='_cnia" + i + "'>" + result[i][4] + "</div>";
+pendientesHtml += "<div class='col-3 text-sm planilla' style='padding-top: 10px; font-size: 0.9rem' id='_cnia" + i + "'>" + result[i][4] + "</div>";
 
 
 pendientesHtml += "</div></div>";
@@ -127,7 +119,7 @@ pendientesHtml += "<div class='col-6 text-sm planilla' style='padding-top: 10px;
 
 // Columna de POLIZA
 if (result[i][12]) {
- pendientesHtml += "<div class='col-5  p-0'><input type='text' class='form-control text-sm planilla'  id='_pol" + i + "' value='" + result[i][11] + "'></div><div class='col-1' style='margin: auto' id='upd_pol" + i + "'>??</div>";
+ pendientesHtml += "<div class='col-5  p-0'><input type='text' class='form-control text-sm planilla'  id='_pol" + i + "' value='" + result[i][11] + "'></div><div class='col-1' style='margin: auto' id='upd_pol" + i + "'>‚úîÔ∏è</div>";
 } else {
  pendientesHtml += "<div class='col-5  p-0'><input type='text' class='form-control text-sm planilla'  id='_pol" + i + "' value='" + result[i][11] + "'></div><div class='col-1' style='margin: auto' id='upd_pol" + i + "'><button class='btn btn-secondary' id='btn_upd_pol" + i + "'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAQxJREFUSEu1lYsNwyAMRH2btJsko3SSjtJukoySTVwdgorwM6EFKYpEnHv2YQAyeWCyvvwFoKo3EVkAvNOETwBVXUTkJSL8oTVWADsDVHWjuA8+RITf+HYjBcTBNUBJPAgysQPAvQZQRwVM66LMnaC3iQkS8gh2pRV0AWq2RPPjgDhzb4OzxT9cizGLvAVsgK9IYgt5J/HSIhctKomHRUzXwmrTDHBVnK0eWtisoCbemKd9W9yFzS4qlW9UlDlgAU4/tMT9rh4HWOI/AZLOyFox6qixCiJAVXyogqt3hapeq2AGoOe4trg7gLV2XHOjPKMLxBJLv/PQ40nqLqNsJ19V64k3L5YekVbMdMAH5/PsGSTMuK8AAAAASUVORK5CYII='/></button></div>";
 }
@@ -150,7 +142,7 @@ pendientesHtml += "<div class='col-3 row planilla'>";
    // Si hay un valor, agrega "Pasado:" y el valor de la columna
    pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "' style='display: none'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALZJREFUSEvdlesNwyAMhO82aTZJR+kkHSWjhFGyiSsiJUoQGOy8pPIX7M8+zEFcvHhxfhQBItIDGAC8jEVMAD4kQ4zTACOACPGsiWRXA8h8gDTJKCK7OK2D5wBplVsNT+nABUiDLEmaOqgBlv3SSC3DUJTocYAmwykS/RdA8w73JbcakgVwxOwCyffO7DJjGp3063DUvF1rL7dVnty51U3vALg0r/0X2w5cmjcDjuisxZq+Q08RP2kHzhnqPM52AAAAAElFTkSuQmCC'/></button><div id='pas_id" + i + "'><b>Pasado: </b><div class='text-sm'  id='_fec_pas" + i + "'>" + result[i][8] + "</div></div>";
  } else {
-   // Si no hay un valor, agrega un botÛn "Pasar"
+   // Si no hay un valor, agrega un bot√≥n "Pasar"
    pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALZJREFUSEvdlesNwyAMhO82aTZJR+kkHSWjhFGyiSsiJUoQGOy8pPIX7M8+zEFcvHhxfhQBItIDGAC8jEVMAD4kQ4zTACOACPGsiWRXA8h8gDTJKCK7OK2D5wBplVsNT+nABUiDLEmaOqgBlv3SSC3DUJTocYAmwykS/RdA8w73JbcakgVwxOwCyffO7DJjGp3063DUvF1rL7dVnty51U3vALg0r/0X2w5cmjcDjuisxZq+Q08RP2kHzhnqPM52AAAAAElFTkSuQmCC'/></button><div id='pas_id" + i + "' style='display: none'><b>Pasado: </b><div class='text-sm'  id='_fec_pas" + i + "' ></div></div>";
  }
  pendientesHtml += "</div>";
@@ -161,10 +153,10 @@ pendientesHtml += "<div class='col-3 row planilla'>";
    // Si hay un valor, agrega "Liquidado:" y el valor de la columna
    pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "' style='display: none'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAJxJREFUSEvtVdsNgCAMvNtEN9FRnMRRHEVGYZMaTDC+KARCTAz9pLR3fcARlY2V80MFEJEBwAKgCxCxACaSJkQ0BrACcCCaWZJ9LoC4QJKvRERE9e+xGrVYgpj/AeADSgd/rvhSQXUAzzyl9HOV2v3s4TWA6H63FrUWHTvw34eWIjT3T9eQHO+HoRY5FZsT1MznC0rnt6JfKjwufgPQK44Z7c91NgAAAABJRU5ErkJggg=='/></button><div id='liq_id'><b>Liquidado: </b><div class='text-sm' id='pas_id" + i + "'>" + result[i][9] + "</div></div>";
  } else if (result[i][8] && !result[i][9]) {
-   // Si no hay un valor en la columna [8], agrega un botÛn "X" de color rojo
+   // Si no hay un valor en la columna [8], agrega un bot√≥n "X" de color rojo
    pendientesHtml += "<button class='btn btn-danger btn-sm' id='btnQuitar" + i + "'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAJxJREFUSEvtVdsNgCAMvNtEN9FRnMRRHEVGYZMaTDC+KARCTAz9pLR3fcARlY2V80MFEJEBwAKgCxCxACaSJkQ0BrACcCCaWZJ9LoC4QJKvRERE9e+xGrVYgpj/AeADSgd/rvhSQXUAzzyl9HOV2v3s4TWA6H63FrUWHTvw34eWIjT3T9eQHO+HoRY5FZsT1MznC0rnt6JfKjwufgPQK44Z7c91NgAAAABJRU5ErkJggg=='/></button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div class='text-sm'  id='pas_id" + i + "'></div></div>";
    }  else if (!result[i][8] && !result[i][9]) {
-   // Si no hay un valor en la columna [8], agrega un botÛn "X" de color rojo
+   // Si no hay un valor en la columna [8], agrega un bot√≥n "X" de color rojo
    pendientesHtml += "<button class='btn btn-danger' id='btnQuitar" + i + "' style='display: none'><img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAJxJREFUSEvtVdsNgCAMvNtEN9FRnMRRHEVGYZMaTDC+KARCTAz9pLR3fcARlY2V80MFEJEBwAKgCxCxACaSJkQ0BrACcCCaWZJ9LoC4QJKvRERE9e+xGrVYgpj/AeADSgd/rvhSQXUAzzyl9HOV2v3s4TWA6H63FrUWHTvw34eWIjT3T9eQHO+HoRY5FZsT1MznC0rnt6JfKjwufgPQK44Z7c91NgAAAABJRU5ErkJggg=='/></button><div id='liq_id" + i + "' style='display: none'><b>Liquidado: </b><div class='text-sm' id='pas_id" + i + "'></div></div>";
    }
 pendientesHtml += "</div>";
@@ -195,6 +187,7 @@ var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
 var totalValInput = document.getElementById("total_val");
 var totalValInput2 = document.getElementById("total_val2");
 var totalCountInput = document.getElementById("total_count");
+var totalCountInput2 = document.getElementById("total_count2");
 var resetFiltroBtn = document.getElementById("bt-reset-filtro");
 
 ///////////////////// SUMAR TOTAL DE VALORES ////////////////
@@ -212,21 +205,21 @@ function calcularSumaTotal() {
      var valor = input.textContent.replace('$', ''); // Eliminar el signo "$"
      valor = valor.replace('.', ''); // Eliminar el signo "."
 
-     console.log("Valor antes de convertir a n˙mero:", valor); // Mostrar el valor antes de convertir a n˙mero
+     console.log("Valor antes de convertir a n√∫mero:", valor); // Mostrar el valor antes de convertir a n√∫mero
 
      if (valor !== "") {
        valor = parseInt(valor); // Usar parseInt para mantener los decimales
 
-       console.log("Valor despuÈs de convertir a n˙mero:", valor); // Mostrar el valor despuÈs de convertir a n˙mero
+       console.log("Valor despu√©s de convertir a n√∫mero:", valor); // Mostrar el valor despu√©s de convertir a n√∫mero
 
        if (!isNaN(valor) && result[i][8] === "") {
          suma2 += valor;
          count2++;
-         console.log("Suma parcial:", suma2); // Mostrar la suma parcial en cada iteraciÛn
+         console.log("Suma parcial:", suma2); // Mostrar la suma parcial en cada iteraci√≥n
        }
      }
    } else {
-     console.log("No se encontrÛ ning˙n div[id^='_imp'] dentro del div actual");
+     console.log("No se encontr√≥ ning√∫n div[id^='_imp'] dentro del div actual");
    }
  }
 
@@ -236,10 +229,14 @@ function calcularSumaTotal() {
  if (totalValInput2) {
    totalValInput2.value = suma2.toFixed(2);
  }
+ 
+ if (totalCountInput2) {
+   totalCountInput2.value = count2;
+ }
 }
 
 
-// Llamar a la funciÛn inicialmente y cada vez que se cambie un valor
+// Llamar a la funci√≥n inicialmente y cada vez que se cambie un valor
 calcularSumaTotal();
 
 var impInputs2 = document.querySelectorAll("input[id^='_imp']");
@@ -290,7 +287,7 @@ function calcularSuma() {
  document.getElementById("fecha_actual").value = fechaFormateada;
 }
 
-// Llamar a la funciÛn inicialmente y cada vez que se cambie un valor
+// Llamar a la funci√≥n inicialmente y cada vez que se cambie un valor
 calcularSuma();
 
 var impInputs = document.querySelectorAll("input[id^='_imp']");
@@ -303,7 +300,7 @@ var divs3 = document.querySelectorAll("[id^='btn_upd_pol']");
 
 divs3.forEach(function (btn_upd_pol) {
  btn_upd_pol.addEventListener("click", function () {
-   var id = btn_upd_pol.id.slice(11); // Obtener el Ìndice del div
+   var id = btn_upd_pol.id.slice(11); // Obtener el √≠ndice del div
    let infoRecibo = document.getElementById("_recibo" + id).textContent;
    let infoPoliza = document.getElementById("_pol" + id).value;
    let infoPatente = document.getElementById("_pat" + id).textContent;
@@ -311,25 +308,25 @@ divs3.forEach(function (btn_upd_pol) {
    let infoCta = document.getElementById("_cta" + id).value;
    let infoVig = document.getElementById("_ctad" + id).value;
 
-   // Ocultar el botÛn
+   // Ocultar el bot√≥n
    document.getElementById("btn_upd_pol" + id).style.display = "none";
 
 
 google.script.run.withSuccessHandler(function (fechaHoyPasada) {
-     document.getElementById("upd_pol" + id).textContent = "??";
+     document.getElementById("upd_pol" + id).textContent = "‚úîÔ∏è";
 
 }).withFailureHandler(function (error) {
  
  console.error("Error al actualizar datos:", error);
- console.log("Hubo un problema al actualizar datos del recibo N∞: " + infoRecibo + ", patente: " + infoPatente + " y N∞ de Poliza: " + infoPoliza);
- alert("Hubo un problema al actualizar datos del recibo N∞: " + infoRecibo + ", patente: " + infoPatente + " y N∞ de Poliza: " + infoPoliza + ". Por favor, intÈntalo de nuevo m·s tarde.");
+ console.log("Hubo un problema al actualizar datos del recibo N¬∞: " + infoRecibo + ", patente: " + infoPatente + " y N¬∞ de Poliza: " + infoPoliza);
+ alert("Hubo un problema al actualizar datos del recibo N¬∞: " + infoRecibo + ", patente: " + infoPatente + " y N¬∞ de Poliza: " + infoPoliza + ". Por favor, int√©ntalo de nuevo m√°s tarde.");
 
  document.getElementById("btn_upd_pol" + id).style.display = "block";
 
 }).updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
 
    // google.script.run.withSuccessHandler(function (fechaHoyPasada) {
-   //   document.getElementById("upd_pol" + id).textContent = "??";
+   //   document.getElementById("upd_pol" + id).textContent = "‚úîÔ∏è";
    // }).updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
  });
 });
@@ -340,7 +337,7 @@ var divs3 = document.querySelectorAll("[id^='btnPasar']");
 
 divs3.forEach(function (btnPasar) {
  btnPasar.addEventListener("click", function () {
-   var id = btnPasar.id.slice(8); // Obtener el Ìndice del div
+   var id = btnPasar.id.slice(8); // Obtener el √≠ndice del div
    let infoRecibo = document.getElementById("_recibo" + id).textContent;
    let infoPatente = document.getElementById("_pat" + id).textContent;
    let infoPoliza = document.getElementById("_pol" + id).value;
@@ -348,7 +345,7 @@ divs3.forEach(function (btnPasar) {
    let infoCta = document.getElementById("_cta" + id).value;
    let infoVig = document.getElementById("_ctad" + id).value;
 
-   // Ocultar el botÛn
+   // Ocultar el bot√≥n
    document.getElementById("btnPasar" + id).style.display = "none";
 
 
@@ -361,26 +358,29 @@ google.script.run.withSuccessHandler(function (fechaHoyPasada) {
      let importe = document.getElementById("_imp" + id).textContent;
      importe = importe.replace('$', ''); // Eliminar el signo "$"
      importe = importe.replace('.', ''); // Eliminar el signo "$"
-     importe = parseInt(importe); // Convertir a n˙mero entero
+     importe = parseInt(importe); // Convertir a n√∫mero entero
 
      let totalActual = parseInt(document.getElementById("total_val").value) || 0;
      let totalActual2 = parseInt(document.getElementById("total_val2").value) || 0;
      let totalCount = parseInt(document.getElementById("total_count").value) || 0;
+     let totalCountB2 = parseInt(document.getElementById("total_count2").value) || 0;
      
      let total = totalActual + importe;
      let total2 = totalActual2 - importe;
      let totalCount2 = totalCount + 1;
+     let totalCountB22 = totalCountB2 - 1;
 
      document.getElementById("total_val").value = total;
      document.getElementById("total_val2").value = total2;
      document.getElementById("total_count").value = totalCount2; 
+     document.getElementById("total_count2").value = totalCountB22; 
 
  document.getElementById("_fec_pas" + id).textContent = fechaHoyPasada;
 }).withFailureHandler(function (error) {
  
  console.error("Error al pasar el pago:", error);
- console.log("Hubo un problema al procesar el pago del recibo N∞: " + infoRecibo + ", patente: " + infoPatente + " y N∞ de Poliza: " + infoPoliza);
- alert("Hubo un problema al procesar el pago del recibo N∞: " + infoRecibo + ", patente: " + infoPatente + " y N∞ de Poliza: " + infoPoliza + ". Por favor, intÈntalo de nuevo m·s tarde.");
+ console.log("Hubo un problema al procesar el pago del recibo N¬∞: " + infoRecibo + ", patente: " + infoPatente + " y N¬∞ de Poliza: " + infoPoliza);
+ alert("Hubo un problema al procesar el pago del recibo N¬∞: " + infoRecibo + ", patente: " + infoPatente + " y N¬∞ de Poliza: " + infoPoliza + ". Por favor, int√©ntalo de nuevo m√°s tarde.");
    document.getElementById("btnPasar" + id).style.display = "block";
 }).pasarPago(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
 
@@ -397,12 +397,12 @@ var divs2 = document.querySelectorAll("[id^='btnQuitar']");
 
 divs2.forEach(function (btnQuitar) {
  btnQuitar.addEventListener("click", function () {
-   var id = btnQuitar.id.slice(9); // Obtener el Ìndice del div
+   var id = btnQuitar.id.slice(9); // Obtener el √≠ndice del div
    let infoRecibo = document.getElementById("_recibo" + id).textContent;
    let infoPatente = document.getElementById("_pat" + id).textContent;
    let infoPoliza = document.getElementById("_pol" + id).value;
 
-   // Ocultar el botÛn
+   // Ocultar el bot√≥n
    document.getElementById("pas_id" + id).style.display = "none";
    document.getElementById("btnQuitar" + id).style.display = "none";
 
@@ -417,27 +417,30 @@ google.script.run.withSuccessHandler(function (fechaHoyPasada) {
      let importe = document.getElementById("_imp" + id).textContent;
      importe = importe.replace('$', ''); // Eliminar el signo "$"
      importe = importe.replace('.', ''); // Eliminar el signo "$"
-     importe = parseInt(importe); // Convertir a n˙mero entero
+     importe = parseInt(importe); // Convertir a n√∫mero entero
 
      let totalActual = parseInt(document.getElementById("total_val").value) || 0;
      let totalActual2 = parseInt(document.getElementById("total_val2").value) || 0;
      let totalCount = parseInt(document.getElementById("total_count").value) || 0;
+     let totalCountB2 = parseInt(document.getElementById("total_count2").value) || 0;
      
-     let total = totalActual - importe;
-     let total2 = totalActual2 + importe;
-     let totalCount2 = totalCount - 1;
+     let total = totalActual + importe;
+     let total2 = totalActual2 - importe;
+     let totalCount2 = totalCount + 1;
+     let totalCountB22 = totalCountB2 - 1;
 
      document.getElementById("total_val").value = total;
      document.getElementById("total_val2").value = total2;
      document.getElementById("total_count").value = totalCount2; 
+     document.getElementById("total_count2").value = totalCountB22; 
 
      document.getElementById("_fec_pas" + id).textContent = "";
 
 }).withFailureHandler(function (error) {
  
  console.error("Error al quitar el pago:", error);
- console.log("Hubo un problema al quitar el pago pasado del recibo N∞: " + infoRecibo + ", patente: " + infoPatente + " y N∞ de Poliza: " + infoPoliza);
- alert("Hubo un problema al quitar el pago pasado del recibo N∞: " + infoRecibo + ", patente: " + infoPatente + " y N∞ de Poliza: " + infoPoliza + ". Por favor, intÈntalo de nuevo m·s tarde.");
+ console.log("Hubo un problema al quitar el pago pasado del recibo N¬∞: " + infoRecibo + ", patente: " + infoPatente + " y N¬∞ de Poliza: " + infoPoliza);
+ alert("Hubo un problema al quitar el pago pasado del recibo N¬∞: " + infoRecibo + ", patente: " + infoPatente + " y N¬∞ de Poliza: " + infoPoliza + ". Por favor, int√©ntalo de nuevo m√°s tarde.");
 
    document.getElementById("btnQuitar" + id).style.display = "block";
 }).quitarPago(infoRecibo);
@@ -456,6 +459,7 @@ google.script.run.withSuccessHandler(function (fechaHoyPasada) {
 document.getElementById("actualizarListaBtn").addEventListener("click", function() {
 
  var suma2 = 0;
+ var count2 = 0;
 
  var dia_desde = parseInt(document.getElementById("dia_desde").value) || 1;
  var mes_desde = parseInt(document.getElementById("mes_desde").value) || 1;
@@ -479,12 +483,12 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
    var partesFecha = fechaPagoString.split(' ');
    var partesFechaSeparadas = partesFecha[0].split('/'); // Tomar la parte de la fecha (antes del espacio) y separarla por las barras
 
-   // Obtener dÌa, mes y aÒo de la fecha de pago
+   // Obtener d√≠a, mes y a√±o de la fecha de pago
    var diaPago = parseInt(partesFechaSeparadas[0]);
    var mesPago = parseInt(partesFechaSeparadas[1]);
    var anioPago = parseInt(partesFechaSeparadas[2]);
 
-   var todosLosAgros = ["AGROSALTA", "AGROSALTA C/GRUA", "AGRO (V) C/GRUA", "AGRO MOTO", "AGRO (V)"];
+   var todosLosAgros = ["AGROSALTA [RC]", "AGROSALTA [RC-GRUA]", "AGROSALTA [B1]", "AGROSALTA [MOTO]"];
 
    if (filtro_patente === "") {
          if (seleccionado === "todosLosAgros") {
@@ -499,6 +503,7 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
 
        if (!isNaN(valor)) {
          suma2 += valor;
+         count2 ++
        }
      }
 
@@ -516,6 +521,7 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
 
        if (!isNaN(valor)) {
          suma2 += valor;
+         count2 ++
        }
      }
    } else {
@@ -534,6 +540,7 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
 
        if (!isNaN(valor)) {
          suma2 += valor;
+         count2 ++
        }
      }
 
@@ -551,6 +558,7 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
 
        if (!isNaN(valor)) {
          suma2 += valor;
+         count2 ++
        }
      }
    } else {
@@ -561,6 +569,9 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
  }
  if (totalValInput2) {
    totalValInput2.value = suma2.toFixed(2);
+ }
+ if (totalCountInput2) {
+   totalCountInput2.value = count2;
  }
  calcularSuma();
 });
@@ -588,12 +599,12 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
  var anio = parseInt(document.getElementById("anio").value, 10);
  var anioUltimosDosDigitos = anio % 100;
  
- // FunciÛn para agregar un cero delante si el n˙mero es menor a 10
+ // Funci√≥n para agregar un cero delante si el n√∫mero es menor a 10
  function agregarCero(num) {
    return num < 10 ? "0" + num : num;
  }
 
- // Aplicar la funciÛn agregarCero a dia y mes
+ // Aplicar la funci√≥n agregarCero a dia y mes
  var diaFormateado = agregarCero(dia);
  var mesFormateado = agregarCero(mes);
 
@@ -605,7 +616,7 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
 
 }
 
- // Llamar a la funciÛn getData() del lado del servidor
+ // Llamar a la funci√≥n getData() del lado del servidor
  google.script.run.withSuccessHandler(updateSinPendientes).getData();
  /////////////////////////////////////////
 
@@ -614,13 +625,13 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
 /// OBTENER FECHA ACTUAL PARA LIQUIDAR
  const fechaActual = new Date();
 
- // Obtiene el dÌa, mes y aÒo
+ // Obtiene el d√≠a, mes y a√±o
  const dia = fechaActual.getDate().toString().padStart(2, '0');
  const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses comienzan en 0
- const aÒo = fechaActual.getFullYear().toString().slice(-2); // Obtiene los ˙ltimos dos dÌgitos del aÒo
+ const a√±o = fechaActual.getFullYear().toString().slice(-2); // Obtiene los √∫ltimos dos d√≠gitos del a√±o
 
  // Formatea la fecha en DD/MM/YY
- const fechaFormateada = `${dia}/${mes}/${aÒo}`;
+ const fechaFormateada = `${dia}/${mes}/${a√±o}`;
 
  // Asigna la fecha formateada al campo de entrada
  document.getElementById('fecha_actual').value = fechaFormateada;
@@ -634,14 +645,14 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
    const selectedMonth = parseInt(mesSelect.value);
    const selectedYear = parseInt(anioSelect.value);
 
-   // Calcula el ˙ltimo dÌa del mes seleccionado
+   // Calcula el √∫ltimo d√≠a del mes seleccionado
    const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
 
    // Borra las opciones actuales
    diaSelect.textContent = "";
    diaSelect.insertAdjacentHTML('beforeend','<option value=""></option>');
 
-   // Llena el select de dÌas
+   // Llena el select de d√≠as
    for (let i = 1; i <= lastDay; i++) {
      const option = document.createElement('option');
      option.value = i;
@@ -650,13 +661,13 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
    }
  }
 
- // Escucha cambios en los selects de mes y aÒo
+ // Escucha cambios en los selects de mes y a√±o
  const mesSelect = document.getElementById('mes');
  const anioSelect = document.getElementById('anio');
  mesSelect.addEventListener('change', actualizarDias);
  anioSelect.addEventListener('change', actualizarDias);
 
- // Llama a la funciÛn inicialmente para establecer los dÌas iniciales
+ // Llama a la funci√≥n inicialmente para establecer los d√≠as iniciales
  actualizarDias();
 
 
@@ -664,7 +675,7 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
 function liquidarPagos() {
  google.script.run.withSuccessHandler(function(numerosRecibos) {
    if (numerosRecibos.length > 0) {
-     // Oculta los divs completos que contienen n˙meros de recibo correspondientes
+     // Oculta los divs completos que contienen n√∫meros de recibo correspondientes
      numerosRecibos.forEach(function(numeroRecibo) {
        var divs = document.querySelectorAll("div[id^='div']");
        divs.forEach(function(div) {
@@ -676,7 +687,7 @@ function liquidarPagos() {
      });
      document.getElementById("total_val").value = 0; 
      document.getElementById("total_count").value = 0; 
-     alert("LiquidaciÛn generada correctamente.\n\nN˙meros de recibos liquidados: " + numerosRecibos.join(", "));
+     alert("Liquidaci√≥n generada correctamente.\n\nN√∫meros de recibos liquidados: " + numerosRecibos.join(", "));
    } else {
      alert("No se encontraron elementos para liquidar.");
    }
@@ -697,7 +708,7 @@ function obtenerDatosTabla() {
  for (var i = 0; i < divs.length; i++) {
    var div = divs[i];
    if (div.style.display === "none") {
-     continue; // Si el div est· oculto, omitirlo y pasar al siguiente
+     continue; // Si el div est√° oculto, omitirlo y pasar al siguiente
    }
 
    var rowData = [];
@@ -758,7 +769,7 @@ function generarPDF(tableData) {
    '<th>VTO:</th>' +
    '<th>CTA:</th>' +
    '<th>DE:</th>' +
-   '<th>COMPA—IA</th>' +
+   '<th>COMPA√ëIA</th>' +
    '<th>IMPORTE:</th>' +
    '<th>POLIZA:</th>' +
    '<th>PATENTE:</th>' +
@@ -811,7 +822,7 @@ document.addEventListener('DOMContentLoaded', function() {
  var modal = document.getElementById('modal3');
  var modal2 = document.getElementById('modal4');
 
- // Agregamos un evento para cerrar el modal cuando se hace clic fuera de Èl
+ // Agregamos un evento para cerrar el modal cuando se hace clic fuera de √©l
  window.addEventListener('click', function(event) {
    if (event.target === modal) {
      modal.style.display = 'none';
@@ -833,7 +844,7 @@ document.addEventListener('DOMContentLoaded', function() {
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// FunciÛn para realizar el inicio de sesiÛn
+// Funci√≥n para realizar el inicio de sesi√≥n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -865,19 +876,19 @@ if (usuarioAlmacenado) {
  iniciarContadorTiempo(tiempoRestante);
 } else {
  
- // FunciÛn para abrir el modal
+ // Funci√≥n para abrir el modal
  modal.style.display = "block";
 
- // FunciÛn para cerrar el modal
+ // Funci√≥n para cerrar el modal
  function closeModal() {
    modal.style.display = "none";
  }
 
- // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botÛn de inicio de sesiÛn
+ // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot√≥n de inicio de sesi√≥n
  document.getElementById("inicio-sesion").addEventListener("click", function (event) {
    event.preventDefault();
 
-   // Obtener el usuario y la contraseÒa del formulario
+   // Obtener el usuario y la contrase√±a del formulario
    var usuario = document.getElementById("usuario").value;
    var contrasena = document.getElementById("contrasena").value;
 
@@ -885,7 +896,7 @@ if (usuarioAlmacenado) {
    var colorPicker = document.getElementById("colorPicker");
    var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contraseÒa
+// Hacer una solicitud al servidor para verificar el usuario y la contrase√±a
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -917,7 +928,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// FunciÛn para calcular el tiempo restante en milisegundos
+// Funci√≥n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
  var horaInicio = parseInt(horaInicioAlmacenada);
  var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -926,7 +937,7 @@ function calcularTiempoRestante() {
  return tiempoRestante;
 }
 
-// FunciÛn para mostrar el tiempo restante en el div correspondiente
+// Funci√≥n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
  if (tiempoRestante <= 0) {
      sessionStorage.removeItem("magi-usuario");
@@ -944,7 +955,7 @@ function mostrarTiempoRestante(tiempoRestante) {
  }
 }
 
-// FunciÛn para iniciar el contador de tiempo
+// Funci√≥n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
  var intervalo = setInterval(function () {
    tiempoRestante -= 1000;
@@ -996,7 +1007,7 @@ function close_sessionok(event) {
      sessionStorage.removeItem("magi-horaInicio");
      tiempoRestanteDiv.textContent = "";    
      document.getElementById("usuario_sp").textContent = "Desconocido";
- // Recargar la p·gina
+ // Recargar la p√°gina
      modal.style.display = "block";
 
 }
@@ -1037,3 +1048,4 @@ function close_sessionok(event) {
 document.getElementById('bt-liquidar-pagos').addEventListener('click', liquidarPagos);
 document.getElementById('close_session').addEventListener('click', close_sessionok);
 //////////////////////////////////////////////////////////////////
+

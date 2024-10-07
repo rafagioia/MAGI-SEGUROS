@@ -29,7 +29,7 @@ if(dia && mes && anio) {
       para_pasar.push(cobranzasData[i][3]); // CLIENTE
       para_pasar.push(cobranzasData[i][1]); // PATENTE
       para_pasar.push(cobranzasData[i][13]); // VEHICULO
-      para_pasar.push(cobranzasData[i][10]); // COMPAÑIA
+      para_pasar.push(cobranzasData[i][10]); // COMPAÃ‘IA
       para_pasar.push(cobranzasData[i][7]); // CUOTA
       para_pasar.push(cobranzasData[i][8]); // VIGENCIA
       para_pasar.push(cobranzasData[i][5]); // VENCE
@@ -58,7 +58,7 @@ function updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVi
   var data = BD_COBRANZAS.getDataRange().getValues();
 
   
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
   const data2 = LISTADO.getDataRange().getDisplayValues();
 
 for (let i = 0; i < data.length; i++) {
@@ -75,7 +75,7 @@ for (let i = 0; i < data.length; i++) {
 
 
   var dia_emi = parseInt(data[i][5].getDate());
-  var mes_emi = parseInt(data[i][5].getMonth() + 1); // Los meses comienzan desde 0, así que sumamos 1.
+  var mes_emi = parseInt(data[i][5].getMonth() + 1); // Los meses comienzan desde 0, asÃ­ que sumamos 1.
   var anio_emi2 = data[i][5].getFullYear();
   var anio_emi = parseInt(anio_emi2 % 100)
   var dia_cob = parseInt(infoVto.split('/')[0]);
@@ -91,13 +91,14 @@ for (let i = 0; i < data.length; i++) {
 
 }
 
-for(let i = 0; i < data2.length; i++) {
+for(let i = data2.length - 1; i >= 0; i--) {
   if(infoPatente === data2[i][0]) {
-      if(parseInt(infoPoliza) !== data[i][8] && infoPoliza !== "") {
-    LISTADO.getRange(i+1,8).setValue(infoPoliza);
-  }
+    if(parseInt(infoPoliza) !== data2[i][8] && infoPoliza !== "") {
+      LISTADO.getRange(i + 1, 8).setValue(infoPoliza);
+    }
   }
 }
+
 }
 
 
@@ -108,7 +109,7 @@ function pasarPago(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVi
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
   var data = BD_COBRANZAS.getDataRange().getValues();
 
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
   const data2 = LISTADO.getDataRange().getDisplayValues();
 
 for(let i = 0; i < data.length; i++) {
@@ -126,7 +127,7 @@ for(let i = 0; i < data.length; i++) {
   }
 
   var dia_emi = parseInt(data[i][5].getDate());
-  var mes_emi = parseInt(data[i][5].getMonth() + 1); // Los meses comienzan desde 0, así que sumamos 1.
+  var mes_emi = parseInt(data[i][5].getMonth() + 1); // Los meses comienzan desde 0, asÃ­ que sumamos 1.
   var anio_emi2 = data[i][5].getFullYear();
   var anio_emi = parseInt(anio_emi2 % 100)
   var dia_cob = parseInt(infoVto.split('/')[0]);
@@ -144,13 +145,15 @@ for(let i = 0; i < data.length; i++) {
   }
 }
 
-for(let i = 0; i < data2.length; i++) {
+for(let i = data2.length - 1; i >= 0; i--) {
   if(infoPatente === data2[i][0]) {
-      if(parseInt(infoPoliza) !== data[i][8] && infoPoliza !== "") {
-    LISTADO.getRange(i+1,8).setValue(infoPoliza);
-  }
+    if(parseInt(infoPoliza) !== data2[i][8] && infoPoliza !== "") {
+      LISTADO.getRange(i + 1, 8).setValue(infoPoliza);
+    }
   }
 }
+
+
 
   return fechaFormateada
 }
@@ -186,12 +189,12 @@ for(let i = 1; i < data.length; i++) {
     var fechaFormateada = Utilities.formatDate(hoy, "GMT", "dd/MM/yy");
     BD_COBRANZAS.getRange(i+1,16).setValue(fechaFormateada);
 
-      // Agrega el número de recibo al array
+      // Agrega el nÃºmero de recibo al array
       numerosRecibos.push(data[i][0]);
     }
   }
 
-  // Devuelve el array de números de recibos
+  // Devuelve el array de nÃºmeros de recibos
   return numerosRecibos;
 }
 /////////////// INGRESAR DEUDOR /////////////////////
@@ -446,7 +449,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o Contrasea!");
+  return alert("Error de Usuario o Contraseï¿½a!");
 }
 
 ///////////////////////////////  CAMBIAR CLAVE DE USUARIO  ////////////////////////////////////////
@@ -512,7 +515,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de clculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de cï¿½lculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];
