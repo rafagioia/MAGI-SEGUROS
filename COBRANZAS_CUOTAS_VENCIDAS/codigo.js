@@ -13,65 +13,249 @@ function include( fileName ){
 }
 
 ///////////////// LISTADO DE PAGOS ////////////////////////
-
-function getData(dia = "", mes = "", anio = "") {
+function getData(dia_desde = 12, mes_desde = 07, anio_desde = 24, dia_hasta = 14, mes_hasta = 07, anio_hasta = 24, sucursal, dia = "", mes = "", anio = "") {
+// function getData( dia_desde, mes_desde, anio_desde, dia_hasta, mes_hasta, anio_hasta, dia = "", mes = "", anio = "") {
   const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
   const cobranzasData = BD_COBRANZAS.getDataRange().getDisplayValues();
+    console.log("sucursal: "+ sucursal)
+    dia_desde = dia_desde.toString().padStart(2, '0');
+    mes_desde = mes_desde.toString().padStart(2, '0');
+    anio_desde = anio_desde.toString().slice(-2).padStart(2, '0');
+
+    dia_hasta = dia_hasta.toString().padStart(2, '0');
+    mes_hasta = mes_hasta.toString().padStart(2, '0');
+    anio_hasta = anio_hasta.toString().slice(-2).padStart(2, '0');
 
   var sinPendientes = [];
-var today = new Date().toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-    var now_split = today.split('/');
-    var now_dia = now_split[0];
-    var now_mes = now_split[1];
-    var now_anio = now_split[2];
-  // for (var i = 1; i < 25; i++) {
+  var today = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' });
+  var now_split = today.split('/');
+  var now_dia = now_split[0];
+  var now_mes = now_split[1];
+  var now_anio = now_split[2];
+
+  var currentDate = new Date(now_anio, now_mes - 1, now_dia); // Define currentDate una vez
+  var patenteSet = new Set(); // Usamos un Set para almacenar las patentes del primer bucle
+
+     console.log("current: " + now_dia + now_mes + now_anio + " dia desde: " + dia_desde + mes_desde + anio_desde + " hasta: " + dia_hasta + mes_hasta + anio_hasta)
+
+    var dataDateFiltroDesde = new Date(anio_desde, mes_desde - 1, dia_desde);
+    var timeDiffFiltroDesde = currentDate - dataDateFiltroDesde;
+    var daysDiffFiltroDesde = timeDiffFiltroDesde / (1000 * 3600 * 24);
+    var dataDateFiltroHasta = new Date(anio_hasta, mes_hasta - 1, dia_hasta);
+    var timeDiffFiltroHasta = currentDate - dataDateFiltroHasta;
+    var daysDiffFiltroHasta = timeDiffFiltroHasta / (1000 * 3600 * 24);
+
+
+  // Primer bucle: almacenar patentes en el Set
+  for (var i = 1; i < cobranzasData.length; i++) {
+    var partes = cobranzasData[i][5].split('/');
+    var diaPago = partes[0];
+    var mesPago = partes[1];
+    var anioPago = partes[2];
+
+    var dataDate = new Date(anioPago, mesPago - 1, diaPago);
+    var timeDiff = currentDate - dataDate;
+    var daysDiff = timeDiff / (1000 * 3600 * 24);
+
+    var patente = cobranzasData[i][1].trim(); // Limpiamos espacios en blanco
+
+    if (daysDiff >= -10 && daysDiff < 26) {
+      patenteSet.add(patente); // Guardamos la patente en el Set
+    }
+  }
+
+  // Segundo bucle: procesar datos y evitar patentes en el Set
   for (var i = 1; i < cobranzasData.length; i++) {
     var partes = cobranzasData[i][5].split('/');
     var dia = partes[0];
     var mes = partes[1];
     var anio = partes[2];
     
+    var dataDate = new Date(anio, mes - 1, dia);
+
+    // Calcula la diferencia en días entre las dos fechas
+    var timeDiff = currentDate - dataDate;
+    var daysDiff = timeDiff / (1000 * 3600 * 24);
+
+    var patente = cobranzasData[i][1].trim(); // Limpiamos espacios en blanco
+    var columnaR = cobranzasData[i][17]; // Columna R está en el índice 17 (la numeración comienza en 0)
+    var sucursalValue = cobranzasData[i][16];
+
+    var cumpleFiltroSucursal = (sucursal === "MARIANO ACOSTA" && sucursalValue === "MARIANO ACOSTA") ||
+                               (sucursal === "MARCOS PAZ" && sucursalValue === "MARCOS PAZ") ||
+                               (!sucursal); // Si la variable sucursal no tiene valor
+
+    var compania = cobranzasData[i][10]; // Asumiendo que la columna G es la número 6
+
+    // Condición para que el valor de la columna G sea uno de los valores especificados
+    var cumpleFiltroCompania = compania === "AGROSALTA [RC]" || 
+                              compania === "AGROSALTA [RC-GRUA]" || 
+                              compania === "AGROSALTA [MOTO]" || 
+                              compania === "AGROSALTA [B1]";
+
+    if (daysDiff >= daysDiffFiltroHasta && daysDiff <= daysDiffFiltroDesde && !columnaR  && !patenteSet.has(patente) && cumpleFiltroSucursal && cumpleFiltroCompania) {
+    // if (daysDiff >= daysDiffFiltroHasta && daysDiff <= daysDiffFiltroDesde && !patenteSet.has(patente)) {
       var para_pasar = [];
       
-  var currentDate = new Date(now_anio, now_mes - 1, now_dia);
-  var dataDate = new Date(anio, mes - 1, dia);
-
-  // Calcula la diferencia en d�as entre las dos fechas
-  var timeDiff = currentDate - dataDate;
-  var daysDiff = timeDiff / (1000 * 3600 * 24);
-
-
-      if (daysDiff > 26 && daysDiff < 56) {
-        if (daysDiff >= 0 && daysDiff <= 26) {
-
-        } else {
+      // Añade los datos necesarios a para_pasar
       para_pasar.push(cobranzasData[i][0]); // ID DEUDOR
       para_pasar.push(cobranzasData[i][3]); // CLIENTE
-      para_pasar.push(cobranzasData[i][1]); // PATENTE
+      para_pasar.push(patente); // PATENTE
       para_pasar.push(cobranzasData[i][13]); // VEHICULO
-      para_pasar.push(cobranzasData[i][10]); // COMPA�IA
+      para_pasar.push(cobranzasData[i][10]); // COMPAÑIA
       para_pasar.push(cobranzasData[i][7]); // CUOTA
       para_pasar.push(cobranzasData[i][8]); // VIGENCIA
       para_pasar.push(cobranzasData[i][5]); // VENCE
       para_pasar.push(cobranzasData[i][15]); // LIQUIDADO
       para_pasar.push(cobranzasData[i][11]); // IMPORTE
       para_pasar.push(cobranzasData[i][4]); // WHATSAPP
-      // para_pasar.push(cobranzasData[i][9]); // POLIZA
-        para_pasar.push("DEBE UN MES");
+      para_pasar.push("DEBE UN MES");
       para_pasar.push(cobranzasData[i][17]); // DEUDOR AVISADO
-      para_pasar.push(daysDiff-30); // Debes completar esta parte seg�n tus necesidades
-      para_pasar.push(""); // Debes completar esta parte seg�n tus necesidades
-      para_pasar.push(""); // Debes completar esta parte seg�n tus necesidades
-      para_pasar.push(""); // PASADO
+      para_pasar.push(daysDiff - 31); // Calcula el tiempo adicional, si es necesario
+      para_pasar.push(""); // Placeholder para datos adicionales si es necesario
+      para_pasar.push(""); // Placeholder para datos adicionales si es necesario
+      para_pasar.push(""); // Placeholder para datos adicionales si es necesario
+      para_pasar.push("PASADO"); // Placeholder o marcador
 
       sinPendientes.push(para_pasar);
-        }
-      } 
-    
     }
-  console.log(sinPendientes)
-  return sinPendientes;
   }
+
+  console.log("Número de registros en sinPendientes: " + sinPendientes.length);
+  console.log(sinPendientes);
+  return sinPendientes;
+}
+
+
+///////////////// GENERAR LISTADO DE PAGOS ////////////////////////
+
+
+function getDataDescargar(dia_desde, mes_desde, anio_desde, dia_hasta, mes_hasta, anio_hasta, sucursal) {
+  const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
+  const cobranzasData = BD_COBRANZAS.getDataRange().getDisplayValues();
+  
+  console.log("sucursal: " + sucursal)
+    dia_desde = dia_desde.toString().padStart(2, '0');
+    mes_desde = mes_desde.toString().padStart(2, '0');
+    anio_desde = anio_desde.toString().slice(-2).padStart(2, '0');
+
+    dia_hasta = dia_hasta.toString().padStart(2, '0');
+    mes_hasta = mes_hasta.toString().padStart(2, '0');
+    anio_hasta = anio_hasta.toString().slice(-2).padStart(2, '0');
+
+
+  var sinPendientes = [];
+  var today = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' });
+  var now_split = today.split('/');
+  var now_dia = now_split[0];
+  var now_mes = now_split[1];
+  var now_anio = now_split[2];
+
+  var id = 1;
+  var currentDate = new Date(now_anio, now_mes - 1, now_dia);
+  var fileContent = "ID,PATENTE,VEHICULO,vence,WHATSAPP\n";
+  var patenteSet = new Set(); // Usamos un Set para almacenar las patentes del primer bucle
+
+     console.log("current: " + now_dia + now_mes + now_anio + " dia desde: " + dia_desde + mes_desde + anio_desde + " hasta: " + dia_hasta + mes_hasta + anio_hasta)
+
+    var dataDateFiltroDesde = new Date(anio_desde, mes_desde - 1, dia_desde);
+    var timeDiffFiltroDesde = currentDate - dataDateFiltroDesde;
+    var daysDiffFiltroDesde = timeDiffFiltroDesde / (1000 * 3600 * 24);
+    var dataDateFiltroHasta = new Date(anio_hasta, mes_hasta - 1, dia_hasta);
+    var timeDiffFiltroHasta = currentDate - dataDateFiltroHasta;
+    var daysDiffFiltroHasta = timeDiffFiltroHasta / (1000 * 3600 * 24);
+
+
+  // Primer bucle: almacenar patentes en el Set
+  for (var i = 1; i < cobranzasData.length; i++) {
+    var partes = cobranzasData[i][5].split('/');
+    var diaPago = partes[0];
+    var mesPago = partes[1];
+    var anioPago = partes[2];
+
+    var dataDate = new Date(anioPago, mesPago - 1, diaPago);
+    var timeDiff = currentDate - dataDate;
+    var daysDiff = timeDiff / (1000 * 3600 * 24);
+
+    var patente = cobranzasData[i][1].trim(); // Limpiamos espacios en blanco
+
+    if (daysDiff >= -10 && daysDiff < 26) {
+      patenteSet.add(patente); // Guardamos la patente en el Set
+    }
+  }
+
+
+  // Segundo bucle: procesar datos y evitar patentes en el Set
+for (var i = 1; i < cobranzasData.length; i++) {
+
+    var valorColumna4 = cobranzasData[i][4].trim();
+
+    // Verificar si la columna [4] no tiene valor, es '1111111111', o no tiene 10 caracteres
+    if (!valorColumna4 || valorColumna4 === '1111111111' || valorColumna4.length !== 10) {
+        continue; // Omitir esta fila
+    }
+
+    var partes = cobranzasData[i][5].split('/');
+    var diaPago = partes[0];
+    var mesPago = partes[1];
+    var anioPago = partes[2];
+
+    var dataDate = new Date(anioPago, mesPago - 1, diaPago);
+    var timeDiff = currentDate - dataDate;
+    var daysDiff = timeDiff / (1000 * 3600 * 24);
+
+    var patente = cobranzasData[i][1].trim(); // Limpiamos espacios en blanco
+    var avisovto = cobranzasData[i][17];
+    var sucursalValue = cobranzasData[i][16]; // Valor en la columna Q (índice 16)
+
+    // Filtro según el valor de la variable sucursal
+    var cumpleFiltroSucursal = (sucursal === "MARIANO ACOSTA" && sucursalValue === "MARIANO ACOSTA") ||
+                               (sucursal === "MARCOS PAZ" && sucursalValue === "MARCOS PAZ") ||
+                               (!sucursal); // Si la variable sucursal no tiene valor
+
+    var compania = cobranzasData[i][10]; // Asumiendo que la columna G es la número 6
+
+    // Condición para que el valor de la columna G sea uno de los valores especificados
+    var cumpleFiltroCompania = compania === "AGROSALTA [RC]" || 
+                              compania === "AGROSALTA [RC-GRUA]" || 
+                              compania === "AGROSALTA [MOTO]" || 
+                              compania === "AGROSALTA [B1]";
+
+
+    if (daysDiff >= daysDiffFiltroHasta && daysDiff <= daysDiffFiltroDesde && !avisovto && !patenteSet.has(patente) && cumpleFiltroSucursal && cumpleFiltroCompania) {
+        var para_pasar = [];
+        para_pasar.push(id);
+        para_pasar.push(patente);
+        para_pasar.push(cobranzasData[i][13] ? cobranzasData[i][13] : 'vehiculo');
+        para_pasar.push(cobranzasData[i][5]);
+        para_pasar.push(cobranzasData[i][4] ? cobranzasData[i][4] : '11111111');
+
+        sinPendientes.push(para_pasar);
+
+        fileContent += para_pasar.join(",") + "\n";
+
+        id++;
+    }
+}
+
+
+  return fileContent;
+}
+
+/////////////// DESCARGAR LISTADO EN EXCEL //////////////////
+
+// Código del lado del servidor (Google Apps Script)
+function fetchDataForDownload(day, month, year) {
+
+    const sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
+  const cobranzasData = sheet.getDataRange().getDisplayValues();
+  // var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('NombreDeLaHoja');
+  var data = sheet.getDataRange().getValues(); // Recupera todos los datos
+  
+  // Filtra y organiza los datos según sea necesario
+  // Ejemplo de retorno de datos (solo las columnas necesarias)
+  return data.map(row => [row[0], row[1], row[7], row[10]]);
+}
 
 
 
@@ -98,7 +282,7 @@ for (let i = 0; i < data.length; i++) {
   }
 
   var dia_emi = parseInt(data[i][5].getDate());
-  var mes_emi = parseInt(data[i][5].getMonth() + 1); // Los meses comienzan desde 0, as� que sumamos 1.
+  var mes_emi = parseInt(data[i][5].getMonth() + 1); // Los meses comienzan desde 0, así que sumamos 1.
   var anio_emi2 = data[i][5].getFullYear();
   var anio_emi = parseInt(anio_emi2 % 100)
   var dia_cob = parseInt(infoVto.split('/')[0]);
@@ -173,12 +357,12 @@ for(let i = 1; i < data.length; i++) {
     var fechaFormateada = Utilities.formatDate(hoy, "GMT", "dd/MM/yy");
     BD_COBRANZAS.getRange(i+1,16).setValue(fechaFormateada);
 
-      // Agrega el n�mero de recibo al array
+      // Agrega el número de recibo al array
       numerosRecibos.push(data[i][0]);
     }
   }
 
-  // Devuelve el array de n�meros de recibos
+  // Devuelve el array de números de recibos
   return numerosRecibos;
 }
 /////////////// INGRESAR DEUDOR /////////////////////
@@ -413,6 +597,84 @@ function marcarColumnaS(numRecibo, isChecked) {
   }
 }
 
+////////////// PROCESAR ARCHIVO
+function procesarYActualizar(contenido) {
+  var sheet = SpreadsheetApp.openById('1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA').getSheetByName('BD COBRANZAS');
+  var data = contenido.split("\n").map(row => row.split(","));
+  
+  // Obtenemos la fecha de hoy
+  var fechaHoy = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "dd/MM/yy");
+  
+  // Leer todos los valores de la hoja en una sola llamada
+  var lastRow = sheet.getLastRow();
+  var range = sheet.getRange(2, 2, lastRow - 1, 17); // Lee desde la columna B hasta la columna R
+  var values = range.getValues();
+  
+  // Crear un objeto para mapear las patentes con sus fechas
+  var patenteMap = {};
+  for (var i = 0; i < values.length; i++) {
+    var patenteHoja = values[i][0]; // Columna B
+    var fechaHoja = values[i][4]; // Columna F
+    if (patenteHoja && fechaHoja) {
+      // Formatear la fecha en el formato dd/MM/yy
+      var fecha = new Date(fechaHoja);
+      var diaHoja = Utilities.formatDate(fecha, Session.getScriptTimeZone(), "dd");
+      var mesHoja = Utilities.formatDate(fecha, Session.getScriptTimeZone(), "MM");
+      var anioHoja = Utilities.formatDate(fecha, Session.getScriptTimeZone(), "yyyy").slice(-2); // Convertir a YY
+      patenteMap[patenteHoja] = {
+        fechaHoja: {diaHoja, mesHoja, anioHoja},
+        row: i + 2 // Guardamos la fila para actualizar más tarde
+      };
+    }
+  }
+  
+  // Procesar los datos del CSV
+  var registrosProcesados = 0;
+  for (var i = 1; i < data.length; i++) {
+    var patenteCSV = data[i][1];
+    var venceCSV = data[i][3];
+    
+    if (patenteCSV && venceCSV) {
+      // Separar día, mes y año de la fecha en el CSV
+      var [diaCSV, mesCSV, anioCSV] = venceCSV.split("/").map(Number);
+      
+      // Asegurarse de que el año CSV tenga dos dígitos
+      if (anioCSV < 100) {
+        anioCSV += 2000; // Asumir año en el siglo XXI
+      }
+      anioCSV = anioCSV.toString().slice(-2); // Convertir a formato YY
+      
+      // Buscar la patente en el objeto
+      var patenteInfo = patenteMap[patenteCSV];
+      if (patenteInfo) {
+        var {diaHoja, mesHoja, anioHoja} = patenteInfo.fechaHoja;
+        
+        // Comparar las fechas
+        if (parseInt(diaCSV, 10) === parseInt(diaHoja, 10) &&
+            parseInt(mesCSV, 10) === parseInt(mesHoja, 10) &&
+            anioCSV === anioHoja) {
+          // Actualizar la columna R en la fila correspondiente
+          sheet.getRange(patenteInfo.row, 18).setValue(fechaHoy); // Columna R
+          registrosProcesados++;
+          Logger.log("Fecha actualizada en la fila " + patenteInfo.row);
+        } else {
+          Logger.log("No coincide la fecha para la patente: " + patenteCSV + 
+                      " | Fecha CSV: " + diaCSV + "/" + mesCSV + "/" + anioCSV + 
+                      " | Fecha Hoja: " + diaHoja + "/" + mesHoja + "/" + anioHoja);
+        }
+      } else {
+        Logger.log("Patente no encontrada en la hoja: " + patenteCSV);
+      }
+    } else {
+      Logger.log("Datos incompletos en CSV: " + data[i]);
+    }
+  }
+  
+  Logger.log('Procesamiento completado. Registros procesados: ' + registrosProcesados);
+}
+
+
+
 
 ////////////////////////////////////////////////////////////////////
 ////////////////////////  SESION DE USUARIOS ////////////////////////
@@ -433,7 +695,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o Contrase�a!");
+  return alert("Error de Usuario o Contrase�a!");
 }
 
 ///////////////////////////////  CAMBIAR CLAVE DE USUARIO  ////////////////////////////////////////
@@ -499,7 +761,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de c�lculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de c�lculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];

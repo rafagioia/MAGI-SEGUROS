@@ -18,6 +18,48 @@
   )
 })()
 
+////////////////// PROCESAR ARCHIVO 
+
+   // function procesarArchivo() {
+   //   console.log("procesado en js")
+   //   var fileInput = document.getElementById("csvFile");
+   //   var file = fileInput.files[0];
+   //   var reader = new FileReader();
+
+   //   reader.onload = function(e) {
+   //     var contenido = e.target.result;
+   //     google.script.run.procesarYActualizar(contenido);
+   //   };
+
+   //   reader.readAsText(file);
+   // }
+function procesarArchivo() {
+ console.log("procesado en js");
+ var fileInput = document.getElementById("csvFile");
+ var file = fileInput.files[0];
+ var reader = new FileReader();
+
+ // Mostrar el spinner dentro del bot√≥n y deshabilitar el bot√≥n
+ var boton = document.getElementById("procesarBtn");
+ var spinner = document.getElementById("spinner");
+ boton.disabled = true;
+ spinner.style.display = "inline-block";  // Mostrar el spinner
+
+ reader.onload = function(e) {
+   var contenido = e.target.result;
+
+   // Llamada al servidor para procesar el archivo
+   google.script.run.withSuccessHandler(function() {
+     // Ocultar el spinner, habilitar el bot√≥n, limpiar el input y mostrar alerta cuando termine el script
+     spinner.style.display = "none";  // Ocultar el spinner
+     boton.disabled = false;          // Habilitar el bot√≥n
+     fileInput.value = "";            // Limpiar el campo de archivo
+     alert("El archivo ha sido procesado exitosamente.");
+   }).procesarYActualizar(contenido);
+ };
+
+ reader.readAsText(file);
+}
 
  ////////////// ESTILOS DE LA NAV BAR //////////////////
 let navbar = document.querySelector(".navbar");
@@ -66,6 +108,29 @@ navLinks.classList.toggle("show7");
 }
 
 
+//////////// PONER FECHAS AUTOMATICAS EN LOS FILTROS ///////////////
+
+
+// function actualizarFechas() {
+//     // Obtener la fecha actual
+//     const hoy = new Date();
+//     const diaActual = hoy.getDate();
+//     const mesActual = hoy.getMonth() + 1; // Los meses en JavaScript son 0-indexados
+//     const anioActual = hoy.getFullYear();
+
+//     // Asignar la fecha actual a los selectores de "desde"
+//     document.getElementById('dia_desde').value = diaActual;
+//     document.getElementById('mes_desde').value = mesActual;
+//     document.getElementById('anio_desde').value = anioActual;
+
+//     // Asignar la fecha actual a los selectores de "hasta"
+//     document.getElementById('dia_hasta').value = diaActual;
+//     document.getElementById('mes_hasta').value = mesActual;
+//     document.getElementById('anio_hasta').value = anioActual;
+// }
+
+// actualizarFechas()
+
 ///////// WPP MODAL ////////////////
 
 $("textarea").keyup(function(){
@@ -77,17 +142,17 @@ $("textarea").keyup(function(){
 document.getElementById("wpp_btn").addEventListener("click", function() {
  console.log("Llamando a la otra hoja");
 
- // Hacer una solicitud HTTP al proyecto de Google Apps Script que contiene la funciÛn
+ // Hacer una solicitud HTTP al proyecto de Google Apps Script que contiene la funci√≥n
  fetch('https://script.google.com/macros/s/AKfycbwsG3BQ9del4pTfwyMoz2SrIcr3A1JpeluXigkONCPTRSO-ykxvYEDdDUqFeLFroemE/exec', {
    method: 'GET'
  })
  .then(function(response) {
    // Manejar la respuesta del servidor
    if (response.status === 200) {
-     console.log('La funciÛn se ejecutÛ correctamente en la otra hoja');
-     // Puedes hacer m·s cosas con la respuesta si es necesario
+     console.log('La funci√≥n se ejecut√≥ correctamente en la otra hoja');
+     // Puedes hacer m√°s cosas con la respuesta si es necesario
    } else {
-     console.error('Error al llamar a la funciÛn en la otra hoja');
+     console.error('Error al llamar a la funci√≥n en la otra hoja');
    }
  })
  .catch(function(error) {
@@ -118,25 +183,20 @@ document.getElementById("wpp_btn_enviar").addEventListener("click", function() {
 function updateSinPendientes(result) {
  var sinPendientesDiv = document.getElementById("sinPendientes");
  var pendientesHtml = "";
+
  var idDeudores = []; // Nuevo array para almacenar los id_deudor distintos
 
- // FunciÛn para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
+ // Funci√≥n para convertir la cadena de fecha en formato DD/MM/YYYY a objeto de fecha
  function convertToDate(dateString) {
    var parts = dateString.split('/');
    return new Date(parts[2], parts[1] - 1, parts[0]); // Restamos 1 al mes ya que en Date() los meses van de 0 a 11
  }
+console.log(result)
 
- // // Ordenar el arreglo result de menor a mayor seg˙n las fechas (result[i][2])
- // result.sort(function(a, b) {
- //   var dateA = convertToDate(a[7]);
- //   var dateB = convertToDate(b[7]);
- //   return dateA - dateB;
- // });
-////ORDEN INVERSO:
 result.sort(function(a, b) {
  var dateA = convertToDate(a[7]);
  var dateB = convertToDate(b[7]);
- return dateB - dateA; // Invertir el orden de comparaciÛn
+ return dateB - dateA; // Invertir el orden de comparaci√≥n
 });
 
  for (var i = 0; i < result.length; i++) {
@@ -177,7 +237,7 @@ pendientesHtml += "</div></div>";
 pendientesHtml += "<div class='col-6 p-0 m-0'><div class='row p-0 m-0'>";
 // Columna de WHATSAPP
 pendientesHtml += "<div class='col-4 planilla'><div class='row p-0 m-0'>";
-pendientesHtml += "<div class='col-6 p-0 m-0 text-sm planilla' style='padding-top: 10px;' id='_imp" + i + "'>" + result[i][10] + "</div><div class='col-1 p-0 m-0 ' id='upd_pol" + i + "'><button class='p-0 m-0 btn btn-primary btn-sm' id='bt_whatsapp_m" + i + "'>??</button></div>";
+pendientesHtml += "<div class='col-6 p-0 m-0 text-sm planilla' style='padding-top: 10px;' id='_imp" + i + "'>" + result[i][10] + "</div><div class='col-1 p-0 m-0 ' id='upd_pol" + i + "'><button class='p-0 m-0 btn btn-primary btn-sm' id='bt_whatsapp_m" + i + "'>üìù</button></div>";
 // <button class='p-0 m-1 btn btn-primary btn-sm' id='bt_whatsapp_m" + i + "'>W</button>
 // Columna de IMPORTE
 pendientesHtml += "<div class='col-5 p-0 m-0  text-sm planilla' id='_pol" + i + "'>" + result[i][9] + "</div>";
@@ -194,17 +254,17 @@ pendientesHtml += "<div class='col-4 row planilla'>";
  pendientesHtml += "<div class='col-7 row planilla' id='sec_liq" + i + "'>";
 // Comprueba si hay un valor en la columna [13]
 if (result[i][13] > 0) {
- // Si hay un valor, agrega "VenciÛ:" y el valor de la columna
- pendientesHtml += "<div id='liq_id'><b>VenciÛ: </b><div class='text-sm' id='pas_id" + i + "'>" + result[i][13] + " dÌas</div></div>";
- pendientesHtml += "<div id='_wpp_msj" + i + "' style='display: none'>Estimado cliente, nos comunicamos de GIOIA SEGUROS para informarle que el seguro de su " + result[i][3] + ", patente: "  + result[i][2] + ", se venciÛ hace " + result[i][13] + " dÌas. Si ya abonÛ la cuota del mismo, por favor desestime este mensaje. Saludos. *Gioia Seguros*</div>";
+ // Si hay un valor, agrega "Venci√≥:" y el valor de la columna
+ pendientesHtml += "<div id='liq_id'><b>Venci√≥: </b><div class='text-sm' id='pas_id" + i + "'>" + result[i][13] + " d√≠as</div></div>";
+ pendientesHtml += "<div id='_wpp_msj" + i + "' style='display: none'>Estimado cliente, nos comunicamos de GIOIA SEGUROS para informarle que el seguro de su " + result[i][3] + ", patente: "  + result[i][2] + ", se venci√≥ hace " + result[i][13] + " d√≠as. Si ya abon√≥ la cuota del mismo, por favor desestime este mensaje. Saludos. *Gioia Seguros*</div>";
 } else if (result[i][13] < 0) {
  // Si no hay un valor en la columna [13], agrega "Vence en:" y el valor negativo de la columna
- pendientesHtml += "<div id='liq_id'><b>Vence en: </b><div class='text-sm' id='pas_id" + i + "'>" + Math.abs(result[i][13]) + " dÌas</div></div>";
- pendientesHtml += "<div id='_wpp_msj" + i + "' style='display: none'>Estimado cliente, nos comunicamos de GIOIA SEGUROS para informarle que el seguro de su " + result[i][3] + ", patente: "  + result[i][2] + ", se vence dentro de " + Math.abs(result[i][13]) + " dÌas. Si ya abonÛ la cuota del mismo, por favor desestime este mensaje. Saludos. *Gioia Seguros*</div>";
+ pendientesHtml += "<div id='liq_id'><b>Vence en: </b><div class='text-sm' id='pas_id" + i + "'>" + Math.abs(result[i][13]) + " d√≠as</div></div>";
+ pendientesHtml += "<div id='_wpp_msj" + i + "' style='display: none'>Estimado cliente, nos comunicamos de GIOIA SEGUROS para informarle que el seguro de su " + result[i][3] + ", patente: "  + result[i][2] + ", se vence dentro de " + Math.abs(result[i][13]) + " d√≠as. Si ya abon√≥ la cuota del mismo, por favor desestime este mensaje. Saludos. *Gioia Seguros*</div>";
 } else if (result[i][13] === 0) {
  // Si no hay un valor en la columna [13], agrega "Vence: HOY"
- pendientesHtml += "<div id='liq_id'><b>Vence: </b><div class='text-sm' id='pas_id" + i + "'> °HOY! </div></div>";
- pendientesHtml += "<div id='_wpp_msj" + i + "' style='display: none'>Estimado cliente, nos comunicamos de GIOIA SEGUROS para informarle que el seguro de su " + result[i][3] + ", patente: "  + result[i][2] + ", se vence el dÌa de hoy. Si ya abonÛ la cuota del mismo, por favor desestime este mensaje. Saludos. *Gioia Seguros*</div>";
+ pendientesHtml += "<div id='liq_id'><b>Vence: </b><div class='text-sm' id='pas_id" + i + "'> ¬°HOY! </div></div>";
+ pendientesHtml += "<div id='_wpp_msj" + i + "' style='display: none'>Estimado cliente, nos comunicamos de GIOIA SEGUROS para informarle que el seguro de su " + result[i][3] + ", patente: "  + result[i][2] + ", se vence el d√≠a de hoy. Si ya abon√≥ la cuota del mismo, por favor desestime este mensaje. Saludos. *Gioia Seguros*</div>";
 }
 
 pendientesHtml += "</div>";
@@ -213,10 +273,10 @@ pendientesHtml += "</div>";
  // Comprueba si hay un valor en la columna [8]
  if (result[i][12]) {
    // Si hay un valor, agrega "Pasado:" y el valor de la columna
-   pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "' style='display: none'>AVIS”</button><div id='pas_id" + i + "'><b>Aviso: </b><div class='text-sm' id='_fec_pas" + i + "'>" + result[i][12] + "</div></div>";
+   pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "' style='display: none'>AVIS√ì</button><div id='pas_id" + i + "'><b>Aviso: </b><div class='text-sm' id='_fec_pas" + i + "'>" + result[i][12] + "</div></div>";
  } else {
-   // Si no hay un valor, agrega un botÛn "AVISADO"
-   pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "'>AVIS”</button><div id='pas_id" + i + "' style='display: none'><b>Aviso: </b><div class='text-sm' id='_fec_pas" + i + "'></div></div>";
+   // Si no hay un valor, agrega un bot√≥n "AVISADO"
+   pendientesHtml += "<button class='btn btn-success btn-sm' id='btnPasar" + i + "'>AVIS√ì</button><div id='pas_id" + i + "' style='display: none'><b>Aviso: </b><div class='text-sm' id='_fec_pas" + i + "'></div></div>";
  }
  pendientesHtml += "</div>";
    // Cierra el div principal
@@ -236,62 +296,13 @@ pendientesHtml += "<div style='display: none;' id='_dni" + i + "'>" + result[i][
    }
  }
 
-   sinPendientesDiv.innerHTML = pendientesHtml;
+   sinPendientesDiv.textContent = "";
+   sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
-// var idDeudorSelect = document.getElementById("id_deudor_select");
-// var idDeudorSelectAlta = document.getElementById("alta_id_deudor");
 var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
 var totalValInput = document.getElementById("total_val");
 var resetFiltroBtn = document.getElementById("bt-reset-filtro");
 
-
-///////////////////// SUMAR VALORES ////////////////
-
-function calcularSuma() {
- var suma = 0;
- var divs = document.querySelectorAll("#sinPendientes > div");
-
- for (var i = 0; i < divs.length; i++) {
-   var div = divs[i];
- 
-   // Verificar si hay un valor en result[i][8] y si contenidoImp no es null
-   if (result[i][8] !== ""){
-     // Obtener el valor del contenido del div con id "_imp"
-     var contenidoImp = div.querySelector("div[id^='_imp']");
-     var valor = contenidoImp.textContent.replace('$', ''); // Eliminar el signo "$"
-     valor = valor.replace('.', ''); // Eliminar el signo "."
-
-     if (valor !== "") {
-       valor = parseInt(valor); // Usar parseInt para mantener los decimales
-       if (!isNaN(valor)) {
-         suma += valor;
-       }
-     }
-   }
- }
-
- totalValInput.value = suma;
-
- // Obtener la fecha actual
- var fechaActual = new Date();
- var dia = fechaActual.getDate();
- var mes = fechaActual.getMonth() + 1; // Los meses comienzan desde 0 (enero)
- var anio = fechaActual.getFullYear();
-
- // Formatear la fecha en el formato deseado (por ejemplo, DD/MM/AAAA)
- var fechaFormateada = dia + "/" + mes + "/" + anio;
-
- // Asignar la fecha formateada al campo de entrada "fecha_actual"
- document.getElementById("fecha_actual").value = fechaFormateada;
-}
-
-// Llamar a la funciÛn inicialmente y cada vez que se cambie un valor
-calcularSuma();
-
-var impInputs = document.querySelectorAll("input[id^='_imp']");
-for (var j = 0; j < impInputs.length; j++) {
- impInputs[j].addEventListener("input", calcularSuma);
-}
 
 ///////////////// BOTON ABRIR MODAL WHATSAPP ///////////////////
 
@@ -299,9 +310,9 @@ for (var j = 0; j < impInputs.length; j++) {
 var divs3 = document.querySelectorAll("[id^='bt_whatsapp_m']");
 
 divs3.forEach(function (bt_whatsapp_m) {
- // Agregar un event listener al hacer clic en el botÛn
+ // Agregar un event listener al hacer clic en el bot√≥n
  bt_whatsapp_m.addEventListener("click", function () {
-   var id = bt_whatsapp_m.id.slice(13); // Obtener el Ìndice del div
+   var id = bt_whatsapp_m.id.slice(13); // Obtener el √≠ndice del div
 
    modal3.style.display = "block"; // Mostrar el elemento
 
@@ -336,9 +347,9 @@ divs3.forEach(function (bt_whatsapp_m) {
 var divs3 = document.querySelectorAll("[id^='bt_whatsapp']");
 
 divs3.forEach(function (bt_whatsapp) {
- // Agregar un event listener al hacer clic en el botÛn
+ // Agregar un event listener al hacer clic en el bot√≥n
  bt_whatsapp.addEventListener("click", function () {
-   var id = bt_whatsapp.id.slice(11); // Obtener el Ìndice del div
+   var id = bt_whatsapp.id.slice(11); // Obtener el √≠ndice del div
 
    var infoMsjWppElement = document.getElementById("_wpp_msj" + id);
    var infoMsjWpp = infoMsjWppElement.textContent;
@@ -349,7 +360,7 @@ divs3.forEach(function (bt_whatsapp) {
    // Asignar el valor de infoMsjWpp al elemento de texto
    tempInput.value = infoMsjWpp;
    
-   // Agregar el elemento de texto al DOM (necesario para el mÈtodo "select" funcionar)
+   // Agregar el elemento de texto al DOM (necesario para el m√©todo "select" funcionar)
    document.body.appendChild(tempInput);
    
    // Seleccionar el contenido del elemento de texto
@@ -367,37 +378,15 @@ divs3.forEach(function (bt_whatsapp) {
 
 
 
-/////////////// BOTON PARA ACTUALIZAR POLIZA //////////////////
-var divs3 = document.querySelectorAll("[id^='btn_upd_pol']");
-
-divs3.forEach(function (btn_upd_pol) {
- btn_upd_pol.addEventListener("click", function () {
-   var id = btn_upd_pol.id.slice(11); // Obtener el Ìndice del div
-   let infoRecibo = document.getElementById("_recibo" + id).textContent;
-   let infoPoliza = document.getElementById("_pol" + id).value;
-   let infoPatente = document.getElementById("_pat" + id).textContent;
-   let infoVto = document.getElementById("_vto" + id).value;
-   let infoCta = document.getElementById("_cta" + id).value;
-   let infoVig = document.getElementById("_ctad" + id).value;
-
-   // Ocultar el botÛn
-   document.getElementById("btn_upd_pol" + id).style.display = "none";
-
-   google.script.run.withSuccessHandler(function (fechaHoyPasada) {
-     document.getElementById("upd_pol" + id).textContent = "??";
-   }).updatePol(infoRecibo, infoPoliza, infoPatente, infoVto, infoCta, infoVig);
- });
-});
-
 
 /////////////// BOTON PARA MARCAR AVISO //////////////////
 var divs3 = document.querySelectorAll("[id^='btnPasar']");
 
 divs3.forEach(function (btnPasar) {
  btnPasar.addEventListener("click", function () {
-   var id = btnPasar.id.slice(8); // Obtener el Ìndice del div
+   var id = btnPasar.id.slice(8); // Obtener el √≠ndice del div
    let infoRecibo = document.getElementById("_recibo" + id).textContent;
-   // Ocultar el botÛn
+   // Ocultar el bot√≥n
    document.getElementById("btnPasar" + id).style.display = "none";
    document.getElementById("pas_id" + id).style.display = "block";
 
@@ -408,37 +397,6 @@ divs3.forEach(function (btnPasar) {
 });
 
 
-/////////////// BOTON PARA QUITAR PAGO PASADO //////////////////
-var divs2 = document.querySelectorAll("[id^='btnQuitar']");
-
-divs2.forEach(function (btnQuitar) {
- btnQuitar.addEventListener("click", function () {
-   var id = btnQuitar.id.slice(9); // Obtener el Ìndice del div
-   let infoRecibo = document.getElementById("_recibo" + id).textContent;
-
-   // Ocultar el botÛn
-   document.getElementById("btnPasar" + id).style.display = "block";
-   document.getElementById("pas_id" + id).style.display = "none";
-   document.getElementById("btnQuitar" + id).style.display = "none";
-
-
-     let importe = document.getElementById("_imp" + id).textContent;
-     importe = importe.replace('$', ''); // Eliminar el signo "$"
-     importe = importe.replace('.', ''); // Eliminar el signo "$"
-     importe = parseInt(importe); // Convertir a n˙mero entero
-
-     let totalActual = parseInt(document.getElementById("total_val").value) || 0;
-     
-     let total = totalActual - importe;
-
-     document.getElementById("total_val").value = total; // Actualizar el valor del elemento total_val con el nuevo total (sin decimales)
-
-     document.getElementById("_fec_pas" + id).textContent = "";
-
-   google.script.run.withSuccessHandler(function (fechaHoyPasada) {
-   }).quitarPago(infoRecibo);
- });
-});
 
 document.getElementById("actualizarListaBtn").addEventListener("click", function() {
 
@@ -464,52 +422,142 @@ document.getElementById("actualizarListaBtn").addEventListener("click", function
      div.style.display = "none"; // Ocultar el elemento
    }
  }
- calcularSuma();
-});
-
-
-
-
-/// GENERAR LISTADO
-document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
- var dia = parseInt(document.getElementById("dia").value, 10);
- var mes = parseInt(document.getElementById("mes").value, 10) + 1; // Sumamos 1 al mes
- var anio = parseInt(document.getElementById("anio").value, 10);
- var anioUltimosDosDigitos = anio % 100;
  
- // FunciÛn para agregar un cero delante si el n˙mero es menor a 10
- function agregarCero(num) {
-   return num < 10 ? "0" + num : num;
- }
-
- // Aplicar la funciÛn agregarCero a dia y mes
- var diaFormateado = agregarCero(dia);
- var mesFormateado = agregarCero(mes);
-
- calcularSuma();
-
- google.script.run.withSuccessHandler(updateSinPendientes).getData(diaFormateado, mesFormateado, anioUltimosDosDigitos);
 });
+
+
+
 
 
 }
 
- // Llamar a la funciÛn getData() del lado del servidor
+ // Llamar a la funci√≥n getData() del lado del servidor
  google.script.run.withSuccessHandler(updateSinPendientes).getData();
  /////////////////////////////////////////
+
+
+/// GENERAR LISTADO
+document.getElementById("bt-regenarar_lista").addEventListener("click", function() {
+
+
+   let dia_desde = document.getElementById('dia_desde').value
+   let mes_desde = document.getElementById('mes_desde').value
+   let anio_desde = document.getElementById('anio_desde').value
+   let dia_hasta = document.getElementById('dia_hasta').value
+   let mes_hasta = document.getElementById('mes_hasta').value
+   let anio_hasta = document.getElementById('anio_hasta').value
+   let sucursal = document.getElementById('suc_sal').value
+console.log("regenerar lista")
+console.log(dia_desde+ mes_desde+ anio_desde+ dia_hasta+ mes_hasta+ anio_hasta)
+ google.script.run.withSuccessHandler(updateSinPendientes).getData(dia_desde, mes_desde, anio_desde, dia_hasta, mes_hasta, anio_hasta, sucursal);
+});
+
+
+////////////////////// DESCARGAR ARCHIVO EXCEL ///////////////////////
+
+
+function downloadTxtFile() {
+       // Obtener la fecha y hora actual
+       var fechaActual = new Date();
+
+       // Obtener el d√≠a, mes, a√±o, hora, minuto y segundo actuales
+       var dia = String(fechaActual.getDate()).padStart(2, '0');
+       var mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+       var anio = String(fechaActual.getFullYear()).slice(-2); // √öltimos dos d√≠gitos del a√±o
+       var hora = String(fechaActual.getHours()).padStart(2, '0');
+       var minuto = String(fechaActual.getMinutes()).padStart(2, '0');
+       var segundo = String(fechaActual.getSeconds()).padStart(2, '0');
+
+       // Generar el nombre del archivo
+       var nombreArchivo = `LISTADO${dia}${mes}${anio}${hora}${minuto}${segundo}.txt`;
+
+
+       
+
+     // Obtener la fecha actual
+     var fechaActual = new Date();
+
+     // Obtener el d√≠a, mes y a√±o actuales
+     var diaActual = fechaActual.getDate();
+     var mesActual = fechaActual.getMonth() + 1; // Los meses en JavaScript van de 0 (Enero) a 11 (Diciembre)
+     var anioActual = fechaActual.getFullYear();
+
+     // Establecer los valores predeterminados
+     var dia_desde = parseInt(document.getElementById("dia_desde").value) || diaActual;
+     var mes_desde = parseInt(document.getElementById("mes_desde").value) || mesActual;
+     var anio_desde = parseInt(document.getElementById("anio_desde").value) || anioActual;
+     var dia_hasta = parseInt(document.getElementById("dia_hasta").value) || diaActual;
+     var mes_hasta = parseInt(document.getElementById("mes_hasta").value) || mesActual;
+     var anio_hasta = parseInt(document.getElementById("anio_hasta").value) || anioActual;
+     var sucursal = document.getElementById("suc_sal").value;
+
+
+    console.log("dia desde: " + dia_desde + mes_desde + anio_desde + " hasta: " + dia_hasta + mes_hasta + anio_hasta)
+
+     google.script.run.withSuccessHandler(function(data) {
+       // Crea un blob con el contenido del archivo
+       var blob = new Blob([data], { type: 'text/plain' });
+       var url = URL.createObjectURL(blob);
+
+       // Crea un enlace temporal y simula el clic para descargar el archivo
+       var a = document.createElement('a');
+       a.href = url;
+       a.download = nombreArchivo;
+       document.body.appendChild(a);
+       a.click();
+
+       // Limpia el enlace temporal
+       document.body.removeChild(a);
+       URL.revokeObjectURL(url);
+     }).getDataDescargar(dia_desde, mes_desde, anio_desde, dia_hasta, mes_hasta, anio_hasta, sucursal);
+   }
+
+
+function processCsvData(data) {
+ if (!data || data.length === 0) {
+   console.error('No se recibieron datos o los datos est√°n vac√≠os.');
+   return;
+ }
+
+ // A√±adir √≠ndice a los datos
+ var indexedData = data.map(function(row, index) {
+   return [index + 1, ...row];
+ });
+
+ // Crear encabezado
+ var headers = ["ID", "Marca", "Patente", "Vencimiento", "Celular"];
+ 
+ // Unir los encabezados con los datos
+ var csvContent = "data:text/csv;charset=utf-8,"
+   + headers.join(",") + "\n" // Encabezados
+   + indexedData.map(function(row) {
+     return row.join(",");
+   }).join("\n"); // Datos
+
+ // Crear un enlace de descarga
+ var encodedUri = encodeURI(csvContent);
+ var link = document.createElement("a");
+ link.setAttribute("href", encodedUri);
+ link.setAttribute("download", "Listado.csv");
+ document.body.appendChild(link);
+
+ // Simular clic en el enlace para descargar el archivo
+ link.click();
+ document.body.removeChild(link); // Limpia el DOM despu√©s de la descarga
+}
 
 
 
 /// OBTENER FECHA ACTUAL PARA LIQUIDAR
  const fechaActual = new Date();
 
- // Obtiene el dÌa, mes y aÒo
+ // Obtiene el d√≠a, mes y a√±o
  const dia = fechaActual.getDate().toString().padStart(2, '0');
  const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses comienzan en 0
- const aÒo = fechaActual.getFullYear().toString().slice(-2); // Obtiene los ˙ltimos dos dÌgitos del aÒo
+ const a√±o = fechaActual.getFullYear().toString().slice(-2); // Obtiene los √∫ltimos dos d√≠gitos del a√±o
 
  // Formatea la fecha en DD/MM/YY
- const fechaFormateada = `${dia}/${mes}/${aÒo}`;
+ const fechaFormateada = `${dia}/${mes}/${a√±o}`;
 
  // Asigna la fecha formateada al campo de entrada
  document.getElementById('fecha_actual').value = fechaFormateada;
@@ -523,13 +571,14 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
    const selectedMonth = parseInt(mesSelect.value);
    const selectedYear = parseInt(anioSelect.value);
 
-   // Calcula el ˙ltimo dÌa del mes seleccionado
+   // Calcula el √∫ltimo d√≠a del mes seleccionado
    const lastDay = new Date(selectedYear, selectedMonth + 1, 0).getDate();
 
    // Borra las opciones actuales
-   diaSelect.innerHTML = '<option value=""></option>';
+   diaSelect.textContent = "";
+   diaSelect.insertAdjacentHTML('beforeend','<option value=""></option>');
 
-   // Llena el select de dÌas
+   // Llena el select de d√≠as
    for (let i = 1; i <= lastDay; i++) {
      const option = document.createElement('option');
      option.value = i;
@@ -538,13 +587,13 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
    }
  }
 
- // Escucha cambios en los selects de mes y aÒo
+ // Escucha cambios en los selects de mes y a√±o
  const mesSelect = document.getElementById('mes');
  const anioSelect = document.getElementById('anio');
  mesSelect.addEventListener('change', actualizarDias);
  anioSelect.addEventListener('change', actualizarDias);
 
- // Llama a la funciÛn inicialmente para establecer los dÌas iniciales
+ // Llama a la funci√≥n inicialmente para establecer los d√≠as iniciales
  actualizarDias();
 
 
@@ -552,7 +601,7 @@ document.getElementById("bt-regenarar_lista").addEventListener("click", function
 function liquidarPagos() {
  google.script.run.withSuccessHandler(function(numerosRecibos) {
    if (numerosRecibos.length > 0) {
-     // Oculta los divs completos que contienen n˙meros de recibo correspondientes
+     // Oculta los divs completos que contienen n√∫meros de recibo correspondientes
      numerosRecibos.forEach(function(numeroRecibo) {
        var divs = document.querySelectorAll("div[id^='div']");
        divs.forEach(function(div) {
@@ -563,7 +612,7 @@ function liquidarPagos() {
        });
      });
      document.getElementById("total_val").value = 0; 
-     alert("LiquidaciÛn generada correctamente.\n\nN˙meros de recibos liquidados: " + numerosRecibos.join(", "));
+     alert("Liquidaci√≥n generada correctamente.\n\nN√∫meros de recibos liquidados: " + numerosRecibos.join(", "));
    } else {
      alert("No se encontraron elementos para liquidar.");
    }
@@ -583,7 +632,7 @@ function obtenerDatosTabla() {
  for (var i = 0; i < divs.length; i++) {
    var div = divs[i];
    if (div.style.display === "none") {
-     continue; // Si el div est· oculto, omitirlo y pasar al siguiente
+     continue; // Si el div est√° oculto, omitirlo y pasar al siguiente
    }
 
    var rowData = [];
@@ -640,7 +689,7 @@ function generarPDF(tableData) {
    '<th>VTO:</th>' +
    '<th>CTA:</th>' +
    '<th>DE:</th>' +
-   '<th>COMPA—IA</th>' +
+   '<th>COMPA√ëIA</th>' +
    '<th>IMPORTE:</th>' +
    '<th>POLIZA:</th>' +
    '<th>PATENTE:</th>' +
@@ -693,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
  var modal = document.getElementById('modal3');
  var modal2 = document.getElementById('modal4');
 
- // Agregamos un evento para cerrar el modal cuando se hace clic fuera de Èl
+ // Agregamos un evento para cerrar el modal cuando se hace clic fuera de √©l
  window.addEventListener('click', function(event) {
    if (event.target === modal) {
      modal.style.display = 'none';
@@ -708,11 +757,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function enviarMensajeWPP() {
  event.preventDefault();
- // Obtener el n˙mero de telÈfono ingresado
+ // Obtener el n√∫mero de tel√©fono ingresado
  var telefono = document.getElementById("wpp").value;
 
- // Abrir WhatsApp Web con el n˙mero de telÈfono y enviar un mensaje
- window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agend·%20nuestro%20n˙mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
+ // Abrir WhatsApp Web con el n√∫mero de tel√©fono y enviar un mensaje
+ window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agend√°%20nuestro%20n√∫mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
 }
 
 /////////////////////////////////////////////////////////////////
@@ -725,14 +774,14 @@ function enviarMensajeWPP() {
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// FunciÛn para realizar el inicio de sesiÛn
+// Funci√≥n para realizar el inicio de sesi√≥n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
 
 if (usuarioAlmacenado) {
  // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
- document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
+ document.getElementById("usuario_sp").textContent = usuarioAlmacenado;
  user.style.display = "block";
  close_session.style.display = "block";
  modal.style.display = "none";
@@ -757,19 +806,19 @@ if (usuarioAlmacenado) {
  iniciarContadorTiempo(tiempoRestante);
 } else {
  
- // FunciÛn para abrir el modal
+ // Funci√≥n para abrir el modal
  modal.style.display = "block";
 
- // FunciÛn para cerrar el modal
+ // Funci√≥n para cerrar el modal
  function closeModal() {
    modal.style.display = "none";
  }
 
- // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botÛn de inicio de sesiÛn
+ // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot√≥n de inicio de sesi√≥n
  document.getElementById("inicio-sesion").addEventListener("click", function (event) {
    event.preventDefault();
 
-   // Obtener el usuario y la contraseÒa del formulario
+   // Obtener el usuario y la contrase√±a del formulario
    var usuario = document.getElementById("usuario").value;
    var contrasena = document.getElementById("contrasena").value;
 
@@ -777,12 +826,12 @@ if (usuarioAlmacenado) {
    var colorPicker = document.getElementById("colorPicker");
    var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contraseÒa
+// Hacer una solicitud al servidor para verificar el usuario y la contrase√±a
 
 
 google.script.run.withSuccessHandler(function (color) {
  if (color) {
-   document.getElementById("usuario_sp").innerHTML = usuario;
+   document.getElementById("usuario_sp").textContent = usuario;
    modal.style.display = "none";
    user.style.display = "block";
    close_session.style.display = "block";
@@ -809,7 +858,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// FunciÛn para calcular el tiempo restante en milisegundos
+// Funci√≥n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
  var horaInicio = parseInt(horaInicioAlmacenada);
  var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -818,25 +867,25 @@ function calcularTiempoRestante() {
  return tiempoRestante;
 }
 
-// FunciÛn para mostrar el tiempo restante en el div correspondiente
+// Funci√≥n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
  if (tiempoRestante <= 0) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
  } else {
    var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
    var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
    var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
 
-   tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+   tiempoRestanteDiv.textContent = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
  }
 }
 
-// FunciÛn para iniciar el contador de tiempo
+// Funci√≥n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
  var intervalo = setInterval(function () {
    tiempoRestante -= 1000;
@@ -846,8 +895,8 @@ function iniciarContadorTiempo(tiempoRestante) {
      sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
      sessionStorage.removeItem("magi-color");
-     tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
+     tiempoRestanteDiv.textContent = "Tiempo expirado";
+     document.getElementById("usuario_sp").textContent = "Desconocido";
      modal.style.display = "block";
    } else {
      mostrarTiempoRestante(tiempoRestante);
@@ -886,9 +935,9 @@ function close_sessionok(event) {
    // Eliminar el valor almacenado en sessionStorage
    sessionStorage.removeItem("magi-usuario");
      sessionStorage.removeItem("magi-horaInicio");
-     tiempoRestanteDiv.innerHTML = "";    
-     document.getElementById("usuario_sp").innerHTML = "Desconocido";
- // Recargar la p·gina
+     tiempoRestanteDiv.textContent = "";    
+     document.getElementById("usuario_sp").textContent = "Desconocido";
+ // Recargar la p√°gina
      modal.style.display = "block";
 
 }
@@ -926,6 +975,7 @@ function close_sessionok(event) {
 /////////////////////// EVENT LISTENERS ////////////////////////////
 
 
+document.getElementById('downloadCSV').addEventListener('click', downloadTxtFile);
 document.getElementById('bt-liquidar-pagos').addEventListener('click', liquidarPagos);
 document.getElementById('close_session').addEventListener('click', close_sessionok);
 //////////////////////////////////////////////////////////////////
