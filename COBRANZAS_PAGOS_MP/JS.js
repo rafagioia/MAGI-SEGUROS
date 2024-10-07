@@ -140,15 +140,33 @@ closeModal.addEventListener("click", () => {
 })()
 
 
+
+////////////////////// VIGENCIAS ///////////////////////////
+
+function buscarRefa() {
+  let cnia = document.getElementById("cnia").value;
+  var valor = "";
+  if (["MAPFRE","ALLIANZ","MERCANTIL", "ORBIS"].includes(cnia)) {
+    valor = 4;
+  } else if (["PROVIDENCIA", "LIBRA", "AGROSALTA [RC]", "AGROSALTA [RC-GRUA]", "AGROSALTA [B1]", "AGROSALTA [MOTO]"].includes(cnia)) {
+    valor = 3;
+  } else if (["GRUA", "DIGNA", "BBVA", "EL TRIUNFO"].includes(cnia)) {
+    valor = 6;
+  } else if (["EXPERTA", "FED PAT", "NIVEL", "RIVADAVIA", "RIO URUGUAY","LA CAJA", "SAN PATRICIO", "ATM"].includes(cnia)) {
+    valor = 1;
+  } else {
+    valor = 0;
+  }
+
+  document.getElementById("vigencia").value = valor;
+}
+
   //////////////////// INGRESAR PAGOS ///////////////////////
 
 function ingresarPago(event) {
   event.preventDefault();
-  const boton = document.getElementById('bt-ingreso');
-  const spinner = document.getElementById('spinner_pago');
-  spinner.style.display = 'block';
-  boton.disabled = true;
-
+  
+  // Obtener todos los valores de los campos
   let infomultiRec = document.getElementById('multiRec').value;
   let infoDNI = document.getElementById('dni').value;
   let infoCliente = document.getElementById('nombreCompleto').value;
@@ -167,6 +185,20 @@ function ingresarPago(event) {
   let infoNotasVeh = document.getElementById('notasveh').value;
   let infoNotasCob = document.getElementById('notascob').value;
   let infoMedio = document.getElementById('mediopago').value;
+  let infoVigTot = document.getElementById('vigtot').value;
+
+  // Verificar si alguno de los campos obligatorios está vacío
+  if (!infomultiRec || !infoDNI || !infoCliente || !infoWpp || !infoPatente || 
+      !infoMarca || !infoCnia || !infoCuota || 
+      !infoVigencia || !infoImporte || !infoVence || !infoMedio) {
+    alert('Por favor, completa todos los campos obligatorios.');
+    return;  // Detener el script si hay campos vacíos
+  }
+
+  const boton = document.getElementById('bt-ingreso');
+  const spinner = document.getElementById('spinner_pago');
+  spinner.style.display = 'block';
+  boton.disabled = true;
 
   google.script.run.withSuccessHandler(handleResponse).pagoNuevo_inv(
     infomultiRec,
@@ -184,7 +216,8 @@ function ingresarPago(event) {
     infoColor,
     infoUsuario,
     infoNotasCob,
-    infoMedio
+    infoMedio,
+    infoVigTot
   );
 
   document.getElementById("dni").value = "";
@@ -196,6 +229,7 @@ function ingresarPago(event) {
   document.getElementById("cnia").value = "";
   document.getElementById("cuota").value = "";
   document.getElementById("vigencia").value = "";
+  document.getElementById("vigtot").value = "";
   document.getElementById("importe").value = "";
   document.getElementById("vto").value = "";
   document.getElementById("color").value = "";
@@ -205,6 +239,7 @@ function ingresarPago(event) {
   document.getElementById("notascob").value = "";
   document.getElementById("mediopago").value = "EFECTIVO";
   document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mensaje").textContent = "Pago adelantado";
 }
 
 function handleResponse(response) {
@@ -256,9 +291,6 @@ function reimprimirReciboMulti_b(numReciboMulti, infomultiRec) {
     })
     .getValuesFromSheetMulti(numReciboMulti, infomultiRec);
 }
-
-
-/////////////////////////////////////////////////////////////////////
 
 
 ///////// INGRESAR NOMOVE ///////////////
@@ -348,6 +380,7 @@ function ingresarRecibi(event) {
         let infoCnia =  document.getElementById("cnia");
         let infoCuota =  document.getElementById("cuota");
         let infoVigencia =  document.getElementById("vigencia");
+        let infoVigTot =  document.getElementById("vigtot");
         let infoImporte =  document.getElementById("importe");
         let infoVence =  document.getElementById("vto");
         let infoColor =  document.getElementById("color");
@@ -370,8 +403,9 @@ function ingresarRecibi(event) {
 
   google.script.run.withSuccessHandler(function(ultima_actu) {
 
-let fechaString = ultima_actu[0][20];
-let fechaEmi, mesEmi, anioEmi;
+/////////////// FECHA ULTIMA ACTU BD EMISION ////////////////
+let fechaString = ultima_actu[0][17];
+let diaEmi, mesEmi, anioEmi;
 
 if (fechaString) {
   let fechaEmiArray = fechaString.split('/');
@@ -382,18 +416,20 @@ if (fechaString) {
   }
 }
     
+/////////////// FECHA ULTIMO PAGO BD COBRANZAS ////////////////
 let fechaString2 = ultima_actu[1][0][5];
-let fechaCob, mesCob, anioCob;
+let diaCob, mesCob, anioCob;
 
 if (fechaString2) {
   let fechaCobArray = fechaString2.split('/');
   if (fechaCobArray.length === 3) {
+    diaCob = fechaCobArray[0];
     mesCob = fechaCobArray[1];
     anioCob = fechaCobArray[2];
   }
 }
 
-
+/////////////// FECHA INICIO VIGENCIA SEG BD EMISION ////////////////
 let fechaString3 = ultima_actu[0][8];
 let fechaEmi3, mesEmi3, anioEmi3;
 
@@ -406,14 +442,19 @@ if (fechaString3) {
   }
 }
 
-///// ERROR, NO HAY NINGUN DATO
+let errores = []
 
-// console.log("anioCob: " + anioCob)
-// console.log("mesCob: " + mesCob)
-// console.log("anioEmi: " + anioEmi)
-// console.log("mesEmi: " + mesEmi)
-// console.log("anioEmi3: " + anioEmi3)
-// console.log("mesEmi3: " + mesEmi3)
+if (anioEmi && anioEmi.length === 4) {
+    alert("BD EMISION: EL AÑO EN ÚLTIMA ACTUALIZACION DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+    return;  // Detiene el script
+}
+
+// Verificar si anioCob es válido y tiene la propiedad length
+if (anioCob && anioCob.length === 4) {
+    alert("BD COBRANZAS: EL AÑO EN VENCIMIENTO DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+    return;  // Detiene el script
+}
+
 
 if (ultima_actu[0] == "" && ultima_actu[1] == "") {
     alert("NO HAY DATOS ENCONTRADOS.") 
@@ -424,8 +465,13 @@ if (ultima_actu[0] == "" && ultima_actu[1] == "") {
 
 }  ////INGRESA POR COBRANZAS NORMAL
 
-else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "") || (anioCob > anioEmi3) || (anioEmi3 === anioCob && mesCob >= mesEmi3)) {
-// alert("PAGO DE CUOTA")
+else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob > mesEmi) ||  (anioEmi === anioCob && mesCob === mesEmi && diaCob >= diaEmi) ||(ultima_actu[0] == "" && ultima_actu[1] !== "") || (anioCob > anioEmi3) || (anioEmi3 === anioCob && mesCob > mesEmi3) || (anioEmi3 === anioCob && mesCob === mesEmi3 && diaCob >= diaEmi3)) {
+// // alert("PAGO DE CUOTA")
+
+//     // alert("PAGO DE CUOTA")
+// console.log("PAGO DE CUOTA--- " + "diaCob: " + diaCob + "mesCob: " + mesCob + "anioCob: " + anioCob + "||| diaEmi3: " + diaEmi3 + "mesEmi3: " + mesEmi3 + "anioEmi3: " +  anioEmi3 + "||| diaEmi: " + diaEmi + "mesEmi: " + mesEmi + "anioEmi: " +  anioEmi)
+
+
           let tableBody = document.getElementById("mantenimientosTableBody");
           tableBody.textContent = "";
           if (ultima_actu[1].length > 0) {
@@ -446,6 +492,7 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoCnia.value = "";
         infoCuota.value = "";
         infoVigencia.value = "";
+        infoVigTot.value = "";
         infoImporte.value = "";
         infoVence.value = "";
         infoColor.value = "";
@@ -470,17 +517,19 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoPoliza.value = ultima_actu[1][0][9];
         infoCnia.value = ultima_actu[1][0][10];
         infoImporte.value = ultima_actu[1][0][11];
+        infoVigTot.value = ultima_actu[0][20];
+        console.log("valor vig: " + ultima_actu[0][20]);
         let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
         let importeNumero = parseInt(importeSinSignos);
 
-infoImporte.value = importeNumero
-
+        infoImporte.value = importeNumero
 
         infoCuota.value = parseInt(ultima_actu[1][0][7])+1;
         infoVigencia.value = parseInt(ultima_actu[1][0][8]);
         if(infoCuota.value > infoVigencia.value) {
           infoCuota.value = 1;
           infoImporte.value = "";
+        buscarRefa()
         } else {}
         let fechaString = ultima_actu[1][0][5];
         if (fechaString) {
@@ -529,9 +578,13 @@ ultima_actu[1].forEach(mantenimiento => {
           }
 
 ///// INGRESA POR SEGURO NUEVO O RENOVACION
-      } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
+      } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob)  || (anioEmi === anioCob && mesEmi === mesCob && diaEmi > diaCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
+// ACTUALIZAR REFACTURACION A FUERZA
 
-    // alert("SEGURO NUEVO / RENOVACION")
+buscarRefa()
+
+//     // alert("SEGURO NUEVO / RENOVACION")
+console.log("SEGURO NUEVO / RENOVACION--- " + "diaCob: " + diaCob + "mesCob: " + mesCob + "anioCob: " + anioCob + "||| diaEmi3: " + diaEmi3 + "mesEmi3: " + mesEmi3 + "anioEmi3: " +  anioEmi3 + "||| diaEmi: " + diaEmi + "mesEmi: " + mesEmi + "anioEmi: " +  anioEmi)
     var vig = parseInt(ultima_actu[0][4]);
     var rf = parseInt(12 / vig);
     let fecha_vto_new = diaEmi3 + "/" + mesEmi3 + "/" + anioEmi3
@@ -567,6 +620,7 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoCnia.value = "";
         infoCuota.value = "";
         infoVigencia.value = "";
+        infoVigTot.value = "";
         infoImporte.value = "";
         infoVence.value = "";
         infoColor.value = "";
@@ -591,6 +645,7 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoNotasVeh.value = ultima_actu[0][14];
         infoWpp.value = ultima_actu[0][15];
         infoNotasCte.value = ultima_actu[0][16];
+        infoVigTot.value = ultima_actu[0][20];
 
 
 let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
@@ -624,9 +679,43 @@ infoImporte.value = importeNumero
           }
   } else {
     
-    alert("ERROR")
+
+function mostrarError(mensaje) {
+    alert("ERROR: \n" + mensaje);
+}
+
+let errores = [];
+
+// Verificar si ultima_actu[0] existe antes de acceder a sus propiedades
+if (ultima_actu[0]) {
+    if (!ultima_actu[0][17]) {
+        errores.push("BD EMISION: FALTA VALOR EN ÚLTIMA ACTUALIZACION CON ESA PATENTE");
+    }
+} else {
+    errores.push("BD EMISION: NO HAY VALORES ENCONTRADOS CON ESA PATENTE");
+}
+
+// Verificar si anioEmi es válido y tiene la propiedad length
+if (anioEmi && anioEmi.length === 4) {
+    errores.push("BD EMISION: EL AÑO EN ÚLTIMA ACTUALIZACION DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+}
+
+// Verificar si mesCob tiene un valor
+if (!mesCob) {
+    errores.push("NO HAY VALOR EN VENCIMENTO DE COBRANZAS CON ESA PATENTE");
+}
+
+// Verificar si anioCob es válido y tiene la propiedad length
+if (anioCob && anioCob.length === 4) {
+    errores.push("BD COBRANZAS: EL AÑO EN VENCIMIENTO DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+}
+
+if (errores.length > 0) {
+    mostrarError(errores.join("\n"));
+}
+      
 console.log("Valores: " + ultima_actu[0])
-console.log("Fecha Emi 19: " + ultima_actu[0][19])
+console.log("Fecha Emi 17: " + ultima_actu[0][17])
 console.log("Fecha Emi 20: " + ultima_actu[0][20])
 console.log("Mes Cob: " + mesCob)
 console.log("Año Cob: " + anioCob)
@@ -668,350 +757,11 @@ ultima_actu[2].forEach(mantenimiento2 => {
   spinner.style.display = 'none';
   boton.disabled = false;
   agroGruas(agrocnia) 
+  actualizarMensaje()
 
   }).getUltimaActu_inv(patente_value);
 
   }
-
-//////////////////////////////// BUSCAR PATENTE (COB + EMI) //////////////////////////////////////
-//   function decidir_patente() {
-//   const boton = document.getElementById('buscarRegistrosBtn7');
-//   const spinner = document.getElementById('spinner7');
-//   spinner.style.display = 'inline-block';
-//   boton.disabled = true;
-//   document.getElementById("mantenimientosTableBody").textContent = "";
-//   document.getElementById("mantenimientosTableBody2").textContent = "";
-//   const patente_value  = document.getElementById("text-box-buscarPatente").value;
-//         let infoDNI =  document.getElementById("dni");
-//         let infoCliente =  document.getElementById("nombreCompleto");
-//         let infoWpp =  document.getElementById("wpp");
-//         let infoPatente =  document.getElementById("patente");
-//         let infoMarca =  document.getElementById("marca");
-//         let infoPoliza =  document.getElementById("poliza");
-//         let infoCnia =  document.getElementById("cnia");
-//         let infoCuota =  document.getElementById("cuota");
-//         let infoVigencia =  document.getElementById("vigencia");
-//         let infoImporte =  document.getElementById("importe");
-//         let infoVence =  document.getElementById("vto");
-//         let infoColor =  document.getElementById("color");
-//         let infoNotasCte = document.getElementById('notascte');
-//         let infoNotasVeh = document.getElementById('notasveh');
-//         let infoHistorico = document.getElementById('historico');
-//         let infoEstado =  document.getElementById("estado_pol");
-//         let agrocnia = document.getElementById("cnia").value
-//         document.getElementById("mediopago").value = "EFECTIVO";
-        
-//   if (!patente_value || patente_value.trim() === "") {
-//     alert("Ingrese una patente válida");
-//     spinner.style.display = 'none'; // Ocultar el spinner
-//     boton.disabled = false; // Habilitar el botón
-//     return;
-//   }
-
-//   spinner.style.display = 'inline-block';
-//   boton.disabled = true;
-
-//   google.script.run.withSuccessHandler(function(ultima_actu) {
-
-// let fechaString = ultima_actu[0][20];
-// let fechaEmi, mesEmi, anioEmi;
-
-// if (fechaString) {
-//   let fechaEmiArray = fechaString.split('/');
-//   if (fechaEmiArray.length === 3) {
-//     diaEmi = fechaEmiArray[0];
-//     mesEmi = fechaEmiArray[1];
-//     anioEmi = fechaEmiArray[2];
-//   }
-// }
-    
-// let fechaString2 = ultima_actu[1][0][5];
-// let fechaCob, mesCob, anioCob;
-
-// if (fechaString2) {
-//   let fechaCobArray = fechaString2.split('/');
-//   if (fechaCobArray.length === 3) {
-//     mesCob = fechaCobArray[1];
-//     anioCob = fechaCobArray[2];
-//   }
-// }
-
-
-// let fechaString3 = ultima_actu[0][8];
-// let fechaEmi3, mesEmi3, anioEmi3;
-
-// if (fechaString3) {
-//   let fechaEmiArray3 = fechaString3.split('/');
-//   if (fechaEmiArray3.length === 3) {
-//     diaEmi3 = fechaEmiArray3[0];
-//     mesEmi3 = fechaEmiArray3[1];
-//     anioEmi3 = fechaEmiArray3[2];
-//   }
-// }
-
-// ///// ERROR, NO HAY NINGUN DATO
-
-// // console.log("anioCob: " + anioCob)
-// // console.log("mesCob: " + mesCob)
-// // console.log("anioEmi: " + anioEmi)
-// // console.log("mesEmi: " + mesEmi)
-// // console.log("anioEmi3: " + anioEmi3)
-// // console.log("mesEmi3: " + mesEmi3)
-
-// if (ultima_actu[0] == "" && ultima_actu[1] == "") {
-//     alert("NO HAY DATOS ENCONTRADOS.") 
-//     spinner.style.display = 'none'; // Ocultar el spinner
-//     boton.disabled = false; // Habilitar el botón
-//     return;
-
-// }  ////INGRESA POR COBRANZAS NORMAL
-
-// else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "") || (anioCob > anioEmi3) || (anioEmi3 === anioCob && mesCob >= mesEmi3)) {
-// // alert("PAGO DE CUOTA")
-//           let tableBody = document.getElementById("mantenimientosTableBody");
-//           tableBody.textContent = "";
-//           if (ultima_actu[1].length > 0) {
-            
-            
-// if (ultima_actu[0][10] == "ANULACION") {
-//     infoEstado.value = "¡POLIZA ANULADA EN SISTEMA DE EMISION!\nNO SE DEBERIA COBRAR UNA POLIZA QUE YA SE ENCUENTRA ANULADA SIN ANTES VERIFICAR LA VIGENCIA DE LA MISMA";  
-//     var confirmation = confirm("Estado de poliza: " + infoEstado.value + "\n¿DE TODAS FORMAS DESEA CONTINUAR?\n(SI PRESIONA ACEPTAR TRAERÁ LOS DATOS.)");
-
-//     if (!confirmation) {
-//         // Si el usuario hace clic en "Cancelar", ejecutar el código a continuación
-//         infoDNI.value = "";
-//         infoCliente.value = "";
-//         infoWpp.value = "";
-//         infoPatente.value = "";
-//         infoMarca.value = "";
-//         infoPoliza.value = "";
-//         infoCnia.value = "";
-//         infoCuota.value = "";
-//         infoVigencia.value = "";
-//         infoImporte.value = "";
-//         infoVence.value = "";
-//         infoColor.value = "";
-//         infoNotasCte.value = "";
-//         infoNotasVeh.value = "";
-//         infoHistorico.value = "";
-//         spinner.style.display = 'none'; // Ocultar el spinner
-//         boton.disabled = false; // Habilitar el botón
-//         return
-//     }
-//     // El código continúa aquí si el usuario hizo clic en "Aceptar"
-// }
-//         infoDNI.value = ultima_actu[1][0][2];
-//         infoCliente.value = ultima_actu[1][0][3];
-//         infoWpp.value = ultima_actu[1][0][4];
-//         infoNotasVeh.value = ultima_actu[0][14];
-//         infoNotasCte.value = ultima_actu[0][16];
-//         infoHistorico.value = ultima_actu[1][0][18];
-//         infoPatente.value = ultima_actu[1][0][1];
-//         infoMarca.value = ultima_actu[1][0][13];
-//         infoPoliza.value = ultima_actu[1][0][9];
-//         infoCnia.value = ultima_actu[1][0][10];
-//         infoImporte.value = ultima_actu[1][0][11];
-//         let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
-//         let importeNumero = parseInt(importeSinSignos);
-
-// infoImporte.value = importeNumero
-
-
-//         infoCuota.value = parseInt(ultima_actu[1][0][7])+1;
-//         infoVigencia.value = parseInt(ultima_actu[1][0][8]);
-//         if(infoCuota.value > infoVigencia.value) {
-//           infoCuota.value = 1;
-//           infoImporte.value = "";
-//         } else {}
-//         let fechaString = ultima_actu[1][0][5];
-//         if (fechaString) {
-//         let partesFecha = fechaString.split('/');
-//         let dia = partesFecha[0];
-//         let mes = partesFecha[1];
-//         let anio = partesFecha[2].slice(-2);
-//         let fecha = new Date(anio, mes - 1, dia);
-//         fecha.setMonth(fecha.getMonth() + 1)
-//         infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-// } else {
-//     alert("Fecha en BD COBRANZAS inválida: " + ultima_actu[1][0][5]);
-//     console.log("FECHA BD COB: " + ultima_actu[1][0][5])
-//     spinner.style.display = 'none'; // Ocultar el spinner
-//     boton.disabled = false; // Habilitar el botón
-//     agroGruas(agrocnia) 
-//     return;
-// }
-
-//         infoColor.value = ultima_actu[1][0][15];
-
-// let rowCount = 0;
-// ultima_actu[1].forEach(mantenimiento => {
-//   if (rowCount < 6) { // solo agrega filas si el número actual de filas es menor que 6
-
-//     const template = document.getElementById("mantenimientosRow");
-//     const templateRow = template.content;
-//     let tr = templateRow.cloneNode(true);
-//     let colFecha = tr.querySelector(".PagoCuota")
-//     let colDescripcion = tr.querySelector(".PagoFecha")
-//     let colAtendio = tr.querySelector(".PagoVto")
-//     let colAtendios = tr.querySelector(".PagoImporte")
-    
-//     colFecha.textContent = mantenimiento[7];
-//     colDescripcion.textContent = mantenimiento[5];
-//     colAtendio.textContent = mantenimiento[6];
-//     colAtendios.textContent = "$" + mantenimiento[11].replace("$", "").replace(".", "");
-    
-//     tableBody.appendChild(tr);
-//     rowCount++;
-//   }
-// });
-
-//           } else {
-//             alert("No se encontraron valores")
-//           }
-
-// ///// INGRESA POR SEGURO NUEVO O RENOVACION
-//       } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
-
-//     // alert("SEGURO NUEVO / RENOVACION")
-//     var vig = parseInt(ultima_actu[0][4]);
-//     var rf = parseInt(12 / vig);
-//     let fecha_vto_new = diaEmi3 + "/" + mesEmi3 + "/" + anioEmi3
-    
-//     for (var i = 0; i <= rf; i++) {
-//   let fecha_refa = new Date(parseInt("20" + anioEmi3), mesEmi3 - 1, diaEmi3); 
-  
-//   fecha_refa.setMonth(fecha_refa.getMonth() + (i * vig));
-//   let refa = fecha_refa.toLocaleDateString('es-ES');
-//   var part = refa.split("/");
-  
-//   if ((parseInt(part[2]) > anioCob) || (parseInt(part[2]) === anioCob && parseInt(part[1]) > mesCob)) { 
-//     fecha_vto_new = parseInt(part[0]) + "/" + parseInt(part[1]) + "/" + parseInt(part[2]);
-    
-//   break
-//   } else {
-//   }
-// }
-
-//     if (ultima_actu[0].length > 0) {
-// if (ultima_actu[0][10] == "ANULACION") {
-//     infoEstado.value = "¡POLIZA ANULADA EN SISTEMA DE EMISION!\nNO SE DEBERIA COBRAR UNA POLIZA QUE YA SE ENCUENTRA ANULADA SIN ANTES VERIFICAR LA VIGENCIA DE LA MISMA";  
-//     var confirmation = confirm("Estado de poliza: " + infoEstado.value + "\n¿DE TODAS FORMAS DESEA CONTINUAR?\n(SI PRESIONA ACEPTAR TRAERÁ LOS DATOS.)");
-
-//     if (!confirmation) {
-//         // Si el usuario hace clic en "Cancelar", ejecutar el código a continuación
-//         infoDNI.value = "";
-//         infoCliente.value = "";
-//         infoWpp.value = "";
-//         infoPatente.value = "";
-//         infoMarca.value = "";
-//         infoPoliza.value = "";
-//         infoCnia.value = "";
-//         infoCuota.value = "";
-//         infoVigencia.value = "";
-//         infoImporte.value = "";
-//         infoVence.value = "";
-//         infoColor.value = "";
-//         infoNotasCte.value = "";
-//         infoNotasVeh.value = "";
-//         infoHistorico.value = "";
-//         spinner.style.display = 'none'; // Ocultar el spinner
-//         boton.disabled = false; // Habilitar el botón
-//         return
-//     }
-//     // El código continúa aquí si el usuario hizo clic en "Aceptar"
-// }            
-//         infoPatente.value = ultima_actu[0][0];  ///
-//         infoDNI.value = ultima_actu[0][1]; //
-//         infoCliente.value = ultima_actu[0][2]; ///
-//         infoVigencia.value = ultima_actu[0][4]; //
-//         infoImporte.value = ultima_actu[0][5]; //
-//         infoCnia.value = ultima_actu[0][6]; //
-//         infoPoliza.value = ultima_actu[0][7]; //
-//         infoMarca.value = ultima_actu[0][12]; //
-//         infoNotasVeh.value = ultima_actu[0][14];
-//         infoWpp.value = ultima_actu[0][15];
-//         infoNotasCte.value = ultima_actu[0][16];
-
-
-// let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
-// let importeNumero = parseInt(importeSinSignos);
-// infoImporte.value = importeNumero
-//         infoCuota.value = 1;
-
-//         let fechaString = fecha_vto_new;
-//         if (fechaString) {
-//         let partesFecha = fechaString.split('/');
-//         let dia = partesFecha[0];
-//         let mes = partesFecha[1];
-//         let anio = partesFecha[2].slice(-2);
-//         let fecha = new Date(anio, mes - 1, dia);
-//         infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-// } else {
-//     alert("Fecha en BD EMISION inválida: " + ultima_actu[1][0][5]);
-//     console.log("FECHA BD EMISION: " + ultima_actu[1][0][5])
-//     spinner.style.display = 'none'; // Ocultar el spinner
-//     boton.disabled = false; // Habilitar el botón
-//     agroGruas(agrocnia) 
-//     return;
-// }
-
-//         infoColor.value = "";
-//         // infoNotasCte.value = "";
-//         // infoNotasVeh.value = "";
-
-//           } else {
-//             alert("No se encontraron valores")
-//           }
-//   } else {
-    
-//     alert("ERROR")
-// console.log("Valores: " + ultima_actu[0])
-// console.log("Fecha Emi 19: " + ultima_actu[0][19])
-// console.log("Fecha Emi 20: " + ultima_actu[0][20])
-// console.log("Mes Cob: " + mesCob)
-// console.log("Año Cob: " + anioCob)
-// console.log("Mes Emi: " + mesEmi)
-// console.log("Año Emi: " + anioEmi)
-
-//   }
-
-// let rowCount = 0;
-// let processed = new Set(); // conjunto para almacenar los valores ya procesados
-// const tableBody2 = document.getElementById("mantenimientosTableBody2");
-// tableBody2.textContent = ""; // Mover la línea de aquí
-
-// ultima_actu[2].forEach(mantenimiento2 => {
-//   if (rowCount < 10) {
-//     // solo agrega filas si el número actual de filas es menor que 10 y el valor no está en el conjunto
-//     if (!processed.has(mantenimiento2[1])) {
-//       const template2 = document.getElementById("mantenimientosRow2");
-//       const templateRow2 = template2.content;
-//       let tr = templateRow2.cloneNode(true);
-//       let PolPatente = tr.querySelector(".PolPatente")
-//       let PolVehiculo = tr.querySelector(".PolVehiculo")
-//       let PolCnia = tr.querySelector(".PolCnia")
-//       let PolVtos = tr.querySelector(".PolVtos")
-
-//       PolPatente.textContent = mantenimiento2[0];
-//       PolVehiculo.textContent = mantenimiento2[1];
-//       PolCnia.textContent = mantenimiento2[2];
-//       PolVtos.textContent = mantenimiento2[3];
-
-//       tableBody2.appendChild(tr);
-//       rowCount++;
-//       processed.add(mantenimiento2[1]); // agregar valor al conjunto de valores procesados
-//     }
-//   }
-// });
-
-
-//   spinner.style.display = 'none';
-//   boton.disabled = false;
-//   agroGruas(agrocnia) 
-
-//   }).getUltimaActu_inv(patente_value);
-
-//   }
   
 //////////////////////////////// BUSCAR DNI (COB + EMI) //////////////////////////////////////
   function decidir_dni() {
@@ -1042,7 +792,7 @@ ultima_actu[2].forEach(mantenimiento2 => {
 
   google.script.run.withSuccessHandler(function(ultima_actu) {
 
-let fechaString = ultima_actu[0][20];
+let fechaString = ultima_actu[0][17];
 let fechaEmi, mesEmi, anioEmi;
 
 if (fechaString) {
@@ -1219,7 +969,7 @@ ultima_actu[2].forEach(mantenimiento2 => {
   spinner.style.display = 'none';
   boton.disabled = false;
   agroGruas(agrocnia) 
-
+  actualizarMensaje()
   }).getUltimaActuDNI_inv(dni_value1);
 
   }
@@ -1674,48 +1424,70 @@ function actualizarMensaje() {
   var fechaActual = new Date();
 
   var fechaPagoStr = inputElement.value;
-  var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
+  var fechaHoraSplit = fechaPagoStr.split(" ");
+  var fechaSplit = fechaHoraSplit[0].split("/");
+
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
-  var year = "20" + parseInt(fechaSplit[2], 10);
-  var fechaVencimiento = new Date(year, month - 1, day); // Formatea la fecha como "m/d/yyyy" sin ceros innecesarios
+  
+  // Revisar si el año tiene 4 dígitos, si no, añadir "20" delante
+  var year = fechaSplit[2].length === 2 ? "20" + parseInt(fechaSplit[2], 10) : parseInt(fechaSplit[2], 10);
+
+  var fechaVencimiento = new Date(year, month - 1, day);
   var tiempoDiferencia = fechaVencimiento.getTime() - fechaActual.getTime();
-  var diasDiferencia = Math.floor(tiempoDiferencia / (1000 * 3600 * 24)+1);
+  var diasDiferencia = Math.floor(tiempoDiferencia / (1000 * 3600 * 24) + 1);
 
   switch (true) {
-      case fechaVencimiento > fechaActual && diasDiferencia > 30:
+    case fechaVencimiento > fechaActual && diasDiferencia > 30:
       mensajeElement.textContent = "Pago adelantado";
       mensajeElement.style.color = "blue";
-      mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
       break;
+
     case fechaVencimiento > fechaActual && diasDiferencia <= 30 && diasDiferencia >= 0:
       mensajeElement.textContent = "OK";
       mensajeElement.style.color = "blue";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia <= -1 && diasDiferencia >= -45:
       mensajeElement.textContent = "Recibo vencido";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia <= -46 && diasDiferencia >= -59:
       mensajeElement.textContent = "Debe dos meses";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
+      var confirmation = confirm("Estado de poliza: ¡DEBE DOS MESES! ¿DESEA COBRAR AMBAS CUOTAS?\n(SI PRESIONA ACEPTAR TRAERÁ AMBOS RECIBOS.)");
+      if (confirmation) {
+        document.getElementById("multiRec").value = 2
+      }
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia <= -60 && diasDiferencia >= -89:
       mensajeElement.textContent = "Debe tres meses";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
+      var confirmation = confirm("Estado de poliza: ¡DEBE TRES MESES! ¿DESEA COBRAR LAS TRES CUOTAS?\n(SI PRESIONA ACEPTAR TRAERÁ LOS TRES RECIBOS.)");
+      if (confirmation) {
+        document.getElementById("multiRec").value = 3
+      }
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia < -90:
       mensajeElement.textContent = "Póliza posiblemente anulada";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
+      var confirmation = confirm("Estado de poliza: ¡DEBE MÁS DE TRES MESES! LA POLIZA PUEDE ESTAR ANULADA, NO SE RECOMIENDA COBRAR.\n¿DESEA CONTINUAR DE IGUAL FORMA?\n(SI PRESIONA ACEPTAR TRAERÁ SOLO UN RECIBO.)");
+      if (confirmation) {
+        // Acción a realizar si presiona "Aceptar"
+      }
       break;
   }
 }
+
 
 
 
@@ -1725,14 +1497,14 @@ function agroGruas(agrocnia) {
   var companiaSeleccionada = document.getElementById("cnia").value;
   var valorPatente = document.getElementById("patente").value;
 
-  if ((companiaSeleccionada === "AGROSALTA C/GRUA" || companiaSeleccionada === "AGRO (V) C/GRUA") || 
-       (agrocnia === "AGROSALTA C/GRUA" || agrocnia === "AGRO (V) C/GRUA")) {
+  if ((companiaSeleccionada === "AGROSALTA [RC-GRUA]" || companiaSeleccionada === "AGROSALTA [B1]") || 
+       (agrocnia === "AGROSALTA [RC-GRUA]" || agrocnia === "AGROSALTA [B1]")) {
         
     google.script.run
       .withSuccessHandler(function(result) {
         if (result) {
           alert("La patente ingresada corresponde a un vehículo el cual no se puede asegurar con grúa. El motivo es: " + result + ", se procederá a cambiar la compañía a AGROSALTA sin grúa.");
-          document.getElementById("cnia").value = "AGROSALTA";
+          document.getElementById("cnia").value = "AGROSALTA [RC]";
         }
       })
       .searchBlacklist(valorPatente);
