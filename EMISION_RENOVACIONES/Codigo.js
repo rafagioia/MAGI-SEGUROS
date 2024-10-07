@@ -24,19 +24,46 @@ function formatDateString(inputDate) {
   return formattedDate;
 }
 
+  function formatearFecha(fecha) {
+    let partes = fecha.split('/');
+    let dia = partes[0].padStart(2, '0'); 
+    let mes = partes[1].padStart(2, '0'); 
+    let anio = partes[2].slice(-2);
+    return `${dia}/${mes}/${anio}`;
+  }
+
 
 function renovarPol(
-  infoPatente,
-  infoImporte,
-  infoVence,
-  infoHasta,
-  infoHoy, 
-  infoPol,
-  infoRefa,
-  infoRefa_Desde,
-  vto_antiguo) {
-  const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
+    infoPatente,
+    infoImporte,
+    infoVence,
+    infoHasta, 
+    infoHoy,
+    infoPol,
+    infoRefa, 
+    vto_antiguo,
+    infoRefa_Desde,
+    infoRefa_Hasta,
+    infoEstado,
+    infoVigTot) {
+  const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
     const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
+
+  let partes = infoRefa_Desde.split('/');
+  let dia = parseInt(partes[0]);
+  let mes = parseInt(partes[1]) - 1; // Los meses en Date empiezan desde 0 (enero es 0)
+  let anio = parseInt(partes[2]); // Convertir año corto a largo (2023 en lugar de 23)
+
+  let fechaDesde = new Date(anio, mes, dia);
+
+  // Sumar los meses indicados en la variable infoRefa
+  fechaDesde.setMonth(fechaDesde.getMonth() + parseInt(infoRefa));
+
+  let diaHasta = String(fechaDesde.getDate()).padStart(2, '0');
+  let mesHasta = String(fechaDesde.getMonth() + 1).padStart(2, '0'); // Los meses en Date son de 0 a 11
+  let anioHasta = fechaDesde.getFullYear(); // Tomar los últimos 2 dígitos del año
+
+  infoRefa_Hasta = `${diaHasta}/${mesHasta}/${anioHasta}`;
 
   const [day, month, year] = infoRefa_Desde.split('/').map(Number);
   const date = new Date(2000 + year, month - 1, day); // Resta 1 al mes para que sea compatible con la indexación de JavaScript (enero es 0).
@@ -54,58 +81,70 @@ fecha_hasta_f = dayFormatted2 + "/" + monthFormatted2 + "/" + yearFormatted2
   // Obtener los datos de la hoja
   const data = BD_EMISION.getDataRange().getValues();
   const data2 = BD_COBRANZAS.getDataRange().getValues();
-  for (var i = 0; i < data.length; i++) {
-    if (data[i][0] == infoPatente && fecha_desde_f == infoHasta) { // Columna A
-      // Actualizar las columnas F, I, J y E
-      BD_EMISION.getRange(i + 1, 6).setValue(infoImporte); // Columna F
-      BD_EMISION.getRange(i + 1, 9).setValue(fecha_desde_f);   // Columna I
-      BD_EMISION.getRange(i + 1, 10).setValue(fecha_hasta_f);  // Columna J
-      BD_EMISION.getRange(i + 1, 10).setValue();  // Columna J
-      BD_EMISION.getRange(i + 1, 5).setValue(infoRefa);    // Columna E
-      BD_EMISION.getRange(i + 1, 8).setValue(infoPol);   // Columna H
-      BD_EMISION.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
-      break; // Terminar la búsqueda una vez que se encuentre una coincidencia
+
+
+   infoVence = formatearFecha(infoVence)
+   infoHasta = formatearFecha(infoHasta)
+   infoRefa_Desde = formatearFecha(infoRefa_Desde)
+   infoRefa_Hasta = formatearFecha(infoRefa_Hasta)
+   infoHoy = formatearFecha(infoHoy)
+for (var i = data.length - 1; i >= 0; i--) {
+    if (data[i][0] == infoPatente && fecha_desde_f == infoHasta) { 
+      
+var polVals = [infoPatente, data[i][1], data[i][2], data[i][3], infoRefa, infoImporte, data[i][6], infoPol, infoVence, infoHasta, data[i][10], data[i][11], data[i][12], data[i][13], data[i][14], , "//" + infoEstado, infoHoy, infoRefa_Desde, infoRefa_Hasta, infoVigTot]
+
+  BD_EMISION.appendRow(polVals);
+
+        break; 
     }
-  }
-  for (var i = 0; i < data2.length; i++) {
-    if (data2[i][1] == infoPatente && data2[i][7] == 1) { 
-      BD_COBRANZAS.getRange(i + 1, 10).setValue(infoPol); 
-    }
-    if (data2[i][1] == infoPatente && infoVence !== vto_antiguo) {
-      BD_COBRANZAS.getRange(i + 1, 6).setValue(infoVence); 
-    }
-      break; 
-  }
+}
+
+  // for (var i = 0; i < data2.length; i++) {
+  //   if (data2[i][1] == infoPatente && data2[i][7] == 1) { 
+  //     BD_COBRANZAS.getRange(i + 1, 10).setValue(infoPol); 
+  //   }
+  //   if (data2[i][1] == infoPatente && infoVence !== vto_antiguo) {
+  //     BD_COBRANZAS.getRange(i + 1, 6).setValue(infoVence); 
+  //   }
+  //     break; 
+  // }
 }
 
 function bajaPol(
   infoPatente,
   infoHoy) {
-  const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
   
   // Obtener los datos de la hoja
-  const data = BD_EMISION.getDataRange().getValues();
+  const data = BD_POLIZAS.getDataRange().getValues();
   
   for (var i = 0; i < data.length; i++) {
     if (data[i][0] == infoPatente) { // Columna A
-      BD_EMISION.getRange(i + 1, 11).setValue("ANULACION");   // Columna H
-      BD_EMISION.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
+      BD_POLIZAS.getRange(i + 1, 11).setValue("ANULACION");   // Columna H
+      BD_POLIZAS.getRange(i + 1, 21).setValue(infoHoy);    // Columna ACTU
       break; // Terminar la búsqueda una vez que se encuentre una coincidencia
     }
   }
 }
 
 ////////////////// LISTADO DE RENOVACIONES //////////////////
-
 function getData(mes_hoy1 = new Date().getMonth(), anio_hoy = new Date().getFullYear()) {
-  const BD_EMISION = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
-  const emisionData = BD_EMISION.getDataRange().getDisplayValues();
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
+  const emisionData = BD_POLIZAS.getDataRange().getDisplayValues();
   
-  var sinPendientes = [];
 
+  var sinPendientes = [];
+  var patentesProcesadas = new Set();
   var mes_hoy = mes_hoy1 +1;
 
-  for (var j = 1; j < emisionData.length; j++) {
+  for (var j = emisionData.length - 1; j >= 1; j--) {
+
+      if (!patentesProcesadas.has(emisionData[j][0])) {
+          patentesProcesadas.add(emisionData[j][0]); // Marcar patente como procesada
+        } else {
+          continue
+        }
+
     var fecha_desde = emisionData[j][8];
     var parts3 = fecha_desde.split('/');
     var dia_desde = parseInt(parts3[0]);
@@ -113,77 +152,53 @@ function getData(mes_hoy1 = new Date().getMonth(), anio_hoy = new Date().getFull
     var anio_desde = parseInt(parts3[2]);
     var anio_hasta = parseInt(parts3[2]) + 1;
 
-var fecha_mod = emisionData[j][20];
-
-if (fecha_mod !== "" ||  emisionData[j][10] !== "ANULACION") { // Verificar si fecha_mod no es null ni undefined
-  var parts4 = fecha_mod.split('/');
-  var mes_mod = parseInt(parts4[1]);
-  var anio_mod = parseInt(parts4[2]);
-} else {
-  var mes_mod = "";
-  var anio_mod = "";
-}
+    let anio_hoyb = anio_hoy.toString().slice(-2)
+    var fecha_mod = emisionData[j][17];
+    var mes_mod, anio_mod;
+    
+    if (fecha_mod !== "" || emisionData[j][10] !== "ANULACION") {
+      var parts4 = fecha_mod.split('/');
+      mes_mod = parseInt(parts4[1]);
+      anio_mod = parseInt(parts4[2]);
+    } else {
+      mes_mod = "";
+      anio_mod = "";
+    }
 
 
     var vig = parseInt(emisionData[j][4]);
-    var rf = parseInt(12 / vig);
+    var vigtot = parseInt(emisionData[j][20]) || 12;
+    var rf = parseInt(vigtot / vig);
+    for (var i = rf; i >= 1; i--) {
 
-    for (var i = 1; i <= rf; i++) {
+
+      
       let fecha_refa = new Date("20" + anio_desde, mes_desde - 1, dia_desde);
       fecha_refa.setMonth(fecha_refa.getMonth() + (i * vig));
       let refa = fecha_refa.toLocaleDateString('es-ES');
 
       var part = refa.split("/");
       var refacturaciones = [];
+      var anio_mod20 = "20" + anio_mod
+      
+      
+            let esMismoAnio = parseInt(anio_hoy) === parseInt(part[2]);
+      let esMismoMes = parseInt(mes_hoy) === parseInt(part[1]);
+      let esMesDistinto = parseInt(mes_mod) !== parseInt(mes_hoy);
+      let esAnioDistinto = parseInt(anio_mod20) !== parseInt(anio_hoyb);
 
-      // Verificar si ha pasado un año desde la fecha de inicio de refacturación
-      if ((anio_hoy > anio_desde && mes_hoy === mes_desde) && (mes_mod !== mes_hoy && anio_mod !== anio_hoy) &&  emisionData[j][10] !== "ANULACION") {
-        // Renovación
-        var fecha_hasta_ren = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
-        var nuevaFecha3 = fecha_hasta_ren.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha3);
-        refacturaciones.push(emisionData[j][2]); // cliente
-        refacturaciones.push(emisionData[j][0]); // patente
-        refacturaciones.push(emisionData[j][12]); // marca
-        refacturaciones.push(emisionData[j][6]); // cnia
-        refacturaciones.push(1); // cuota
-        refacturaciones.push(vig); // cuotaHasta
-        fecha_refa.setMonth(fecha_refa.getMonth() + vig);
-        var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha);
-        refacturaciones.push(""); // poliza
-        refacturaciones.push(emisionData[j][13]); // fpago
-        refacturaciones.push("RENOVACION");
-        refacturaciones.push(nuevaFecha3);
-        let fecha_hasta = new Date("20" + (anio_hasta + 1), mes_desde - 1, dia_desde);
-        var nuevaFecha2 = fecha_hasta.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha2);
-        refacturaciones.push("");
-      } else if (mes_mod == mes_hoy && anio_mod == anio_hoy &&  emisionData[j][10] !== "ANULACION") {
-        // Renovadas
-        var fecha_hasta_ren = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
-        var nuevaFecha3 = fecha_hasta_ren.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha3);
-        refacturaciones.push(emisionData[j][2]); // cliente
-        refacturaciones.push(emisionData[j][0]); // patente
-        refacturaciones.push(emisionData[j][12]); // marca
-        refacturaciones.push(emisionData[j][6]); // cnia
-        refacturaciones.push(1); // cuota
-        refacturaciones.push(vig); // cuotaHasta
-        fecha_refa.setMonth(fecha_refa.getMonth() + vig);
-        var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha);
-        refacturaciones.push(emisionData[j][7]); // poliza
-        refacturaciones.push(emisionData[j][13]); // fpago
-        refacturaciones.push("ACTUALIZADA: " + emisionData[j][20]);
-        refacturaciones.push(nuevaFecha3);
-        let fecha_hasta = new Date("20" + (anio_hasta + 1), mes_desde - 1, dia_desde);
-        var nuevaFecha2 = fecha_hasta.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha2);
-        refacturaciones.push(emisionData[j][5]);
-      } else {
+        // Estado de emisión
+        let noEsAnulacion = emisionData[j][10] !== "ANULACION";
+
+        // Condición final
+        // console.log("res1: " + esMismoAnio + " res2: " + esMismoMes + " res3: " + esMesDistinto + " res4: " + esAnioDistinto + " res5: " + noEsAnulacion)
+        // console.log("aniohoy: " + aniohoy + "anio_hasta: " + anio_hasta + "mes_hoyb: " + mes_hoy + "mes_desde: " + mes_desde + "mes_mod: " + mes_mod + "anio_mod: " + anio_mod)
+      
+      if (esMismoAnio && esMismoMes && esMesDistinto && esAnioDistinto && noEsAnulacion) {
+
         // Refacturación normal
-        refacturaciones.push(refa); // desde
+        // console.log("pasó refa")
+        refacturaciones.push(fecha_desde); // VIG DESDE
         refacturaciones.push(emisionData[j][2]); // cliente
         refacturaciones.push(emisionData[j][0]); // patente
         refacturaciones.push(emisionData[j][12]); // marca
@@ -192,25 +207,108 @@ if (fecha_mod !== "" ||  emisionData[j][10] !== "ANULACION") { // Verificar si f
         refacturaciones.push(vig); // cuotaHasta
         fecha_refa.setMonth(fecha_refa.getMonth() + vig);
         var nuevaFecha = fecha_refa.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha);
+        refacturaciones.push(nuevaFecha); // REFA HASTA
+        // refacturaciones.push(refa);
         refacturaciones.push(emisionData[j][7]); // poliza
         refacturaciones.push(emisionData[j][13]); // fpago
         refacturaciones.push("REFA" + (i + 1));
-        refacturaciones.push(fecha_desde);
+        refacturaciones.push(refa);  /// REFA DESDE
         let fecha_hasta = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
         var nuevaFecha2 = fecha_hasta.toLocaleDateString('es-ES');
-        refacturaciones.push(nuevaFecha2);
+        refacturaciones.push(nuevaFecha2); // VIG HASTA
         refacturaciones.push("");
+        refacturaciones.push(vigtot);
+          sinPendientes.push(refacturaciones);
       }
       
-      if (parseInt(part[1]) === mes_hoy && parseInt(part[2]) === anio_hoy &&  emisionData[j][10] !== "ANULACION") {
+
+          // console.log("parseInt(part[1]): " + parseInt(part[1]) + " mes_hoy: " + mes_hoy + ", parseInt(part[2]): " + parseInt(part[2]) + " anio_hoy: " + anio_hoy)
+if (parseInt(part[1]) === parseInt(mes_hoy) && parseInt(part[2]) === parseInt(anio_hoy) && emisionData[j][10] !== "ANULACION") {
+    // Verifica si refacturaciones es una cadena y si no está vacía
+    if (typeof refacturaciones === 'string' && refacturaciones.trim() !== "") {
         sinPendientes.push(refacturaciones);
-      }
     }
+}
+
+      
+    }
+
+if ((anio_hoyb == anio_hasta && mes_hoy === mes_desde) && (mes_mod !== mes_hoy && anio_mod !== anio_hoyb) &&  emisionData[j][10] !== "ANULACION") {
+    // Renovación
+    // console.log("pasó renovacion: " + emisionData[j][0]);
+    var fecha_hasta_ren = new Date("20" + anio_hasta, mes_desde - 1, dia_desde);
+
+    // Use the Date object for manipulation before converting to string
+    var dia_desde5 = String(fecha_hasta_ren.getDate()).padStart(2, '0');
+    var mes_desde5 = String(fecha_hasta_ren.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based, so add 1
+    var anio_desde5 = String(fecha_hasta_ren.getFullYear()).slice(-2);
+
+    
+    refacturaciones.push(dia_desde5 + "/" + mes_desde5 + "/" + anio_desde5); // Push VIG DESDE
+    refacturaciones.push(emisionData[j][2]); // cliente
+    refacturaciones.push(emisionData[j][0]); // patente
+    refacturaciones.push(emisionData[j][12]); // marca
+    refacturaciones.push(emisionData[j][6]); // cnia
+    refacturaciones.push(1); // cuota
+    refacturaciones.push(vig); // cuotaHasta
+    fecha_hasta_ren.setMonth(fecha_hasta_ren.getMonth() + vig);
+    var nuevaFecha = fecha_hasta_ren.toLocaleDateString('es-ES');
+    
+    // Push REFA HASTA
+    refacturaciones.push(nuevaFecha);
+    refacturaciones.push(""); // poliza
+    refacturaciones.push(emisionData[j][13]); // fpago
+    refacturaciones.push("RENOVACION");
+    refacturaciones.push(dia_desde5 + "/" + mes_desde5 + "/" + anio_desde5); // Push VIG DESDE
+    var fechaInicial = new Date(anio_desde5, mes_desde5 - 1, dia_desde5); // mes - 1 porque Date usa meses de 0 a 11
+
+    fechaInicial.setMonth(fechaInicial.getMonth() + vigtot);
+
+    var dia_final = fechaInicial.getDate().toString().padStart(2, '0');
+    var mes_final = (fechaInicial.getMonth() + 1).toString().padStart(2, '0'); // sumamos 1 al mes porque getMonth() devuelve de 0 a 11
+    var anio_final = fechaInicial.getFullYear().toString().slice(-2); // convertimos a string para usar slice()
+
+    var fecha_final = dia_final + '/' + mes_final + '/' + anio_final;
+
+    // Push VIG HASTA
+    refacturaciones.push(fecha_final);
+    refacturaciones.push("");
+        refacturaciones.push(vigtot);
+    console.log(refacturaciones)
+          sinPendientes.push(refacturaciones);
+      } else
+      if (parseInt(anio_mod) == parseInt(anio_desde) && parseInt(anio_mod) == parseInt(anio_hoyb) &&
+          parseInt(mes_mod) == parseInt(mes_desde) && parseInt(mes_mod) == parseInt(mes_hoy) &&
+          emisionData[j][10] !== "ANULACION") {
+      var refacturaciones = [];
+        // Ya Renovadas
+        refacturaciones.push(emisionData[j][8]);
+        refacturaciones.push(emisionData[j][2]); // cliente
+        refacturaciones.push(emisionData[j][0]); // patente
+        refacturaciones.push(emisionData[j][12]); // marca
+        refacturaciones.push(emisionData[j][6]); // cnia
+        refacturaciones.push(1); // cuota
+        refacturaciones.push(vig); // cuotaHasta
+        refacturaciones.push(emisionData[j][19]);
+        refacturaciones.push(emisionData[j][7]); // poliza
+        refacturaciones.push(emisionData[j][13]); // fpago
+        refacturaciones.push("ACTUALIZADA: " + emisionData[j][17]);
+        refacturaciones.push(emisionData[j][18]);
+        refacturaciones.push(emisionData[j][9]);
+        refacturaciones.push(emisionData[j][5]);
+        refacturaciones.push(vigtot);
+        sinPendientes.push(refacturaciones);
+        // console.log("pasó renovada: "  + refacturaciones)
+      } 
+
   }
 
+console.log(sinPendientes)
   return sinPendientes;
-}
+ }
+
+
+
 
 
 
@@ -577,3 +675,5 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
+
+

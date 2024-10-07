@@ -337,6 +337,7 @@ function buscarRegistros() {
  let infoPatente = document.getElementById("patente");
  let infoMarca = document.getElementById("marca");
  let infoCnia = document.getElementById("cnia");
+ let infoDanio = document.getElementById("danos");
 
  google.script.run
    .withSuccessHandler(info => {
@@ -356,6 +357,14 @@ function buscarRegistros() {
    })
    .buscarMantenimientos(numeroInventario);
 
+ google.script.run
+ .withSuccessHandler( info => {
+   if (info.length > 0) {
+     infoDanio.value = info[0][15];
+   } else {
+   }
+ })
+ .buscarMantenimientos3(numeroInventario);
      
  if (infoDNI.value) {
    google.script.run.withSuccessHandler(mostrarFotos_reg).obtenerFotosPorDNI(infoDNI.value);
@@ -379,6 +388,7 @@ function buscarRegistros() {
        let infoPatente =  document.getElementById("patente");
        let infoMarca =  document.getElementById("marca");
        let infoCnia =  document.getElementById("cnia");
+       let infoDanio =  document.getElementById("danos");
 
  google.script.run
  .withSuccessHandler( info => {
@@ -389,6 +399,7 @@ function buscarRegistros() {
      infoPatente.value = info[0][0];
      infoMarca.value = info[0][12];
      infoCnia.value = info[0][6];
+     infoDanio.value = info[0][15];
    } else {
      alert("No se encontraron valores")
    }
@@ -416,14 +427,9 @@ function buscarRegistros() {
        let infoWpp =  document.getElementById("wpp");
        let infoPatente =  document.getElementById("patente");
        let infoMarca =  document.getElementById("marca");
-       let infoPoliza =  document.getElementById("poliza");
        let infoCnia =  document.getElementById("cnia");
-       let infoCuota =  document.getElementById("cuota");
-       let infoVigencia =  document.getElementById("vigencia");
-       let infoImporte =  document.getElementById("importe");
-       let infoVence =  document.getElementById("vto");
-       let infoColor =  document.getElementById("color");
        let infoNotas =  document.getElementById("notas");
+       let infoDanio =  document.getElementById("danos");
 
        google.script.run.withSuccessHandler( info => {
          if (info.length > 0) {
@@ -433,29 +439,7 @@ function buscarRegistros() {
        infoWpp.value = info[0][4];
        infoPatente.value = info[0][1];
        infoMarca.value = info[0][13];
-       infoPoliza.value = info[0][9];
        infoCnia.value = info[0][10];
-       infoImporte.value = info[0][11];
-
-let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
-let importeNumero = parseInt(importeSinSignos);
-infoImporte.value = importeNumero
-
-       infoCuota.value = parseInt(info[0][7])+1;
-       infoVigencia.value = parseInt(info[0][8]);
-       if(infoCuota.value > infoVigencia.value) {
-         infoCuota.value = 1;
-         infoImporte.value = "";
-       } else {}
-       let fechaString = info[0][5];
-       let partesFecha = fechaString.split('/');
-       let dia = partesFecha[0];
-       let mes = partesFecha[1];
-       let anio = partesFecha[2].slice(-2);
-       let fecha = new Date(anio, mes - 1, dia);
-       fecha.setMonth(fecha.getMonth() + 1)
-       infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-       infoColor.value = info[0][15];
        infoNotas.value = info[0][18];
 
          } else {
@@ -467,6 +451,20 @@ infoImporte.value = importeNumero
        })
        .buscarMantenimientos2(numeroInventario2)
        
+
+               google.script.run.withSuccessHandler( info => {
+         if (info.length > 0) {
+           
+       infoDanio.value = info[0][15];
+
+         } else {
+         }
+
+       })
+       .buscarMantenimientos4(numeroInventario2)
+
+
+
  if (numeroInventario2) {
    google.script.run.withSuccessHandler(mostrarFotos_reg).obtenerFotosPorDNI(numeroInventario2);
  } else {
@@ -488,6 +486,7 @@ infoImporte.value = importeNumero
        let infoPatente =  document.getElementById("patente");
        let infoMarca =  document.getElementById("marca");
        let infoCnia =  document.getElementById("cnia");
+       let infoDanio =  document.getElementById("danos");
 
        google.script.run.withSuccessHandler( info => {
          if (info.length > 0) {
@@ -498,6 +497,7 @@ infoImporte.value = importeNumero
        infoPatente.value = info[0][0];
        infoMarca.value = info[0][12];
        infoCnia.value = info[0][6]; 
+       infoDanio.value = info[0][15];
 
          } else {
            alert("No se encontraron valores")
@@ -507,6 +507,7 @@ infoImporte.value = importeNumero
 
        })
        .buscarMantenimientos4(numeroInventario2)
+
  if (numeroInventario2) {
    google.script.run.withSuccessHandler(mostrarFotos_reg).obtenerFotosPorDNI(numeroInventario2);
  } else {

@@ -63,8 +63,8 @@ function updateSinPendientes(result) {
   }
 
   result.sort(function(a, b) {
-    var dateA = convertToDate(a[0]); // PosiciÛn 7 en base 0
-    var dateB = convertToDate(b[0]); // PosiciÛn 7 en base 0
+    var dateA = convertToDate(a[11]); // Posici√≥n 7 en base 0
+    var dateB = convertToDate(b[11]); // Posici√≥n 7 en base 0
     return dateA - dateB;
   });
 
@@ -81,7 +81,7 @@ function formatFecha(dateStr) {
 }
 
 const fecha_hasta_new = formatFecha(result[i][12]);
-const fecha_desde_ab = formatFecha(result[i][0]);
+const fecha_desde_ab = formatFecha(result[i][11]);
 const fecha_hasta_ab = formatFecha(result[i][7]);
 
     pendientesHtml += "<div class='border mb-0 bg-white' style='box-shadow: 0px 0px 1px 0px #000;' id='div" + i + "'>";
@@ -92,14 +92,14 @@ const fecha_hasta_ab = formatFecha(result[i][7]);
     pendientesHtml += "<div class='col-4  m-0 p-1 text-sm text-truncate planilla' style=' padding-top: 10px;' id='_cte" + i + "'>" + result[i][1] + "</div>";
 
     // Columna de vencimiento
-    pendientesHtml += "<div class='col-2  m-0 p-1 planilla'><input type='text' class='form-control planilla' id='_vto" + i + "' value='" + result[i][11] + "'></div>";
+    pendientesHtml += "<div class='col-2  m-0 p-1 planilla'><input type='text' class='form-control planilla' id='_vto" + i + "' value='" + result[i][0] + "'></div>";
     pendientesHtml += "<div class='col-2  m-0 p-1 planilla'><input type='text' class='form-control planilla' id='_hasta" + i + "' value='" + fecha_hasta_new + "'></div>";
 
     // Columna de CNIA
     pendientesHtml += "<div class='col-3   m-0 p-1 text-sm planilla' style='padding-top: 10px;' id='_cnia" + i + "'>" + result[i][4] + "</div>";
 
     // Columna de REFA
-    pendientesHtml += "<div class='col-1  m-0 p-1 planilla'><input type='text' class='form-control planilla p-1 ' id='_refa" + i + "' value='" + result[i][6] + "'></div>";
+    pendientesHtml += "<div class='col-1  m-0 p-1 planilla'><input type='text' class='form-control planilla p-1 ' id='_vig_total" + i + "' value='" + result[i][14] + "'></div>";
 
     pendientesHtml += "</div></div>";
     pendientesHtml += "<div class='col-6 container p-0 m-0'><div class='row p-0 m-0'>";
@@ -117,14 +117,17 @@ pendientesHtml += "<div class='row col-3'>";
 pendientesHtml += "<div class='text-sm text-truncate planilla fs-5' id='_pat" + i + "'>" + result[i][2] + "</div>";
 pendientesHtml += "<div class='text-sm text-truncate planilla' style='font-size: 0.6rem' id='_marca" + i + "'>" + result[i][3] + "</div>";
 pendientesHtml += "</div>";
-    // Establecer el estilo seg˙n el valor de result[i][10]
+    // Establecer el estilo seg√∫n el valor de result[i][10]
     if (result[i][10] == "RENOVACION") {
       // Columna de REFA
       pendientesHtml += "<div class='col-3 m-0 p-0 text-sm text-truncate planilla'>";
       pendientesHtml += "<div class='row m-0 p-0'>";
-      pendientesHtml += "<div class='col-12 m-0 p-0' id='_estado'>" + result[i][10] + "</div>";
-      pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde" + i + "'>" + fecha_desde_ab + "</div>";
-      pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta" + i + "'>" + fecha_hasta_ab + "</div>";
+      pendientesHtml += "<div class='col-12 m-0 p-0' id='_estado" + i + "'>" + result[i][10] + "</div>";
+      pendientesHtml += "<div class='col-2 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text' style='border: none; width: 100%; text-align: center;' id='_refa" + i + "' value='" + result[i][6] + "'></div>";
+      pendientesHtml += "<div class='col-5 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text' style='border: none; width: 100%; text-align: center;' id='_refa_desde" + i + "' value='" + result[i][11] + "'></div>";
+      pendientesHtml += "<div class='col-5 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text'  style='border: none; width: 100%; text-align: center;'  id='_refa_hasta" + i + "' value='" + result[i][7] + "'></div>";
+      // pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde" + i + "'>" + fecha_desde_ab + "</div>";
+      // pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta" + i + "'>" + fecha_hasta_ab + "</div>";
       pendientesHtml += "</div>";
       pendientesHtml += "</div>";
 
@@ -134,9 +137,12 @@ pendientesHtml += "</div>";
       // Columna de REFA
       pendientesHtml += "<div class='col-3 m-0 p-0 text-sm text-truncate planilla'>";
       pendientesHtml += "<div class='row m-0 p-0'>";
-      pendientesHtml += "<div class='col-12 m-0 p-0 text-sm planilla' id='_estado'>" + result[i][10] + "</div>";
-      pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde" + i + "'>" + fecha_desde_ab + "</div>";
-      pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta" + i + "'>" + fecha_hasta_ab + "</div>";
+      pendientesHtml += "<div class='col-12 m-0 p-0 text-sm planilla' id='_estado" + i + "'>" + result[i][10] + "</div>";
+      pendientesHtml += "<div class='col-2 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text' style='border: none; width: 100%; text-align: center;' id='_refa" + i + "' value='" + result[i][6] + "'></div>";
+      pendientesHtml += "<div class='col-5 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text' style='border: none; width: 100%; text-align: center;' id='_refa_desde" + i + "' value='" + result[i][11] + "'></div>";
+      pendientesHtml += "<div class='col-5 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text'  style='border: none; width: 100%; text-align: center;'  id='_refa_hasta" + i + "' value='" + result[i][7] + "'></div>";
+      // pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde" + i + "'>" + fecha_desde_ab + "</div>";
+      // pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta" + i + "'>" + fecha_hasta_ab + "</div>";
       pendientesHtml += "</div>";
       pendientesHtml += "</div>";
 
@@ -146,14 +152,15 @@ pendientesHtml += "</div>";
       // Columna de REFA
       pendientesHtml += "<div class='col-3 m-0 p-0 text-sm text-truncate planilla'>";
       pendientesHtml += "<div class='row m-0 p-0'>";
-      pendientesHtml += "<div class='col-12 m-0 p-0 text-sm planilla' id='_estado'>" + result[i][10] + "</div>";
-      pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_desde" + i + "'>" + fecha_desde_ab + "</div>";
-      pendientesHtml += "<div class='col-6 m-0 p-0' style='border: 1px solid black; border-radius: 5px;' id='_refa_hasta" + i + "'>" + fecha_hasta_ab + "</div>";
+      pendientesHtml += "<div class='col-12 m-0 p-0 text-sm planilla' id='_estado" + i + "'>" + result[i][10] + "</div>";
+      pendientesHtml += "<div class='col-2 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text' style='border: none; width: 100%; text-align: center;' id='_refa" + i + "' value='" + result[i][6] + "'></div>";
+      pendientesHtml += "<div class='col-5 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text' style='border: none; width: 100%; text-align: center;' id='_refa_desde" + i + "' value='" + result[i][11] + "'></div>";
+      pendientesHtml += "<div class='col-5 m-0 p-0' style='border: 2px solid black; border-radius: 5px;'><input type='text'  style='border: none; width: 100%; text-align: center;'  id='_refa_hasta" + i + "' value='" + result[i][7] + "'></div>";
       pendientesHtml += "</div>";
       pendientesHtml += "</div>";
 
       pendientesHtml += "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;'><button class='btn btn-danger btn-sm' id='_btn_baja" + i + "'>BAJA</button></div>";
-      pendientesHtml += "<div class='col-1 p-1 planilla' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; width: 32px;  height: 32px;' id='_ver" + i + "'>??</div>";
+      pendientesHtml += "<div class='col-1 p-1 planilla' style='margin: 2px 1px 0px 5px; border: 1px solid black; border-radius: 5px; width: 32px;  height: 32px;' id='_ver" + i + "'>‚úîÔ∏è</div>";
   // pendientesHtml += "<div class='col-1 m-0 p-0' style='padding: 2px 0px 0px 5px;'></div>";
 }
 
@@ -161,7 +168,8 @@ pendientesHtml += "</div>";
 pendientesHtml += "</div></div></div></div>";
 pendientesHtml += "</div></div></div>";
   }
-    sinPendientesDiv.innerHTML = pendientesHtml;
+    sinPendientesDiv.textContent = "";
+    sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
 
 var idCniaSelect = document.getElementById("id_cnia_select");
@@ -207,7 +215,7 @@ resetFiltroBtn.addEventListener("click", function() {
     div.style.display = "block"; // Mostrar todos los elementos
   }
 
-  // Restablecer la selecciÛn del select
+  // Restablecer la selecci√≥n del select
   idCniaSelect.selectedIndex = 0;
   idEstadoSelect.selectedIndex = 0;
 
@@ -217,7 +225,7 @@ resetFiltroBtn.addEventListener("click", function() {
   var divs = document.querySelectorAll("[id^='_btn_ren']");
   divs.forEach(function(_btn_ren) {
     _btn_ren.addEventListener("click", function() {
-      var id = _btn_ren.id.slice(8); // Obtener el Ìndice del div
+      var id = _btn_ren.id.slice(8); // Obtener el √≠ndice del div
   let vto_antiguo = result[id][11]
   let infoPatente = document.getElementById("_pat" + id).textContent;
   let infoImporte = document.getElementById("_imp" + id).value;
@@ -226,6 +234,10 @@ resetFiltroBtn.addEventListener("click", function() {
   let infoRefa = document.getElementById("_refa" + id).value;
   let infoPol = document.getElementById("_pol" + id).value;
   let infoRefa_Desde = document.getElementById("_refa_desde" + id).textContent;
+  let infoRefa_Hasta = document.getElementById("_refa_hasta" + id).textContent;
+  let infoEstado = document.getElementById("_estado" + id).textContent;
+  let infoVigTot = document.getElementById("_vig_total" + id).textContent;
+
 
   let fechaHoy = new Date();
   let dia = fechaHoy.getDate();
@@ -234,8 +246,8 @@ resetFiltroBtn.addEventListener("click", function() {
   let infoHoy = dia + '/' + mes + '/' + anio;
 
 console.log("infoHasta: " + infoHasta + ", infoRefa_Desde: " + infoRefa_Desde)
-  // document.getElementById("_ver" + id).textContent = "??";
-    // Ocultar el botÛn
+  // document.getElementById("_ver" + id).textContent = "‚úîÔ∏è";
+    // Ocultar el bot√≥n
     _btn_ren.style.display = "none";
 
     google.script.run.withSuccessHandler().renovarPol(
@@ -247,7 +259,10 @@ console.log("infoHasta: " + infoHasta + ", infoRefa_Desde: " + infoRefa_Desde)
     infoPol,
     infoRefa, 
     vto_antiguo,
-    infoRefa_Desde
+    infoRefa_Desde,
+    infoRefa_Hasta,
+    infoEstado,
+    infoVigTot
   );
 
     });
@@ -259,7 +274,7 @@ console.log("infoHasta: " + infoHasta + ", infoRefa_Desde: " + infoRefa_Desde)
   var divs = document.querySelectorAll("[id^='_btn_baja']");
   divs.forEach(function(_btn_baja) {
     _btn_baja.addEventListener("click", function() {
-      var id = _btn_baja.id.slice(9); // Obtener el Ìndice del div
+      var id = _btn_baja.id.slice(9); // Obtener el √≠ndice del div
 
   let infoPatente = document.getElementById("_pat" + id).textContent;
   let fechaHoy = new Date();
@@ -268,8 +283,8 @@ console.log("infoHasta: " + infoHasta + ", infoRefa_Desde: " + infoRefa_Desde)
   let anio = fechaHoy.getFullYear();
   let infoHoy = dia + '/' + mes + '/' + anio;
 
-  // document.getElementById("_ver" + id).textContent = "?";
-    // Ocultar el botÛn
+  // document.getElementById("_ver" + id).textContent = "‚ùå";
+    // Ocultar el bot√≥n
     _btn_baja.style.display = "none";
     // _btn_ren.style.display = "none";
 
@@ -283,7 +298,7 @@ console.log("infoHasta: " + infoHasta + ", infoRefa_Desde: " + infoRefa_Desde)
 
   }
 
-  // Llamar a la funciÛn getData() del lado del servidor
+  // Llamar a la funci√≥n getData() del lado del servidor
   google.script.run.withSuccessHandler(updateSinPendientes).getData();
   /////////////////////////////////////////
 
@@ -298,14 +313,14 @@ console.log("infoHasta: " + infoHasta + ", infoRefa_Desde: " + infoRefa_Desde)
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// FunciÛn para realizar el inicio de sesiÛn
+// Funci√≥n para realizar el inicio de sesi√≥n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
 
 if (usuarioAlmacenado) {
   // Si hay un usuario almacenado, establecerlo en el elemento correspondiente
-  document.getElementById("usuario_sp").innerHTML = usuarioAlmacenado;
+  document.getElementById("usuario_sp").textContent = usuarioAlmacenado;
   user.style.display = "block";
   close_session.style.display = "block";
   modal.style.display = "none";
@@ -330,19 +345,19 @@ if (usuarioAlmacenado) {
   iniciarContadorTiempo(tiempoRestante);
 } else {
   
-  // FunciÛn para abrir el modal
+  // Funci√≥n para abrir el modal
   modal.style.display = "block";
 
-  // FunciÛn para cerrar el modal
+  // Funci√≥n para cerrar el modal
   function closeModal() {
     modal.style.display = "none";
   }
 
-  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botÛn de inicio de sesiÛn
+  // Si no hay un usuario almacenado, abrir el modal al hacer clic en el bot√≥n de inicio de sesi√≥n
   document.getElementById("inicio-sesion").addEventListener("click", function (event) {
     event.preventDefault();
 
-    // Obtener el usuario y la contraseÒa del formulario
+    // Obtener el usuario y la contrase√±a del formulario
     var usuario = document.getElementById("usuario").value;
     var contrasena = document.getElementById("contrasena").value;
 
@@ -350,12 +365,12 @@ if (usuarioAlmacenado) {
     var colorPicker = document.getElementById("colorPicker");
     var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contraseÒa
+// Hacer una solicitud al servidor para verificar el usuario y la contrase√±a
 
 
 google.script.run.withSuccessHandler(function (color) {
   if (color) {
-    document.getElementById("usuario_sp").innerHTML = usuario;
+    document.getElementById("usuario_sp").textContent = usuario;
     modal.style.display = "none";
     user.style.display = "block";
     close_session.style.display = "block";
@@ -382,7 +397,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// FunciÛn para calcular el tiempo restante en milisegundos
+// Funci√≥n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
   var horaInicio = parseInt(horaInicioAlmacenada);
   var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -391,25 +406,25 @@ function calcularTiempoRestante() {
   return tiempoRestante;
 }
 
-// FunciÛn para mostrar el tiempo restante en el div correspondiente
+// Funci√≥n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
   if (tiempoRestante <= 0) {
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
       sessionStorage.removeItem("magi-color");
-      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      tiempoRestanteDiv.textContent = "Tiempo expirado";
+      document.getElementById("usuario_sp").textContent = "Desconocido";
       modal.style.display = "block";
   } else {
     var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
     var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
     var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
 
-    tiempoRestanteDiv.innerHTML = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
+    tiempoRestanteDiv.textContent = "Tiempo restante: " + horas + ":" + minutos + ":" + segundos;
   }
 }
 
-// FunciÛn para iniciar el contador de tiempo
+// Funci√≥n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
   var intervalo = setInterval(function () {
     tiempoRestante -= 1000;
@@ -419,8 +434,8 @@ function iniciarContadorTiempo(tiempoRestante) {
       sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
       sessionStorage.removeItem("magi-color");
-      tiempoRestanteDiv.innerHTML = "Tiempo expirado";
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
+      tiempoRestanteDiv.textContent = "Tiempo expirado";
+      document.getElementById("usuario_sp").textContent = "Desconocido";
       modal.style.display = "block";
     } else {
       mostrarTiempoRestante(tiempoRestante);
@@ -459,9 +474,9 @@ function close_sessionok(event) {
     // Eliminar el valor almacenado en sessionStorage
     sessionStorage.removeItem("magi-usuario");
       sessionStorage.removeItem("magi-horaInicio");
-      tiempoRestanteDiv.innerHTML = "";    
-      document.getElementById("usuario_sp").innerHTML = "Desconocido";
-  // Recargar la p·gina
+      tiempoRestanteDiv.textContent = "";    
+      document.getElementById("usuario_sp").textContent = "Desconocido";
+  // Recargar la p√°gina
       modal.style.display = "block";
 
 }

@@ -44,14 +44,14 @@ function siniestroNuevo(infoPatente, infoNumSin, infoFechaSin, infoDNI, infoClie
   }
 
 
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
-  const VAL_VEH = LISTADO.getDataRange().getDisplayValues();
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
+  const VAL_POL = BD_POLIZAS.getDataRange().getDisplayValues();
 
 
  // Buscar si el Patente ya existe en la hoja de Polizas
   let patenteIndex = -1;
-  for (let i = 0; i < VAL_VEH.length; i++) {
-    if (VAL_VEH[i][0] === infoPatente) {
+  for (let i = 0; i < VAL_POL.length; i++) {
+    if (VAL_POL[i][0] === infoPatente) {
       patenteIndex = i + 1;
       break;
     }
@@ -62,9 +62,40 @@ function siniestroNuevo(infoPatente, infoNumSin, infoFechaSin, infoDNI, infoClie
   }
   // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
    else {
-var vehVals = [infoPatente, infoDNI, infoCliente, "BD SINIESTROS", , , infoCnia, ,infoFechaSin,infoFechaSin, "SEGURO NUEVO", , infoMarca, , , infoDanos, , , ]
-    LISTADO.insertRowBefore(2).getRange(2, 1, 1, vehVals.length).setValues([vehVals]);
+var vehVals = [infoPatente, infoDNI, infoCliente, "BD SINIESTROS", , , infoCnia, ,,, "SEGURO NUEVO", , infoMarca, , , infoDanos, , , , fecha]
+
+
+  BD_POLIZAS.appendRow(vehVals);
   }
+
+
+
+
+
+    const BD_VEHICULOS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/17FkXB8az__L819hlpT09J46uX24OWV5kH2_ilJY9u-0/edit").getSheetByName("BD_VEHICULOS");
+  const VAL_VEH = BD_VEHICULOS.getDataRange().getDisplayValues();
+
+
+ // Buscar si el Patente ya existe en la hoja de Polizas
+  let patenteIndex2 = -1;
+  for (let i = 0; i < VAL_VEH.length; i++) {
+    if (VAL_VEH[i][0] === infoPatente) {
+      patenteIndex2 = i + 1;
+      break;
+    }
+  }
+
+  // Si la Patente ya existe, actualizar los datos del Vehiculo
+  if (patenteIndex2 !== -1) {
+  }
+  // Si la Patente no existe, agregar una nueva fila a la hoja de polizas
+   else {
+
+var vehVals = [infoPatente, infoMarca, , , , , , , , , , infoDanios, , fecha]
+
+    BD_VEHICULOS.appendRow(vehVals);
+  }
+
 
   const BD_SINIESTROS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1iWcnNTYzdTIyIEwGopjHhh_RglbtDK4Yl6kIXCBw4vs/edit")
   var LISTADO_SIN = BD_SINIESTROS.getSheetByName("LISTADO");
@@ -123,10 +154,10 @@ function buscarMantenimientos2(numeroInventario2 = "1192774"){
 //////////////// BUSCAR PATENTE EN BD EMISION ////////////////
 function buscarMantenimientos3(numeroInventario = "1192774"){
   let mantenimientosRealizados3 = [];
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
 
-  const mantenimientos3 = LISTADO.getDataRange().getDisplayValues();
+  const mantenimientos3 = BD_POLIZAS.getDataRange().getDisplayValues();
   const mantenimientos8 = BD_CLIENTES.getDataRange().getDisplayValues();
 
   for (let i = 0; i < mantenimientos3.length; i++) {
@@ -152,10 +183,10 @@ function buscarMantenimientos3(numeroInventario = "1192774"){
 //////////////// BUSCAR DNI EN BD EMISION ////////////////
 function buscarMantenimientos4(numeroInventario2 = "1192774"){
   let mantenimientosRealizados4 = [];   
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
 
-  const mantenimientos4 = LISTADO.getDataRange().getDisplayValues();
+  const mantenimientos4 = BD_POLIZAS.getDataRange().getDisplayValues();
   const mantenimientos7 = BD_CLIENTES.getDataRange().getDisplayValues();
 
   //////////// BUSCAMOS EL VALOR DE LA COLUMNA E EN BD_CLIENTES ////////////
@@ -172,7 +203,7 @@ function buscarMantenimientos4(numeroInventario2 = "1192774"){
 
     /////// SI EL VALOR DE LA COLUMNA A EN MANTENIMIENTO ES IGUAL AL NUMERO DE INVENTARIO TRAIDO COMO ARGUMENTO, ENTONCES... ///////////
     if(mantenimiento4[1] === numeroInventario2) {
-      /////////// REEMPLAZAMOS EL VALOR EN LA POSICIÓN 3 DEL ARRAY /////////////
+      /////////// REEMPLAZAMOS EL VALOR EN LA POSICIÃ“N 3 DEL ARRAY /////////////
       mantenimiento4[4] = valorEncontrado;
       /////////// HACEMOS PUSH PARA INCORPORARLO A MANTENIMIENTOSREALIZADOS /////////////
       mantenimientosRealizados4.push(mantenimiento4);
@@ -259,7 +290,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o Contraseña!");
+  return alert("Error de Usuario o ContraseÃ±a!");
 }
 
 
@@ -326,7 +357,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de cálculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de cÃ¡lculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];
@@ -371,7 +402,7 @@ function uploadRegToDrive(folderId, filesBase64, dni) {
 
 
 function obtenerFotosPorDNI(dni) {
-  var folderId = "1CyTu6J75Nhdshmt38N79Jf9Ymxq8znYz"; // Reemplaza esto con el ID de tu carpeta raíz en Google Drive
+  var folderId = "1CyTu6J75Nhdshmt38N79Jf9Ymxq8znYz"; // Reemplaza esto con el ID de tu carpeta raÃ­z en Google Drive
   var folder = DriveApp.getFolderById(folderId);
   var subFolders = folder.getFolders();
   var fotosBase64 = [];
