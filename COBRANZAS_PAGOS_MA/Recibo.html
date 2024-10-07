@@ -89,7 +89,7 @@
         <h6 style="font-size: 8px;font-weight: 700;">Lugar y Fecha:</h6>
     </div>
     <div class="col-5" style="height:12px; background-color: #dcdcdc;border: 1px solid black;">
-        <h6 style="padding-left:3px;font-size: 8px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>M. Acosta - <span id="fechaHora"></span></h6>
+        <h6 style="padding-left:3px;font-size: 8px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>M. Acosta - <?= sourceVals[6] ?></h6>
     </div>       
   </div>
 
@@ -124,19 +124,16 @@
 var contenidoSwitch = document.getElementById("contenido-switch");
 
 switch ("<?= sourceVals[10] ?>") {
-  case "AGROSALTA":
+  case "AGROSALTA [RC]":
     contenidoSwitch.textContent = "NO POSEE";
     break;
-  case "AGROSALTA C/GRUA":
+  case "AGROSALTA [RC-GRUA]":
     contenidoSwitch.textContent = "0800 666 1366 (100km)";
     break;
-  case "AGRO (V)":
-    contenidoSwitch.textContent = "NO POSEE";
-    break;
-  case "AGRO (V) C/GRUA":
+  case "AGROSALTA [B1]":
     contenidoSwitch.textContent = "0800 666 1366 (100km)";
     break;
-  case "AGRO MOTO":
+  case "AGROSALTA [MOTO]":
     contenidoSwitch.textContent = "0800 666 1366 (100km)";
     break;
   case "RIVADAVIA":
@@ -184,6 +181,9 @@ switch ("<?= sourceVals[10] ?>") {
   case "BBVA":
     contenidoSwitch.textContent = "";
     break;
+  case "PRUDENCIA":
+    contenidoSwitch.textContent = "";
+    break;
   default:
     contenidoSwitch.textContent = "";
 }
@@ -219,4 +219,3 @@ switch ("<?= sourceVals[10] ?>") {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
 </html>
-

@@ -36,12 +36,36 @@
 </div>
 <script>
 
-
 // Intentamos convertir sourceVals a un array de arrays usando JSON.parse
 var sourceVals = <?= JSON.stringify(sourceVals) ?>;
 
-function cleanAndSplit(value) {
+    console.log("luego de stringify: " + JSON.stringify(sourceVals));
 
+    // Función para limpiar y reemplazar los valores
+    function cleanAndReplace(value) {
+        value = value.replace(/\[RC-GRUA\]/g, '(RC-GRUA)');
+        value = value.replace(/\[RC\]/g, '(RC)');
+        value = value.replace(/\[B1\]/g, '(B1)');
+        value = value.replace(/\[MOTO\]/g, '(MOTO)');
+        return value;
+    }
+
+    // Reemplaza los valores en sourceVals
+    function processSourceVals(sourceVals) {
+        if (Array.isArray(sourceVals)) {
+            return sourceVals.map(item => cleanAndReplace(item));
+        } else if (typeof sourceVals === 'string') {
+            return cleanAndReplace(sourceVals);
+        }
+        return sourceVals;
+    }
+
+    // Limpia y reemplaza los valores de sourceVals
+    sourceVals = processSourceVals(sourceVals);
+
+    console.log("Luego de reemplazar: ", sourceVals);
+
+function cleanAndSplit(value) {
 
     return value.replace(/^['"\[\]]+|['"\[\]]+$/g, '').split('","');
     // return value.replace(/^['"]|['"]$/g, '').split('","');
@@ -59,9 +83,7 @@ while ((match = regex.exec(sourceVals)) !== null) {
 
 console.log(subArrays);
 
-
-
-//////////////////////////////////////////////////////////
+/////////////////// NUEVA GENERACION HTML ////////////////
 function generarHTML() {
     var html = '';
     var receiptsPerColumn = 3;
@@ -84,19 +106,16 @@ function generarHTML() {
 var telGrua = ""
 
 switch (subArrays[j][10]) {
-  case "AGROSALTA":
+  case "AGROSALTA [RC]":
     telGrua = "NO POSEE";
     break;
-  case "AGROSALTA C/GRUA":
+  case "AGROSALTA [RC-GRUA]":
     telGrua = "0800 666 1366 (100km)";
     break;
-  case "AGRO (V)":
-    telGrua = "NO POSEE";
-    break;
-  case "AGRO (V) C/GRUA":
+  case "AGROSALTA [B1]":
     telGrua = "0800 666 1366 (100km)";
     break;
-  case "AGRO MOTO":
+  case "AGROSALTA [MOTO]":
     telGrua = "0800 666 1366 (100km)";
     break;
   case "RIVADAVIA":
@@ -210,7 +229,7 @@ let fecha1 = new Date(
           <h6 style="font-size: 8px;font-weight: 700;">Lugar/Fecha:</h6>
       </div>
       <div class="col-5" style="height:12px; background-color: #dcdcdc;border: 1px solid black;">
-          <h6 style="padding-left:3px;font-size: 8px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>M. Acosta <span id="fechaHora">${fechaHora}</span></h6>
+          <h6 style="padding-left:3px;font-size: 8px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>M. Acosta ${subArrays[j][6]}</h6>
       </div>       
     </div>
   

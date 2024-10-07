@@ -1,3 +1,4 @@
+
 ////////////// ESTILOS DE LA NAV BAR //////////////////
 let navbar = document.querySelector(".navbar");
 
@@ -139,15 +140,33 @@ closeModal.addEventListener("click", () => {
 })()
 
 
+
+////////////////////// VIGENCIAS ///////////////////////////
+
+function buscarRefa() {
+  let cnia = document.getElementById("cnia").value;
+  var valor = "";
+  if (["MAPFRE","ALLIANZ","MERCANTIL", "ORBIS"].includes(cnia)) {
+    valor = 4;
+  } else if (["PROVIDENCIA", "LIBRA", "AGROSALTA [RC]", "AGROSALTA [RC-GRUA]", "AGROSALTA [B1]", "AGROSALTA [MOTO]"].includes(cnia)) {
+    valor = 3;
+  } else if (["GRUA", "DIGNA", "BBVA", "EL TRIUNFO"].includes(cnia)) {
+    valor = 6;
+  } else if (["EXPERTA", "FED PAT", "NIVEL", "RIVADAVIA", "RIO URUGUAY","LA CAJA", "SAN PATRICIO", "ATM"].includes(cnia)) {
+    valor = 1;
+  } else {
+    valor = 0;
+  }
+
+  document.getElementById("vigencia").value = valor;
+}
+
   //////////////////// INGRESAR PAGOS ///////////////////////
 
 function ingresarPago(event) {
   event.preventDefault();
-  const boton = document.getElementById('bt-ingreso');
-  const spinner = document.getElementById('spinner_pago');
-  spinner.style.display = 'block';
-  boton.disabled = true;
-
+  
+  // Obtener todos los valores de los campos
   let infomultiRec = document.getElementById('multiRec').value;
   let infoDNI = document.getElementById('dni').value;
   let infoCliente = document.getElementById('nombreCompleto').value;
@@ -166,6 +185,20 @@ function ingresarPago(event) {
   let infoNotasVeh = document.getElementById('notasveh').value;
   let infoNotasCob = document.getElementById('notascob').value;
   let infoMedio = document.getElementById('mediopago').value;
+  let infoVigTot = document.getElementById('vigtot').value;
+
+  // Verificar si alguno de los campos obligatorios está vacío
+  if (!infomultiRec || !infoDNI || !infoCliente || !infoWpp || !infoPatente || 
+      !infoMarca || !infoCnia || !infoCuota || 
+      !infoVigencia || !infoImporte || !infoVence || !infoMedio) {
+    alert('Por favor, completa todos los campos obligatorios.');
+    return;  // Detener el script si hay campos vacíos
+  }
+
+  const boton = document.getElementById('bt-ingreso');
+  const spinner = document.getElementById('spinner_pago');
+  spinner.style.display = 'block';
+  boton.disabled = true;
 
   google.script.run.withSuccessHandler(handleResponse).pagoNuevo_inv(
     infomultiRec,
@@ -183,7 +216,8 @@ function ingresarPago(event) {
     infoColor,
     infoUsuario,
     infoNotasCob,
-    infoMedio
+    infoMedio,
+    infoVigTot
   );
 
   document.getElementById("dni").value = "";
@@ -195,6 +229,7 @@ function ingresarPago(event) {
   document.getElementById("cnia").value = "";
   document.getElementById("cuota").value = "";
   document.getElementById("vigencia").value = "";
+  document.getElementById("vigtot").value = "";
   document.getElementById("importe").value = "";
   document.getElementById("vto").value = "";
   document.getElementById("color").value = "";
@@ -204,6 +239,7 @@ function ingresarPago(event) {
   document.getElementById("notascob").value = "";
   document.getElementById("mediopago").value = "EFECTIVO";
   document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mensaje").textContent = "Pago adelantado";
 }
 
 function handleResponse(response) {
@@ -248,11 +284,13 @@ function reimprimirReciboMulti_b(numReciboMulti, infomultiRec) {
     const spinner = document.getElementById('spinner_pago');
   spinner.style.display = 'none';
   document.getElementById('multiRec').value = 1;
-  }).getValuesFromSheetMulti(numReciboMulti, infomultiRec);
+    })
+    .withFailureHandler(function(error) {
+      // Manejar el error aquí, por ejemplo, mostrar un mensaje de error
+      alert('Error al obtener los valores del recibo: ' + error);
+    })
+    .getValuesFromSheetMulti(numReciboMulti, infomultiRec);
 }
-
-
-/////////////////////////////////////////////////////////////////////
 
 
 ///////// INGRESAR NOMOVE ///////////////
@@ -323,14 +361,15 @@ function ingresarRecibi(event) {
 }
 
 
+
 //////////////////////////////// BUSCAR PATENTE (COB + EMI) //////////////////////////////////////
   function decidir_patente() {
   const boton = document.getElementById('buscarRegistrosBtn7');
   const spinner = document.getElementById('spinner7');
   spinner.style.display = 'inline-block';
   boton.disabled = true;
-  document.getElementById("mantenimientosTableBody").textcontent = "";
-  document.getElementById("mantenimientosTableBody2").textcontent = "";
+  document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mantenimientosTableBody2").textContent = "";
   const patente_value  = document.getElementById("text-box-buscarPatente").value;
         let infoDNI =  document.getElementById("dni");
         let infoCliente =  document.getElementById("nombreCompleto");
@@ -341,6 +380,7 @@ function ingresarRecibi(event) {
         let infoCnia =  document.getElementById("cnia");
         let infoCuota =  document.getElementById("cuota");
         let infoVigencia =  document.getElementById("vigencia");
+        let infoVigTot =  document.getElementById("vigtot");
         let infoImporte =  document.getElementById("importe");
         let infoVence =  document.getElementById("vto");
         let infoColor =  document.getElementById("color");
@@ -363,8 +403,9 @@ function ingresarRecibi(event) {
 
   google.script.run.withSuccessHandler(function(ultima_actu) {
 
-let fechaString = ultima_actu[0][20];
-let fechaEmi, mesEmi, anioEmi;
+/////////////// FECHA ULTIMA ACTU BD EMISION ////////////////
+let fechaString = ultima_actu[0][17];
+let diaEmi, mesEmi, anioEmi;
 
 if (fechaString) {
   let fechaEmiArray = fechaString.split('/');
@@ -375,18 +416,20 @@ if (fechaString) {
   }
 }
     
+/////////////// FECHA ULTIMO PAGO BD COBRANZAS ////////////////
 let fechaString2 = ultima_actu[1][0][5];
-let fechaCob, mesCob, anioCob;
+let diaCob, mesCob, anioCob;
 
 if (fechaString2) {
   let fechaCobArray = fechaString2.split('/');
   if (fechaCobArray.length === 3) {
+    diaCob = fechaCobArray[0];
     mesCob = fechaCobArray[1];
     anioCob = fechaCobArray[2];
   }
 }
 
-
+/////////////// FECHA INICIO VIGENCIA SEG BD EMISION ////////////////
 let fechaString3 = ultima_actu[0][8];
 let fechaEmi3, mesEmi3, anioEmi3;
 
@@ -399,14 +442,16 @@ if (fechaString3) {
   }
 }
 
-///// ERROR, NO HAY NINGUN DATO
 
-// console.log("anioCob: " + anioCob)
-// console.log("mesCob: " + mesCob)
-// console.log("anioEmi: " + anioEmi)
-// console.log("mesEmi: " + mesEmi)
-// console.log("anioEmi3: " + anioEmi3)
-// console.log("mesEmi3: " + mesEmi3)
+if (anioEmi && anioEmi.length === 4) {
+    errores.push("BD EMISION: EL AÑO EN ÚLTIMA ACTUALIZACION DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+}
+let errores = []
+// Verificar si anioCob es válido y tiene la propiedad length
+if (anioCob && anioCob.length === 4) {
+    errores.push("BD COBRANZAS: EL AÑO EN VENCIMIENTO DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+}
+
 
 if (ultima_actu[0] == "" && ultima_actu[1] == "") {
     alert("NO HAY DATOS ENCONTRADOS.") 
@@ -417,10 +462,15 @@ if (ultima_actu[0] == "" && ultima_actu[1] == "") {
 
 }  ////INGRESA POR COBRANZAS NORMAL
 
-else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ultima_actu[0] == "" && ultima_actu[1] !== "") || (anioCob > anioEmi3) || (anioEmi3 === anioCob && mesCob >= mesEmi3)) {
-// alert("PAGO DE CUOTA")
+else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob > mesEmi) ||  (anioEmi === anioCob && mesCob === mesEmi && diaCob >= diaEmi) ||(ultima_actu[0] == "" && ultima_actu[1] !== "") || (anioCob > anioEmi3) || (anioEmi3 === anioCob && mesCob > mesEmi3) || (anioEmi3 === anioCob && mesCob === mesEmi3 && diaCob >= diaEmi3)) {
+// // alert("PAGO DE CUOTA")
+
+//     // alert("PAGO DE CUOTA")
+// console.log("PAGO DE CUOTA--- " + "diaCob: " + diaCob + "mesCob: " + mesCob + "anioCob: " + anioCob + "||| diaEmi3: " + diaEmi3 + "mesEmi3: " + mesEmi3 + "anioEmi3: " +  anioEmi3 + "||| diaEmi: " + diaEmi + "mesEmi: " + mesEmi + "anioEmi: " +  anioEmi)
+
+
           let tableBody = document.getElementById("mantenimientosTableBody");
-          tableBody.textcontent = "";
+          tableBody.textContent = "";
           if (ultima_actu[1].length > 0) {
             
             
@@ -439,6 +489,7 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoCnia.value = "";
         infoCuota.value = "";
         infoVigencia.value = "";
+        infoVigTot.value = "";
         infoImporte.value = "";
         infoVence.value = "";
         infoColor.value = "";
@@ -463,17 +514,19 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoPoliza.value = ultima_actu[1][0][9];
         infoCnia.value = ultima_actu[1][0][10];
         infoImporte.value = ultima_actu[1][0][11];
+        infoVigTot.value = ultima_actu[0][20];
+        console.log("valor vig: " + ultima_actu[0][20]);
         let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
         let importeNumero = parseInt(importeSinSignos);
 
-infoImporte.value = importeNumero
-
+        infoImporte.value = importeNumero
 
         infoCuota.value = parseInt(ultima_actu[1][0][7])+1;
         infoVigencia.value = parseInt(ultima_actu[1][0][8]);
         if(infoCuota.value > infoVigencia.value) {
           infoCuota.value = 1;
           infoImporte.value = "";
+        buscarRefa()
         } else {}
         let fechaString = ultima_actu[1][0][5];
         if (fechaString) {
@@ -522,13 +575,17 @@ ultima_actu[1].forEach(mantenimiento => {
           }
 
 ///// INGRESA POR SEGURO NUEVO O RENOVACION
-      } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
+      } else if((anioEmi > anioCob) || (anioEmi === anioCob && mesEmi > mesCob)  || (anioEmi === anioCob && mesEmi === mesCob && diaEmi > diaCob) || (ultima_actu[0] !== "" && ultima_actu[1] == "")) {
+// ACTUALIZAR REFACTURACION A FUERZA
 
-    // alert("SEGURO NUEVO / RENOVACION")
+buscarRefa()
+
+//     // alert("SEGURO NUEVO / RENOVACION")
+console.log("SEGURO NUEVO / RENOVACION--- " + "diaCob: " + diaCob + "mesCob: " + mesCob + "anioCob: " + anioCob + "||| diaEmi3: " + diaEmi3 + "mesEmi3: " + mesEmi3 + "anioEmi3: " +  anioEmi3 + "||| diaEmi: " + diaEmi + "mesEmi: " + mesEmi + "anioEmi: " +  anioEmi)
     var vig = parseInt(ultima_actu[0][4]);
     var rf = parseInt(12 / vig);
     let fecha_vto_new = diaEmi3 + "/" + mesEmi3 + "/" + anioEmi3
-
+    
     for (var i = 0; i <= rf; i++) {
   let fecha_refa = new Date(parseInt("20" + anioEmi3), mesEmi3 - 1, diaEmi3); 
   
@@ -560,6 +617,7 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoCnia.value = "";
         infoCuota.value = "";
         infoVigencia.value = "";
+        infoVigTot.value = "";
         infoImporte.value = "";
         infoVence.value = "";
         infoColor.value = "";
@@ -584,6 +642,7 @@ if (ultima_actu[0][10] == "ANULACION") {
         infoNotasVeh.value = ultima_actu[0][14];
         infoWpp.value = ultima_actu[0][15];
         infoNotasCte.value = ultima_actu[0][16];
+        infoVigTot.value = ultima_actu[0][20];
 
 
 let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
@@ -617,9 +676,43 @@ infoImporte.value = importeNumero
           }
   } else {
     
-    alert("ERROR")
+
+function mostrarError(mensaje) {
+    alert("ERROR: \n" + mensaje);
+}
+
+let errores = [];
+
+// Verificar si ultima_actu[0] existe antes de acceder a sus propiedades
+if (ultima_actu[0]) {
+    if (!ultima_actu[0][17]) {
+        errores.push("BD EMISION: FALTA VALOR EN ÚLTIMA ACTUALIZACION CON ESA PATENTE");
+    }
+} else {
+    errores.push("BD EMISION: NO HAY VALORES ENCONTRADOS CON ESA PATENTE");
+}
+
+// Verificar si anioEmi es válido y tiene la propiedad length
+if (anioEmi && anioEmi.length === 4) {
+    errores.push("BD EMISION: EL AÑO EN ÚLTIMA ACTUALIZACION DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+}
+
+// Verificar si mesCob tiene un valor
+if (!mesCob) {
+    errores.push("NO HAY VALOR EN VENCIMENTO DE COBRANZAS CON ESA PATENTE");
+}
+
+// Verificar si anioCob es válido y tiene la propiedad length
+if (anioCob && anioCob.length === 4) {
+    errores.push("BD COBRANZAS: EL AÑO EN VENCIMIENTO DEBE TENER DOS DIGITOS Y CONTIENE CUATRO");
+}
+
+if (errores.length > 0) {
+    mostrarError(errores.join("\n"));
+}
+      
 console.log("Valores: " + ultima_actu[0])
-console.log("Fecha Emi 19: " + ultima_actu[0][19])
+console.log("Fecha Emi 17: " + ultima_actu[0][17])
 console.log("Fecha Emi 20: " + ultima_actu[0][20])
 console.log("Mes Cob: " + mesCob)
 console.log("Año Cob: " + anioCob)
@@ -631,7 +724,7 @@ console.log("Año Emi: " + anioEmi)
 let rowCount = 0;
 let processed = new Set(); // conjunto para almacenar los valores ya procesados
 const tableBody2 = document.getElementById("mantenimientosTableBody2");
-tableBody2.textcontent = ""; // Mover la línea de aquí
+tableBody2.textContent = ""; // Mover la línea de aquí
 
 ultima_actu[2].forEach(mantenimiento2 => {
   if (rowCount < 10) {
@@ -661,20 +754,20 @@ ultima_actu[2].forEach(mantenimiento2 => {
   spinner.style.display = 'none';
   boton.disabled = false;
   agroGruas(agrocnia) 
+  actualizarMensaje()
 
   }).getUltimaActu_inv(patente_value);
 
   }
-
-
+  
 //////////////////////////////// BUSCAR DNI (COB + EMI) //////////////////////////////////////
   function decidir_dni() {
   const boton = document.getElementById('buscarRegistrosBtn8');
   const spinner = document.getElementById('spinner8');
   spinner.style.display = 'inline-block';
   boton.disabled = true;
-  document.getElementById("mantenimientosTableBody").textcontent = "";
-  document.getElementById("mantenimientosTableBody2").textcontent = "";
+  document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mantenimientosTableBody2").textContent = "";
   const dni_value1  = document.getElementById("text-box-numeroInventario_dni").value;
         let infoDNI =  document.getElementById("dni");
         let infoCliente =  document.getElementById("nombreCompleto");
@@ -696,7 +789,7 @@ ultima_actu[2].forEach(mantenimiento2 => {
 
   google.script.run.withSuccessHandler(function(ultima_actu) {
 
-let fechaString = ultima_actu[0][20];
+let fechaString = ultima_actu[0][17];
 let fechaEmi, mesEmi, anioEmi;
 
 if (fechaString) {
@@ -722,6 +815,7 @@ if (fechaString2) {
 console.log("FECHA EMI: " + fechaString + "FECHA COB: " + fechaString2)
 console.log("FECHA EMI 19: " + fechaString + "FECHA EMI 20: " + fechaString2)
 console.log("FECHA EMI: " + ultima_actu[0] + "FECHA COB: " + ultima_actu[1])
+
 ///// ERROR, NO HAY NINGUN DATO
 
 if (ultima_actu[0] == "" && ultima_actu[1] == "") {
@@ -736,7 +830,7 @@ else if ((anioCob > anioEmi) || (anioEmi === anioCob && mesCob >= mesEmi) || (ul
     // alert("PAGO DE CUOTA")
 
           let tableBody = document.getElementById("mantenimientosTableBody");
-          tableBody.textcontent = "";
+          tableBody.textContent = "";
           if (ultima_actu[1].length > 0) {
             
         infoDNI.value = ultima_actu[1][0][2];
@@ -842,7 +936,7 @@ infoImporte.value = importeNumero
 let rowCount = 0;
 let processed = new Set(); // conjunto para almacenar los valores ya procesados
 const tableBody2 = document.getElementById("mantenimientosTableBody2");
-tableBody2.textcontent = ""; // Mover la línea de aquí
+tableBody2.textContent = ""; // Mover la línea de aquí
 
 ultima_actu[2].forEach(mantenimiento2 => {
   if (rowCount < 10) {
@@ -872,12 +966,117 @@ ultima_actu[2].forEach(mantenimiento2 => {
   spinner.style.display = 'none';
   boton.disabled = false;
   agroGruas(agrocnia) 
-
+  actualizarMensaje()
   }).getUltimaActuDNI_inv(dni_value1);
 
   }
 
 //////////////////////////////// FIN DE BUSCAR DNI (COB + EMI) //////////////////////////////////////
+          
+  ///// SCRIPT PARA BUSCAR DATOS POR DNI BD COB //////////
+      function buscarRegistros_dni() {
+  const boton = document.getElementById('buscarRegistrosBtn3');
+  const spinner = document.getElementById('spinner3');
+  spinner.style.display = 'inline-block';
+  boton.disabled = true;
+  document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mantenimientosTableBody2").textContent = "";
+        const numeroInventario2 = document.getElementById("text-box-numeroInventario_dni").value;
+        let infoDNI =  document.getElementById("dni");
+        let infoCliente =  document.getElementById("nombreCompleto");
+        let infoWpp =  document.getElementById("wpp");
+        let infoPatente =  document.getElementById("patente");
+        let infoMarca =  document.getElementById("marca");
+        let infoPoliza =  document.getElementById("poliza");
+        let infoCnia =  document.getElementById("cnia");
+        let infoCuota =  document.getElementById("cuota");
+        let infoVigencia =  document.getElementById("vigencia");
+        let infoImporte =  document.getElementById("importe");
+        let infoVence =  document.getElementById("vto");
+        let infoColor =  document.getElementById("color");
+        let infoNotas =  document.getElementById("notas");
+        let agrocnia = document.getElementById("cnia").value
+        document.getElementById("mediopago").value = "EFECTIVO";
+
+        google.script.run
+        .withSuccessHandler( info => {
+          let tableBody2 = document.getElementById("mantenimientosTableBody2");
+          tableBody2.textContent = "";
+          if (info.length > 0) {
+            
+        infoDNI.value = info[0][2];
+        infoCliente.value = info[0][3];
+        infoWpp.value = info[0][4];
+        infoPatente.value = info[0][1];
+        infoMarca.value = info[0][13];
+        infoPoliza.value = info[0][9];
+        infoCnia.value = info[0][10];
+        infoImporte.value = info[0][11];
+
+let importeSinSignos = infoImporte.value.replace("$", "").replace(".", "");
+let importeNumero = parseInt(importeSinSignos);
+infoImporte.value = importeNumero
+
+        infoCuota.value = parseInt(info[0][7])+1;
+        infoVigencia.value = parseInt(info[0][8]);
+        if(infoCuota.value > infoVigencia.value) {
+          infoCuota.value = 1;
+          infoImporte.value = "";
+        } else {}
+        let fechaString = info[0][5];
+        let partesFecha = fechaString.split('/');
+        let dia = partesFecha[0];
+        let mes = partesFecha[1];
+        let anio = partesFecha[2].slice(-2);
+        let fecha = new Date(anio, mes - 1, dia);
+        fecha.setMonth(fecha.getMonth() + 1)
+        infoVence.value = fecha.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+        infoColor.value = info[0][15];
+const valorRecuperado = info[0][18];
+const inicio = valorRecuperado.indexOf("(") + 1;
+const fin = valorRecuperado.indexOf(")");
+const contenido = valorRecuperado.substring(inicio, fin);
+infoNotas.value = contenido;
+
+let rowCount = 0;
+let processed = new Set(); // conjunto para almacenar los valores ya procesados
+info.forEach(mantenimiento2 => {
+  if (rowCount < 10) {
+    // solo agrega filas si el número actual de filas es menor que 10 y el valor no está en el conjunto
+    if (!processed.has(mantenimiento2[1])) {
+      const template2 = document.getElementById("mantenimientosRow2");
+      const templateRow2 = template2.content;
+      let tr = templateRow2.cloneNode(true);
+      let PolPatente = tr.querySelector(".PolPatente")
+      let PolVehiculo = tr.querySelector(".PolVehiculo")
+      let PolCnia = tr.querySelector(".PolCnia")
+      let PolVtos = tr.querySelector(".PolVtos")
+
+      PolPatente.textContent = mantenimiento2[1];
+      PolVehiculo.textContent = mantenimiento2[13];
+      PolCnia.textContent = mantenimiento2[10];
+      PolVtos.textContent = mantenimiento2[5];
+
+      tableBody2.appendChild(tr);
+      rowCount++;
+      processed.add(mantenimiento2[1]); // agregar valor al conjunto de valores procesados
+    }
+  }
+});
+
+          } else {
+            alert("No se encontraron valores")
+          }
+    spinner.style.display = 'none';
+    boton.disabled = false;
+  agroGruas(agrocnia) 
+
+actualizarMensaje()
+        })
+        .buscarMantenimientos2(numeroInventario2)
+      }
+            ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR DNI //////////
+
 
   ///// SCRIPT PARA BUSCAR DATOS POR NOMBRE BD COB //////////
       function buscarRegistros_nom() {
@@ -885,8 +1084,8 @@ ultima_actu[2].forEach(mantenimiento2 => {
   const spinner = document.getElementById('spinner5');
   spinner.style.display = 'inline-block';
   boton.disabled = true;
-  document.getElementById("mantenimientosTableBody").textcontent = "";
-  document.getElementById("mantenimientosTableBody2").textcontent = "";
+  document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mantenimientosTableBody2").textContent = "";
         const numeroInventario = document.getElementById("text-box-buscarNombre").value;
         let infoDNI =  document.getElementById("dni");
         let infoCliente =  document.getElementById("nombreCompleto");
@@ -906,7 +1105,7 @@ ultima_actu[2].forEach(mantenimiento2 => {
         google.script.run
         .withSuccessHandler( info => {
           let tableBody = document.getElementById("mantenimientosTableBody");
-          tableBody.textcontent = "";
+          tableBody.textContent = "";
           if (info.length > 0) {
             
         infoDNI.value = info[0][2];
@@ -985,8 +1184,8 @@ actualizarMensaje()
   const spinner = document.getElementById('spinner6');
   spinner.style.display = 'inline-block';
   boton.disabled = true;
-  document.getElementById("mantenimientosTableBody").textcontent = "";
-  document.getElementById("mantenimientosTableBody2").textcontent = "";
+  document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mantenimientosTableBody2").textContent = "";
         const numeroInventario = document.getElementById("text-box-buscarNombre").value;
         let infoDNI =  document.getElementById("dni");
         let infoCliente =  document.getElementById("nombreCompleto");
@@ -1001,12 +1200,11 @@ actualizarMensaje()
         let infoVence =  document.getElementById("vto");
         let infoColor =  document.getElementById("color");
         let infoNotas =  document.getElementById("notas");
-        document.getElementById("mediopago").value = "EFECTIVO";
 
         google.script.run
         .withSuccessHandler( info => {
           // let tableBody3 = document.getElementById("mantenimientosTableBody3");
-          // tableBody3.textcontent = "";
+          // tableBody3.textContent = "";
           if (info.length > 0) {
             
         infoDNI.value = info[0][1]; //
@@ -1054,8 +1252,8 @@ actualizarMensaje()
   const spinner = document.getElementById('spinner4');
   spinner.style.display = 'inline-block';
   boton.disabled = true;
-  document.getElementById("mantenimientosTableBody").textcontent = "";
-  document.getElementById("mantenimientosTableBody2").textcontent = "";
+  document.getElementById("mantenimientosTableBody").textContent = "";
+  document.getElementById("mantenimientosTableBody2").textContent = "";
         const numeroInventario2 = document.getElementById("text-box-numeroInventario_dni").value;
         let infoDNI =  document.getElementById("dni");
         let infoCliente =  document.getElementById("nombreCompleto");
@@ -1075,7 +1273,7 @@ actualizarMensaje()
         google.script.run
         .withSuccessHandler( info => {
           let tableBody5 = document.getElementById("mantenimientosTableBody5");
-          tableBody5.textcontent = "";
+          tableBody5.textContent = "";
           if (info.length > 0) {
             
         infoDNI.value = info[0][1];
@@ -1162,6 +1360,7 @@ function reimprimirRecibo(event) {
   event.preventDefault();
   const numRecibo = document.getElementById('numRecibo').value;
   google.script.run.withSuccessHandler(function(content) {
+    console.log(content)
     var newWindow = window.open();
     newWindow.document.write(content);
   }).getValuesFromSheet(numRecibo);
@@ -1178,7 +1377,6 @@ function reimprimirReciboMulti(event) {
   }).getValuesFromSheetMulti(numReciboMulti, cantReciboMulti);
   document.getElementById('multiRec').value = 1;
 }
-
 
 
 ////////////////////////// DESCARGAR PDF DE RECIBOS /////////////////////
@@ -1223,50 +1421,69 @@ function actualizarMensaje() {
   var fechaActual = new Date();
 
   var fechaPagoStr = inputElement.value;
-  var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
-  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
+  var fechaHoraSplit = fechaPagoStr.split(" ");
+  var fechaSplit = fechaHoraSplit[0].split("/");
+
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
-  var year = "20" + parseInt(fechaSplit[2], 10);
-  var fechaVencimiento = new Date(year, month - 1, day); // Formatea la fecha como "m/d/yyyy" sin ceros innecesarios
+  
+  // Revisar si el año tiene 4 dígitos, si no, añadir "20" delante
+  var year = fechaSplit[2].length === 2 ? "20" + parseInt(fechaSplit[2], 10) : parseInt(fechaSplit[2], 10);
+
+  var fechaVencimiento = new Date(year, month - 1, day);
   var tiempoDiferencia = fechaVencimiento.getTime() - fechaActual.getTime();
-  var diasDiferencia = Math.floor(tiempoDiferencia / (1000 * 3600 * 24)+1);
+  var diasDiferencia = Math.floor(tiempoDiferencia / (1000 * 3600 * 24) + 1);
 
   switch (true) {
-      case fechaVencimiento > fechaActual && diasDiferencia > 30:
-      mensajeElement.textcontent = "Pago adelantado";
+    case fechaVencimiento > fechaActual && diasDiferencia > 30:
+      mensajeElement.textContent = "Pago adelantado";
       mensajeElement.style.color = "blue";
-      mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
       break;
+
     case fechaVencimiento > fechaActual && diasDiferencia <= 30 && diasDiferencia >= 0:
-      mensajeElement.textcontent = "OK";
+      mensajeElement.textContent = "OK";
       mensajeElement.style.color = "blue";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia <= -1 && diasDiferencia >= -45:
-      mensajeElement.textcontent = "Recibo vencido";
+      mensajeElement.textContent = "Recibo vencido";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia <= -46 && diasDiferencia >= -59:
-      mensajeElement.textcontent = "Debe dos meses";
+      mensajeElement.textContent = "Debe dos meses";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
+      var confirmation = confirm("Estado de poliza: ¡DEBE DOS MESES! ¿DESEA COBRAR AMBAS CUOTAS?\n(SI PRESIONA ACEPTAR TRAERÁ AMBOS RECIBOS.)");
+      if (confirmation) {
+        document.getElementById("multiRec").value = 2
+      }
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia <= -60 && diasDiferencia >= -89:
-      mensajeElement.textcontent = "Debe tres meses";
+      mensajeElement.textContent = "Debe tres meses";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
+      var confirmation = confirm("Estado de poliza: ¡DEBE TRES MESES! ¿DESEA COBRAR LAS TRES CUOTAS?\n(SI PRESIONA ACEPTAR TRAERÁ LOS TRES RECIBOS.)");
+      if (confirmation) {
+        document.getElementById("multiRec").value = 3
+      }
       break;
+
     case fechaVencimiento < fechaActual && diasDiferencia < -90:
-      mensajeElement.textcontent = "Póliza posiblemente anulada";
+      mensajeElement.textContent = "Póliza posiblemente anulada";
       mensajeElement.style.color = "red";
-    mensajeElement.style.fontWeight = "bold"; // Fuente más gruesa
+      mensajeElement.style.fontWeight = "bold";
+      var confirmation = confirm("Estado de poliza: ¡DEBE MÁS DE TRES MESES! LA POLIZA PUEDE ESTAR ANULADA, NO SE RECOMIENDA COBRAR.\n¿DESEA CONTINUAR DE IGUAL FORMA?\n(SI PRESIONA ACEPTAR TRAERÁ SOLO UN RECIBO.)");
+      if (confirmation) {
+        // Acción a realizar si presiona "Aceptar"
+      }
       break;
   }
 }
-
-
 
 //////////////////////// FUNCION PARA COMPROBAR LISTA NEGRA ///////////////////////////
 
@@ -1274,14 +1491,14 @@ function agroGruas(agrocnia) {
   var companiaSeleccionada = document.getElementById("cnia").value;
   var valorPatente = document.getElementById("patente").value;
 
-  if ((companiaSeleccionada === "AGROSALTA C/GRUA" || companiaSeleccionada === "AGRO (V) C/GRUA") || 
-       (agrocnia === "AGROSALTA C/GRUA" || agrocnia === "AGRO (V) C/GRUA")) {
+  if ((companiaSeleccionada === "AGROSALTA [RC-GRUA]" || companiaSeleccionada === "AGROSALTA [B1]") || 
+       (agrocnia === "AGROSALTA [RC-GRUA]" || agrocnia === "AGROSALTA [B1]")) {
         
     google.script.run
       .withSuccessHandler(function(result) {
         if (result) {
           alert("La patente ingresada corresponde a un vehículo el cual no se puede asegurar con grúa. El motivo es: " + result + ", se procederá a cambiar la compañía a AGROSALTA sin grúa.");
-          document.getElementById("cnia").value = "AGROSALTA";
+          document.getElementById("cnia").value = "AGROSALTA [RC]";
         }
       })
       .searchBlacklist(valorPatente);
@@ -1292,10 +1509,6 @@ function agroGruas(agrocnia) {
 
 
   ////////////////////////////////////////////////////////////
-
-
-  ////////////////////////////////////////////////////////////
-
 
 
 
@@ -1505,6 +1718,7 @@ function close_sessionok(event) {
 
             
 ////////////////////////////////////////////////////////////////////////////////
+
 
 
 
