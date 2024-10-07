@@ -512,7 +512,7 @@ nav .navbar .links li .sub-menu li{
     .container {
       border: 0px solid white;
       background-color: #FFFFFF;
-      border-radius: 5%;
+      border-radius: 20px;
       padding: 20px;
       width: 600px;
     }
@@ -539,16 +539,11 @@ nav .navbar .links li .sub-menu li{
 
 
   .cnia_border {
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 750;
-  padding: 2px; 
   text-align: center; 
-  margin-left: 5px; 
-  border-radius:5px; 
-  height: 30px; 
-  margin-right: 1px;
+  border-radius:5px;  
   color: white; 
-  width:140px;
   border: 1px solid black;
   box-shadow: 0px 0px 2px 0px #000000;
   }
@@ -556,16 +551,11 @@ nav .navbar .links li .sub-menu li{
   .modulo {
   font-size: 1.1rem;
   font-weight: 700;
-  margin-left: 0px;
-  margin-right: 0px; 
   }
 
   .modulo-sm {
   font-size: 0.8rem;
   font-weight: 700;
-  margin-left: 0px; 
-  padding-top: 5px;
-  margin-right: 0px;
   }
   .est_not::before {
     content: "Nuevo Estado";
@@ -574,9 +564,6 @@ nav .navbar .links li .sub-menu li{
   font-size: 1.1rem;
   align: center;
   font-weight: 700;
-  margin-left: 1px; 
-  padding: 0px;
-  margin-right: 1px;
   }
 
     .container25 {

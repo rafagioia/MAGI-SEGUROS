@@ -12,163 +12,149 @@ function include( fileName ){
   .getContent();
 }
 
-
-
-function modifDatos(valorMod, nuevoValor, tramite_sn) {
-  var BD_SINIESTROS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1iWcnNTYzdTIyIEwGopjHhh_RglbtDK4Yl6kIXCBw4vs/edit");
-  var sheet = BD_SINIESTROS.getSheetByName("LISTADO");
-  var dataValues = sheet.getDataRange().getDisplayValues();
-  
-  console.log(valorMod, nuevoValor, tramite_sn)
-  var column;
-  switch (valorMod) {
-    case 'dni':
-      column = 4;
-      break;
-    case 'nombre':
-      column = 5;
-      break;
-    case 'patente':
-      column = 1;
-      break;
-    case 'marca':
-      column = 15;
-      break;
-    case 'riesgo':
-      column = 8;
-      break;
-    case 'compania':
-      column = 6;
-      break;
-    case 'numSin':
-      column = 2;
-      break;
-    case 'fechaDec':
-      column = 22;
-      break;
-    case 'fechaSin':
-      column = 3;
-      break;
-    case 'hora':
-      column = 21;
-      break;
-    case 'relato':
-      column = 19;
-      break;
-    case 'taller':
-      column = 12;
-      break;
-    case 'wpp':
-      column = 17;
-      break;
-    default:
-      column = 0;
-      break;
-  }
-
-
-  for (var i = 0; i < dataValues.length; i++) {
-    if (dataValues[i][28] == tramite_sn) {
-      var celda = sheet.getRange(i + 1, column);
-      const valorAntiguo = celda.getValue();
-      celda.setValue(nuevoValor);
-      console.log("Campo Modificado:", valorMod, "Valor Antiguo:", valorAntiguo, "Valor Nuevo:", nuevoValor);
-    }
-  }
-
-
-
-  // for (var i = 0; i < dataValues.length; i++) {
-  //   if (dataValues[i][28] == tramite_sn) {
-  //     sheet.getRange(i+1, column).setValue(nuevoValor);
-  //   }
-  // }
-
-
-  var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
-  var folder = DriveApp.getFolderById(folderId);
-
-  var fileName = 'log_emision_endosos.txt'; // Nombre fijo del archivo de registro
-  var files = folder.getFilesByName(fileName);
-
-  if (files.hasNext()) {
-    var file = files.next();
-    var contenidoActual = file.getBlob().getDataAsString();
-    contenidoActual += '\n' +  "[ " + infoHoy + " ] //" + infoUsuario + ": ENDOSO:\nCampo Modificado:", valorMod, "Valor Antiguo:", valorAntiguo, "Valor Nuevo:", nuevoValor
-    file.setContent(contenidoActual);
-  } else {
-    // Si el archivo no existe, créalo con el mensaje actual
-    folder.createFile(fileName, vehVals);
-  }
-
-
-}
-
-
-
 function getData(cnia_filter = "", patente_filter = "", dni_filter = "", estado_filter, nombre_filter = "") {
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
-  const data = LISTADO.getDataRange().getDisplayValues();
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
-  const data2 = BD_CLIENTES.getDataRange().getDisplayValues();
+    const BD_VEHICULOS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/17FkXB8az__L819hlpT09J46uX24OWV5kH2_ilJY9u-0/edit").getSheetByName("BD_VEHICULOS");
+    const BD_COBRANZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1mA3lgXqaLeMnr9q-f56ZrcWt5GjOAURemUbpZaRzuEA/edit").getSheetByName("BD COBRANZAS");
+  const dataPol = BD_POLIZAS.getDataRange().getDisplayValues();
+  const dataCli = BD_CLIENTES.getDataRange().getDisplayValues();
+  const dataVeh = BD_VEHICULOS.getDataRange().getDisplayValues();
+  const dataCob = BD_COBRANZAS.getDataRange().getDisplayValues();
 
   var sinPendientes = [];
-  for (var i = 1; i < data.length; i++) {
-    if ((data[i][10] === estado_filter || data[i][10] == "PENDIENTE" || estado_filter === "" ) && 
-    (cnia_filter === "" || data[i][6] === cnia_filter) && 
-    (nombre_filter === "" || data[i][2].includes(nombre_filter)) &&
-    (patente_filter === "" || data[i][0].includes(patente_filter)) && 
-    (dni_filter === "" || data[i][1] === dni_filter))
+  for (var i = 1; i < dataPol.length; i++) {
+    if ((dataPol[i][10] === estado_filter || dataPol[i][10] == "PENDIENTE" || estado_filter === "" ) && 
+    (cnia_filter === "" || dataPol[i][6] === cnia_filter) && 
+    (nombre_filter === "" || dataPol[i][2].includes(nombre_filter)) &&
+    (patente_filter === "" || dataPol[i][0].includes(patente_filter)) && 
+    (dni_filter === "" || dataPol[i][1] === dni_filter))
      {
       var sinPend = [];
-      sinPend.push(data[i][0]); // PATENTE
-      sinPend.push(data[i][1]); // DNI
-      sinPend.push(data[i][2]); // NOMBRE
-      sinPend.push(data[i][3]); // SUCURSAL
-      sinPend.push(data[i][5]); // IMPORTE
-      sinPend.push(data[i][6]); // COMPAÑIA
-      sinPend.push(data[i][7]); // POLIZA
-      sinPend.push(data[i][8]); // DESDE
-      sinPend.push(data[i][9]); // HASTA
-      sinPend.push(data[i][10]); // OPERACION
-      sinPend.push(data[i][11]); // COBERTURA
-      sinPend.push(data[i][12]); // MARCA
-      sinPend.push(data[i][13]); // F PAGO
-      sinPend.push(data[i][14]); // OBSERVACIONES
-      sinPend.push(data[i][15]); // DAÑOS
-      sinPend.push(data[i][17]); // MOTOR
-      sinPend.push(data[i][18]); // CHASIS
-      
-      for (var j = 0; j < data2.length; j++) {
-        if (data2[j][0] === data[i][1]) {
-          sinPend.push(data2[j][2]); // DOMICILIO
-          sinPend.push(data2[j][3]); // LOCALIDAD
-          sinPend.push(data2[j][4]); // WHATSAPP
-          sinPend.push(data2[j][6]); // MAIL
-          sinPend.push(data2[j][7]); // NOTAS CTE
+      sinPend.push(dataPol[i][0]); // PATENTE
+      sinPend.push(dataPol[i][1]); // DNI
+      sinPend.push(dataPol[i][2]); // NOMBRE
+      sinPend.push(dataPol[i][3]); // SUCURSAL
+      sinPend.push(dataPol[i][5]); // IMPORTE
+      sinPend.push(dataPol[i][6]); // COMPAÑIA
+      sinPend.push(dataPol[i][7]); // POLIZA
+      sinPend.push(dataPol[i][8]); // DESDE
+      sinPend.push(dataPol[i][9]); // HASTA
+      sinPend.push(dataPol[i][10]); // OPERACION
+      sinPend.push(dataPol[i][11]); // COBERTURA
+      sinPend.push(dataPol[i][12]); // MARCA
+      sinPend.push(dataPol[i][13]); // F PAGO
+      sinPend.push(dataPol[i][4]); // REFACTURACIONES
+      sinPend.push(i); // INDICE DE LA POLIZA
+      sinPend.push(dataPol[i][18]); // REFA DESDE
+      sinPend.push(dataPol[i][19]); // REFA HASTA
+       
+      for (var j = 0; j < dataCli.length; j++) {
+        if (dataCli[j][0] === dataPol[i][1]) {
+          sinPend.push(dataCli[j][2]); // DOMICILIO
+          sinPend.push(dataCli[j][3]); // LOCALIDAD
+          sinPend.push(dataCli[j][4]); // WHATSAPP
+          sinPend.push(dataCli[j][6]); // MAIL
+          sinPend.push(dataCli[j][7]); // NOTAS CTE
+          sinPend.push(dataCli[j][9]); // ESTADO
         }
       }
       
+      for (var k = 0; k < dataVeh.length; k++) {
+        if (dataVeh[k][0] === dataPol[i][0]) {
+          sinPend.push(dataVeh[k][2]); // AÑO
+          sinPend.push(dataVeh[k][3]); // TIPO
+          sinPend.push(dataVeh[k][4]); // MOTOR
+          sinPend.push(dataVeh[k][5]); // CHASIS
+          sinPend.push(dataVeh[k][6]); // COLOR
+          sinPend.push(dataVeh[k][7]); // SUMA ASEG
+          sinPend.push(dataVeh[k][8]); // ACCESORIO
+          sinPend.push(dataVeh[k][9]); // VTV
+          sinPend.push(dataVeh[k][10]); // NOTAS
+          sinPend.push(dataVeh[k][11]); // DAÑOS
+        }
+      }
+          
+
+var resultadosEncontrados = 0;
+let fechanext = '';
+let imp_next = '';
+
+// Función para incrementar un mes en una fecha
+function incrementarMes(fechaStr) {
+  // Convertir la fecha en un objeto Date
+  let [dia, mes, anio] = fechaStr.split('/').map(Number);
+  // Ajustar el año para que sea completo
+  anio += 2000;
+  
+  let fecha = new Date(anio, mes - 1, dia); // Meses en JS van de 0 a 11
+  fecha.setMonth(fecha.getMonth() + 1); // Incrementar un mes
+  
+  // Formatear la fecha de vuelta en DD/MM/YY
+  dia = fecha.getDate().toString().padStart(2, '0');
+  mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+  anio = fecha.getFullYear().toString().slice(-2);
+  
+  return `${dia}/${mes}/${anio}`;
+}
+
+// Primer bucle
+for (var l = 0; l < dataCob.length; l++) {
+  if (dataCob[l][1] === dataPol[i][0] && (dataCob[l][5] >= dataPol[i][18] && dataCob[l][5] < dataPol[i][19])) {
+    // Agrega los valores que encuentras
+    sinPend.push(dataCob[l][5]); // VTO1
+    sinPend.push(dataCob[l][6]); // F.PAGO
+    sinPend.push(dataCob[l][7]); // CUOTA
+    sinPend.push(dataCob[l][11]); // IMPORTE
+
+    // Guarda el valor para usarlo en el siguiente bucle
+    fechanext = dataCob[l][5];
+    imp_next = dataCob[l][11];
+
+    // Incrementa el contador de resultados
+    resultadosEncontrados++;
+  }
+}
+
+// Segundo bucle
+for (let m = resultadosEncontrados; m < dataPol[i][4]; m++) {
+  let nextcuot = m + 1; // CUOTA, incrementando en cada iteración
+
+  // Incrementa la fecha en un mes
+  fechanext = incrementarMes(fechanext);
+
+  sinPend.push(fechanext); // VTO2 DD/MM/YY
+  sinPend.push('PENDIENTE'); // F.PAGO
+  sinPend.push(nextcuot); // CUOTA
+  sinPend.push(imp_next); // IMPORTE (vacío o puedes poner un valor por defecto)
+}
+
+
+for (let n = 0; n < 12 - dataPol[i][4]; n++) {
+  sinPend.push(''); // VTO
+  sinPend.push(''); // F.PAGO
+  sinPend.push(''); // CUOTA
+  sinPend.push(''); // IMPORTE (vacío o puedes poner un valor por defecto)
+}
+
+      sinPend.push(dataPol[i][20]); // VIGENCIA TOTAL
+
       sinPendientes.push(sinPend);
     }
   }
 
-  console.log(sinPendientes);
   return sinPendientes;
 }
 
-function actualizarEstado(poliza_sn, operacion_sn, novedad_sn, usuario_sn, notas_sn, patente_sn, notas_old) {
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("listado");
-  const dataValues = LISTADO.getDataRange().getDisplayValues();
-console.log(poliza_sn, operacion_sn, novedad_sn, usuario_sn, notas_sn, patente_sn, notas_old)
 
-
+function actualizarEstado(poliza_sn, operacion_sn, novedad_sn, usuario_sn, notas_sn, patente_sn, notas_old, indexPol) {
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
+  const dataValues = BD_POLIZAS.getDataRange().getDisplayValues();
+  
   var fechaActual = new Date().toLocaleString();
-
   var novedad = novedad_sn;
   var usuario = usuario_sn;
   var notas = notas_sn;
-  
   var modificacionEstado = "";
 
   if (operacion_sn !== "") {
@@ -177,78 +163,161 @@ console.log(poliza_sn, operacion_sn, novedad_sn, usuario_sn, notas_sn, patente_s
 
   var dataConcatenada = "[" + fechaActual + ": " + novedad + "]\n" + usuario + ": " + notas + modificacionEstado + notas_old;
 
-  for (var i = 0; i < dataValues.length; i++) {
-    if (dataValues[i][0] == patente_sn) { 
-
+  // Bucle de abajo hacia arriba
+  for (var i = dataValues.length - 1; i >= 0; i--) {
+    if (i == indexPol) { 
       if (operacion_sn.length > 0) {
-        LISTADO.getRange(i +1, 11).setValue(operacion_sn); 
+        BD_POLIZAS.getRange(i + 1, 11).setValue(operacion_sn); 
       }
       if (poliza_sn.length > 0) {
-        LISTADO.getRange(i +1, 8).setValue(poliza_sn); 
+        BD_POLIZAS.getRange(i + 1, 8).setValue(poliza_sn); 
       }
 
-      LISTADO.getRange(i +1, 15).setValue(dataConcatenada); 
-      break;
+      BD_POLIZAS.getRange(i + 1, 15).setValue(dataConcatenada); 
+      break; // Detener el bucle al encontrar el valor
     }
   }
 }
 
-function mostrarCorreos(patente) {
-  // Busca los correos electrónicos que contienen el número 820005104 en el asunto
-  var query = "subject:" + patente;
-  var threads = GmailApp.search(query);
-
-  // Crea una variable para almacenar el contenido HTML de los correos electrónicos
-  var emailsHTML = "";
-
-  // Recorre los primeros diez correos electrónicos que contienen el número 820005104 en el asunto y agrega su contenido HTML a la variable
-  for (var i = 0; i < threads.length && i < 10; i++) {
-    var thread = threads[i];
-    var messages = thread.getMessages();
-    for (var j = 0; j < messages.length; j++) {
-      var message = messages[j];
-      if (message.getSubject().indexOf(patente) !== -1) {
-        var sender = message.getFrom();
-        var subject = message.getSubject();
-        var body = message.getPlainBody();
-
-        // Agrega estilo visual de Bootstrap al contenido HTML generado
-        emailsHTML += "<div class='card mb-3'>";
-        emailsHTML += "<div class='card-header'><img src='https://drive.google.com/uc?id=1gx2-28N0e8R5m95gOthbdiz61rBnLu8x' alt='Imagen' style='height: 13px; width: 17px; margin-right: 10px;'><strong>" + sender + ":</strong> " + subject + "</div>";
-        emailsHTML += "<div class='card-body'>";
-        emailsHTML += "<p class='card-text'>" + body.substring(0, 200) + "...</p>";
-        emailsHTML += "</div>";
-        emailsHTML += "</div>";
-        break; // Detiene el bucle si se encuentra un correo electrónico que contiene el número 820005104 en el asunto
-      }
-    }
-  }
-
-  // Devuelve el contenido HTML de los correos electrónicos que contienen el número 820005104 en el asunto
-  return "<div class='container'>" + emailsHTML + "</div>";
-}
 
 
 
 
 ////////////// INGESAMOS POLIZA NUEVA A BD EMISION //////////////////
-function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoPatentev, infoUsuario) {
+// function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoNotasPol, infoTipo, infoColor, infoSuma, infoAnio, infoAccesorio, infoVTV, infoPatentev, infoUsuario, infoCalifica, infoRefaDesde, infoRefaHasta) {
 
-  const LISTADO = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("LISTADO");
+//   const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
+//   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
+//     const BD_VEHICULOS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/17FkXB8az__L819hlpT09J46uX24OWV5kH2_ilJY9u-0/edit").getSheetByName("BD_VEHICULOS");
+//   const VAL_VEH = BD_VEHICULOS.getDataRange().getDisplayValues();
+//   const VAL_POL = BD_POLIZAS.getDataRange().getDisplayValues();
+//   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
+//     let fechaHoy = new Date();
+//     let dia = fechaHoy.getDate();
+//     let mes = fechaHoy.getMonth() + 1; // Agregar 1 ya que los meses se cuentan desde 0 (enero) hasta 11 (diciembre)
+//     let anio = fechaHoy.getFullYear().toString().slice(-2); // Obtener los últimos 2 dígitos del año
+
+//     // Agregar un cero inicial si el día o el mes es menor a 10
+//     dia = dia < 10 ? '0' + dia : dia;
+//     mes = mes < 10 ? '0' + mes : mes;
+
+//      let infoHoy = dia + '/' + mes + '/' + anio;
+
+
+//  // Buscar si el DNI ya existe en la hoja de clientes
+//   let dniIndex = -1;
+//   for (let i = 0; i < VAL_CTE.length; i++) {
+//     if (VAL_CTE[i][0] === infoDNI) {
+//       dniIndex = i + 1;
+//       break;
+//     }
+//   }
+
+//   // Si el DNI ya existe, actualizar los datos del cliente
+//   if (dniIndex !== -1) {
+//     BD_CLIENTES.getRange(dniIndex, 2).setValue(infoCliente);
+//     BD_CLIENTES.getRange(dniIndex, 3).setValue(infoDomicilio);
+//     BD_CLIENTES.getRange(dniIndex, 4).setValue(infoLocalidad);
+//     BD_CLIENTES.getRange(dniIndex, 5).setValue(infoWpp);
+//     BD_CLIENTES.getRange(dniIndex, 7).setValue(infoMail);
+//     BD_CLIENTES.getRange(dniIndex, 8).setValue(infoNotascte);
+//     BD_CLIENTES.getRange(dniIndex, 9).setValue(new Date());
+//     BD_CLIENTES.getRange(dniIndex, 10).setValue(infoCalifica);
+//   }
+//   // Si el DNI no existe, no hace nada
+//   else {
+//   }
+
+
+//  // Buscar si el Patente ya existe en la hoja de Polizas
+//     let patenteIndex = -1;
+//     for (let i = VAL_POL.length - 1; i >= 0; i--) { 
+//       if (VAL_POL[i][0] === infoPatente) {
+//         patenteIndex = i + 1;
+//         break;
+//       }
+//     }
+
+
+//   // Si la Patente ya existe, actualizar los datos del Vehiculo
+//   if (patenteIndex !== -1) {
+//   BD_POLIZAS.getRange(patenteIndex, 1).setValue(infoPatentev);
+//   BD_POLIZAS.getRange(patenteIndex, 2).setValue(infoDNI);
+//   BD_POLIZAS.getRange(patenteIndex, 3).setValue(infoCliente);
+//   BD_POLIZAS.getRange(patenteIndex, 4).setValue(infoSucursal);
+//   BD_POLIZAS.getRange(patenteIndex, 6).setValue(infoImporte);
+//   BD_POLIZAS.getRange(patenteIndex, 7).setValue(infoCnia);
+//   BD_POLIZAS.getRange(patenteIndex, 8).setValue(infoPoliza);
+//   BD_POLIZAS.getRange(patenteIndex, 9).setValue(infoVigencia);
+//   BD_POLIZAS.getRange(patenteIndex, 10).setValue(infoHasta);
+//   BD_POLIZAS.getRange(patenteIndex, 11).setValue(infoOperacion);
+//   BD_POLIZAS.getRange(patenteIndex, 12).setValue(infoCobertura);
+//   BD_POLIZAS.getRange(patenteIndex, 13).setValue(infoMarca);
+//   BD_POLIZAS.getRange(patenteIndex, 14).setValue(infoFpago);
+//   BD_POLIZAS.getRange(patenteIndex, 15).setValue(infoNotasPol);
+//   BD_POLIZAS.getRange(patenteIndex, 16).setValue(infoHoy);
+//   BD_POLIZAS.getRange(patenteIndex, 19).setValue(infoRefaDesde);
+//   BD_POLIZAS.getRange(patenteIndex, 20).setValue(infoRefaHasta);
+
+//   }
+//   // Si la Patente no existe, no hace nada.
+//    else {
+//   }
+
+
+//  // Buscar si el Patente ya existe en la hoja de Polizas
+//   let patenteIndexV = -1;
+//   for (let i = 0; i < VAL_VEH.length; i++) {
+//     if (VAL_VEH[i][0] === infoPatente) {
+//       patenteIndexV = i + 1;
+//       break;
+//     }
+//   }
+
+//   // Si la Patente ya existe, actualizar los datos del Vehiculo
+//   if (patenteIndexV !== -1) {
+//   BD_VEHICULOS.getRange(patenteIndexV, 1).setValue(infoPatentev);
+//   BD_VEHICULOS.getRange(patenteIndexV, 2).setValue(infoMarca);
+//   BD_VEHICULOS.getRange(patenteIndexV, 3).setValue(infoAnio);
+//   BD_VEHICULOS.getRange(patenteIndexV, 4).setValue(infoTipo);
+//   BD_VEHICULOS.getRange(patenteIndexV, 5).setValue(infoMotor);
+//   BD_VEHICULOS.getRange(patenteIndexV, 6).setValue(infoChasis);
+//   BD_VEHICULOS.getRange(patenteIndexV, 7).setValue(infoColor);
+//   BD_VEHICULOS.getRange(patenteIndexV, 8).setValue(infoSuma);
+//   BD_VEHICULOS.getRange(patenteIndexV, 10).setValue(infoAccesorio);
+//   BD_VEHICULOS.getRange(patenteIndexV, 11).setValue(infoVTV);
+//   BD_VEHICULOS.getRange(patenteIndexV, 12).setValue(infoNotasVeh);
+//   BD_VEHICULOS.getRange(patenteIndexV, 13).setValue(infoDanios);
+//   BD_VEHICULOS.getRange(patenteIndexV, 15).setValue(infoHoy);
+//   }
+//   // Si la Patente no existe, no hace nada.
+//    else {
+//   }
+
+// }
+
+
+
+////////////// INGESAMOS POLIZA NUEVA A BD EMISION //////////////////
+function modNueva(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoRefa, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoNotasVeh, infoMotor, infoChasis, infoTipo, infoColor, infoSuma, infoAnio, infoAccesorio, infoVTV, infoPatentev, infoUsuario, infoCalifica, infoRefaDesde, infoRefaHasta, infoVigTot) {
+
+  const BD_POLIZAS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1Os6YSZHVMsTm7TZhC7vT1onIyBVIwLqEDd5hkjin4uA/edit").getSheetByName("BD_POLIZAS");
   const BD_CLIENTES = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1g6EpLNEQaAsYHHe78J4nmlGthon-NJfvfKs_wKjzkLQ/edit").getSheetByName("BD CLIENTES");
-
-  const VAL_VEH = LISTADO.getDataRange().getDisplayValues();
+    const BD_VEHICULOS = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/17FkXB8az__L819hlpT09J46uX24OWV5kH2_ilJY9u-0/edit").getSheetByName("BD_VEHICULOS");
+  const VAL_VEH = BD_VEHICULOS.getDataRange().getDisplayValues();
+  const VAL_POL = BD_POLIZAS.getDataRange().getDisplayValues();
   const VAL_CTE = BD_CLIENTES.getDataRange().getDisplayValues();
-
-const cl_new = [infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte]
-const veh_new = [infoPatente, infoMarca, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoMotor, infoChasis]
-
-
-var fechaHoy = new Date();
+    let fechaHoy = new Date();
     let dia = fechaHoy.getDate();
     let mes = fechaHoy.getMonth() + 1; // Agregar 1 ya que los meses se cuentan desde 0 (enero) hasta 11 (diciembre)
-    let anio = fechaHoy.getFullYear();
-    let infoHoy = dia + '/' + mes + '/' + anio;
+    let anio = fechaHoy.getFullYear().toString().slice(-2); // Obtener los últimos 2 dígitos del año
+
+    // Agregar un cero inicial si el día o el mes es menor a 10
+    dia = dia < 10 ? '0' + dia : dia;
+    mes = mes < 10 ? '0' + mes : mes;
+
+     let infoHoy = dia + '/' + mes + '/' + anio;
+
 
  // Buscar si el DNI ya existe en la hoja de clientes
   let dniIndex = -1;
@@ -268,6 +337,7 @@ var fechaHoy = new Date();
     BD_CLIENTES.getRange(dniIndex, 7).setValue(infoMail);
     BD_CLIENTES.getRange(dniIndex, 8).setValue(infoNotascte);
     BD_CLIENTES.getRange(dniIndex, 9).setValue(new Date());
+    BD_CLIENTES.getRange(dniIndex, 10).setValue(infoCalifica);
   }
   // Si el DNI no existe, no hace nada
   else {
@@ -275,53 +345,77 @@ var fechaHoy = new Date();
 
 
  // Buscar si el Patente ya existe en la hoja de Polizas
-  let patenteIndex = -1;
+    let patenteIndex = -1;
+    for (let i = VAL_POL.length - 1; i >= 0; i--) { 
+      if (VAL_POL[i][0] === infoPatentev && VAL_POL[i][10] === "PENDIENTE") {
+        patenteIndex = i + 1;
+        break;
+      }
+    }
+
+
+  // Si la Patente ya existe, actualizar los datos del Vehiculo
+  if (patenteIndex !== -1) {
+  BD_POLIZAS.getRange(patenteIndex, 1).setValue(infoPatentev);
+  BD_POLIZAS.getRange(patenteIndex, 2).setValue(infoDNI);
+  BD_POLIZAS.getRange(patenteIndex, 3).setValue(infoCliente);
+  BD_POLIZAS.getRange(patenteIndex, 4).setValue(infoSucursal);
+  BD_POLIZAS.getRange(patenteIndex, 5).setValue(infoRefa);
+  BD_POLIZAS.getRange(patenteIndex, 6).setValue(infoImporte);
+  BD_POLIZAS.getRange(patenteIndex, 7).setValue(infoCnia);
+  BD_POLIZAS.getRange(patenteIndex, 8).setValue(infoPoliza);
+  BD_POLIZAS.getRange(patenteIndex, 9).setValue(infoVigencia);
+  BD_POLIZAS.getRange(patenteIndex, 10).setValue(infoHasta);
+  BD_POLIZAS.getRange(patenteIndex, 11).setValue(infoOperacion);
+  BD_POLIZAS.getRange(patenteIndex, 12).setValue(infoCobertura);
+  BD_POLIZAS.getRange(patenteIndex, 13).setValue(infoMarca);
+  BD_POLIZAS.getRange(patenteIndex, 14).setValue(infoFpago);
+  BD_POLIZAS.getRange(patenteIndex, 15).setValue(infoNotasVeh);
+  BD_POLIZAS.getRange(patenteIndex, 18).setValue(infoHoy);
+  BD_POLIZAS.getRange(patenteIndex, 19).setValue(infoRefaDesde);
+  BD_POLIZAS.getRange(patenteIndex, 20).setValue(infoRefaHasta);
+  BD_POLIZAS.getRange(patenteIndex, 21).setValue(infoVigTot);
+  }
+  
+   else {
+
+var polVals = [infoPatentev, infoDNI, infoCliente, infoSucursal, infoRefa, infoImporte, infoCnia, infoPoliza, infoVigencia, infoHasta, infoOperacion, infoCobertura, infoMarca, infoFpago, infoNotasVeh, , , infoHoy, infoRefaDesde, infoRefaHasta, infoVigTot]
+
+  BD_POLIZAS.appendRow(polVals);
+
+  }
+
+
+ // Buscar si el Patente ya existe en la hoja de Polizas
+  let patenteIndexV = -1;
   for (let i = 0; i < VAL_VEH.length; i++) {
-    if (VAL_VEH[i][0] === infoPatente) {
-      patenteIndex = i + 1;
+    if (VAL_VEH[i][0] === infoPatentev) {
+      patenteIndexV = i + 1;
       break;
     }
   }
 
   // Si la Patente ya existe, actualizar los datos del Vehiculo
-  if (patenteIndex !== -1) {
-  LISTADO.getRange(patenteIndex, 1).setValue(infoPatentev);
-  LISTADO.getRange(patenteIndex, 2).setValue(infoDNI);
-  LISTADO.getRange(patenteIndex, 3).setValue(infoCliente);
-  LISTADO.getRange(patenteIndex, 4).setValue(infoSucursal);
-  LISTADO.getRange(patenteIndex, 6).setValue(infoImporte);
-  LISTADO.getRange(patenteIndex, 7).setValue(infoCnia);
-  LISTADO.getRange(patenteIndex, 8).setValue(infoPoliza);
-  LISTADO.getRange(patenteIndex, 9).setValue(infoVigencia);
-  LISTADO.getRange(patenteIndex, 10).setValue(infoHasta);
-  LISTADO.getRange(patenteIndex, 11).setValue(infoOperacion);
-  LISTADO.getRange(patenteIndex, 12).setValue(infoCobertura);
-  LISTADO.getRange(patenteIndex, 13).setValue(infoMarca);
-  LISTADO.getRange(patenteIndex, 14).setValue(infoFpago);
-  LISTADO.getRange(patenteIndex, 15).setValue(infoNotasVeh);
-  LISTADO.getRange(patenteIndex, 16).setValue(infoDanios);
-  LISTADO.getRange(patenteIndex, 18).setValue(infoMotor);
-  LISTADO.getRange(patenteIndex, 19).setValue(infoChasis);
+  if (patenteIndexV !== -1) {
+  BD_VEHICULOS.getRange(patenteIndexV, 1).setValue(infoPatentev);
+  BD_VEHICULOS.getRange(patenteIndexV, 2).setValue(infoMarca);
+  BD_VEHICULOS.getRange(patenteIndexV, 3).setValue(infoAnio);
+  BD_VEHICULOS.getRange(patenteIndexV, 4).setValue(infoTipo);
+  BD_VEHICULOS.getRange(patenteIndexV, 5).setValue(infoMotor);
+  BD_VEHICULOS.getRange(patenteIndexV, 6).setValue(infoChasis);
+  BD_VEHICULOS.getRange(patenteIndexV, 7).setValue(infoColor);
+  BD_VEHICULOS.getRange(patenteIndexV, 8).setValue(infoSuma);
+  BD_VEHICULOS.getRange(patenteIndexV, 9).setValue(infoAccesorio);
+  BD_VEHICULOS.getRange(patenteIndexV, 10).setValue(infoVTV);
+  BD_VEHICULOS.getRange(patenteIndexV, 11).setValue(infoNotasVeh);
+  BD_VEHICULOS.getRange(patenteIndexV, 12).setValue(infoDanios);
+  BD_VEHICULOS.getRange(patenteIndexV, 13).setValue("//" + infoUsuario + "[" + infoHoy + "] - ENDOSO");
+  BD_VEHICULOS.getRange(patenteIndexV, 14).setValue(infoHoy);
   }
   // Si la Patente no existe, no hace nada.
    else {
   }
 
-  var folderId = '1jnTshNxU1QzCRPSpmS38bDXJJE_CwhSM'; // Reemplaza con el ID de la carpeta de Google Drive donde deseas guardar los registros.
-  var folder = DriveApp.getFolderById(folderId);
-
-  var fileName = 'log_emision_endosos.txt'; // Nombre fijo del archivo de registro
-  var files = folder.getFilesByName(fileName);
-
-  if (files.hasNext()) {
-    var file = files.next();
-    var contenidoActual = file.getBlob().getDataAsString();
-    contenidoActual += '\n' +  "[ " + infoHoy + " ] //" + infoUsuario + ": ENDOSO:\nCliente: " + cl_new + "\nVehiculo: " + veh_new
-    file.setContent(contenidoActual);
-  } else {
-    // Si el archivo no existe, créalo con el mensaje actual
-    folder.createFile(fileName, vehVals);
-  }
 }
 
 
@@ -426,5 +520,3 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
 }
 
 ////////////////////////////// FIN SESION DE USUARIOS ////////////////////////////////
-
-
