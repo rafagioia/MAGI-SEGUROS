@@ -26,7 +26,7 @@ var fechaPagoStr = data[i][6];
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -70,7 +70,7 @@ var fechaPagoStr = data[i][7];
 console.log(data[i][7])
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 console.log("fechaHoraSplit: " + fechaHoraSplit)
-  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 console.log("fechaSplit: " + fechaSplit)
 
   var day = parseInt(fechaSplit[0], 10);
@@ -108,7 +108,7 @@ var fechaPagoStr = data[i][7];
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -147,7 +147,7 @@ function obtenerTotalPagos() {
   var totalPagos = 0;
   
   for (var i = 1; i < data.length; i++) { // Comenzar en la segunda fila para omitir la fila de encabezado
-    var valor = parseFloat(data[i][11]); // Suponiendo que la columna L es la columna 11 (índice 11 en base 0)
+    var valor = parseFloat(data[i][11]); // Suponiendo que la columna L es la columna 11 (Ã­ndice 11 en base 0)
     
     if (!isNaN(valor)) {
       totalPagos += valor;
@@ -195,7 +195,7 @@ function generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -220,7 +220,7 @@ function generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m
       listPagos6.push(data3[i][8]); // MEDIO
       descExcel.push(listPagos6);
       
-      // Insertar una nueva fila en la hoja de cálculo y escribir los datos
+      // Insertar una nueva fila en la hoja de cÃ¡lculo y escribir los datos
       sheet.insertRowBefore(2).getRange(2, 1, 1, listPagos6.length).setValues([listPagos6]);
     }
   }
@@ -230,7 +230,7 @@ function generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -255,7 +255,7 @@ function generateExcelFileAndSendEmail(t_pagos_mp_m,t_gastos_mp_m,t_recibis_mp_m
       listPagos3.push(data3[i][8]); // MEDIO
       descExcel.push(listPagos3);
       
-      // Insertar una nueva fila en la hoja de cálculo y escribir los datos
+      // Insertar una nueva fila en la hoja de cÃ¡lculo y escribir los datos
       sheet.insertRowBefore(2).getRange(2, 1, 1, listPagos3.length).setValues([listPagos3]);
     }
   }
@@ -278,7 +278,7 @@ sheet.insertRowBefore(2).getRange(2, 1).setValue("");
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -303,7 +303,7 @@ sheet.insertRowBefore(2).getRange(2, 1).setValue("");
       listPagos5.push(data2[i][8]); // MEDIO
       descExcel.push(listPagos5);
       
-      // Insertar una nueva fila en la hoja de cálculo y escribir los datos
+      // Insertar una nueva fila en la hoja de cÃ¡lculo y escribir los datos
       sheet.insertRowBefore(2).getRange(2, 1, 1, listPagos5.length).setValues([listPagos5]);
     }
   }
@@ -314,7 +314,7 @@ sheet.insertRowBefore(2).getRange(2, 1).setValue("");
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("-"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -339,7 +339,7 @@ sheet.insertRowBefore(2).getRange(2, 1).setValue("");
       listPagos2.push(data2[i][8]); // MEDIO
       descExcel.push(listPagos2);
       
-      // Insertar una nueva fila en la hoja de cálculo y escribir los datos
+      // Insertar una nueva fila en la hoja de cÃ¡lculo y escribir los datos
       sheet.insertRowBefore(2).getRange(2, 1, 1, listPagos2.length).setValues([listPagos2]);
     }
   }
@@ -365,7 +365,7 @@ var fechaPagoStr = data[i][6];
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -389,7 +389,7 @@ var fechaPagoStr = data[i][6];
       listPagos4.push(data[i][19]);
       descExcel.push(listPagos4);
       
-      // Insertar una nueva fila en la hoja de cálculo y escribir los datos
+      // Insertar una nueva fila en la hoja de cÃ¡lculo y escribir los datos
       sheet.insertRowBefore(2).getRange(2, 1, 1, listPagos4.length).setValues([listPagos4]);
     }
 
@@ -401,7 +401,7 @@ var fechaPagoStr = data[i][6];
 
   var fechaHoraSplit = fechaPagoStr.split(" "); // Dividir la cadena por espacio
 
-  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en día, mes y año
+  var fechaSplit = fechaHoraSplit[0].split("/"); // Dividir la fecha en dÃ­a, mes y aÃ±o
 
   var day = parseInt(fechaSplit[0], 10);
   var month = parseInt(fechaSplit[1], 10);
@@ -425,7 +425,7 @@ var fechaPagoStr = data[i][6];
       listPagos.push(data[i][19]);
       descExcel.push(listPagos);
       
-      // Insertar una nueva fila en la hoja de cálculo y escribir los datos
+      // Insertar una nueva fila en la hoja de cÃ¡lculo y escribir los datos
       sheet.insertRowBefore(2).getRange(2, 1, 1, listPagos.length).setValues([listPagos]);
     }
 
@@ -434,7 +434,7 @@ var fechaPagoStr = data[i][6];
 
 
 // Agregar fila de encabezado con los valores de la tabla
-var headerspagos = ["CLIENTE", "F. VENC", "F. PAGO", "CUOTA", "POLIZA", "COMPAÑIA", "IMPORTE", "PATENTE", "MARCA", "SUCURSAL", "F.PAGO"];
+var headerspagos = ["CLIENTE", "F. VENC", "F. PAGO", "CUOTA", "POLIZA", "COMPAÃ‘IA", "IMPORTE", "PATENTE", "MARCA", "SUCURSAL", "F.PAGO"];
 
 sheet.insertRowBefore(2).getRange(2, 1, 1, headerspagos.length).setValues([headerspagos]);
 
@@ -471,7 +471,7 @@ var headers_valpagos_d = ["PAGOS:", t_pagos_mp_m_d, "", "PAGOS:", t_pagos_mp_t_d
 sheet.insertRowBefore(2).getRange(2, 1, 1, headers_valpagos_d.length).setValues([headers_valpagos_d]);
 
 // Agregar fila de encabezado con los valores de la tabla
-var headerstotales_d = ["CAJA MAÑANA", "", "", "CAJA TARDE", "", "", "CAJA MAÑANA", "", "", "CAJA TARDE", "", ""];
+var headerstotales_d = ["CAJA MAÃ‘ANA", "", "", "CAJA TARDE", "", "", "CAJA MAÃ‘ANA", "", "", "CAJA TARDE", "", ""];
 sheet.insertRowBefore(2).getRange(2, 1, 1, headerstotales_d.length).setValues([headerstotales_d]);
 
 
@@ -506,7 +506,7 @@ var headers_valpagos = ["PAGOS:", t_pagos_mp_m, "", "PAGOS:", t_pagos_mp_t, "", 
 sheet.insertRowBefore(2).getRange(2, 1, 1, headers_valpagos.length).setValues([headers_valpagos]);
 
 // Agregar fila de encabezado con los valores de la tabla
-var headerstotales = ["CAJA MAÑANA", "", "", "CAJA TARDE", "", "", "CAJA MAÑANA", "", "", "CAJA TARDE", "", ""];
+var headerstotales = ["CAJA MAÃ‘ANA", "", "", "CAJA TARDE", "", "", "CAJA MAÃ‘ANA", "", "", "CAJA TARDE", "", ""];
 sheet.insertRowBefore(2).getRange(2, 1, 1, headerstotales.length).setValues([headerstotales]);
 
 // Agregar fila de encabezado con los valores de la tabla
@@ -554,7 +554,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o Contraseña!");
+  return alert("Error de Usuario o ContraseÃ±a!");
 }
 
 ///////////////////////////////  CAMBIAR CLAVE DE USUARIO  ////////////////////////////////////////
@@ -620,7 +620,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de cálculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de cÃ¡lculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];
