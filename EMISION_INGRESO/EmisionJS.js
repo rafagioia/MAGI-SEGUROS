@@ -12,7 +12,7 @@
         event.preventDefault()
         event.stopPropagation()
       }
-      form.classList.add('was-validated')
+     //  form.classList.add('was-validated')
     }, false)
   }
   )
@@ -23,6 +23,7 @@
    google.script.run.withSuccessHandler(function () {
    }).report_data();
  });
+
 
 ////////////// ESTILOS DE LA NAV BAR //////////////////
 let navbar = document.querySelector(".navbar");
@@ -76,7 +77,7 @@ navLinks.classList.toggle("show7");
    var btnShowModal = document.getElementById("emi_show_modal");
    var closeModal = document.getElementById("emi_close");
 
-   // Abrir modal al hacer clic en el botÛn
+   // Abrir modal al hacer clic en el bot√≥n
    btnShowModal.onclick = function() {
  event.preventDefault();
      modalContainer.style.display = "block";
@@ -91,7 +92,7 @@ var modalSA1 = document.getElementById("modalSA1");
 var imprimirModalButton = document.getElementById("imprimirModal");
 var modalContent2 = document.getElementById("emi_modal_content2");
 
-// FunciÛn para abrir el modal
+// Funci√≥n para abrir el modal
 btnShowModal.onclick = function() {
  event.preventDefault();
  
@@ -110,7 +111,7 @@ btnShowModal.onclick = function() {
 
 
 
-// FunciÛn para imprimir el contenido del modal
+// Funci√≥n para imprimir el contenido del modal
 imprimirModalButton.onclick = function() {
  // Abrir una nueva ventana emergente
  var printWindow = window.open('', '', 'width=1000,height=600');
@@ -122,36 +123,95 @@ imprimirModalButton.onclick = function() {
  // Imprimir la ventana emergente
  printWindow.print();
 
- // Cerrar la ventana emergente despuÈs de la impresiÛn
+ // Cerrar la ventana emergente despu√©s de la impresi√≥n
  printWindow.close();
 }
    
-/////////// DESHABILITAMOS EL BOTON DE ENVIO ///////////////
- const miFormulario = document.getElementById('formularioEmision');
- miFormulario.addEventListener('submit', function() {
-   const boton = document.querySelector('input[type="submit"]');
-   boton.disabled = true;
- });
- /////////////////////////////////////////////////////
+/////////////////////// SEGUROS EMITIDOS DIA ////////////////
 
- ///////// INGRESAR SEGURO NUEVO ///////////////
+
+
+   function segurosDia() {
+     google.script.run.withSuccessHandler(tablaSegurosDia).segurosEmitidosDia();
+     console.log("seguros del dia cargados!")
+     };
+
+
+function tablaSegurosDia(data) {
+ const tbody = document.getElementById('bodyVehiculosDia');
+ const totales = {}; // Objeto para almacenar los totales por usuario
+ let totalGlobal = 0; // Inicializar como n√∫mero
+
+ data.forEach(row => {
+   const tr = document.createElement('tr');
+   row.forEach((cell, index) => {
+     const td = document.createElement('td');
+     if (index === 5) { // La columna "Usuario" es la sexta columna (√≠ndice 5)
+       td.innerHTML = `<strong>${cell}</strong>`; // Aplicar negrita al valor de la celda
+
+       // Actualizar el total para el usuario
+       if (!totales[cell]) {
+         totales[cell] = 0;
+       }
+       totales[cell] += 1; // Aumentar el total por cada registro
+       totalGlobal += 1; // Aumentar el total global
+     } else {
+       td.textContent = cell;
+     }
+     tr.appendChild(td);
+   });
+   tbody.appendChild(tr);
+ });
+
+ // Mostrar los totales en el div
+ const divTotales = document.getElementById('totalesdia');
+ divTotales.innerHTML = ''; // Limpiar el contenido previo
+
+ // Agregar el total global
+ divTotales.innerHTML = `<h6 style="margin-bottom: 25px;"><strong>SEGUROS INGRESADOS HOY: ${totalGlobal}</strong></h6>`;
+
+ // Mostrar los totales en forma de botones con badges
+ for (const usuario in totales) {
+   const button = document.createElement('div');
+   button.className = 'col-md-4 mb-4 d-flex flex-column align-items-center';
+
+   button.innerHTML = `
+     <button type="button" class="btn btn-outline-primary position-relative d-flex align-items-center">
+       <span class="badge bg-primary position-absolute top-0 start-100 translate-middle p-2">${totales[usuario]}</span>
+       <div class="">
+         <h5 class="mb-1">${usuario}</h5>
+         <p class="mb-0 text-muted">Emisiones hoy</p>
+       </div>
+     </button>
+   `;
+   divTotales.appendChild(button);
+ }
+}
+
+segurosDia();
+
+
+// INGRESAR SEGURO NUEVO
 function ingresarPoliza(event) {
- event.preventDefault();
- const boton = document.getElementById('bt-ingreso');
-   const spinner = document.getElementById('spinner5');
-   spinner.style.display = 'inline-block';
-   boton.disabled = true;
+   event.preventDefault();
+   var modeloInput = document.getElementById("modelo");
+   var modeloValue = parseInt(modeloInput.value, 10);
+
+
+   /// DATOS DE CLIENTE A INGRESAR
    let infoDNI =  document.getElementById("dni").value;
    let infoCliente =  document.getElementById("nombreCompleto").value;
    let infoDomicilio =  document.getElementById("domicilio").value;
    let infoLocalidad =  document.getElementById("localidad").value;
    let infoWpp =  document.getElementById("wpp").value;
    let infoMail =  document.getElementById("mail").value;
+   let infoNotascte =  document.getElementById("notascte").value;
+   let infoCalifica = document.getElementById("califica_cliente").value;
+
+
+   /// DATOS DE POLIZA A INGRESAR
    let infoFpago =  document.getElementById("fpago").value;
    let infoSucursal =  document.getElementById("sucursal").value;
-   let infoNotascte =  document.getElementById("notascte").value;
-   let infoPatente =  document.getElementById("patente_sn").value;
-   let infoMarca =  document.getElementById("marca").value;
    let infoCnia =  document.getElementById("cnia").value;
    let infoCobertura =  document.getElementById("cobertura").value;
    let infoImporte =  document.getElementById("importe").value;
@@ -159,52 +219,137 @@ function ingresarPoliza(event) {
    let infoOperacion =  document.getElementById("operacion").value;
    let infoVigencia =  document.getElementById("vigencia").value;
    let infoHasta =  document.getElementById("hasta").value;
-   let infoDanios =  document.getElementById("danios").value;
    let infoRefa =  document.getElementById("refac").value;
-   let infoSumaAseg =  document.getElementById("suma_aseg").value;
+   let infoRefaDesde =  document.getElementById("refa_desde").value;
+   let infoRefaHasta =  document.getElementById("refa_hasta").value;
+   let infoVigTot =  document.getElementById("vigtot").value;
    let infoNotifica = document.getElementById("notifica").value;
-   let infoCalifica = document.getElementById("califica_cliente").value;
-   document.getElementById("mensajeRequerimiento").style.display = "none";
-   document.getElementById("mensajeModelo").style.display = "none";
-   document.getElementById("mensajeMoto").style.display = "none";
- 
+
+   /// DATOS DE VEHICULO A INGRESAR
+   // let ramo =  document.getElementById("ramo_1").value;
+   // let infoPatente =  ramo + ramo_pat
+   let infoPatente =  document.getElementById("patente_sn").value;
+   let infoMarca =  document.getElementById("marca").value;
+   let infoMotor =  document.getElementById("motor").value;
+   let infoChasis =  document.getElementById("chasis").value;
+   let infoDanios =  document.getElementById("danios").value;
+   let infoTipo =   document.getElementById("tipo").value;
+   let infoAnio =   document.getElementById("modelo").value;
+   let infoColor =   document.getElementById("color").value;
+   let infoVTV =   document.getElementById("vtv").value;
+   let infoSumaAseg =  document.getElementById("suma_aseg").value;
+   let infoAcc1 =  document.getElementById("accesorio1").value;
+   let infoAcc1valor =  document.getElementById("accesorio1_valor").value;
+   let infoNotasVeh =  document.getElementById("notasveh").value;
+   let infoHistorico =  document.getElementById("historico").value;    
+   
+   let fechaHoy = new Date();
+   let dia = fechaHoy.getDate();
+   let mes = fechaHoy.getMonth() + 1; // Agregar 1 ya que los meses se cuentan desde 0 (enero) hasta 11 (diciembre)
+   let anio = fechaHoy.getFullYear().toString().slice(-2); // Obtener los √∫ltimos 2 d√≠gitos del a√±o
+
+   // Agregar un cero inicial si el d√≠a o el mes es menor a 10
+   dia = dia < 10 ? '0' + dia : dia;
+   mes = mes < 10 ? '0' + mes : mes;
+
+    let infoHoy = dia + '/' + mes + '/' + anio;
+
+   // ESTO A FUTURO SE BORRA
      let sumaAseg = ""
    if (infoSumaAseg == "") {
    } else {
      sumaAseg = "SA: $" + infoSumaAseg + " | "
    }
-   let infoNotasVeh =  document.getElementById("notasveh").value;
-   let infoHistorico =  document.getElementById("historico").value;
+
+   // VERIFICACION DE DATOS ANTES DE INICIAR
+     if (isNaN(modeloValue) || modeloInput.value.length !== 4 || modeloValue < 1900 || modeloValue > 2100) {
+         alert("El a√±o de la unidad no es correcto.");
+         return;
+     }
+
+     if (infoSumaAseg.trim() === "" && infoCnia.trim() === "AGROSALTA [B1]") {
+         alert("Debe ingresar la Suma Asegurada del vehiculo para emitir el acuerdo.");
+         return false;
+     }
+
+     if (infoPoliza.trim() === "" && infoCnia.startsWith("AGROSALTA")) {
+       let confirmar = confirm("El n√∫mero de p√≥liza se encuentra vac√≠o, la tarjeta de circulaci√≥n saldr√° como 'E/T'. ¬øEst√° seguro que desea continuar?");
+       if (!confirmar) {
+         return false;
+       }
+     }
+
+   const boton = document.getElementById('bt-ingreso');
+   const spinner = document.getElementById('spinner5');
+   spinner.style.display = 'inline-block';
+   boton.disabled = true;
+
+
+
+   // Mostrar datos en el modal
+   if (infoDNI) document.getElementById("modalDNI").value = infoDNI;
+   if (infoCliente) document.getElementById("modalCliente").value = infoCliente;
+   if (infoDomicilio) document.getElementById("modalDomicilio").value = infoDomicilio;
+   if (infoLocalidad) document.getElementById("modalLocalidad").value = infoLocalidad;
+   if (infoWpp) document.getElementById("modalWpp").value = infoWpp;
+   if (infoMail) document.getElementById("modalMail").value = infoMail;
+   // if (infoNotascte) document.getElementById("modalNotascte").value = infoNotascte;
+   if (infoFpago) document.getElementById("modalFpago").value = infoFpago;
+   if (infoSucursal) document.getElementById("modalSucursal").value = infoSucursal;
+   if (infoCnia) document.getElementById("modalCnia").value = infoCnia;
+   if (infoCobertura) document.getElementById("modalCobertura").value = infoCobertura;
+   if (infoImporte) document.getElementById("modalImporte").value = infoImporte;
+   if (infoPoliza) document.getElementById("modalPoliza").value = infoPoliza;
+   if (infoOperacion) document.getElementById("modalOperacion").value = infoOperacion;
+   if (infoVigencia) document.getElementById("modalVigencia").value = infoVigencia;
+   if (infoHasta) document.getElementById("modalHasta").value = infoHasta;
+   if (infoRefa) document.getElementById("modalRefa").value = infoRefa;
+   if (infoRefaDesde) document.getElementById("modalRefaDesde").value = infoRefaDesde;
+   if (infoRefaHasta) document.getElementById("modalRefaHasta").value = infoRefaHasta;
+   if (infoVigTot) document.getElementById("modalVigTot").value = infoVigTot;
+   if (infoNotifica) document.getElementById("modalNotifica").value = infoNotifica;
+   if (infoPatente) document.getElementById("modalPatente").value = infoPatente;
+   if (infoMarca) document.getElementById("modalMarca").value = infoMarca;
+   if (infoMotor) document.getElementById("modalMotor").value = infoMotor;
+   if (infoChasis) document.getElementById("modalChasis").value = infoChasis;
+   if (infoDanios) document.getElementById("modalDanios").value = infoDanios;
+   if (infoTipo) document.getElementById("modalTipo").value = infoTipo;
+   if (infoAnio) document.getElementById("modalAnio").value = infoAnio;
+   if (infoColor) document.getElementById("modalColor").value = infoColor;
+   if (infoVTV) document.getElementById("modalVTV").value = infoVTV;
+   if (infoSumaAseg) document.getElementById("modalSumaAseg").value = infoSumaAseg;
+   if (infoAcc1) document.getElementById("modalAcc1").value = infoAcc1;
+   if (infoAcc1valor) document.getElementById("modalAcc1valor").value = infoAcc1valor;
+
+
+   document.getElementById("mensajeRequerimiento").style.display = "none";
+   document.getElementById("mensajeModelo").style.display = "none";
+   document.getElementById("mensajeMoto").style.display = "none";
+ 
    let infoUsuario =  sessionStorage.getItem("magi-usuario");
    let infoHistoricoFull = "//" + infoUsuario + " [" + infoVigencia + "] " + infoOperacion + " (" + infoNotasVeh + ") " + sumaAseg + infoHistorico;
-   let infoMotor =  document.getElementById("motor").value;
-   let infoChasis =  document.getElementById("chasis").value;
-   let fechaHoy = new Date();
-   let dia = fechaHoy.getDate();
-   let mes = fechaHoy.getMonth() + 1; // Agregar 1 ya que los meses se cuentan desde 0 (enero) hasta 11 (diciembre)
-   let anio = fechaHoy.getFullYear();
-   let infoHoy = dia + '/' + mes + '/' + anio;
 
 
-console.log("califica:" + infoCalifica)
-
- google.script.run.seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoHistoricoFull, infoNotasVeh, infoMotor, infoChasis, infoUsuario, infoHoy, infoNotifica, infoCalifica);
+ google.script.run.seguroNuevo(infoDNI, infoCliente, infoDomicilio, infoLocalidad, infoWpp, infoMail, infoFpago, infoSucursal, infoNotascte, infoPatente, infoMarca, infoRefa, infoCnia, infoCobertura, infoImporte, infoPoliza, infoOperacion, infoVigencia, infoHasta, infoDanios, infoHistoricoFull, infoNotasVeh, infoMotor, infoChasis, infoUsuario, infoHoy, infoNotifica, infoCalifica, infoAnio, infoColor, infoVTV, infoSumaAseg, infoTipo, infoAcc1, infoAcc1valor, infoRefaDesde, infoRefaHasta ,infoVigTot);
  event.target.reset();
 
 const successAlert = document.getElementById('success-alert');
+
+segurosDia()
+
 
 function fadeInAndOutElement(element) {
  fadeInElement(element, function() {
    setTimeout(function() {
      fadeOutElement(element);
-   }, 6000); // Cambia la duraciÛn del "fade in" a tu preferencia
+   }, 6000); // Cambia la duraci√≥n del "fade in" a tu preferencia
  });
 }
 
-// FunciÛn para aplicar el "fade in"
+// Funci√≥n para aplicar el "fade in"
 function fadeInElement(element, callback) {
  element.style.opacity = '0'; // Establecer la opacidad inicial a 0
- element.style.display = 'block'; // Asegurarse de que el elemento estÈ visible
+ element.style.display = 'block'; // Asegurarse de que el elemento est√© visible
 
  let opacity = 0;
  const fadeInInterval = setInterval(function () {
@@ -214,13 +359,13 @@ function fadeInElement(element, callback) {
    } else {
      clearInterval(fadeInInterval); // Detener el intervalo una vez que la opacidad llegue a 1
      if (typeof callback === 'function') {
-       callback(); // Llamar al callback despuÈs del "fade in"
+       callback(); // Llamar al callback despu√©s del "fade in"
      }
    }
- }, 50); // Intervalo de actualizaciÛn de la opacidad (en milisegundos)
+ }, 50); // Intervalo de actualizaci√≥n de la opacidad (en milisegundos)
 }
 
-// FunciÛn para aplicar el "fade out"
+// Funci√≥n para aplicar el "fade out"
 function fadeOutElement(element) {
  let opacity = 1;
  const fadeOutInterval = setInterval(function () {
@@ -231,10 +376,28 @@ function fadeOutElement(element) {
      clearInterval(fadeOutInterval); // Detener el intervalo
      element.style.display = 'none'; // Ocultar el elemento cuando la opacidad sea 0
    }
- }, 50); // Intervalo de actualizaciÛn de la opacidad (en milisegundos)
+ }, 50); // Intervalo de actualizaci√≥n de la opacidad (en milisegundos)
 }
 
-// Llamar a la funciÛn para mostrar el elemento con "fade in" y luego desaparecer con "fade out"
+   let labelPagoAgro = document.getElementById("labelPagoAgro");
+
+   labelPagoAgro.textContent = "Ingresar pago de Agrosalta:";
+
+   document.getElementById('pagoAgro_container').style.display = 'none';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'none';
+   document.getElementById("emi2_modal_container").style.display = "block";
+   document.getElementById('pagRecA').style.display = 'block';
+   document.getElementById('genPag').style.display = 'none'; 
+   
+   if(infoCnia === "AGROSALTA [RC]" || infoCnia === "AGROSALTA [MOTO]" || infoCnia === "AGROSALTA [RC-GRUA]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   } else if(infoCnia === "AGROSALTA [B1]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'flex';
+   }   
+
+
+// Llamar a la funci√≥n para mostrar el elemento con "fade in" y luego desaparecer con "fade out"
 fadeInAndOutElement(successAlert);
 
 infoDNI =  "";
@@ -248,6 +411,7 @@ infoSucursal =  "";
 infoNotascte =  "";
 infoRefa = "";
 infoPatente =  "";
+ramo =  "";
 infoMarca =  "";
 infoCnia =  "";
 infoCobertura =  "";
@@ -257,14 +421,22 @@ infoHoy =  "";
 infoOperacion =  "SEGURO NUEVO";
 var today = new Date();
 infoVigencia.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-infoHasta.value = new Date(today.getFullYear(), today.getMonth() + 12, today.getDate()).toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+infoHasta = "";
+infoRefaDesde.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+infoRefaHasta = "";
+infoVigTot = "";
 infoDanios =  "";
 infoNotasVeh =  "";
 infoHistorico =  "";
 infoUsuario =  "";
 infoHistoricoFull = "";
 infoMotor =  "";
+infoAcc1 = "";
+infoAcc1valor =  "";
 infoChasis =  "";
+infoAnio = "";
+infoColor = "";
+infoVTV = "";
 document.getElementById("dniValor").textContent = "";
 document.getElementById("vehiculo_vista").textContent = "";
 document.getElementById("vehiculo_carga").textContent = "";
@@ -285,10 +457,27 @@ document.getElementById('formContainer').style.display = 'none';
 document.getElementById('formContainer_veh').style.display = 'none';
 document.getElementById("mantenimientosTableBody2").textContent = "";
 
+document.getElementById('mensajeAD').style.display = 'none';
+document.getElementById('mensajeAuto').style.display = 'none';
+document.getElementById('mensajeBici').style.display = 'none';
+document.getElementById('mensajeCasa').style.display = 'none';
+document.getElementById('mensajeComercio').style.display = 'none';
+document.getElementById('mensajeAP').style.display = 'none';
+document.getElementById('mensajeCaucion').style.display = 'none';
+document.getElementById('mensajeRC').style.display = 'none';
+document.getElementById('mensajeTransporte').style.display = 'none';
+document.getElementById('mensajeTecnico').style.display = 'none';
+
 infoNotifica = false;
 infoCalifica = 4;
 spinner.style.display = 'none';
 boton.disabled = false;
+
+
+
+   // Mostrar el modal
+   $('#polizaResumenModal').modal('show');
+
 
 (function() {
  'use strict';
@@ -312,7 +501,7 @@ if (window.matchMedia("(min-width: 1081px)").matches) {
 }
 
 
-///// SCRIPT PARA BUSCAR DATOS POR DNI EN BD EMISION//////////
+///// NUEVO SCRIPT PARA BUSCAR DATOS POR DNI EN BD EMISION//////////
 
 function buscarRegistros_dni_emision() {
  const boton = document.getElementById('buscarRegistrosBtn4');
@@ -351,6 +540,7 @@ function buscarRegistros_dni_emision() {
    infoNotascte.value = info[0][0][7] !== undefined ? info[0][0][7] : "";
    infoSucursal.value = "MARCOS PAZ";
    infoCalifica.value = info[0][0][9] !== undefined ? info[0][0][9] : "";
+   console.log(info[0][0][9])
 
      document.getElementById('valoresContainer').style.display = 'block';
      document.getElementById('dniValor').textContent = infoDNI.value;
@@ -361,22 +551,24 @@ function buscarRegistros_dni_emision() {
 
 var valorSeleccionado = infoCalifica.value;
 
+
 var emoji;
-if (valorSeleccionado === "5") {
- emoji = "?? Amable";
-} else if (valorSeleccionado === "4") {
- emoji = "?? Sin Calificar";
-} else if (valorSeleccionado === "3") {
- emoji = "?? Dramatico";
-} else if (valorSeleccionado === "2") {
- emoji = "?? Loco";
-} else if (valorSeleccionado === "1") {
- emoji = "?? Conflictivo";
-} else if (valorSeleccionado === "0") {
- emoji = "?? No Asegurar";
+if (valorSeleccionado == "5") {
+ emoji = "üòä Amable";
+} else if (valorSeleccionado == "4") {
+ emoji = "üò© Dramatico";
+} else if (valorSeleccionado == "3") {
+ emoji = "ü§™ Loco";
+} else if (valorSeleccionado == "2") {
+ emoji = "ü§¨ Conflictivo";
+} else if (valorSeleccionado == "1") {
+ emoji = "üö´ No Asegurar";
+} else if (valorSeleccionado == "0") {
+ emoji = "üòê Sin Calificar";
 } else {
  emoji = "";
 }
+
 
 document.getElementById("statCte").textContent = emoji;
 
@@ -387,7 +579,7 @@ document.getElementById("statCte").textContent = emoji;
 
      let rowCount = 0;
      let processed = new Set();
-   if (info[1] && info[1].length > 0) { // Verifica si info[1] est· definido y tiene elementos
+   if (info[1] && info[1].length > 0) { // Verifica si info[1] est√° definido y tiene elementos
      info[1].forEach(mantenimiento2 => {
        if (rowCount < 10) {
          if (!processed.has(mantenimiento2[1])) {
@@ -398,11 +590,85 @@ document.getElementById("statCte").textContent = emoji;
            let PolVehiculo = tr.querySelector(".PolVehiculo");
            let PolCnia = tr.querySelector(".PolCnia");
            let PolVtos = tr.querySelector(".PolVtos");
+           let PolVig = tr.querySelector(".PolVig");
 
            PolPatente.textContent = mantenimiento2[0];
            PolVehiculo.textContent = mantenimiento2[1];
            PolCnia.textContent = mantenimiento2[2];
            PolVtos.textContent = mantenimiento2[3];
+           // PolVig.textContent = mantenimiento2[4];
+
+           // Crear el bot√≥n de eliminar
+           let botonEliminar = document.createElement('button');
+           botonEliminar.innerHTML = "üóëÔ∏è";
+           botonEliminar.className = "btn p-0 m-0"; // Bot√≥n peque√±o sin padding ni margen
+
+           let valor_elim = mantenimiento2[0]; // Guardar la patente a eliminar
+
+           // Asignar acci√≥n al bot√≥n de eliminar
+           botonEliminar.addEventListener('click', function(event) {
+               event.preventDefault(); // Prevenir el comportamiento por defecto del bot√≥n
+
+               // Llamada al servidor con google.script.run
+               google.script.run
+                   .withSuccessHandler(function(response) {
+                       console.log("Eliminaci√≥n exitosa:", response);
+                       // Obtener la fila <tr> m√°s cercana al bot√≥n usando event.target
+                       let tr = event.target.closest('tr');
+                       
+                       // Verificar si se encontr√≥ el <tr>
+                       if (tr) {
+                           tr.parentNode.removeChild(tr); // Eliminar la fila visualmente de la tabla
+                       } else {
+                           console.error("Error: No se encontr√≥ la fila <tr> asociada al bot√≥n.");
+                       }
+                   })
+                   .withFailureHandler(function(error) {
+                       console.error("Error al eliminar:", error);
+                   })
+                   .baja_pol(valor_elim); // Pasar la patente al servidor
+
+               // Imprimir en consola y eliminar la fila de la tabla
+               console.log("Patente a eliminar:", valor_elim);
+           });
+
+           // Crear el √≠cono üîÉ como un bot√≥n
+           let botonRecargar = document.createElement('button');
+           botonRecargar.innerHTML = "üîÉ";
+           botonRecargar.className = "btn p-0 m-0"; // Bot√≥n peque√±o y de color amarillo
+
+           let valor_renov = mantenimiento2[0]; // Guardar la patente a eliminar
+
+           // Asignar acci√≥n al bot√≥n de eliminar
+           botonRecargar.addEventListener('click', function(event) {
+               event.preventDefault(); 
+
+               google.script.run
+                   .withSuccessHandler(function(response) {
+                       console.log("Renovacion exitosa:", response);
+                       event.target.closest('tr').querySelector('.PolVig')
+                       PolVig.textContent = "‚úÖ Vigente";
+                   })
+                   .withFailureHandler(function(error) {
+                       console.error("Error al renovar:", error);
+                   })
+                   .renov_pol(valor_renov); // Pasar la patente al servidor
+
+               // Imprimir en consola y eliminar la fila de la tabla
+               console.log("Patente a renovar:", valor_renov);
+           });
+
+
+           // Aplicar color y grosor de texto seg√∫n el valor de PolVig
+           if (mantenimiento2[4] === "VIGENTE") {
+               PolVig.textContent = "‚úÖ ";
+               PolVig.appendChild(botonRecargar); // Agregar el √≠cono de recarga
+               PolVig.appendChild(botonEliminar); // Agregar el bot√≥n de eliminar
+           } else if (mantenimiento2[4] === "NO VIGENTE") {
+               PolVig.textContent = "‚ö´ ";
+               PolVig.appendChild(botonRecargar); // Agregar el √≠cono de recarga
+               PolVig.appendChild(botonEliminar); // Agregar el bot√≥n de eliminar
+           }
 
            tableBody2.appendChild(tr);
            rowCount++;
@@ -430,11 +696,12 @@ document.getElementById("statCte").textContent = emoji;
      infoMail.value = "";
      infoSucursal.value = "";
      infoNotascte.value = "";
-     infoCalifica.value = 4;
+     infoCalifica.value = 0;
    }
    spinner.style.display = 'none';
    boton.disabled = false;
  };
+
 
  google.script.run.withSuccessHandler((info) => {
    if (info[0].length > 0) {
@@ -451,7 +718,7 @@ document.getElementById("statCte").textContent = emoji;
          mostrarValores(modifiedInfo);
          calcularUltimoNumeroCuit()
        } else {
-         alert("No se encontraron valores");
+
          document.getElementById('valoresContainer').style.display = 'block';
          document.getElementById('statCte').textContent = "NUEVO CLIENTE";
          document.getElementById("nombreCompletoValor").value = "";
@@ -464,14 +731,602 @@ document.getElementById("statCte").textContent = emoji;
          infoMail.value = "";
          infoSucursal.value = "";
          infoNotascte.value = "";
-         infoCalifica.value = 4;
+         infoCalifica.value = 0;
+
+// Llamadas a los scripts de forma paralela
+Promise.all([
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG1: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_1(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG2: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_2(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG3: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_3(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG4: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_4(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG5: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_5(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG6: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_6(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG7: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_7(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG8: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_8(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG9: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_9(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG10: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_10(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG11: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_11(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG12: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_12(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG13: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_13(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG14: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_14(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG15: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_15(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG16: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_16(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG17: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_17(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG18: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_18(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG19: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_19(dni),
+ 
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG20: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_20(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG21: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_21(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG22: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_22(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG23: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_23(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG24: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_24(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG25: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_25(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG26: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_26(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG27: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_27(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG28: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_28(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG29: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_29(dni),
+   
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG30: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_30(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG31: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_31(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG32: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_32(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG33: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_33(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG34: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_34(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG35: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_35(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG36: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_36(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG37: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_37(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG38: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_38(dni),
+ 
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG39: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_39(dni),
+
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG40: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_40(dni),
+
+
+
+ google.script.run.withSuccessHandler((info) => {
+   if (info.length > 0) {
+     console.log("BD DNI ARG41: " + info);
+         infoDNI.value = info[0] !== undefined ? info[0] : "";
+         infoCliente.value = info[1] !== undefined ? info[1] : "";
+         document.getElementById('valoresContainer').style.display = 'block';
+         document.getElementById('dniValor').textContent = infoDNI.value;
+         document.getElementById('nombreCompletoValor').textContent = infoCliente.value;
+         mostrarValores(modifiedInfo);
+         calcularUltimoNumeroCuit()
+   }
+ }).buscarDNI_BD_ARG_41(dni)
+
+
+
+
+]).then(() => {
+ // C√≥digo a ejecutar despu√©s de que todas las llamadas se completen
+ spinner.style.display = 'none';
+ boton.disabled = false;
+}).catch((error) => {
+ console.error('Error encontrando el cliente:', error);
+ spinner.style.display = 'none';
+ boton.disabled = false;
+});
+
        }
        spinner.style.display = 'none';
        boton.disabled = false;
-     }).buscarMantenimientos11(dni);
+     }).buscar_DNI_MP(dni);
    }
- }).buscarMantenimientos4(dni);
- 
+ }).buscarDNI_cliente(dni);
+
  if (dni) {
    google.script.run.withSuccessHandler(mostrarFotos_reg).obtenerFotosPorDNI(dni);
  } else {
@@ -479,9 +1334,7 @@ document.getElementById("statCte").textContent = emoji;
  }
 }
 
-
 ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR DNI //////////
-
 
 
 
@@ -514,6 +1367,17 @@ function buscarRegistros_nombre_emision() {
  document.getElementById("mensajeModelo").style.display = "none";
  document.getElementById("mensajeMoto").style.display = "none";
 
+ document.getElementById('mensajeAD').style.display = 'none';
+ document.getElementById('mensajeAuto').style.display = 'none';
+ document.getElementById('mensajeBici').style.display = 'none';
+ document.getElementById('mensajeCasa').style.display = 'none';
+ document.getElementById('mensajeComercio').style.display = 'none';
+ document.getElementById('mensajeAP').style.display = 'none';
+ document.getElementById('mensajeCaucion').style.display = 'none';
+ document.getElementById('mensajeRC').style.display = 'none';
+ document.getElementById('mensajeTransporte').style.display = 'none';
+ document.getElementById('mensajeTecnico').style.display = 'none';
+
  const mostrarValores = (info) => {
    console.log(info)
    if (info.length > 0) {
@@ -525,7 +1389,8 @@ function buscarRegistros_nombre_emision() {
      infoMail.value = info[0][6];
      infoNotascte.value = info[0][7];
      infoSucursal.value = "MARCOS PAZ";
-     infoCalifica.value = info[0][0][9];
+     infoCalifica.value = info[0][9];
+   console.log("califica: " + infoCalifica)
 
      document.getElementById('valoresContainer').style.display = 'block';
      document.getElementById('dniValor').textContent = infoDNI.value;
@@ -537,21 +1402,23 @@ function buscarRegistros_nombre_emision() {
 var valorSeleccionado = infoCalifica.value;
 
 var emoji;
-if (valorSeleccionado === "5") {
- emoji = "?? Amable";
-} else if (valorSeleccionado === "4") {
- emoji = "?? Sin Calificar";
-} else if (valorSeleccionado === "3") {
- emoji = "?? Dramatico";
-} else if (valorSeleccionado === "2") {
- emoji = "?? Loco";
-} else if (valorSeleccionado === "1") {
- emoji = "?? Conflictivo";
-} else if (valorSeleccionado === "0") {
- emoji = "?? No Asegurar";
+if (valorSeleccionado == "5") {
+ emoji = "üòä Amable";
+} else if (valorSeleccionado == "4") {
+ emoji = "üò© Dramatico";
+} else if (valorSeleccionado == "3") {
+ emoji = "ü§™ Loco";
+} else if (valorSeleccionado == "2") {
+ emoji = "ü§¨ Conflictivo";
+} else if (valorSeleccionado == "1") {
+ emoji = "üö´ No Asegurar";
+} else if (valorSeleccionado == "0") {
+ emoji = "üòê Sin Calificar";
 } else {
  emoji = "";
 }
+
+   console.log("emoji: " + emoji)
 
 document.getElementById("statCte").textContent = emoji;
 
@@ -589,7 +1456,7 @@ document.getElementById("whatsappValor").value =  "";
          infoMail.value =  "";
          infoNotascte.value =  "";
          document.getElementById("notascte").textContent = "";
-         infoCalifica.value = 4;
+         infoCalifica.value = 0;
          calcularUltimoNumeroCuit()
        } else {
          alert("No se encontraron valores");
@@ -597,15 +1464,15 @@ document.getElementById("whatsappValor").value =  "";
          document.getElementById('statCte').textContent = "NUEVO CLIENTE";
          document.getElementById("nombreCompletoValor").value =  "";
          document.getElementById("whatsappValor").value =  "";
-       infoDNI.value = numeroInventario2;
-       infoCliente.value =  "";
-       infoDomicilio.value =  "";
-       infoLocalidad.value =  "";
-       infoWpp.value =  "";
-       infoMail.value =  "";
-       infoSucursal.value =  "";
-       infoNotascte.value =  "";
-       infoCalifica.value = 4;
+         infoDNI.value = numeroInventario2;
+         infoCliente.value =  "";
+         infoDomicilio.value =  "";
+         infoLocalidad.value =  "";
+         infoWpp.value =  "";
+         infoMail.value =  "";
+         infoSucursal.value =  "";
+         infoNotascte.value =  "";
+         infoCalifica.value = 0;
        }
        spinner.style.display = 'none';
        boton.disabled = false;
@@ -619,11 +1486,11 @@ document.getElementById("whatsappValor").value =  "";
 
 function enviarMensajeWPP() {
  event.preventDefault();
- // Obtener el n˙mero de telÈfono ingresado
+ // Obtener el n√∫mero de tel√©fono ingresado
  var telefono = document.getElementById("wpp").value;
 
- // Abrir WhatsApp Web con el n˙mero de telÈfono y enviar un mensaje
- window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agend·%20nuestro%20n˙mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
+ // Abrir WhatsApp Web con el n√∫mero de tel√©fono y enviar un mensaje
+ window.open("https://web.whatsapp.com/send?phone=549" + telefono + "&text=Hola,%20nos%20comunicamos%20de%20GIOIA%20Seguros.%20Por%20favor%20agend√°%20nuestro%20n√∫mero%20para%20cualquier%20consulta%20o%20solicitud%20que%20tengas.");
 }
 
 
@@ -636,22 +1503,64 @@ function enviarMensajeWPP() {
    const spinner = document.getElementById('spinner2');
    spinner.style.display = 'inline-block';
    boton.disabled = true;
-   let patente = document.getElementById("patente").value;
-   let infoPatente =  document.getElementById("patente_sn");
-   let infoMarca =  document.getElementById("marca");
+
+   /// DATOS DE POLIZA A INGRESAR
    let infoCnia =  document.getElementById("cnia");
+   infoCnia.value = "";
    let infoCobertura =  document.getElementById("cobertura");
+   infoCobertura.value = "";
    let infoImporte =  document.getElementById("importe");
+   infoImporte.value = "";
    let infoPoliza =  document.getElementById("poliza");
+   infoPoliza.value = "";
    let infoOperacion =  document.getElementById("operacion");
+   infoOperacion.value = "SEGURO NUEVO";
    let infoVigencia =  document.getElementById("vigencia");
+   infoVigencia.value = "";
    let infoHasta =  document.getElementById("hasta");
-   let infoRefa =  document.getElementById("refa");
-   let infoDanios =  document.getElementById("danios");
-   let infoNotasVeh =  document.getElementById("notasveh");
-   let infoHistorico =  document.getElementById("historico");
+   infoHasta.value = "";
+   let infoVigTot =  document.getElementById("vigtot");
+   infoVigTot.value = "";
+   let infoRefaDesde =  document.getElementById("refa_desde");
+   infoRefaDesde.value = "";
+   let infoRefaHasta =  document.getElementById("refa_hasta");
+   infoRefaHasta.value = "";
+   let infoRefa =  document.getElementById("refac");
+   infoRefa.value = "";
+
+   /// DATOS DE VEHICULO A INGRESAR
+   let ramo = document.getElementById("ramo_1").value;
+   let pat_ramo = document.getElementById("patente").value;
+   let patente = ramo + pat_ramo
+   let infoPatente =  document.getElementById("patente_sn");
+   infoPatente.value = "";
+   let infoMarca =  document.getElementById("marca");
+   infoMarca.value = "";
    let infoMotor =  document.getElementById("motor");
+   infoMotor.value = "";
    let infoChasis =  document.getElementById("chasis");
+   infoChasis.value = "";
+   let infoDanios =  document.getElementById("danios");
+   infoDanios.value = "";
+   let infoTipo =   document.getElementById("tipo");
+   infoTipo.value = "";
+   let infoAnio =   document.getElementById("modelo");
+   infoAnio.value = "";
+   let infoColor =   document.getElementById("color");
+   infoColor.value = "";
+   let infoVTV =   document.getElementById("vtv");
+   infoVTV.value = "";
+   let infoSumaAseg =  document.getElementById("suma_aseg");
+   infoSumaAseg.value = "";
+   let infoAcc1 =  document.getElementById("accesorio1");
+   infoAcc1.value = "";
+   let infoAcc1valor =  document.getElementById("accesorio1_valor");
+   infoAcc1valor.value = "";
+   let infoNotasVeh =  document.getElementById("notasveh");
+   infoNotasVeh.value = "";
+   let infoHistorico =  document.getElementById("historico");
+   infoHistorico.value = "";
+
    let agrocnia = document.getElementById("cnia").value
    document.getElementById("patenteValor").textContent =  "";
    document.getElementById("marcaValor").textContent =  "";
@@ -665,30 +1574,44 @@ function enviarMensajeWPP() {
    document.getElementById("mensajeMoto").style.display = "none";
 
    google.script.run.withSuccessHandler(info => {
+
      if (info.length > 0) {
+       buscarModelo()
        infoPatente.value = info[0][0];
-       infoMarca.value = info[0][12];
-       infoCnia.value = info[0][6];
-       infoImporte.value = info[0][5];
-       infoPoliza.value = "";
+       infoMarca.value = info[0][1];
+       infoMotor.value = info[0][4];
+       infoChasis.value = info[0][5];
+       infoColor.value = info[0][6];
+       // infoSumaAseg.value = info[0][7];
+       let valorCompleto = info[0][8].split(','); 
+       infoAcc1.value = valorCompleto[0];
+       infoAcc1valor.value = valorCompleto[1];
+         // console.log("accesorios: " + valorCompleto[0] + "y el " + valorCompleto[1])
+       infoVTV.value = info[0][9];
+       infoNotasVeh.value = info[0][10];
+       infoDanios.value = info[0][11];
+       infoHistorico.value = info[0][12];
        infoOperacion.value = "SEGURO NUEVO";
-       infoHistorico.value = info[0][19];
-       infoNotasVeh.value = info[0][14];
-       infoDanios.value = info[0][15];
+       infoPoliza.value = "";
+       if (info[0][2]) {
+           infoAnio.value = info[0][2];
+       }
+       if (info[0][3]) {
+           infoTipo.value = info[0][3];
+       }
+       // infoCnia.value = info[0][6];
+       // infoImporte.value = info[0][5];
 
-       var today = new Date();
-       infoVigencia.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-       infoHasta.value = new Date(today.getFullYear(), today.getMonth() + 12, today.getDate()).toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-
-       infoCobertura.value = info[0][11];
-       infoMotor.value = info[0][17];
-       infoChasis.value = info[0][18];
-       document.getElementById('valoresContainer_veh').style.display = 'block';
+       var r_fechaHoy = formatearFecha();
+       infoVigencia.value = r_fechaHoy;
+       infoRefaDesde.value = r_fechaHoy;
+       infoCobertura.value = info[0][13];
+       // document.getElementById('valoresContainer_veh').style.display = 'block';
        document.getElementById('patenteValor').textContent = document.getElementById('patente').value;
        document.getElementById('marcaValor').textContent = document.getElementById('marca').value;
        document.getElementById('cniaValor').textContent = document.getElementById('cnia').value;
        document.getElementById('statVeh').textContent = document.getElementById('cobertura').value;
-       buscarModelo()
+
        buscarRefa()
      } else {
        alert("No se encontraron valores");
@@ -696,14 +1619,15 @@ function enviarMensajeWPP() {
        document.getElementById('statVeh').textContent = "NUEVO VEHICULO";
        document.getElementById('patenteValor').textContent = document.getElementById('patente').value;
        infoPatente.value = patente
-       var today = new Date();
-       infoVigencia.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-       infoHasta.value = new Date(today.getFullYear(), today.getMonth() + 12, today.getDate()).toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+       var r_fechaHoy = formatearFecha();
+       infoVigencia.value = r_fechaHoy;
+       infoRefaDesde.value = r_fechaHoy;
+       var r_nuevaFecha = sumarMeses(r_fechaHoy, 12);
+       infoHasta.value = r_nuevaFecha
        buscarModelo()
-       buscarRefa()
        infoMarca.value =  "";
-       infoMotor.value =  "";
-       infoChasis.value =  "";
+       // infoMotor.value =  "";
+       // infoChasis.value =  "";
        infoCnia.value =  "";
        infoCobertura.value =  "";
        infoImporte.value =  "";
@@ -716,12 +1640,40 @@ function enviarMensajeWPP() {
      spinner.style.display = 'none';
      boton.disabled = false;
      agroGruas(agrocnia)
-   }).buscarMantenimientos3(patente);
+   }).buscarVehPat(patente);
  if (patente) {
    google.script.run.withSuccessHandler(mostrarFotos_veh).obtenerFotosPorPatente(patente);
  } else {
    alert("Por favor, ingrese una patente.");
  }
+
+   google.script.run.withSuccessHandler(info => {
+
+     if (info.length > 0) {
+       console.log("infoVeh:" + info)
+       infoCnia.value = info[0][6];
+       infoCobertura.value = info[0][11];
+       // infoImporte.value = info[0][5];
+       // infoPoliza.value = info[0][7];
+       infoOperacion.value = info[0][10];
+       infoRefa.value = info[0][4];
+       infoVigTot.value = info[0][20];
+
+       var r_fechaHoy = formatearFecha();
+       infoVigencia.value = r_fechaHoy;
+       infoRefaDesde.value = r_fechaHoy;
+       
+       document.getElementById('valoresContainer_veh').style.display = 'block';
+       document.getElementById('patenteValor').textContent = document.getElementById('patente').value;
+       document.getElementById('marcaValor').textContent = document.getElementById('marca').value;
+       document.getElementById('cniaValor').textContent = document.getElementById('cnia').value;
+       document.getElementById('statVeh').textContent = document.getElementById('cobertura').value;
+       buscarRefa()
+     } else {
+     }
+   }).buscarVehPol(patente);
+
+
  }
 
  ///// FIN DEL SCRIPT PARA BUSCAR DATOS POR PATENTE EN BD EMISION //////////
@@ -740,7 +1692,7 @@ function filtrar(event) {
   var dni_filter = infoDNI.value;
   console.log(dni_filter)
  google.script.run.withSuccessHandler(function(result) {
- // Actualizar HTML de la p·gina con los nuevos resultados
+ // Actualizar HTML de la p√°gina con los nuevos resultados
  var sinPendientesDiv = document.getElementById("sinPendientes");
 
 var pendientesHtml = "";
@@ -761,11 +1713,11 @@ pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-
    //  sinPendientesDiv.innerHTML = pendientesHtml;
    sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
-     // Agregar evento de click a los divs din·micos
+     // Agregar evento de click a los divs din√°micos
  var divs = document.querySelectorAll("[id^='div']");
  divs.forEach(function(div) {
    div.addEventListener("click", function() {
-     var id = div.id.slice(3); // Obtener el Ìndice del div
+     var id = div.id.slice(3); // Obtener el √≠ndice del div
      document.getElementsByName("patente_sn")[0].value = document.getElementById("patente_sn_" + id).textContent;
      document.getElementsByName("marca")[0].value = document.getElementById("marca_" + id).textContent;
      document.getElementsByName("cnia")[0].value = document.getElementById("cnia_" + id).textContent;
@@ -785,9 +1737,11 @@ document.getElementById('statVeh').textContent = document.getElementById('cobert
 
    let infoVigencia =  document.getElementById("vigencia");
    let infoHasta =  document.getElementById("hasta");
-var today = new Date();
-infoVigencia.value = today.toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
-infoHasta.value = new Date(today.getFullYear(), today.getMonth() + 12, today.getDate()).toLocaleDateString('es-ES', {day: '2-digit', month: '2-digit', year: '2-digit'});
+
+       var r_fechaHoy = formatearFecha();
+       infoVigencia.value = r_fechaHoy;
+       var r_nuevaFecha = sumarMeses(r_fechaHoy, 12);
+       infoHasta.value = r_nuevaFecha
 
    });
  });
@@ -809,7 +1763,7 @@ function filtrar2(event) {
  let infoPatente =  document.getElementById("patente");
   var patente_filter = infoPatente.value;
  google.script.run.withSuccessHandler(function(result) {
- // Actualizar HTML de la p·gina con los nuevos resultados
+ // Actualizar HTML de la p√°gina con los nuevos resultados
  var sinPendientesDiv = document.getElementById("sinPendientes2");
 
 var pendientesHtml = "";
@@ -826,11 +1780,11 @@ pendientesHtml += "<div class='bg-light border' style=' margin-bottom: 0;border-
    //  sinPendientesDiv.innerHTML = pendientesHtml;
    sinPendientesDiv.insertAdjacentHTML('beforeend',pendientesHtml);
 
-     // Agregar evento de click a los divs din·micos
+     // Agregar evento de click a los divs din√°micos
  var divs = document.querySelectorAll("[id^='div']");
  divs.forEach(function(div) {
    div.addEventListener("click", function() {
-     var id = div.id.slice(3); // Obtener el Ìndice del div
+     var id = div.id.slice(3); // Obtener el √≠ndice del div
      document.getElementsByName("dni")[0].value = document.getElementById("dni_" + id).textContent;
      document.getElementsByName("nombreCompleto")[0].value = document.getElementById("cliente_" + id).textContent;
      document.getElementsByName("wpp")[0].value = document.getElementById("whatsapp_" + id).textContent;
@@ -891,232 +1845,464 @@ valoresContainer_veh.addEventListener('click', () => {
    formContainer_veh.style.display = 'block';
 });
 
-////////////// VALIDADOR DE A—O DE PATENTE /////////////////
-function buscarModelo() {
- const patente = document.getElementById("patente_sn").value;
- var ano = "";
+////////////////////////// VER REFACTURACION ////////////////////////
 
-if (patente.length == 6) {
- //// VALIDADOR DE A—O DE AUTOS PATENTE VIEJA
+function buscarRefa() {
+ let cnia = document.getElementById("cnia").value;
+ let refa = 0; // Valor por defecto
+ let vigencia = 0; // Valor por defecto para vigencia
+ 
+ switch (cnia) {
+   case "MAPFRE":
+     refa = 4;
+     vigencia = 6;
+     break;
+   case "ALLIANZ":
+     refa = 4;
+     vigencia = 6;
+     break;
+   case "MERCANTIL":
+     refa = 4;
+     vigencia = 6;
+     break;
+   case "ORBIS":
+     refa = 4;
+     vigencia = 6;
+     break;
+   case "PROVIDENCIA":
+     refa = 3;
+     vigencia = 6;
+     break;
+   case "LIBRA":
+     refa = 3;
+     vigencia = 6;
+     break;
+   case "AGROSALTA [RC]":
+   case "AGROSALTA [RC-GRUA]":
+   case "AGROSALTA [MOTO]":
+   case "AGROSALTA [B1]":
+     refa = 3;
+     vigencia = 6;
+     break;
+   case "GRUA":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "DIGNA":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "BBVA":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "EL TRIUNFO":
+     refa = 6;
+     vigencia = 12;
+     break;
+   case "EXPERTA":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "FED PAT":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "NIVEL":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "RIVADAVIA":
+     refa = 3;
+     vigencia = 12;
+     break;
+   case "RIO URUGUAY":
+     refa = 6;
+     vigencia = 6;
+     break;
+   case "LA CAJA":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "SAN PATRICIO":
+     refa = 1;
+     vigencia = 12;
+     break;
+   case "ATM":
+     refa = 1;
+     vigencia = 12;
+     break;
+     
+   default:
+     refa = 0;
+     vigencia = 0;
+     break;
+ }
+
+document.getElementById("refac").value = refa;
+document.getElementById("vigtot").value = vigencia;
+
+let vigenciaDate = document.getElementById("vigencia").value; 
+
+
+ let nuevaVigencia = sumarMeses(vigenciaDate, vigencia);
+ let nuevaRefa = sumarMeses(vigenciaDate, refa);
+
+ document.getElementById("hasta").value = nuevaVigencia;
+ document.getElementById("refa_hasta").value = nuevaRefa;
+
+}
+
+
+////////////// VALIDADOR DE A√ëO DE PATENTE /////////////////
+function buscarModelo() {
+ const patente = document.getElementById("patente").value;
+ const ramo = document.getElementById("ramo_1").value;
+ console.log("verificacion patente: " + patente)
+ console.log("ramo: " + ramo)
+ 
+ var ano = "";
+ var tipo = "";
+ var motor = "";
+ var chasis = "";
+
+if (ramo === "BICI_") { 
+       tipo = "BICICLETA";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+} else if (ramo === "CASA_") { 
+       tipo = "COMBINADO FAMILIAR";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+       ano = "2000";
+} else if (ramo === "COMERCIO_") { 
+       tipo = "INTEGRAL DE COMERCIO";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+       ano = "2000";
+} else if (ramo === "AP_") { 
+       tipo = "ACCIDENTES PERSONALES";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+       ano = "2000";
+} else if (ramo === "CAUCION_") { 
+       tipo = "CAUCION";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+       ano = "2000";
+} else if (ramo === "RC_") { 
+       tipo = "RESPONSABILIDAD CIVIL";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+       ano = "2000";
+} else if (ramo === "TRANSPORTE_") { 
+       tipo = "TRANSPORTE";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+       ano = "2000";
+} else if (ramo === "TECNICO_") { 
+       tipo = "SEGURO TECNICO";
+       ano = "2000";
+} else if (patente.length == 6) {
+ //// VALIDADOR DE A√ëO DE AUTOS PATENTE VIEJA
    if (patente.slice(0, 3) >= "PRA" && patente.slice(0, 3) <= "XZZ") {
-       ano = "VEH A—O <= 1994";
+       tipo = "AUTO PARTICULAR";
+       ano = "<= 1994";
    } else if (patente.slice(0, 3) == "AAA" && patente.slice(3, 6) <= "069") {
-       ano = "VEH A—O: 1994";
+       tipo = "AUTO PARTICULAR";
+       ano = 1994;
    } else if ((patente.slice(0, 3) == "AAA" && patente.slice(3, 6) >= "070") 
            || (patente.slice(0, 3) >= "AAB" && patente.slice(0, 3) <= "AOK") 
            || (patente.slice(0, 3) == "AOL" && patente.slice(3, 6) <= "106")) {
-       ano = "VEH A—O: 1995";
+       tipo = "AUTO PARTICULAR";
+       ano = 1995;
    } else if ((patente.slice(0, 3) == "AOL" && patente.slice(3, 6) >= "107") 
            || (patente.slice(0, 3) >= "AOM" && patente.slice(0, 3) <= "BDF") 
            || (patente.slice(0, 3) == "BDG" && patente.slice(3, 6) <= "779")) {
-       ano = "VEH A—O: 1996";
+       tipo = "AUTO PARTICULAR";
+       ano = 1996;
    } else if ((patente.slice(0, 3) == "BDG" && patente.slice(3, 6) >= "780") 
            || (patente.slice(0, 3) >= "BDH" && patente.slice(0, 3) <= "BTI") 
            || (patente.slice(0, 3) == "BTJ" && patente.slice(3, 6) <= "925")) {
-       ano = "VEH A—O: 1997";
+       tipo = "AUTO PARTICULAR";
+       ano = 1997;
    } else if ((patente.slice(0, 3) == "BTJ" && patente.slice(3, 6) >= "926") 
            || (patente.slice(0, 3) >= "BTK" && patente.slice(0, 3) <= "CNJ") 
            || (patente.slice(0, 3) == "CNK" && patente.slice(3, 6) <= "039")) {
-       ano = "VEH A—O: 1998";
+       tipo = "AUTO PARTICULAR";
+       ano = 1998;
    } else if ((patente.slice(0, 3) == "CNK" && patente.slice(3, 6) >= "040") 
            || (patente.slice(0, 3) >= "CNL" && patente.slice(0, 3) <= "DBC") 
            || (patente.slice(0, 3) == "DBD" && patente.slice(3, 6) <= "014")) {
-       ano = "VEH A—O: 1999";
+       tipo = "AUTO PARTICULAR";
+       ano = 1999;
    } else if ((patente.slice(0, 3) == "DBD" && patente.slice(3, 6) >= "015") 
            || (patente.slice(0, 3) >= "DBE" && patente.slice(0, 3) <= "DQC") 
            || (patente.slice(0, 3) == "DQD" && patente.slice(3, 6) <= "179")) {
-       ano = "VEH A—O: 2000";
+       tipo = "AUTO PARTICULAR";
+       ano = 2000;
    } else if ((patente.slice(0, 3) == "DBD" && patente.slice(3, 6) >= "015") 
            || (patente.slice(0, 3) >= "DBE" && patente.slice(0, 3) <= "DXE") 
            || (patente.slice(0, 3) == "DXF" && patente.slice(3, 6) <= "252")) {
-       ano = "VEH A—O: 2001";
+       tipo = "AUTO PARTICULAR";
+       ano = 2001;
    } else if ((patente.slice(0, 3) == "DXF" && patente.slice(3, 6) >= "253") 
            || (patente.slice(0, 3) >= "DXG" && patente.slice(0, 3) <= "EBL") 
            || (patente.slice(0, 3) == "EBM" && patente.slice(3, 6) <= "313")) {
-       ano = "VEH A—O: 2002";
+       tipo = "AUTO PARTICULAR";
+       ano = 2002;
    } else if ((patente.slice(0, 3) == "EBM" && patente.slice(3, 6) >= "314") 
            || (patente.slice(0, 3) >= "EBN" && patente.slice(0, 3) <= "EGT") 
            || (patente.slice(0, 3) == "EGU" && patente.slice(3, 6) <= "805")) {
-       ano = "VEH A—O: 2003";
+       tipo = "AUTO PARTICULAR";
+       ano = 2003;
    } else if ((patente.slice(0, 3) == "EGU" && patente.slice(3, 6) >= "806") 
            || (patente.slice(0, 3) >= "EGV" && patente.slice(0, 3) <= "ESJ") 
            || (patente.slice(0, 3) == "ESK" && patente.slice(3, 6) <= "914")) {
-       ano = "VEH A—O: 2004";
+       tipo = "AUTO PARTICULAR";
+       ano = 2004;
    } else if ((patente.slice(0, 3) == "ESK" && patente.slice(3, 6) >= "915") 
            || (patente.slice(0, 3) >= "ESL" && patente.slice(0, 3) <= "FHK") 
            || (patente.slice(0, 3) == "FHL" && patente.slice(3, 6) <= "039")) {
-       ano = "VEH A—O: 2005";
+       tipo = "AUTO PARTICULAR";
+       ano = 2005;
    } else if ((patente.slice(0, 3) == "FHL" && patente.slice(3, 6) >= "040") 
            || (patente.slice(0, 3) >= "FHM" && patente.slice(0, 3) <= "FYY") 
            || (patente.slice(0, 3) == "FYZ" && patente.slice(3, 6) <= "659")) {
-       ano = "VEH A—O: 2006";
+       tipo = "AUTO PARTICULAR";
+       ano = 2006;
    } else if ((patente.slice(0, 3) == "FYZ" && patente.slice(3, 6) >= "660") 
            || (patente.slice(0, 3) >= "FZA" && patente.slice(0, 3) <= "GVQ") 
            || (patente.slice(0, 3) == "GVR" && patente.slice(3, 6) <= "173")) {
-       ano = "VEH A—O: 2007";
+       tipo = "AUTO PARTICULAR";
+       ano = 2007;
    } else if ((patente.slice(0, 3) == "GVR" && patente.slice(3, 6) >= "174") 
            || (patente.slice(0, 3) >= "GVS" && patente.slice(0, 3) <= "HSJ") 
            || (patente.slice(0, 3) == "HSK" && patente.slice(3, 6) <= "507")) {
-       ano = "VEH A—O: 2008";
+       tipo = "AUTO PARTICULAR";
+       ano = 2008;
    } else if ((patente.slice(0, 3) == "HSK" && patente.slice(3, 6) >= "508") 
            || (patente.slice(0, 3) >= "HSL" && patente.slice(0, 3) <= "IMX") 
            || (patente.slice(0, 3) == "IMY" && patente.slice(3, 6) <= "879")) {
-       ano = "VEH A—O: 2009";
+       tipo = "AUTO PARTICULAR";
+       ano = 2009;
    } else if ((patente.slice(0, 3) == "IMY" && patente.slice(3, 6) >= "880") 
            || (patente.slice(0, 3) >= "IMZ" && patente.slice(0, 3) <= "JMK") 
            || (patente.slice(0, 3) == "JML" && patente.slice(3, 6) <= "170")) {
-       ano = "VEH A—O: 2010";
+       tipo = "AUTO PARTICULAR";
+       ano = 2010;
    } else if ((patente.slice(0, 3) == "JML" && patente.slice(3, 6) >= "171") 
            || (patente.slice(0, 3) >= "JMM" && patente.slice(0, 3) <= "KTQ") 
            || (patente.slice(0, 3) == "KTR" && patente.slice(3, 6) <= "984")) {
-       ano = "VEH A—O: 2011";
+       tipo = "AUTO PARTICULAR";
+       ano = 2011;
    } else if ((patente.slice(0, 3) == "JML" && patente.slice(3, 6) >= "171") 
            || (patente.slice(0, 3) >= "JMM" && patente.slice(0, 3) <= "LZU") 
            || (patente.slice(0, 3) == "LZV" && patente.slice(3, 6) <= "232")) {
-       ano = "VEH A—O: 2012";
+       tipo = "AUTO PARTICULAR";
+       ano = 2012;
    } else if ((patente.slice(0, 3) == "LZV" && patente.slice(3, 6) >= "233") 
            || (patente.slice(0, 3) >= "LZW" && patente.slice(0, 3) <= "NKB") 
            || (patente.slice(0, 3) == "NKC" && patente.slice(3, 6) <= "496")) {
-       ano = "VEH A—O: 2013";
+       ano = 2013;
+       tipo = "AUTO PARTICULAR";
    } else if ((patente.slice(0, 3) == "NKC" && patente.slice(3, 6) >= "495") 
            || (patente.slice(0, 3) >= "NKD" && patente.slice(0, 3) <= "OMW") 
            || (patente.slice(0, 3) == "OMX" && patente.slice(3, 6) <= "383")) {
-       ano = "VEH A—O: 2014";
+       tipo = "AUTO PARTICULAR";
+       ano = 2014;
    } else if ((patente.slice(0, 3) == "OMX" && patente.slice(3, 6) >= "382") 
            || (patente.slice(0, 3) >= "OMY" && patente.slice(0, 3) <= "PKE") 
            || (patente.slice(0, 3) == "PKF" && patente.slice(3, 6) <= "051")) {
-       ano = "VEH A—O: 2015";
+       tipo = "AUTO PARTICULAR";
+       ano = 2015;
    } else if ((patente.slice(0, 3) == "PKF" && patente.slice(3, 6) >= "052")
            || (patente.slice(0, 3) >= "PKG" && patente.slice(0, 3) <= "PQZ")) {
-       ano = "VEH A—O: 2016";
-       //// VALIDADOR DE A—O DE MOTOS PATENTE VIEJA
+       tipo = "AUTO PARTICULAR";
+       ano =  2016;
+       //// VALIDADOR DE A√ëO DE MOTOS PATENTE VIEJA
    } else if (patente.slice(3, 6) <= "CKY") {
-       ano = "VEH A—O: <= 2006";
+       tipo = "MOTO PARTICULAR";
+       ano = "<= 2006";
    } else if ((patente.slice(3, 6) == "CKZ" && patente.slice(0, 3) >= "000")
            || (patente.slice(3, 6) >= "CLA" && patente.slice(3, 6) <= "CZY")
            || (patente.slice(3, 6) == "CZZ" && patente.slice(0, 3) <= "252")) {
-       ano = "MOTO A—O: 2006";
+       tipo = "MOTO PARTICULAR";
+       ano = 2006;
    } else if ((patente.slice(3, 6) == "CZZ" && patente.slice(0, 3) >= "253")
            || (patente.slice(3, 6) >= "DAA" && patente.slice(3, 6) <= "DUY")
            || (patente.slice(3, 6) == "DUZ" && patente.slice(0, 3) <= "999")) {
-       ano = "MOTO A—O: 2007";
+       tipo = "MOTO PARTICULAR";
+       ano = 2007;
    } else if ((patente.slice(3, 6) == "DVA" && patente.slice(0, 3) >= "000")
            || (patente.slice(3, 6) >= "DVB" && patente.slice(3, 6) <= "ETV")
            || (patente.slice(3, 6) == "ETW" && patente.slice(0, 3) <= "999")) {
-       ano = "MOTO A—O: 2008";
+       tipo = "MOTO PARTICULAR";
+       ano = 2008;
    } else if ((patente.slice(3, 6) == "ETX" && patente.slice(0, 3) >= "000")
            || (patente.slice(3, 6) >= "ETY" && patente.slice(3, 6) <= "FAA")
            || (patente.slice(3, 6) == "FAB" && patente.slice(0, 3) <= "081")) {
-       ano = "MOTO A—O: 2009";
+       tipo = "MOTO PARTICULAR";
+       ano = 2009;
    } else if ((patente.slice(3, 6) == "FAB" && patente.slice(0, 3) >= "082")
            || (patente.slice(3, 6) >= "FAC" && patente.slice(3, 6) <= "GXF")
            || (patente.slice(3, 6) == "GXG" && patente.slice(0, 3) <= "710")) {
-       ano = "MOTO A—O: 2010";
+       tipo = "MOTO PARTICULAR";
+       ano = 2010;
    } else if ((patente.slice(3, 6) == "GXG" && patente.slice(0, 3) >= "711")
            || (patente.slice(3, 6) >= "GXH" && patente.slice(3, 6) <= "HZB")
            || (patente.slice(3, 6) == "HZC" && patente.slice(0, 3) <= "824")) {
-       ano = "MOTO A—O: 2011";
+       tipo = "MOTO PARTICULAR";
+       ano = 2011;
    } else if ((patente.slice(3, 6) == "HZC" && patente.slice(0, 3) >= "825")
            || (patente.slice(3, 6) >= "HZD" && patente.slice(3, 6) <= "IXY")
            || (patente.slice(3, 6) == "IXZ" && patente.slice(0, 3) <= "947")) {
-       ano = "MOTO A—O: 2012";
+       tipo = "MOTO PARTICULAR";
+       ano = 2012;
    } else if ((patente.slice(3, 6) == "IXZ" && patente.slice(0, 3) >= "948")
            || (patente.slice(3, 6) >= "IYA" && patente.slice(3, 6) <= "KCB")
            || (patente.slice(3, 6) == "KCC" && patente.slice(0, 3) <= "679")) {
-       ano = "MOTO A—O: 2013";
+       tipo = "MOTO PARTICULAR";
+       ano = 2013;
    } else if ((patente.slice(3, 6) == "KCC" && patente.slice(0, 3) >= "680")
            || (patente.slice(3, 6) >= "KCD" && patente.slice(3, 6) <= "KTQ")
            || (patente.slice(3, 6) == "KTR" && patente.slice(0, 3) <= "088")) {
-       ano = "MOTO A—O: 2014";
+       tipo = "MOTO PARTICULAR";
+       ano = 2014;
    } else if ((patente.slice(3, 6) == "KTR" && patente.slice(0, 3) >= "089")
            || (patente.slice(3, 6) >= "KTS" && patente.slice(3, 6) <= "LMY")
            || (patente.slice(3, 6) == "LMZ" && patente.slice(0, 3) <= "425")) {
-       ano = "MOTO A—O: 2015";
+       tipo = "MOTO PARTICULAR";
+       ano = 2015;
    } else if ((patente.slice(3, 6) == "LMZ" && patente.slice(0, 3) >= "426")
            || (patente.slice(3, 6) >= "LNA" && patente.slice(3, 6) <= "LZZ")) {
-       ano = "MOTO A—O: 2016";
+       tipo = "MOTO PARTICULAR";
+       ano = 2016;
    } else {
-       ano = "A—O VEH NO ENCONTRADO.";
+       ano = "ERROR.";
    }
-   //// VALIDADOR DE A—O DE AUTOS MERCOSUR
+   //// VALIDADOR DE A√ëO DE AUTOS MERCOSUR
      } else if (patente.length == 7) {
    if (patente.slice(0, 2) == "AA" && (patente.slice(2, 5) < "829" 
            || (patente.slice(2, 5) == "829" && patente.slice(5, 7) <= "SZ"))) {
-       ano = "VEH A—O: 2016";
+       tipo = "AUTO PARTICULAR";
+       ano = 2016;
      } else if (
          (patente.slice(0, 2) == "AA" && ((patente.slice(2, 4) == "829" && patente.slice(5, 7) <= "TA") || (patente.slice(2, 4) > "829"))) ||
          (patente.slice(0, 2) == "AB") ||
          (patente.slice(0, 2) == "AC" && ((patente.slice(2, 4) < "178") || (patente.slice(2, 4) == "178" && patente.slice(5, 7) <= "RK")))) {
-         ano = "VEH A—O: 2017";
+       tipo = "AUTO PARTICULAR";
+         ano = 2017;
            } else if (
          (patente.slice(0, 2) == "AC" && ((patente.slice(2, 4) == "178" && patente.slice(5, 7) >= "RL") || (patente.slice(2, 4) > "178"))) ||
          (patente.slice(0, 2) == "AD" && ((patente.slice(2, 4) < "535") || (patente.slice(2, 4) == "535" && patente.slice(5, 7) <= "AD")))) {
-         ano = "VEH A—O: 2018";
+       tipo = "AUTO PARTICULAR";
+         ano = 2018;
            } else if (
          (patente.slice(0, 2) == "AD" && ((patente.slice(2, 4) == "535" && patente.slice(5, 7) >= "AE") || (patente.slice(2, 4) > "535"))) ||
          (patente.slice(0, 2) == "AE" && ((patente.slice(2, 4) < "070") || (patente.slice(2, 4) == "070" && patente.slice(5, 7) <= "KX")))) {
-         ano = "VEH A—O: 2019";
+       tipo = "AUTO PARTICULAR";
+         ano = 2019;
            } else if (
          (patente.slice(0, 2) == "AE" && ((patente.slice(2, 4) == "070" && patente.slice(5, 7) >= "KY") || (patente.slice(2, 4) > "070" && patente.slice(2, 4) < "551") || (patente.slice(2, 4) == "551" && patente.slice(5, 7) <= "LM")))) {
-         ano = "VEH A—O: 2020";
+       tipo = "AUTO PARTICULAR";
+         ano = 2020;
            } else if (
          (patente.slice(0, 2) == "AE" && ((patente.slice(2, 4) == "551" && patente.slice(5, 7) >= "LN") || (patente.slice(2, 4) > "551"))) ||
          (patente.slice(0, 2) == "AF" && ((patente.slice(2, 4) < "119") || (patente.slice(2, 4) == "119" && patente.slice(5, 7) <= "LA")))) {
-         ano = "VEH A—O: 2021";
+       tipo = "AUTO PARTICULAR";
+         ano = 2021;
            } else if (
          (patente.slice(0, 2) == "AF" && ((patente.slice(2, 4) == "119" && patente.slice(5, 7) >= "LB") || (patente.slice(2, 4) > "119" && patente.slice(2, 4) < "725") || (patente.slice(2, 4) == "725" && patente.slice(5, 7) <= "CA")))) {
-         ano = "VEH A—O: 2022";
+       tipo = "AUTO PARTICULAR";
+         ano = 2022;
            } else if (
          (patente.slice(0, 2) == "AF" && ((patente.slice(2, 4) == "725" && patente.slice(5, 7) >= "CB") || (patente.slice(2, 4) > "725"))) ||
          (patente.slice(0, 2) == "AG" && ((patente.slice(2, 4) < "394") || (patente.slice(2, 4) == "394" && patente.slice(5, 7) <= "GB")))) {
-         ano = "VEH A—O: 2023";
+       tipo = "AUTO PARTICULAR";
+         ano = 2023;
            } else if (
          (patente.slice(0, 2) == "AG" && ((patente.slice(2, 4) == "394" && patente.slice(5, 7) >= "GC") || (patente.slice(2, 4) > "394")))) {
-       ano = "VEH A—O: >= 2024";
+       tipo = "AUTO PARTICULAR";
+       ano = ">= 2024";
 
        // //// VALIDADOR DE MOTOS MERCOSUR
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) < "022")
        || (patente.slice(1, 4) == "022" && patente.slice(4, 7) <= "FCK"))) {
-       ano = "MOTO A—O: 2016";
+       tipo = "MOTO PARTICULAR";
+       ano = 2016;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "022" && patente.slice(4, 7) >= "FCL")
        || (patente.slice(1, 4) >= "023" && patente.slice(1, 4) <= "061")
        || (patente.slice(1, 4) == "062" && patente.slice(4, 7) <= "AGC"))) {
-       ano = "MOTO A—O: 2017";
+       tipo = "MOTO PARTICULAR";
+       ano = 2017;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "062" && patente.slice(4, 7) >= "AGD")
        || (patente.slice(1, 4) >= "063" && patente.slice(1, 4) <= "093")
        || (patente.slice(1, 4) == "094" && patente.slice(4, 7) <= "FDF"))) {
-       ano = "MOTO A—O: 2018";
+       tipo = "MOTO PARTICULAR";
+       ano = 2018;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "094" && patente.slice(4, 7) >= "FDG")
        || (patente.slice(1, 4) >= "095" && patente.slice(1, 4) <= "112")
        || (patente.slice(1, 4) == "113" && patente.slice(4, 7) <= "NSX"))) {
-       ano = "MOTO A—O: 2019";
+       tipo = "MOTO PARTICULAR";
+       ano = 2019;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "113" && patente.slice(4, 7) >= "FDH")
        || (patente.slice(1, 4) >= "114" && patente.slice(1, 4) <= "135")
        || (patente.slice(1, 4) == "136" && patente.slice(4, 7) <= "PRA"))) {
-       ano = "MOTO A—O: 2020";
+       tipo = "MOTO PARTICULAR";
+       ano = 2020;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "136" && patente.slice(4, 7) >= "PRB")
        || (patente.slice(1, 4) >= "137" && patente.slice(1, 4) <= "156")
        || (patente.slice(1, 4) == "157" && patente.slice(4, 7) <= "XZZ"))) {
-       ano = "MOTO A—O: 2021";
+       tipo = "MOTO PARTICULAR";
+       ano = 2021;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "157" && patente.slice(4, 7) >= "YAA")
        || (patente.slice(1, 4) >= "158" && patente.slice(1, 4) <= "173")
        || (patente.slice(1, 4) == "174" && patente.slice(4, 7) <= "ZVH"))) {
-       ano = "MOTO A—O: 2022";
+       tipo = "MOTO PARTICULAR";
+       ano = 2022;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "174" && patente.slice(4, 7) >= "ZVI")
        || (patente.slice(1, 4) >= "175" && patente.slice(1, 4) <= "197")
        || (patente.slice(1, 4) == "198" && patente.slice(4, 7) <= "KAK"))) {
-     ano = "MOTO A—O: 2023";
+       tipo = "MOTO PARTICULAR";
+     ano = 2023;
    } else if (patente.slice(0, 1) == "A" && ((patente.slice(1, 4) == "198" && patente.slice(4, 7) >= "KAK")
                                          || (patente.slice(1, 4) >= "199"))) {
-     ano = "MOTO A—O: >= 2024";
+       tipo = "MOTO PARTICULAR";
+     ano = ">= 2024";
    } else {
-     ano = "A—O VEH NO ENCONTRADO.";
+     ano = "ERROR.";
    }
+ } else if (patente.length == 9 || patente.length == 10) {
+ //// TRAILER
+   if (patente.slice(0, 3) >= "101") {
+       tipo = "TRAILER";
+       ano = "2000";
+       motor = "NO APLICA";
+       chasis = "NO APLICA";
+   } 
  } else {
    ano = "ERROR FORMATO PATENTE NO VALIDA.";
  }
 
- document.getElementById("modelo").value = ano;
+if (!document.getElementById("modelo").value) {
+   document.getElementById("modelo").value = ano;
+}
+
+console.log("valor final de tipo: "  + tipo)
+console.log("antiguo valor en tipo: " + document.getElementById("tipo").value)
+if (!document.getElementById("tipo").value) {
+   document.getElementById("tipo").value = tipo;
+}
+
+if (!document.getElementById("motor").value) {
+   document.getElementById("motor").value = motor;
+}
+
+if (!document.getElementById("chasis").value) {
+   document.getElementById("chasis").value = chasis;
+}
+
 
  const modelo = document.getElementById("modelo").value;
  const last4Characters = modelo.slice(-4);
@@ -1253,7 +2439,7 @@ if (/^[0-9]{3}[A-Z]{3}$|^[A-Z]{1}[0-9]{3}[A-Z]{3}$/.test(patente)) {
 }
 
 else {
- resultado += "Patente no v·lida\n";
+ resultado += "Patente no v√°lida\n";
 }
 document.getElementById("tipo_veh").textContent = "";
 document.getElementById("tipo_veh").insertAdjacentHTML('beforeend', `
@@ -1310,9 +2496,10 @@ document.getElementById("planes").insertAdjacentHTML('beforeend', `
 console.log(resultado)
 }
 
+
 /////////////////////////// AUTOCOMPLETAR MARCA /////////////////////////////
 
-// FunciÛn para obtener y mostrar sugerencias
+// Funci√≥n para obtener y mostrar sugerencias
 function autocompletar() {
  var inputDato = document.getElementById('marca').value;
 
@@ -1336,26 +2523,8 @@ function actualizarSugerencias(datos) {
 }
 
 
-////////////////////////// VER REFACTURACION ////////////////////////
 
 
-function buscarRefa() {
- let cnia = document.getElementById("cnia").value;
- var valor = "";
- if (["FED PAT", "MAPFRE",  "ALLIANZ","MERCANTIL", "NIVEL", "ORBIS"].includes(cnia)) {
-   valor = 4;
- } else if (["LA CAJA", "RIVADAVIA", "PROVIDENCIA", "RIO URUGUAY", "ATM", "LIBRA"].includes(cnia)) {
-   valor = 3;
- } else if (["AGROSALTA", "AGROSALTA C/GRUA", "AGRO MOTO", "AGRO (V)", "AGRO (V) C/GRUA", "GRUA", "DIGNA", "BBVA", "EL TRIUNFO", "SAN PATRICIO"].includes(cnia)) {
-   valor = 6;
- } else if (["EXPERTA"].includes(cnia)) {
-   valor = 1;
- } else {
-   valor = 0;
- }
-
- document.getElementById("refac").value = valor;
-}
 
 
 ////////////////////////// CUIT AUTOMATICA //////////////////////
@@ -1417,9 +2586,9 @@ function reducirCalidadImagen(file, callback) {
    var canvas = document.createElement('canvas');
    var ctx = canvas.getContext('2d');
    
-   // Configura las nuevas dimensiones deseadas (podrÌas hacer esto din·mico)
-   var maxWidth = 800; // Ancho m·ximo
-   var maxHeight = 600; // Alto m·ximo
+   // Configura las nuevas dimensiones deseadas (podr√≠as hacer esto din√°mico)
+   var maxWidth = 800; // Ancho m√°ximo
+   var maxHeight = 600; // Alto m√°ximo
    var width = img.width;
    var height = img.height;
 
@@ -1445,7 +2614,7 @@ function reducirCalidadImagen(file, callback) {
    // Convierte la imagen del canvas a un Blob con calidad reducida
    canvas.toBlob(function(blob) {
      callback(blob);
-   }, 'image/jpeg', 0.25); // Ajusta la calidad aquÌ, 0.5 es 50% de la calidad original
+   }, 'image/jpeg', 0.25); // Ajusta la calidad aqu√≠, 0.5 es 50% de la calidad original
  };
 }
 ////////////// MOSTRAR FOTOS AL BUSCAR PATENTE /////////////////////
@@ -1453,11 +2622,11 @@ function reducirCalidadImagen(file, callback) {
 function mostrarFotos_veh(data) {
    var fotosBase64 = data.fotosBase64;
    var vehiculo_vista = document.getElementById("vehiculo_vista");
-   vehiculo_vista.innerHTML = ''; // Limpia la galerÌa antes de mostrar nuevas fotos
+   vehiculo_vista.innerHTML = ''; // Limpia la galer√≠a antes de mostrar nuevas fotos
    if (fotosBase64.length > 0) {
        fotosBase64.forEach(function(foto, index) {
            var col = document.createElement("div");
-           col.classList.add("col-md-6", "mb-3");
+           col.classList.add("col-md-3", "mb-3");
 
            var imgContainer = document.createElement("div");
            imgContainer.classList.add("position-relative");
@@ -1467,10 +2636,10 @@ function mostrarFotos_veh(data) {
            img.classList.add("img-thumbnail", "rounded");
 
            img.onload = function() {
-               // Configura el porcentaje de reducciÛn deseado
-               var reductionPercentage = 20; // Porcentaje de reducciÛn (por ejemplo, 50% para reducir a la mitad)
+               // Configura el porcentaje de reducci√≥n deseado
+               var reductionPercentage = 15; // Porcentaje de reducci√≥n (por ejemplo, 50% para reducir a la mitad)
 
-               // Calcula las nuevas dimensiones basadas en el porcentaje de reducciÛn
+               // Calcula las nuevas dimensiones basadas en el porcentaje de reducci√≥n
                var newWidth = img.width * (reductionPercentage / 100);
                var newHeight = img.height * (reductionPercentage / 100);
 
@@ -1509,11 +2678,11 @@ function mostrarFotos_veh(data) {
 function mostrarFotos_reg(data) {
    var fotosBase64 = data.fotosBase64;
    var registro_vista = document.getElementById("registro_vista");
-   registro_vista.innerHTML = ''; // Limpia la galerÌa antes de mostrar nuevas fotos
+   registro_vista.innerHTML = ''; // Limpia la galer√≠a antes de mostrar nuevas fotos
    if (fotosBase64.length > 0) {
        fotosBase64.forEach(function(foto, index) {
            var col = document.createElement("div");
-           col.classList.add("col-md-6", "mb-3");
+           col.classList.add("col-md-3", "mb-3");
 
            var imgContainer = document.createElement("div");
            imgContainer.classList.add("position-relative");
@@ -1523,10 +2692,10 @@ function mostrarFotos_reg(data) {
            img.classList.add("img-thumbnail", "rounded");
 
            img.onload = function() {
-               // Configura el porcentaje de reducciÛn deseado
-               var reductionPercentage = 20; // Porcentaje de reducciÛn (por ejemplo, 20% para reducir en un 20%)
+               // Configura el porcentaje de reducci√≥n deseado
+               var reductionPercentage = 15; // Porcentaje de reducci√≥n (por ejemplo, 20% para reducir en un 20%)
 
-               // Calcula las nuevas dimensiones basadas en el porcentaje de reducciÛn
+               // Calcula las nuevas dimensiones basadas en el porcentaje de reducci√≥n
                var newWidth = img.width * (reductionPercentage / 100);
                var newHeight = img.height * (reductionPercentage / 100);
 
@@ -1574,7 +2743,7 @@ function borrarFoto(fotoId) {
 function eliminarArchivo(index) {
    var input = document.getElementById("fileInput_veh");
    var files = Array.from(input.files);
-   files.splice(index, 1); // Elimina el archivo en la posiciÛn 'index'
+   files.splice(index, 1); // Elimina el archivo en la posici√≥n 'index'
    var nuevoFileList = new DataTransfer();
    files.forEach(file => nuevoFileList.items.add(file));
    input.files = nuevoFileList.files;
@@ -1584,7 +2753,7 @@ function eliminarArchivo(index) {
 function eliminarArchivo_reg(index) {
    var input = document.getElementById("fileInput_reg");
    var files = Array.from(input.files);
-   files.splice(index, 1); // Elimina el archivo en la posiciÛn 'index'
+   files.splice(index, 1); // Elimina el archivo en la posici√≥n 'index'
    var nuevoFileList = new DataTransfer();
    files.forEach(file => nuevoFileList.items.add(file));
    input.files = nuevoFileList.files;
@@ -1595,21 +2764,21 @@ function mostrarMiniaturas_veh() {
    var files = document.getElementById("fileInput_veh").files;
    var vehiculo_carga = document.getElementById("vehiculo_carga");
 
-   vehiculo_carga.textContent = ''; // Limpiar galerÌa antes de mostrar miniaturas
+   vehiculo_carga.textContent = ''; // Limpiar galer√≠a antes de mostrar miniaturas
 
    Array.from(files).forEach((file, index) => {
        var reader = new FileReader();
 
        var imgContainer = document.createElement("div");
-       imgContainer.classList.add("position-relative", "col-md-6", "mb-3");
+       imgContainer.classList.add("position-relative", "col-md-3", "mb-3");
 
        var img = document.createElement("img");
        img.classList.add("img-thumbnail", "rounded");
 
-       // CondiciÛn para determinar si la imagen es horizontal o vertical
+       // Condici√≥n para determinar si la imagen es horizontal o vertical
          img.onload = function() {
-               var reductionPercentage = 8; // Porcentaje de reducciÛn (por ejemplo, 20% para reducir en un 20%)
-                               // Calcula las nuevas dimensiones basadas en el porcentaje de reducciÛn
+               var reductionPercentage = 8; // Porcentaje de reducci√≥n (por ejemplo, 20% para reducir en un 20%)
+                               // Calcula las nuevas dimensiones basadas en el porcentaje de reducci√≥n
                var newWidth = img.naturalWidth * (reductionPercentage / 100);
                var newHeight = img.naturalHeight * (reductionPercentage / 100);
 
@@ -1658,7 +2827,7 @@ function mostrarMiniaturas_reg() {
    var files = document.getElementById("fileInput_reg").files;
    var registro_carga = document.getElementById("registro_carga");
 
-   registro_carga.textContent = ''; // Limpiar galerÌa antes de mostrar miniaturas
+   registro_carga.textContent = ''; // Limpiar galer√≠a antes de mostrar miniaturas
 
    Array.from(files).forEach((file, index) => {
        var reader = new FileReader();
@@ -1669,10 +2838,10 @@ function mostrarMiniaturas_reg() {
        var img = document.createElement("img");
        img.classList.add("img-thumbnail", "rounded");
 
-       // CondiciÛn para determinar si la imagen es horizontal o vertical
+       // Condici√≥n para determinar si la imagen es horizontal o vertical
          img.onload = function() {
-               var reductionPercentage = 8; // Porcentaje de reducciÛn (por ejemplo, 20% para reducir en un 20%)
-                               // Calcula las nuevas dimensiones basadas en el porcentaje de reducciÛn
+               var reductionPercentage = 8; // Porcentaje de reducci√≥n (por ejemplo, 20% para reducir en un 20%)
+                               // Calcula las nuevas dimensiones basadas en el porcentaje de reducci√≥n
                var newWidth = img.naturalWidth * (reductionPercentage / 100);
                var newHeight = img.naturalHeight * (reductionPercentage / 100);
 
@@ -1747,7 +2916,7 @@ navigator.mediaDevices.getUserMedia({ video: { facingMode: facingMode } })
    video.srcObject = stream;
  })
  .catch(function(error) {
-   console.error('Error al acceder a la c·mara:', error);
+   console.error('Error al acceder a la c√°mara:', error);
  });
 
 function capturePhoto(event) {
@@ -1758,7 +2927,7 @@ function capturePhoto(event) {
 
  // Agregar fecha y hora actual en el lienzo
  var fechaHoraActual = new Date().toLocaleString();
- context.font = 'bold 35px arial black'; // Fuente m·s gruesa
+ context.font = 'bold 35px arial black'; // Fuente m√°s gruesa
  context.fillStyle = 'white';
  context.strokeStyle = 'black'; // Color del borde
  context.lineWidth = 2; // Grosor del borde
@@ -1812,24 +2981,24 @@ function switchCamera(event) {
              video.srcObject = stream;
            })
            .catch(function(error) {
-             console.error('Error al cambiar de c·mara:', error);
+             console.error('Error al cambiar de c√°mara:', error);
            });
        } else {
-         console.log('No se encontraron c·maras adicionales.');
+         console.log('No se encontraron c√°maras adicionales.');
        }
      })
      .catch(function(error) {
        console.error('Error al enumerar los dispositivos:', error);
      });
  } else {
-   console.log('La funciÛn enumerateDevices no est· disponible en este navegador.');
+   console.log('La funci√≥n enumerateDevices no est√° disponible en este navegador.');
  }
 }
 
 
        var canvas2 = document.getElementById('canvas2');
      var resultado = document.getElementById('resultado');
-       var currentCamera = 'environment'; // Valor inicial de la c·mara trasera
+       var currentCamera = 'environment'; // Valor inicial de la c√°mara trasera
 
        function tomarFoto() {
    event.preventDefault();
@@ -1850,27 +3019,27 @@ function extraerTexto() {
        var tempCanvas = document.createElement('canvas');
        var context = tempCanvas.getContext('2d');
 
-       // Ajustar el tamaÒo del lienzo temporal para obtener una imagen de mayor calidad
-       var scaleFactor = 4; // Ajusta este valor para obtener el tamaÒo deseado
+       // Ajustar el tama√±o del lienzo temporal para obtener una imagen de mayor calidad
+       var scaleFactor = 4; // Ajusta este valor para obtener el tama√±o deseado
        tempCanvas.width = img.width * scaleFactor;
        tempCanvas.height = img.height * scaleFactor;
 
-       // Dibujar la imagen en el nuevo canvas utilizando la interpolaciÛn adecuada
+       // Dibujar la imagen en el nuevo canvas utilizando la interpolaci√≥n adecuada
        context.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
 
-       // Obtener los pÌxeles de la imagen
+       // Obtener los p√≠xeles de la imagen
        var imageData = context.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
        var data = imageData.data;
 
-       // Recorrer los pÌxeles y modificar el fondo a blanco
+       // Recorrer los p√≠xeles y modificar el fondo a blanco
        for (var i = 0; i < data.length; i += 4) {
-           // Verificar si el pÌxel es parte del fondo
+           // Verificar si el p√≠xel es parte del fondo
            var r = data[i];
            var g = data[i + 1];
            var b = data[i + 2];
            var alpha = data[i + 3];
 
-           // Si el pÌxel no es parte del fondo, establecerlo como blanco
+           // Si el p√≠xel no es parte del fondo, establecerlo como blanco
            if (r > 100 && g > 100 && b > 100 && alpha > 100) {
                data[i] = 255;     // Rojo
                data[i + 1] = 255; // Verde
@@ -1879,7 +3048,7 @@ function extraerTexto() {
            }
        }
 
-       // Establecer los pÌxeles modificados en el canvas original
+       // Establecer los p√≠xeles modificados en el canvas original
        context.putImageData(imageData, 0, 0);
 
        // Obtener la imagen resultante en formato base64
@@ -1911,7 +3080,7 @@ function extraerTexto() {
  var chasis = getTextAfterKeyword2(texto, chasisIndex, 'CHASIS:');
  var cuadro = getTextAfterKeyword2(texto, cuadroIndex, 'CUADRO:');
 
- // Verificar si se encontrÛ la palabra "chasis" o "cuadro"
+ // Verificar si se encontr√≥ la palabra "chasis" o "cuadro"
  if (chasis === '') {
    chasis = cuadro;
  }
@@ -1923,7 +3092,7 @@ function extraerTexto() {
 })
            .catch(function (error) {
                console.error(error);
-               alert('OcurriÛ un error al extraer el texto de la imagen.');
+               alert('Ocurri√≥ un error al extraer el texto de la imagen.');
            });
    };
 
@@ -1933,21 +3102,21 @@ function extraerTexto() {
 
 function getTextAfterKeyword(texto, keywordIndex, keyword) {
    event.preventDefault();
-   // Verificar si se encontrÛ la palabra clave
+   // Verificar si se encontr√≥ la palabra clave
    if (keywordIndex !== -1) {
-       // Obtener el Ìndice despuÈs de la palabra clave
+       // Obtener el √≠ndice despu√©s de la palabra clave
        var startIndex = keywordIndex + keyword.length;
 
-       // Obtener el texto despuÈs de la palabra clave
+       // Obtener el texto despu√©s de la palabra clave
        var value = texto.substring(startIndex).trim();
 
-       // Verificar si hay un salto de lÌnea o espacio
+       // Verificar si hay un salto de l√≠nea o espacio
        var nextLineIndex = value.indexOf('\n');
 
-       // Obtener el Ìndice del siguiente espacio o salto de lÌnea
+       // Obtener el √≠ndice del siguiente espacio o salto de l√≠nea
        var endIndex = Math.min(nextLineIndex);
 
-       // Si se encuentra el siguiente espacio o salto de lÌnea, truncar el texto
+       // Si se encuentra el siguiente espacio o salto de l√≠nea, truncar el texto
        if (endIndex !== -1) {
            value = value.substring(0, endIndex);
        }
@@ -1963,22 +3132,22 @@ function getTextAfterKeyword(texto, keywordIndex, keyword) {
 
 function getTextAfterKeyword2(texto, keywordIndex, keyword) {
    event.preventDefault();
-   // Verificar si se encontrÛ la palabra clave
+   // Verificar si se encontr√≥ la palabra clave
    if (keywordIndex !== -1) {
-       // Obtener el Ìndice despuÈs de la palabra clave
+       // Obtener el √≠ndice despu√©s de la palabra clave
        var startIndex = keywordIndex + keyword.length;
 
-       // Obtener el texto despuÈs de la palabra clave
+       // Obtener el texto despu√©s de la palabra clave
        var value = texto.substring(startIndex).trim();
 
-       // Verificar si hay un salto de lÌnea o espacio
+       // Verificar si hay un salto de l√≠nea o espacio
        var nextLineIndex = value.indexOf('\n');
        var nextSpaceIndex = value.indexOf(' ');
 
-       // Obtener el Ìndice del siguiente espacio o salto de lÌnea
+       // Obtener el √≠ndice del siguiente espacio o salto de l√≠nea
        var endIndex = Math.min(nextLineIndex, nextSpaceIndex);
 
-       // Si se encuentra el siguiente espacio o salto de lÌnea, truncar el texto
+       // Si se encuentra el siguiente espacio o salto de l√≠nea, truncar el texto
        if (endIndex !== -1) {
            value = value.substring(0, endIndex);
        }
@@ -2001,7 +3170,1727 @@ function mostrarImagenModificada(modifiedImageData) {
 
 ////////////////////////FIN DE SCRIPTS DE FOTOGRAFIA Y OCR /////////////////////////
 
-//////////////////////// FUNCION PARA COMPROBAR LISTA NEGRA ///////////////////////////
+//////////////////////// FUNCION PARA COMPROBAR RAMO ///////////////////////////
+
+function compruebaRamo() {
+ var ramo = document.getElementById("ramo_1").value;
+ var patenteInput = document.getElementById("patente");
+
+ // Oculta todos los mensajes inicialmente
+ document.getElementById("mensajeBici").style.display = "none";
+ document.getElementById("mensajeCasa").style.display = "none";
+ document.getElementById("mensajeComercio").style.display = "none";
+ document.getElementById("mensajeAP").style.display = "none";
+ document.getElementById("mensajeCaucion").style.display = "none";
+ document.getElementById("mensajeRC").style.display = "none";
+ document.getElementById("mensajeTransporte").style.display = "none";
+ document.getElementById("mensajeTecnico").style.display = "none";
+ document.getElementById("mensajeAD").style.display = "none";
+
+
+ // Mostrar el mensaje correspondiente seg√∫n la selecci√≥n
+ switch(ramo) {
+   case "BICI_":
+     document.getElementById("mensajeBici").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "BICI_2_":
+     document.getElementById("mensajeBici").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "BICI_3_":
+     document.getElementById("mensajeBici").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "CASA_":
+     document.getElementById("mensajeCasa").style.display = "block";
+     patenteInput.placeholder = "Ingrese Direccion";
+     break;
+   case "COMERCIO_":
+     document.getElementById("mensajeComercio").style.display = "block";
+     patenteInput.placeholder = "Ingrese Direccion";
+     break;
+   case "AP_":
+     document.getElementById("mensajeAP").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "AP_2_":
+     document.getElementById("mensajeAP").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "AP_3_":
+     document.getElementById("mensajeAP").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "CAUCION_":
+     document.getElementById("mensajeCaucion").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "RC_":
+     document.getElementById("mensajeRC").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "TRANSPORTE_":
+     document.getElementById("mensajeTransporte").style.display = "block";
+     patenteInput.placeholder = "Ingrese Patente";
+     break;
+   case "TECNICO_":
+     document.getElementById("mensajeTecnico").style.display = "block";
+     patenteInput.placeholder = "Ingrese N¬∞ Serie";
+     break;
+   case "AD_":
+     document.getElementById("mensajeAD").style.display = "block";
+     patenteInput.placeholder = "Ingrese DNI";
+     break;
+   case "":
+     patenteInput.placeholder = "Ingrese Patente";
+     break;
+   default:
+     // No hacer nada si la selecci√≥n no coincide
+     break;
+ }
+
+}
+
+// Ejecutar la funci√≥n cada vez que cambia el valor del select
+document.getElementById("ramo_1").addEventListener("change", compruebaRamo);
+
+
+///////////////////// MOSTRAR MENU POST EMISION ///////////////////
+
+function menuPost() {
+
+   document.getElementById("emi2_modal_container").style.display = "block";
+
+   /// DATOS DE CLIENTE A INGRESAR
+   let infoDNI =  document.getElementById("dni").value;
+   let infoCliente =  document.getElementById("nombreCompleto").value;
+   let infoDomicilio =  document.getElementById("domicilio").value;
+   let infoLocalidad =  document.getElementById("localidad").value;
+   let infoWpp =  document.getElementById("wpp").value;
+   let infoMail =  document.getElementById("mail").value;
+   let infoNotascte =  document.getElementById("notascte").value;
+
+   /// DATOS DE POLIZA A INGRESAR
+   let infoFpago =  document.getElementById("fpago").value;
+   let infoSucursal =  document.getElementById("sucursal").value;
+   let infoCnia =  document.getElementById("cnia").value;
+   let infoCobertura =  document.getElementById("cobertura").value;
+   let infoImporte =  document.getElementById("importe").value;
+   let infoPoliza =  document.getElementById("poliza").value;
+   let infoOperacion =  document.getElementById("operacion").value;
+   let infoVigencia =  document.getElementById("vigencia").value;
+   let infoHasta =  document.getElementById("hasta").value;
+   let infoRefa =  document.getElementById("refac").value;
+   let infoNotifica = document.getElementById("notifica").value;
+
+   /// DATOS DE VEHICULO A INGRESAR
+   let ramo =  document.getElementById("ramo_1").value;
+   let ramo_pat =  document.getElementById("patente_sn").value;
+   let infoPatente =  ramo + ramo_pat;
+   let infoMarca =  document.getElementById("marca").value;
+   let infoMotor =  document.getElementById("motor").value;
+   let infoChasis =  document.getElementById("chasis").value;
+   let infoDanios =  document.getElementById("danios").value;
+   let infoTipo =   document.getElementById("tipo").value;
+   let infoAnio =   document.getElementById("modelo").value;
+   let infoColor =   document.getElementById("color").value;
+   let infoVTV =   document.getElementById("vtv").value;
+   let infoSumaAseg =  document.getElementById("suma_aseg").value;
+   let infoAcc1 =  document.getElementById("accesorio1").value;
+   let infoAcc1valor =  document.getElementById("accesorio1_valor").value;
+   let infoNotasVeh =  document.getElementById("notasveh").value;
+
+   // Mostrar datos en el modal solo si hay valores
+   if (infoDNI) document.getElementById("modalDNI").value = infoDNI;
+   if (infoCliente) document.getElementById("modalCliente").value = infoCliente;
+   if (infoDomicilio) document.getElementById("modalDomicilio").value = infoDomicilio;
+   if (infoLocalidad) document.getElementById("modalLocalidad").value = infoLocalidad;
+   if (infoWpp) document.getElementById("modalWpp").value = infoWpp;
+   if (infoMail) document.getElementById("modalMail").value = infoMail;
+   if (infoNotascte) document.getElementById("modalNotascte").value = infoNotascte;
+   if (infoFpago) document.getElementById("modalFpago").value = infoFpago;
+   if (infoSucursal) document.getElementById("modalSucursal").value = infoSucursal;
+   if (infoCnia) document.getElementById("modalCnia").value = infoCnia;
+   if (infoCobertura) document.getElementById("modalCobertura").value = infoCobertura;
+   if (infoImporte) document.getElementById("modalImporte").value = infoImporte;
+   if (infoPoliza) document.getElementById("modalPoliza").value = infoPoliza;
+   if (infoOperacion) document.getElementById("modalOperacion").value = infoOperacion;
+   if (infoVigencia) document.getElementById("modalVigencia").value = infoVigencia;
+   if (infoHasta) document.getElementById("modalHasta").value = infoHasta;
+   if (infoRefa) document.getElementById("modalRefa").value = infoRefa;
+   if (infoNotifica) document.getElementById("modalNotifica").value = infoNotifica;
+   if (infoPatente) document.getElementById("modalPatente").value = infoPatente;
+   if (infoMarca) document.getElementById("modalMarca").value = infoMarca;
+   if (infoMotor) document.getElementById("modalMotor").value = infoMotor;
+   if (infoChasis) document.getElementById("modalChasis").value = infoChasis;
+   if (infoDanios) document.getElementById("modalDanios").value = infoDanios;
+   if (infoTipo) document.getElementById("modalTipo").value = infoTipo;
+   if (infoAnio) document.getElementById("modalAnio").value = infoAnio;
+   if (infoColor) document.getElementById("modalColor").value = infoColor;
+   if (infoVTV) document.getElementById("modalVTV").value = infoVTV;
+   if (infoSumaAseg) document.getElementById("modalSumaAseg").value = infoSumaAseg;
+   if (infoAcc1) document.getElementById("modalAcc1").value = infoAcc1;
+   if (infoAcc1valor) document.getElementById("modalAcc1valor").value = infoAcc1valor;
+}
+
+///////////////////// IMPRIMIR MODAL DE COBERTURA /////////////////
+
+function printAcuerdoAgroB1() {
+ event.preventDefault();
+let data = {
+   dni: document.getElementById("modalDNI").value || '',
+   nombre: document.getElementById("modalCliente").value || '',
+   domicilio: document.getElementById("modalDomicilio").value || '',
+   localidad: document.getElementById("modalLocalidad").value || '',
+   telefono: document.getElementById("modalWpp").value || '',
+   email: document.getElementById("modalMail").value || '',
+   notas: document.getElementById("notascte").value || '', // Suponiendo que no cambi√≥ el ID para notas
+   formaPago: document.getElementById("modalFpago").value || '',
+   sucursal: document.getElementById("modalSucursal").value || '',
+   compania: document.getElementById("modalCnia").value || '',
+   cobertura: document.getElementById("modalCobertura").value || '',
+   importe: document.getElementById("modalImporte").value || '',
+   poliza: document.getElementById("modalPoliza").value || '',
+   operacion: document.getElementById("modalOperacion").value || '',
+   vigenciaDesde: document.getElementById("modalVigencia").value || '',
+   vigenciaHasta: document.getElementById("modalHasta").value || '',
+   refactura: document.getElementById("modalRefa").value || '',
+   notificacion: document.getElementById("modalNotifica").value || '',
+   patente: document.getElementById("modalPatente").value || '',
+   marca: document.getElementById("modalMarca").value || '',
+   motor: document.getElementById("modalMotor").value || '',
+   chasis: document.getElementById("modalChasis").value || '',
+   danios: document.getElementById("modalDanios").value || '',
+   tipo: document.getElementById("modalTipo").value || '',
+   anio: document.getElementById("modalAnio").value || '',
+   color: document.getElementById("modalColor").value || '',
+   vtv: document.getElementById("modalVTV").value || '',
+   sumaAsegurada: document.getElementById("modalSumaAseg").value || '',
+   accesorio: document.getElementById("modalAcc1").value || '',
+   valorAccesorio: document.getElementById("modalAcc1valor").value || '',
+   comentarios: document.getElementById("notasveh").value || '' // Suponiendo que no cambi√≥ el ID para comentarios
+};
+
+   // Crear la ventana de impresi√≥n
+   const printWindow = window.open('', '_blank', 'height=600,width=800');
+   printWindow.document.open();
+   printWindow.document.write(`
+       <html>
+           <head>
+               <title>Resumen de P√≥liza</title>
+               <style>
+                   body {
+                       font-family: Arial, sans-serif;
+                       padding: 20px;
+                   }
+                   .container {
+                       width: 100%;
+                       margin: 0 auto;
+                   }
+                   .form-label {
+                       font-weight: bold;
+                       margin-bottom: 2px;
+                   }
+                   .form-control {
+                       border: 1px solid #ccc;
+                       padding: 5px;
+                       width: 100%;
+                       box-sizing: border-box;
+                       border-radius: 8px; /* Borde redondeado */
+                   }
+                   .row {
+                       display: flex;
+                       flex-wrap: wrap;
+                   }
+
+/* Estilo para las columnas */
+.col-12 {
+   flex: 0 0 calc(100% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(100% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-8 {
+   flex: 0 0 calc(66.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(66.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+.col-6 {
+   flex: 0 0 calc(50% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(50% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-4 {
+   flex: 0 0 calc(33.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(33.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-3 {
+   flex: 0 0 calc(25% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(25% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-2 {
+   flex: 0 0 calc(20% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(20% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-1 {
+   flex: 0 0 calc(10% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(10% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+/* Opcional: Ajusta el padding de las columnas si es necesario */
+.col-12, .col-6, .col-4, .col-3, .col-2, .col-1 {
+   padding: 10px; /* Ajusta el padding seg√∫n sea necesario */
+}
+                   .text-center {
+                       text-align: center;
+                   }
+               </style>
+           </head>
+           <body>
+               <div class="container">
+                   <div class="modal-body">
+                       <h3 style="margin: 0px">Datos del Cliente</h3>
+                       <div class="row m-0">
+                           <div class="col-2 mb-1">
+                               <label for="modalDNI" class="form-label">DNI</label>
+                               <input type="text" class="form-control" id="modalDNI" value="${data.dni}" disabled>
+                           </div>
+                           <div class="col-6 mb-1">
+                               <label for="modalCliente" class="form-label">Nombre</label>
+                               <input type="text" class="form-control" id="modalCliente" value="${data.nombre}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalMail" class="form-label">Email</label>
+                               <input type="email" class="form-control" id="modalMail" value="${data.email}" disabled>
+                           </div></div>
+                       <div class="row">
+                           <div class="col-6 mb-1">
+                               <label for="modalDomicilio" class="form-label">Domicilio</label>
+                               <input type="text" class="form-control" id="modalDomicilio" value="${data.domicilio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalLocalidad" class="form-label">Localidad</label>
+                               <input type="text" class="form-control" id="modalLocalidad" value="${data.localidad}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalWpp" class="form-label">Telefono</label>
+                               <input type="text" class="form-control" id="modalWpp" value="${data.telefono}" disabled>
+                           </div>
+                       </div>
+
+                       <h3 style="margin: 0px">Datos de la P√≥liza</h3>
+                       <div class="row m-0">
+                           <div class="col-3 mb-1">
+                               <label for="modalOperacion" class="form-label">Operaci√≥n</label>
+                               <input type="text" class="form-control" id="modalOperacion" value="${data.operacion}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalCnia" class="form-label">Compa√±√≠a</label>
+                               <input type="text" class="form-control" id="modalCnia" value="${data.compania}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalCobertura" class="form-label">Cobertura</label>
+                               <input type="text" class="form-control" id="modalCobertura" value="${data.cobertura}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalPoliza" class="form-label">P√≥liza</label>
+                               <input type="text" class="form-control" id="modalPoliza" value="${data.poliza}" disabled>
+                           </div>
+                       </div>
+                       <div class="row m-0">
+                           <div class="col-2 mb-1">
+                               <label for="modalVigencia" class="form-label">Desde</label>
+                               <input type="text" class="form-control" id="modalVigencia" value="${data.vigenciaDesde}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalHasta" class="form-label">Hasta</label>
+                               <input type="text" class="form-control" id="modalHasta" value="${data.vigenciaHasta}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalRefa" class="form-label">Refactura</label>
+                               <input type="text" class="form-control" id="modalRefa" value="${data.refactura}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalFpago" class="form-label">Forma de Pago</label>
+                               <input type="text" class="form-control" id="modalFpago" value="${data.formaPago}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalSucursal" class="form-label">Sucursal</label>
+                               <input type="text" class="form-control" id="modalSucursal" value="${data.sucursal}" disabled>
+                           </div>
+                           <div class="col-0 mb-1" style="display: none;">
+                               <label for="modalNotifica" class="form-label">Notificaci√≥n</label>
+                               <input type="text" class="form-control" id="modalNotifica" value="${data.notificacion}" disabled>
+                           </div>
+                           <div class="col-0 mb-1" style="display: none;">
+                               <label for="modalImporte" class="form-label">Importe</label>
+                               <input type="text" class="form-control" id="modalImporte" value="${data.importe}" disabled>
+                           </div>
+                       </div>
+
+                       <h3 style="margin: 0px">Datos del Veh√≠culo</h3>
+                       <div class="row m-0">
+                           <div class="col-2 mb-1">
+                               <label for="modalPatente" class="form-label">Patente</label>
+                               <input type="text" class="form-control" id="modalPatente" value="${data.patente}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalMarca" class="form-label">Marca</label>
+                               <input type="text" class="form-control" id="modalMarca" value="${data.marca}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalMotor" class="form-label">Motor</label>
+                               <input type="text" class="form-control" id="modalMotor" value="${data.motor}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalChasis" class="form-label">Chasis</label>
+                               <input type="text" class="form-control" id="modalChasis" value="${data.chasis}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-12 mb-1">
+                               <label for="modalDanios" class="form-label">Da√±os</label>
+                               <input type="text" class="form-control" id="modalDanios" value="${data.danios}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalTipo" class="form-label">Tipo</label>
+                               <input type="text" class="form-control" id="modalTipo" value="${data.tipo}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalAnio" class="form-label">A√±o</label>
+                               <input type="text" class="form-control" id="modalAnio" value="${data.anio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalColor" class="form-label">Color</label>
+                               <input type="text" class="form-control" id="modalColor" value="${data.color}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalVtv" class="form-label">Vto VTV</label>
+                               <input type="text" class="form-control" id="modalVtv" value="${data.vtv}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalSumaAsegurada" class="form-label">Suma Asegurada</label>
+                               <input type="text" class="form-control" id="modalSumaAsegurada" value="${data.sumaAsegurada}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalAccesorio" class="form-label">Accesorio</label>
+                               <input type="text" class="form-control" id="modalAccesorio" value="${data.accesorio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalValorAccesorio" class="form-label">Valor Accesorio</label>
+                               <input type="text" class="form-control" id="modalValorAccesorio" value="${data.valorAccesorio}" disabled>
+                           </div>
+                           <div class="col-3 mb-1" style="display: none">
+                               <label for="modalComentarios" class="form-label">Comentarios</label>
+                               <textarea class="form-control" id="modalComentarios" rows="3" disabled>${data.comentarios}</textarea>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+         <h3 style="margin: 0px">Detalle de Cobertura</h3>
+       <ul class="list-unstyled">
+         <li><i class="bi bi-check-circle"></i> Responsabilidad civil, cubre los da√±os provocados por el vehiculo hacia terceros. (No los da√±os propios)</li>
+         <li><i class="bi bi-check-circle"></i> Robo total, cubre si el vehiculo desaparece completo a causa de un robo.</li>
+         <li><i class="bi bi-check-circle"></i> Incendio total, cubre el incendio solo si afecta al total del vehiculo, no a una parte.</li>
+       </ul>
+
+       <h3 style="margin: 0px">Exclusiones de cobertura:</h3>
+       <ul class="list-unstyled">
+         <li><i class="bi bi-check-circle"></i> La cobertura se encuentra sujeta a la VTV, si el vehiculo no posee VTV o la tuviese vencida, la compa√±ia se libera de todo tipo de obligaci√≥n sobre la p√≥liza o los siniestros que ocurriesen.</li>
+         <li><i class="bi bi-check-circle"></i> Si el vehiculo posee equipo de GNC (Gas Natural Comprimido) y se encuentra vencido, la aseguradora no indemnizar√° ningun tipo de siniestro provocado por o hacia el mismo.</li>
+         <li><i class="bi bi-check-circle"></i> La cobertura quedar√° sujeta al pago de la p√≥liza, si el pago no fuese efectuado antes del dia del vencimiento, la aseguradora se libera de todo tipo de responsabilidad de cualquier siniestro ocurrido posterior a la fecha de pago.</li>
+         <!-- Agrega m√°s cl√°usulas seg√∫n sea necesario -->
+       </ul>
+
+       <div class="row">
+         <div class="col-8 mb-1">
+         </div>
+         <div class="col-4 mb-1 text-center"> <!-- Agrega 'text-center' para centrar el texto -->
+             <div class="border-bottom border-2 border-dark" style="height: 50px;"></div>
+             <label for="clienteNombre" class="form-label d-block">Firma y Aclaraci√≥n del cliente</label>
+         </div>
+       </div>
+           </body>
+       </html>
+   `);
+   printWindow.document.close();
+   printWindow.focus();
+   printWindow.print();
+}
+
+function printPropuesta() {
+ event.preventDefault();
+
+   let compania = document.getElementById("modalCnia").value || '';
+let pas = '';
+let codigo = '';
+
+if (compania === 'NIVEL') {
+   pas = 'GIOIA RAUL HECTOR';
+   codigo = '462';
+} else if (compania === 'RIVADAVIA') {
+   pas = 'CUGNONI SILVIA SUSANA';
+   codigo = '10527';
+} else if (compania === 'PROVIDENCIA') {
+   pas = 'GIOIA NICOLAS JOSE';
+   codigo = '64487';
+}
+
+
+let data = {
+   dni: document.getElementById("modalDNI").value || '',
+   nombre: document.getElementById("modalCliente").value || '',
+   domicilio: document.getElementById("modalDomicilio").value || '',
+   localidad: document.getElementById("modalLocalidad").value || '',
+   telefono: document.getElementById("modalWpp").value || '',
+   email: document.getElementById("modalMail").value || '',
+   notas: document.getElementById("notascte").value || '', // Suponiendo que no cambi√≥ el ID para notas
+   formaPago: document.getElementById("modalFpago").value || '',
+   sucursal: document.getElementById("modalSucursal").value || '',
+   compania: document.getElementById("modalCnia").value || '',
+   cobertura: document.getElementById("modalCobertura").value || '',
+   importe: document.getElementById("modalImporte").value || '',
+   poliza: document.getElementById("modalPoliza").value || '',
+   operacion: document.getElementById("modalOperacion").value || '',
+   vigenciaDesde: document.getElementById("modalVigencia").value || '',
+   vigenciaHasta: document.getElementById("modalHasta").value || '',
+   refactura: document.getElementById("modalRefa").value || '',
+   notificacion: document.getElementById("modalNotifica").value || '',
+   patente: document.getElementById("modalPatente").value || '',
+   marca: document.getElementById("modalMarca").value || '',
+   motor: document.getElementById("modalMotor").value || '',
+   chasis: document.getElementById("modalChasis").value || '',
+   danios: document.getElementById("modalDanios").value || '',
+   tipo: document.getElementById("modalTipo").value || '',
+   anio: document.getElementById("modalAnio").value || '',
+   color: document.getElementById("modalColor").value || '',
+   vtv: document.getElementById("modalVTV").value || '',
+   sumaAsegurada: document.getElementById("modalSumaAseg").value || '',
+   accesorio: document.getElementById("modalAcc1").value || '',
+   valorAccesorio: document.getElementById("modalAcc1valor").value || '',
+   comentarios: document.getElementById("notasveh").value || '',
+   codigo: codigo,
+   pas: pas
+};
+
+   // Crear la ventana de impresi√≥n
+   const printWindow = window.open('', '_blank', 'height=600,width=800');
+   printWindow.document.open();
+   printWindow.document.write(`
+       <html>
+           <head>
+               <title>Resumen de P√≥liza</title>
+               <style>
+                   body {
+                       font-family: Arial, sans-serif;
+                       padding: 20px;
+                   }
+                   .container {
+                       width: 100%;
+                       margin: 0 auto;
+                   }
+                   .form-label {
+                       font-weight: bold;
+                       margin-bottom: 2px;
+                   }
+                   .form-control {
+                       border: 1px solid #ccc;
+                       padding: 5px;
+                       width: 100%;
+                       box-sizing: border-box;
+                       border-radius: 8px; /* Borde redondeado */
+                   }
+                   .row {
+                       display: flex;
+                       flex-wrap: wrap;
+                   }
+
+/* Estilo para las columnas */
+.col-12 {
+   flex: 0 0 calc(100% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(100% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-8 {
+   flex: 0 0 calc(66.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(66.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+.col-6 {
+   flex: 0 0 calc(50% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(50% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-4 {
+   flex: 0 0 calc(33.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(33.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-3 {
+   flex: 0 0 calc(25% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(25% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-2 {
+   flex: 0 0 calc(20% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(20% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-1 {
+   flex: 0 0 calc(10% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(10% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+/* Opcional: Ajusta el padding de las columnas si es necesario */
+.col-12, .col-6, .col-4, .col-3, .col-2, .col-1 {
+   padding: 10px; /* Ajusta el padding seg√∫n sea necesario */
+}
+                   .text-center {
+                       text-align: center;
+                   }
+               </style>
+           </head>
+           <body>
+               <div class="container">
+                   <div class="modal-body">
+                       <h3 class="text-center mb-0">Solicitud de Cobertura</h3>
+                       <hr>
+                       <div class="row m-0">
+                           <div class="col-2 mb-1">
+                               <label for="modalDNI" class="form-label">DNI</label>
+                               <input type="text" class="form-control" id="modalDNI" value="${data.dni}" disabled>
+                           </div>
+                           <div class="col-6 mb-1">
+                               <label for="modalCliente" class="form-label">Nombre</label>
+                               <input type="text" class="form-control" id="modalCliente" value="${data.nombre}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalMail" class="form-label">Email</label>
+                               <input type="email" class="form-control" id="modalMail" value="${data.email}" disabled>
+                           </div></div>
+                       <div class="row">
+                           <div class="col-6 mb-1">
+                               <label for="modalDomicilio" class="form-label">Domicilio</label>
+                               <input type="text" class="form-control" id="modalDomicilio" value="${data.domicilio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalLocalidad" class="form-label">Localidad</label>
+                               <input type="text" class="form-control" id="modalLocalidad" value="${data.localidad}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalWpp" class="form-label">Telefono</label>
+                               <input type="text" class="form-control" id="modalWpp" value="${data.telefono}" disabled>
+                           </div>
+                       </div>
+
+                       <h3 style="margin: 0px">Datos de la P√≥liza</h3>
+                       <div class="row m-0">
+                           <div class="col-3 mb-1">
+                               <label for="modalOperacion" class="form-label">Operaci√≥n</label>
+                               <input type="text" class="form-control" id="modalOperacion" value="${data.operacion}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalCnia" class="form-label">Compa√±√≠a</label>
+                               <input type="text" class="form-control" id="modalCnia" value="${data.compania}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalPAS" class="form-label">Productor</label>
+                               <input type="text" class="form-control" id="modalPAS" value="${data.pas}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalCod" class="form-label">Codigo:</label>
+                               <input type="text" class="form-control" id="modalCod" value="${data.codigo}" disabled>
+                           </div>
+                       </div>
+                       <div class="row m-0">
+                           <div class="col-2 mb-1">
+                               <label for="modalVigencia" class="form-label">Desde</label>
+                               <input type="text" class="form-control" id="modalVigencia" value="${data.vigenciaDesde}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalHasta" class="form-label">Hasta</label>
+                               <input type="text" class="form-control" id="modalHasta" value="${data.vigenciaHasta}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalRefa" class="form-label">Refactura</label>
+                               <input type="text" class="form-control" id="modalRefa" value="${data.refactura}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalFpago" class="form-label">Forma de Pago</label>
+                               <input type="text" class="form-control" id="modalFpago" value="${data.formaPago}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalCobertura" class="form-label">Cobertura</label>
+                               <input type="text" class="form-control" id="modalCobertura" value="${data.cobertura}" disabled>
+                           </div>
+                           <div class="col-0 mb-1" style="display: none;">
+                               <label for="modalNotifica" class="form-label">Notificaci√≥n</label>
+                               <input type="text" class="form-control" id="modalNotifica" value="${data.notificacion}" disabled>
+                           </div>
+                           <div class="col-0 mb-1" style="display: none;">
+                               <label for="modalImporte" class="form-label">Importe</label>
+                               <input type="text" class="form-control" id="modalImporte" value="${data.importe}" disabled>
+                           </div>
+                       </div>
+
+                       <h3 style="margin: 0px">Datos del Veh√≠culo</h3>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalMarca" class="form-label">Marca</label>
+                               <input type="text" class="form-control" id="modalMarca" value="${data.marca}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalMotor" class="form-label">Motor</label>
+                               <input type="text" class="form-control" id="modalMotor" value="${data.motor}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalChasis" class="form-label">Chasis</label>
+                               <input type="text" class="form-control" id="modalChasis" value="${data.chasis}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-12 mb-1">
+                               <label for="modalDanios" class="form-label">Da√±os</label>
+                               <input type="text" class="form-control" id="modalDanios" value="${data.danios}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalTipo" class="form-label">Tipo</label>
+                               <input type="text" class="form-control" id="modalTipo" value="${data.tipo}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalAnio" class="form-label">A√±o</label>
+                               <input type="text" class="form-control" id="modalAnio" value="${data.anio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalColor" class="form-label">Color</label>
+                               <input type="text" class="form-control" id="modalColor" value="${data.color}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalVtv" class="form-label">Vto VTV</label>
+                               <input type="text" class="form-control" id="modalVtv" value="${data.vtv}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalSumaAsegurada" class="form-label">Suma Asegurada</label>
+                               <input type="text" class="form-control" id="modalSumaAsegurada" value="${data.sumaAsegurada}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalAccesorio" class="form-label">Accesorio</label>
+                               <input type="text" class="form-control" id="modalAccesorio" value="${data.accesorio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalValorAccesorio" class="form-label">Valor Accesorio</label>
+                               <input type="text" class="form-control" id="modalValorAccesorio" value="${data.valorAccesorio}" disabled>
+                           </div>
+                           <div class="col-3 mb-1" style="display: none">
+                               <label for="modalComentarios" class="form-label">Comentarios</label>
+                               <textarea class="form-control" id="modalComentarios" rows="3" disabled>${data.comentarios}</textarea>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <hr>
+         <h3 style="margin: 0px">Contra los siguientes riesgos:</h3>
+         <ul class="list-unstyled">
+           <li>
+             <i class="bi bi-check-circle"></i> A) RESPONSABILIDAD CIVIL CON LIMITE S/RES 22.187 BIS/93
+             <ul class="list-unstyled ms-4">
+               <li><i class="bi bi-check-circle"></i> Da√±os corporales y/o Muerte - Res.22.178 Bis/93</li>
+               <li><i class="bi bi-check-circle"></i> Da√±os materiales  Res 22.187 Bis/93</li>
+             </ul>
+           </li>
+           <li><i class="bi bi-check-circle"></i><div id="cob2"></div></li>
+           <li><i class="bi bi-check-circle"></i><div id="cob3"></div></li>
+         </ul>
+         <hr>
+         Las condiciones de cobertura quedan sujetas a las Condiciones Generales Especificas aprobadas por la Superintendencia de Seguros de la Naci√≥n.
+         <hr>
+         La cobertura queda sujeta a la aceptaci√≥n de la aseguradora.
+         <hr>
+
+           </body>
+       </html>
+   `);
+   printWindow.document.close();
+   printWindow.focus();
+   printWindow.print();
+}
+
+function printCertCob() {
+ event.preventDefault();
+let data = {
+   dni: document.getElementById("modalDNI").value || '',
+   nombre: document.getElementById("modalCliente").value || '',
+   domicilio: document.getElementById("modalDomicilio").value || '',
+   localidad: document.getElementById("modalLocalidad").value || '',
+   telefono: document.getElementById("modalWpp").value || '',
+   email: document.getElementById("modalMail").value || '',
+   notas: document.getElementById("notascte").value || '', // Suponiendo que no cambi√≥ el ID para notas
+   formaPago: document.getElementById("modalFpago").value || '',
+   sucursal: document.getElementById("modalSucursal").value || '',
+   compania: document.getElementById("modalCnia").value || '',
+   cobertura: document.getElementById("modalCobertura").value || '',
+   importe: document.getElementById("modalImporte").value || '',
+   poliza: document.getElementById("modalPoliza").value || '',
+   operacion: document.getElementById("modalOperacion").value || '',
+   vigenciaDesde: document.getElementById("modalVigencia").value || '',
+   vigenciaHasta: document.getElementById("modalHasta").value || '',
+   refactura: document.getElementById("modalRefa").value || '',
+   notificacion: document.getElementById("modalNotifica").value || '',
+   patente: document.getElementById("modalPatente").value || '',
+   marca: document.getElementById("modalMarca").value || '',
+   motor: document.getElementById("modalMotor").value || '',
+   chasis: document.getElementById("modalChasis").value || '',
+   danios: document.getElementById("modalDanios").value || '',
+   tipo: document.getElementById("modalTipo").value || '',
+   anio: document.getElementById("modalAnio").value || '',
+   color: document.getElementById("modalColor").value || '',
+   vtv: document.getElementById("modalVTV").value || '',
+   sumaAsegurada: document.getElementById("modalSumaAseg").value || '',
+   accesorio: document.getElementById("modalAcc1").value || '',
+   valorAccesorio: document.getElementById("modalAcc1valor").value || '',
+   comentarios: document.getElementById("notasveh").value || '' // Suponiendo que no cambi√≥ el ID para comentarios
+};
+
+   // Crear la ventana de impresi√≥n
+   const printWindow = window.open('', '_blank', 'height=600,width=800');
+   printWindow.document.open();
+   printWindow.document.write(`
+
+       <html>
+           <head>
+               <title>Resumen de P√≥liza</title>
+               <style>
+                   body {
+               font-family: 'Trebuchet MS', Arial, sans-serif;
+                       padding: 20px;
+                   }
+                   .container {
+                       width: 100%;
+                       margin: 0 auto;
+                   }
+                   .form-label {
+                       font-weight: bold;
+                       margin-bottom: 2px;
+                   }
+                   .form-control {
+                       border: 1px solid #ccc;
+                       padding: 5px;
+                       width: 100%;
+                       box-sizing: border-box;
+                       border-radius: 8px; /* Borde redondeado */
+                   }
+                   .row {
+                       display: flex;
+                       flex-wrap: wrap;
+                   }
+                   table {border-collapse: collapse;}
+                   table td {padding: 0px}
+
+/* Estilo para las columnas */
+.col-12 {
+   flex: 0 0 calc(100% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(100% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-8 {
+   flex: 0 0 calc(66.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(66.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+.col-6 {
+   flex: 0 0 calc(50% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(50% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-4 {
+   flex: 0 0 calc(33.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(33.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-3 {
+   flex: 0 0 calc(25% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(25% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-2 {
+   flex: 0 0 calc(20% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(20% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-1 {
+   flex: 0 0 calc(10% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(10% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+/* Opcional: Ajusta el padding de las columnas si es necesario */
+.col-12, .col-6, .col-4, .col-3, .col-2, .col-1 {
+   padding: 10px; /* Ajusta el padding seg√∫n sea necesario */
+}
+                   .text-center {
+                       text-align: center;
+                   }
+               </style>
+           </head>
+           <body>
+
+
+
+
+
+
+<img style="position:absolute;top:0.71in;left:5.33in;width:3.27in;height:0.46in" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASEAAAApCAYAAAB6OZ/CAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFXSURBVHhe7dihMsRRGMbhnREFlyAIoiAIgksQRVEUBFEQXIAgCKLgAgRB2OACRFEQNwjCBt5vd2ZnGI39f+V5Zn4z59jZ+s5Zox/201W6TTeS9M9dp+O0kb5ZS/dpmsbpty9L0l+7S6/pIx2lhfrwLe3MbgDLs5LOUz16dusPZZIO50eAQTykyzpspc+0WReAgdRr6LEOe6lGaL0uAAM5S0YIaGOEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVosR2k41Qpt1ARjIRZqNUHlPR/MjwCCe0uX8OD9M0tbsBrBcp2maFpuzmsapfpY9p3oiSdIyekm1NTVE36ykg1SvohtJWlInqf4XHaPRF6kaSbVqgSvcAAAAAElFTkSuQmCC'>
+
+<img style="position:absolute;top:0.38in;left:5.25in;width:3.44in;height:2.01in" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAC6CAYAAADGZXrHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAT5SURBVHhe7dwtkFYFHMVhZggEgoFAIBgIBgPBQDAYCAQCwUAgEAwGA4FgMBgMBgLBYCAQCAQCkWAwGAwGo4FgMBAIBAKBIP9zX9jZFWTYL/aemeeZOcx7d5Btv7lfr8f26Pjs49kXs2tmZnvclVk6kp6cmB2q07P80gez57N/zcwOcOnKL7OvZ4nagflodmuWX/Bsdn92dZZ6fjo7NQPYi/Tlk1l6cnl2e/Zklqjdm52d7cs3s6ev9t3s0E/3AEau+v6ZvZh9mx/sVu55pYipYc7CnG0BH1pOmhKwhOzu7OTsveU0LpeOl5YjgKNzYZarwYfL0XtI+RKw88sRwNHLfbN06Yfl6B1yYy2nbnnsCbAmF2fpU55evlWuPx/NflqOANbnx1nelDizHP3H9VmuO/PIE2CNcnP/8ezOcrRNnkbm3Yy8RgGwZrmczGXljrOxz2d5neLccgSwXrn1lUvKvMe65eYs98MAGuTrj/mK0pa/Zm7oAy1ySZl7Y1vy/sWNzUeA1ct3LXMLbJG7/TnIl7oBGuTl13Rr+b9d5I8cpGwADV53a/lmkYgBbXZ0S8SANiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQbUe3Tr46uJQDgAJvnHw9m321+QiweudniVhitng0+37zEWD1Ls8SsRPL0Xg4e7D5CLB6Oen6e/NxI5eSuaTcqhrAiv05+3nzcePMLKdmOUUDWLPXN/UvLEfb/D77dfMRYLVuzXIf//hytM3FWermVQtgrc7OXsyuLEdvkTOxFC7vjgGsSbr02+yP5eh/nJ49nuVp5RunagBH6N7s+eyz5egd8hfyF3PnX8iAo5YO5T5YbnddzQ/ex7VZrjtzeXkqPwA4ArmEzJVhAnY9P9iNPL58OsvlZf5jZ2XAh/TlLC+05h3WPb/+lffH7sxSwdzwvzHL0wGAw5Arv7x8n5v36U6+SbT1/cj9ODe7O3syyz+cX5C45dV/M7P97vYst6/Sl9yTT7zyJe8Dl0vKXGbenOVJQR535nTPzGyvS0fuz3LzPpeNu3jF69ixlybZCPExQ31VAAAAAElFTkSuQmCC'>
+
+<img style="position:absolute;top:0.39in;left:1.70in;width:3.43in;height:2.00in" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAC6CAYAAADGZXrHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAT5SURBVHhe7dwtkFYFHMVhZggEgoFAIBgIBgPBQDAYCAQCwUAgEAwGA4FgMBgMBgLBYCAQCAQCkWAwGAwGo4FgMBAIBAKBIP9zX9jZFWTYL/aemeeZOcx7d5Btv7lfr8f26Pjs49kXs2tmZnvclVk6kp6cmB2q07P80gez57N/zcwOcOnKL7OvZ4nagflodmuWX/Bsdn92dZZ6fjo7NQPYi/Tlk1l6cnl2e/Zklqjdm52d7cs3s6ev9t3s0E/3AEau+v6ZvZh9mx/sVu55pYipYc7CnG0BH1pOmhKwhOzu7OTsveU0LpeOl5YjgKNzYZarwYfL0XtI+RKw88sRwNHLfbN06Yfl6B1yYy2nbnnsCbAmF2fpU55evlWuPx/NflqOANbnx1nelDizHP3H9VmuO/PIE2CNcnP/8ezOcrRNnkbm3Yy8RgGwZrmczGXljrOxz2d5neLccgSwXrn1lUvKvMe65eYs98MAGuTrj/mK0pa/Zm7oAy1ySZl7Y1vy/sWNzUeA1ct3LXMLbJG7/TnIl7oBGuTl13Rr+b9d5I8cpGwADV53a/lmkYgBbXZ0S8SANiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQbUe3Tr46uJQDgAJvnHw9m321+QiweudniVhitng0+37zEWD1Ls8SsRPL0Xg4e7D5CLB6Oen6e/NxI5eSuaTcqhrAiv05+3nzcePMLKdmOUUDWLPXN/UvLEfb/D77dfMRYLVuzXIf//hytM3FWermVQtgrc7OXsyuLEdvkTOxFC7vjgGsSbr02+yP5eh/nJ49nuVp5RunagBH6N7s+eyz5egd8hfyF3PnX8iAo5YO5T5YbnddzQ/ex7VZrjtzeXkqPwA4ArmEzJVhAnY9P9iNPL58OsvlZf5jZ2XAh/TlLC+05h3WPb/+lffH7sxSwdzwvzHL0wGAw5Arv7x8n5v36U6+SbT1/cj9ODe7O3syyz+cX5C45dV/M7P97vYst6/Sl9yTT7zyJe8Dl0vKXGbenOVJQR535nTPzGyvS0fuz3LzPpeNu3jF69ixlybZCPExQ31VAAAAAElFTkSuQmCC'>
+
+<img style="position:absolute;top:0.20in;left:1.69in;width:3.45in;height:0.36in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAhCAYAAACxxJxHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJoSURBVHhe7d2hc1NBEMfxN4NAVCAQCERFBQJZgUD0D0BUVCIQCCSCPwCBRCARiAokAomoqEAgEPwBiAp6e3d5IUynAtGZpLsvByUzO2nakOQy892Zj8q+i/vN3uW9vOY61e/374q02zH2HonkJwBwXeMcabctV0rELKZijA9CzK+CpO8S8wgA/jfNlyMNtjcivZ3RaHSjxM981YWXpEPvCwFgUWxgCintlii6eml4begi+97iALA0kj6nlO6UaJqt7IIQ01d3QQBYMh2oop2blYiaXl2ASfrhLQQAq6K5dHppkNlBWpD8xVsAAFbNJrKpW8sQ8nvvQgCohQ5aByWyJivk/NC7AABqY/eWlei6KPsFwGsGgNrotvJbia5x5Zy3vEYAqNa/h/w6hb1wmwCgUvYEUYkwtpIA1s/EltJ+tvSaAKBWmltnXYDZvWFeAwDU7vjk5LZuJQeb3ocAULsYf94nxACsL+ntjP/g0PsQAGpnIWblfggAleu2k1bB/k3RaQCAmnUH+12I8d9hANaMDl+/uwCzEonvvCYAqJbkjyXCdBJLaddtAoBKaW49LhHWNMPh8KaOZr+8RgCojebV6d/zsD+lqfbcawaA6kh6WaLroso0xjslAVRNcyoOBoNbJbomy+65sDHNuxAAanDpuyg55AdQLW8b6ZU2PtOJ7MxdBABWIMT0ukTUbGXPJGmYtd5iALAsNlCF2Htaoulqddy29zT9PnkLA8CiaYAdzvzm72llU5mG2QcO/QEsWjd5ST5wX8s2b9ltGLawHa6FmN/ql+0DwLy6Rx81V0TyXoxxo0TODNU05w7CMkjx4fr6AAAAAElFTkSuQmCC">
+<img style="position:absolute;top:0.38in;left:1.69in;width:3.45in;height:0.27in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAZCAYAAABZ7RmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABuSURBVHhe7dQBCQAwDMCw+xf6MxW7jkIKsdAjSfnumwUoMjEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPSTAxIMzEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPCZj+9nayowhm6/AAAAABJRU5ErkJggg==">
+
+<img style="position:absolute;top:0.38in;left:5.24in;width:3.45in;height:0.27in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAZCAYAAABZ7RmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABuSURBVHhe7dQBCQAwDMCw+xf6MxW7jkIKsdAjSfnumwUoMjEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPSTAxIMzEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPCZj+9nayowhm6/AAAAABJRU5ErkJggg==">
+
+
+<img style="position:absolute;top:0.20in;left:5.24in;width:3.45in;height:0.36in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAhCAYAAACxxJxHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJoSURBVHhe7d2hc1NBEMfxN4NAVCAQCERFBQJZgUD0D0BUVCIQCCSCPwCBRCARiAokAomoqEAgEPwBiAp6e3d5IUynAtGZpLsvByUzO2nakOQy892Zj8q+i/vN3uW9vOY61e/374q02zH2HonkJwBwXeMcabctV0rELKZijA9CzK+CpO8S8wgA/jfNlyMNtjcivZ3RaHSjxM981YWXpEPvCwFgUWxgCintlii6eml4begi+97iALA0kj6nlO6UaJqt7IIQ01d3QQBYMh2oop2blYiaXl2ASfrhLQQAq6K5dHppkNlBWpD8xVsAAFbNJrKpW8sQ8nvvQgCohQ5aByWyJivk/NC7AABqY/eWlei6KPsFwGsGgNrotvJbia5x5Zy3vEYAqNa/h/w6hb1wmwCgUvYEUYkwtpIA1s/EltJ+tvSaAKBWmltnXYDZvWFeAwDU7vjk5LZuJQeb3ocAULsYf94nxACsL+ntjP/g0PsQAGpnIWblfggAleu2k1bB/k3RaQCAmnUH+12I8d9hANaMDl+/uwCzEonvvCYAqJbkjyXCdBJLaddtAoBKaW49LhHWNMPh8KaOZr+8RgCojebV6d/zsD+lqfbcawaA6kh6WaLroso0xjslAVRNcyoOBoNbJbomy+65sDHNuxAAanDpuyg55AdQLW8b6ZU2PtOJ7MxdBABWIMT0ukTUbGXPJGmYtd5iALAsNlCF2Htaoulqddy29zT9PnkLA8CiaYAdzvzm72llU5mG2QcO/QEsWjd5ST5wX8s2b9ltGLawHa6FmN/ql+0DwLy6Rx81V0TyXoxxo0TODNU05w7CMkjx4fr6AAAAAElFTkSuQmCC">
+
+<img style='position:absolute;top:0.23in;left:2.60in;width:1.51in;height:0.39in' alt='LOGO1' src='data:image/png;base64,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' />
+
+
+<img style='position:absolute;top:0.23in;left:6.24in;width:1.51in;height:0.39in'   alt='LOGO2'  src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAAA2CAYAAABgHM2OAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABRHSURBVHhe7d1LrLVXWQfwDhpH4sDEDhqHaMIAJiImRhKMEhjUCTXgBYOJ1pE4UVGMl4RwVaPgpVFRIahNU0UEFdG2xgsXa9Va8COVWKipAaqIihKkCtv9e3v+O895znr33ud8+5zT7/Md/L+991rPurxr/f/redbaa5/vho9+7LHVReATV96x+rf7bx/mLVhwLeJCxPMvD927+vyvfOHq82/8gtV/vOdVQ5sFC641XIh4/vlD7179zx1fPolnEdCC6wXnKp7HHv7LKVzL+8/e9ZUbAS0h3IJrHecmno23WYdr//rgHVPaxx798Oq/3/Z1GwF96s9/+ES5BQuuFZyreD73pi9+QihbBPSf9770RNkFC64FHFw8H//I+6cQzXsh2+fe/CUbAX3yr395Siegz771qxcBLbimcVDxEM7jdzxtCtd4HmnHBLRG9jpdQEI4+PQffMtGZF59/tSfvGz16D99dKr/v+6+bfXpd33rdIKXdhcsuAzsFA8vgvC7gOg8SMRAQEMPtAZ76R9/5MqxQ4SAOOSnvv99y5dOYiPI2ERgCxZcFnaK59/f97oNYU8LwuAt1NMF9MkH3jKlE1g9xgbeRR6P47P8jXiOvi9K+QULLgu7xXPfTx0j9mkhjDsWwpVDhE984Lc36bXMIp4F1wJ2imfaa6zDKx5kK9Y2vAhBCLtCchB2ZY9SPZB0ZaV/5u3P29gv4llwLWAv8SDuPmCbcsTy+J3P2AjimIDWAosICERaDQ+vNfH8w8MfWT34/r+bUMfgMnCIvij73vfdt/qL++6f3o9sFuwhHpt7ngL5d4FYnI4lHOONhG0RBRueR14VhkmuodtFiefXfv03Vq9+zWtXP/4TPznhbx/8wNBuhLvvuXf1vd/3/auvf+5zV0996petbr755glf8cxnrl784m9b3XnnXcNyv//Od61uvfUbVy984YtmIV8dP/KjPzbZj+qpQPDXvPZ1q1tu+YbV05/+jBN9ues33zosV3Hlgw9N7X3Ns589lX3KU75ogvfSXv7yH9pbSI/846NTu8YmMF4j24Dov+M7b5ueHV75qlcP7YL7/+pvpudV9/Oe//y9wNb4etZen2dPXV5/8ZfeeMKmY6d43EMLqU8DYZgwrl4KBQIiAmJI+MZmsjuyuQjxvPs9753IceONN25ADCPbCgNvknvZEUyuSa7lb7/9F4a224BMyFXrCUwy8Y7KVYz6EiA20Y3KVbDZJQIg1l72JS/59qFtYOG66aabNvYIPLIL9KPWvy/MWx8Hi0JtGyw8uzz3TvEgNRLne5htQPp69Dx5muyBjtKAjY7lex7ezQ2E5F+EeKw0dbAACedICgbZKtzLbQPC1RUb2Ud2u2Alr30Bq/PIdg6e70//7InDm+DhDz8yEaXbItNogfA8D/39h47V0WF17+V4sG2e3RixiT2xj+yCs4rHc3Xx8Noj210ee6d4zgKC+8w7bplI7nQt74GgvBJGDgl4t/od0XmLB2HmVto5d03sPEC3t0IS4uvf8DMTmdl00n33S79nU08Xj/JWZeKoGBH6d3/vnZt6Rqs78vGKQtC5vnjuukCM+qNuex7e+Wd/7uePkRrUn/IdiNlX8X3KnVY8IoCE24EQvNZhseg2nqc+v3kdjTWMFqyKneKxF0Fm5N4GNrwPISC2ckgfQQS+3Nx4pyMhKF/3RvuIJ/uqs8B+ZDRYMDdp9kfVDkHmhIbkdRLratfJ+jtvf2IP2JE9QLUl0uR18Zvo0cquLz2sSz1A2EkfhTTQ+2xf0G2Cbd6Q154LhU4rnjlUIXg/sqkwPrGHutiYtwceeHBYDnaK56x7njnwSvVwADbf/Ryhi8dBhEGv4mGTGwynRfUgJsxqm88Gz4rby5jM2IAVrNtUWAWrvVVPeifittCghyZZCX/1TW8+lr5rf+DQoZLCMyf0quKBKqyAp7YfvO2275rs7du6DfRVnFj6AlC9Z8UhxNMjCn2ZE2tQ+6f9Hs5vO7jYKZ5pL3JE2L2wtkVsqN4k4HmIpwtmQvFE2s7ta2GfzzxatRcCEmPt7y5YSWpYYfB6CNQPDqzGlXzPetZX7ZwU7ZgMk6mNbLRPIx6Cq7YJ/4iopm+rI+hleFLpXYhAjNq+554/ngjZ65pDX8URzx6rps0dHFyGeK6sQ7/eJq9ePfW2OnaKB9kr0W3yeQTphOUV2Tch2loAjqs1KNQahW4jMRKIsM97dU5e5igv+xv1Jm3Cuh5C7H3ehh5WCOH0tQ6Y9zUu7iHby37gB4/VOQeE6GldPEjK0xFXgIT62fcOIXxd3Xtf59BFkgXCsXKtrwMZCU/b24gIhJFy8eDK1PqRdTQulyEe0UNsIdFE95a/9da3nSgLW8WDxCGqVT6/yQl8j2Pll05AVRS8xgmyz0BYpq6EiNrNSZxXbWnnmOgI52jfI2+fEK5PZCVeD19CVOgegACSB+olQulIGqgDvJ/zPPsi+wUE6Stj7csc+tG80DV5PEwl3Ry0tW/YVfc3r3jFK4/VkxB2W/mLEM9znvO1G1sLVUTdPWjC5Y5Z8UzCOSJrDY94EySfNv2VzPuA/aAMoak3BwmbC6RrWx6o5iU//UlYuU8I1wclYRD84R/dfSyvTl4XTxUWmKDuJToyAWcRDxJkI2+Cq3iQtPZlDv17lBe84NZj+fZAPGqtewR1jATUV/Gffv0bNnn9BG7U54sWTw8nq0CUUTZ5VVgVQ/FMe4sjkldSInIlMRv7mnoNZwTeA8ndY+MhvK+/JgX11M/q1g8eKV4IhIHpT73m43VXCFfdsVU43iDoBweOa6X37wFGnqdO/AjaZnta8djACq3SFpKfRTyeZc7zVPDExKFd4zFaFLRZSel9HTtljC3CBTUf+s2JixaPsDV24BCk9rfnj7zlCfFMJ2EDQiI9IYXE9j3SdC57lRGIjefo7SjXBVRhD8TD1TYJh4CVP3booJ/lSlAum1ZcaZtDREKgF33TN0+vVp4euuTkqRO+n0h5FhOFNBW1zJx41CWmtuk3QV2ESFQJ4H3tp/c1fw79UCReV9kr67Fxj220d3LwYf9VhdcXHmFfzYc+Fj0/4xFcpHg8Z/ewvb9Q89XV6zkmHsTckHVNyOxxiGTjXdbpQjrpRJF9jfz8KK4eMGz7PuaYUHdAvyIcnqeGdmlDP4mVyLoX6mHFPjDABr/vF0arPZIJT8B7YUElw5x4+mYUKfvE1fAS6lG7fu1z/220p9NPz+I51dPbqRiVT15fpfeBsSHa1HGR4tH32JwGPVzdiAcxczKG/LuEM4VTZY/Cnm09TlbfyOsEHixtboP6I4bezyqcGj76HVJtq24OT4OQBMlqukOAWv8IdXWbE8/omHkk9Pplaq9jF9EIuhKTOIV/yFsXBf2dO7nr4snF19Eqrs4Rqg24lZH6L1I8dfGBUV+h2kA/OJjEg4DxOJWQwp+hcNbpfe8zeQJeBI7SH1/vY3aJpxJe+Eckk/c68ixnEY5wr7ZjNa+DYVCdAAmZKoQnSF4HLJPYCYuA0kaTg1A91DmNeKBPMFKE2F4rSQC5kafXY6/jebtt8j1fzfM5hxNgv0XM9Vk8e2wsIrW8fgvjjHmFNM9e66l7py4etxgIXPocutD3EY/xqJ6dTe9rwNPUhUE57aauG/wjDJrEsyZ+CDmdcJWNelby6nF2Yl3fthMwYqghHq8lLXfhiC/lvW6EQ1AzwiHA2gb0VTPn+SMY7DoBJtt+QHonGiAAIaoTtNVXYpg7bZsTD3LWSQYCT/4o9EAEotUG6EslJPhcCdBPIGPjuaCLFOp+xaldzdsVQqqz2icU0qfaV+NuHKXNoX/fto94jE/yweea39G54+ZI8ibxAHJmhe/CyUo+Eo4b09u+zyGE/gBBL1eFlOs34HAieUSefu4jnB5W9NVjBL9diT34LB2h+yq+D0xoSLKveKBf8UGoeiuamGr+Lnj20V26TqhtQP4rR3uVvhf0nHNzHfSTyywqXTz7oIoYdomHF635+l697AgWg9hDfcaNeAKErAKJcLqgQmKe4vF2zFxFAETCTh0a1gZxVJsOJ3FTP0oYyPPEE3Xh9FAt6PsHYcXIrgIpahmTmrtgiGPCa/4cTI77YMqk7v57nrrx7jBWfaX2uYYrnm8f0iHSNq8g/Nq2MGgDWeuzRHQRUPWMc0DW9Fc579VZj+Cl7wK7Gn4C8dRnMFbGMPkWqlp+n31VnYOUy5ydEA+SZ/8TQqogoRTIjxhiGyA4Ylf7CWsREBnCd3Htgjp5H55Pf/YVDljxHQEHhDGy6+AharnurRDR5FmJEMDAWtm9N9iINGrLRhtJlIN4pDnYKyBE7JXt3gohtceu9oUtghBsJdE2iPUJMs/ty059Hnlr7RoHZbz2PcgcjEsvp3+e1ZfV2XNsg3Lda6gjdUMff89gvFN+VwQSOJWs5YTx0m/ohmB1z99Wg+4lcnCQsAu58zcIkFzeCfHMgHepHo3IiMGeBog0/QDeLnsf2Caci4JJMFE2o/sS6GqwTQjpy9z3NgsOh6F4Ap6l70sQXR6BJS1E996+Y7rndpS3DTxQPFgVUDyN428gVmKe+lLCuCeDcBb8/8VW8YwOCHLqFoHI9xm5fZ4LyQgA2Xu68Ivg4FTh3FpE1TsuuDzwhIeChfRQwF8h/iFgkRf1gM+ee6t4QAfq3yDIEXE8RcK0E8IoHgJ4Ko3WtKtF/izvHPSd54pn3AUCtzgcBOswNovCIWCxyu+krhY8uLD6EMjBzqFgD30o+ErDgnwIVD4bQ/zaKR6gthT0XlrEgyQ+E1FsdNyE5zOwJ6CpIyXd54RlBHgaIHztZ0ft94IFh8LpxLMmaQp28SCxz1U8Ks+eiF1CPKdtEY/VL7cIrF5xhYdExLo31v2x3zoUhKSj1fVMWI+jcToEjP3kgXxHd5VQT/eSVwNe20J6CFiUffF+CNAAPp0qbIPTikenN+JZT7xYNvaBQVdvBIS80kaDMAdt1H52aFesui8Myih2PitqLH+1GD3fgsvFXuKJEGAf8RDFZn+zjhWzcbMax0a6eqV3Ye0LK1/t54IFF4m9xGNVzoZpX/FYLXkdn7nj1FMFJIyzQsvjSWxAj4UqWyAkStsLFlwGzkU8SfPqs9BMHamrCogQkgc9XNmGlDkP+MLTDQJXcVxAvKwvHLXrPpvn9Y1/vt0+K1zD6d+8j8Amz6/dkc1Fwjf8bn3UtCsffGj61r+mGS83JC5ivs5FPDal0niVCIVIhG+prwrIfod3Os2eQ11e1XdoII6rLe5y+c2JPzVV78Sdt3ArXLvJBUjvR1dSRu/n4ApPfoszB7cU2PmRm+c3Frkce96Yewbj3y+C+tzv01lo9Dc/XT/PuToX8Ux269BNun0NcUjrAnKkXcvAdDa/Dwhu3aa6Dg33wepE+eMZiGRCTJZ8k8k7yXdBUhoQnglT3qotLffXrJyu8Nc09frbzlZ5K2bqiYfIXTn22tZWyO+CovJuSqccm04YnkN/9YcosjpLU6av3rm8mXT9yGquvRDZRUxt8czqCZmV915ePJixksZOXX3MtCPN+OjnlXIBVT1d9N67v2fsiD116xvoa9LY9EXnEDiYePp/v8izRCiO+qqAeBjp6iKEWu40cDqnnkPCRLiAmQmt8BMBk4hUJtgkEQR7aYjlD114b2LlIRPyIzg7lzqRRJoJZWeSiUN9BOEypnZcSMxFUGW0qQ1AKHVoAznlq4N9De1cCtWuPH1TRn1J0z/p6qvPqj51+RsPIZ5+6qPnUw9RKi/NhU515hnUqYz+IbA0F1YJR38zjiG4PhOsPklTLn3RvrqzWIELmvqnjvytb2NsPM0Tcem7fvkVsX6m7KFwwyixYxLPEWHjUYjA54147jv53y9Onuboj3FUoRBWjpm7gHwHkfN5edsQER4SRGNiiShpJs+NX4TIdfSQ0S8e8+dnlUWqeBBpSCENIZBDesohsTx2VkqkQj750pXVF/nIgaxIpa60gfTxBlZYhKp9V1f2LAShDXXVvkDE4zUk9TxsQ1x165dy+qVdn7PQsNWGdO1I85MMaX4wqN/StJefsfsbDuqIp9CWZ6xiNk7aq2kZf1GBMhG4vpkjZbzXJ/02Xil7KOwlHh5EiAQhLLH48hOJfSYGn3M9JWJ4/I6nHfM08WBCtgjI6xTCrfMizsuCSTTYWfn8zsTkIoDJMinSTTSCVCIgjcmSjsjSrHhsQZ5JZqd+dYZQyphsxGcnHQmkydcHhLHi2oMhE9ISrve8VLxcJZk8/ZMmD4kIDalrX2Lv+ZExz+mz1Vxfkh6PoT/S9AOJjZs0fbbyGzv5ysYjpU95n3ExFvqjfsKOICHeLZ+TpmxErZ/KaC/90gd9le/VGNSxuVrsJZ6zICdtXUA8SgTEAyWdgC5bOIGV2oCbMJNACPY70k28yUZERA95TaQ0BEAe5WInLWGbOpMmP38EA6mlExHyIBNS6weiyctv+pE5KzuiaN/n1F+fRT3y9Uk5BENQabUvtQxBaTf994qc2rBY8JqeFxHZqoudfuujPHbaVI82fY4g+jgSvrq9T9nqPfUznpKNZyIedfDO6lHG80uzF/NZurL6kEUpi8IhcG7iASdoEVA9LBCWJb2GcE8mOLUxyX2wkRWZkSlpvEHSrqw3uiaQHfIjRuyQR1qIYTWsJFFGe1ZTpEBOn/WFbbWr7cvXvnIhaEXqzeorLX+Qo7Zf4Zn686c/2vJeW2zsKxwaIDY7fWOjPX3zubYNfRxTtz7VZwNl2coDn9MGsSrrvT5rTxnpOXRhb/ETIs4971lwwyjxkJgT0OaAQah2FPpdDzBRVshR3vUGC4MV3gmZV4IY2V2vOHfxwJyA3Cq4noQDVsG+cl7PsKLHE4zyr2dciHigC8gJ3shuwYJrBRcmHqgCerIcDixYcFZcqHjAMXb+lO+CBdcuHlv9HxjfB652DWS8AAAAAElFTkSuQmCC'>
+
+
+
+<img style="position:absolute;top:0.15in;left:1.59in;width:0.02in;height:2.33in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAADOCAYAAAAUnNPrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVEhLYwACayDmBjGSgVgYxMAEo2qAYFQNVjCqBghG1WAFo2qAYFQNVjAU1SADBgYAIFIlda6KaRwAAAAASUVORK5CYII=">
+
+<img style="position:absolute;top:0.15in;left:8.76in;width:0.02in;height:2.33in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAADOCAYAAAD7XrjVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAvSURBVEhL7cuxDQAgEAOx346RWB8FpURiAV9zlaet/rb7TwyTGCYxTGKYxDCvZg5ysCXbwDAddAAAAABJRU5ErkJggg==">
+
+<img style="position:absolute;top:0.65in;left:5.18in;width:0.02in;height:1.57in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAACLCAYAAABLCUg0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAqSURBVDhPYwACcSDWBzHUgdgfxMAEo2qAYFQNVjCqBghG1WAFA66GgQEA8+cZtb8lztAAAAAASUVORK5CYII=">
+
+
+
+
+<img style="position:absolute;top:1.80in;left:8.10in;width:0.52in;height:0.49in" alt='FIRMA' src='data:image/png;base64,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'>
+
+<div style="position:absolute;top:2.21in;left:8.06in;width:0.50in;line-height:0.06in;"><span style="font-style:normal;font-weight:normal;font-size:4pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">Dr. Juan Jorge Olcese</span><br></div>
+<div style="position:absolute;top:2.27in;left:8.18in;width:0.23in;line-height:0.06in;"><span style="font-style:normal;font-weight:normal;font-size:4pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">Presidente</span></div>
+
+<div style="position:absolute;top:1.22in;left:5.40in;width:3.26in;">
+<span style="font-style:normal;font-size:5pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;">
+Nota: La posesi√≥n de este comprobante obligatorio ser√° prueba suficiente de la vigencia del<br>
+seguro obligatorio de automotores exigido por el articulo 68 de la Ley N¬∫ 24.449. Conforme el<br>
+articulo 2¬∫ de la Disposici√≥n N¬∫ 70/2009 de la AGENCIA NACIONAL DE SEGURIDAD VIAL, la falta<br>
+de portaci√≥n del recibo de pago de prima del seguro obligatorio por parte del conductor del<br>
+veh√≠culo, no podr√° ser aducida por la Autoridad de Constataci√≥n para determinar el<br>
+incumplimiento de los requisitos para la circulaci√≥n.<br>
+</span><br><br><br><br><br><br></div>
+
+<img style="position:absolute;top:2.17in;left:7.96in;width:0.68in;height:0.02in"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAACCAYAAADrTtSRAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAVSURBVChTYwCC/yMMgwE2iWGMGRgAqYR3icki4WoAAAAASUVORK5CYII=">
+
+
+<div style="position:absolute;top:0.77in;left:1.78in;width:1.69in;line-height:0.16in;"><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Asegurado: </span>
+<span class="value" style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.nombre}</span>
+               
+<br><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">P√≥liza: </span>
+<span class="value" style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.poliza}</span>
+
+<br><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;">Vigencia: </span>
+
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.vigenciaDesde}</span>
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">  al </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.vigenciaHasta}</span>
+</div>
+<div style="position:absolute;top:1.14in;left:1.78in;width:1.69in;line-height:0.20in;"><div style="position:relative; left:1.16in;"><br></div>
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Marca: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.marca}</span><br>
+
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Tipo: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.tipo}</span>
+
+<br></div>
+<div style="position:absolute;top:0.96in;left:3.69in;width:0.59in;line-height:0.12in;">
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Cobertura: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.cobertura}</span>
+<br></div>
+
+<div style="position:absolute;top:0.84in;left:5.50in;width:2.95in;line-height:0.12in;text-align:center;"><div style="position:relative">
+
+<span style="font-style:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.5pt;line-height:1.5;color:#000000">SEGURO OBLIGATORIO AUTOMOTOR CONFORME DECRETO 1716/08<br></span></div>
+<span style="font-style:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.5pt;line-height:1.5;color:#000000">(Reglamentario de la Ley Nacional de Transito y Seguridad Vial N¬∫ 26363)</span>
+
+
+<br></div>
+<div style="position:absolute;top:0.03in;left:0.24in;width:8.52in;line-height:0.15in;">
+<span style="font-style:normal;font-weight:bold;font-size:8pt;font-family:TrebuchetMS;color:#000000">
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+</span><br></div>
+
+
+
+
+
+
+
+
+<div style="position:absolute;top:1.62in;left:3.69in;width:1.40in;line-height:0.15in;"><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Dominio:</span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.patente}</span>
+
+<br><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Chasis: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.chasis}</span>
+
+<br></div>
+<div style="position:absolute;top:1.62in;left:1.78in;width:1.69in;line-height:0.15in;"><div style="position:relative; left:0.27in;"><br>
+
+</div><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">N¬∫ Motor:</span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.motor}</span>
+<br></div>
+<div style="position:absolute;top:1.99in;left:6.12in;width:1.71in;line-height:0.12in;">
+
+<span style="font-style:normal;font-weight:bold;font-size:5pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Agrosalta Cooperativa de Seguros Limitada</span><br><div style="position:relative; left:0.25in;"><span style="font-style:normal;font-weight:normal;font-size:5pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Pedernera  237  - (4400) - Salta</span><br></div></div>
+<div style="position:absolute;top:2.37in;left:0.24in;width:8.52in;line-height:0.15in;"><span style="font-style:normal;font-weight:bold;font-size:8pt;font-family:TrebuchetMS;color:#000000">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span><br></div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<hr>
+
+
+
+               <div class="container">
+                   <div class="modal-body">
+                       <h3 style="margin: 0px">Datos del Cliente</h3>
+                       <div class="row m-0">
+                           <div class="col-2 mb-1">
+                               <label for="modalDNI" class="form-label">DNI</label>
+                               <input type="text" class="form-control" id="modalDNI" value="${data.dni}" disabled>
+                           </div>
+                           <div class="col-6 mb-1">
+                               <label for="modalCliente" class="form-label">Nombre</label>
+                               <input type="text" class="form-control" id="modalCliente" value="${data.nombre}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalMail" class="form-label">Email</label>
+                               <input type="email" class="form-control" id="modalMail" value="${data.email}" disabled>
+                           </div></div>
+                       <div class="row">
+                           <div class="col-6 mb-1">
+                               <label for="modalDomicilio" class="form-label">Domicilio</label>
+                               <input type="text" class="form-control" id="modalDomicilio" value="${data.domicilio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalLocalidad" class="form-label">Localidad</label>
+                               <input type="text" class="form-control" id="modalLocalidad" value="${data.localidad}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalWpp" class="form-label">Telefono</label>
+                               <input type="text" class="form-control" id="modalWpp" value="${data.telefono}" disabled>
+                           </div>
+                       </div>
+
+                       <h3 style="margin: 0px">Datos de la P√≥liza</h3>
+                       <div class="row m-0">
+                           <div class="col-3 mb-1">
+                               <label for="modalOperacion" class="form-label">Operaci√≥n</label>
+                               <input type="text" class="form-control" id="modalOperacion" value="${data.operacion}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalCnia" class="form-label">Compa√±√≠a</label>
+                               <input type="text" class="form-control" id="modalCnia" value="${data.compania}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalCobertura" class="form-label">Cobertura</label>
+                               <input type="text" class="form-control" id="modalCobertura" value="${data.cobertura}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalPoliza" class="form-label">P√≥liza</label>
+                               <input type="text" class="form-control" id="modalPoliza" value="${data.poliza}" disabled>
+                           </div>
+                       </div>
+                       <div class="row m-0">
+                           <div class="col-2 mb-1">
+                               <label for="modalVigencia" class="form-label">Desde</label>
+                               <input type="text" class="form-control" id="modalVigencia" value="${data.vigenciaDesde}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalHasta" class="form-label">Hasta</label>
+                               <input type="text" class="form-control" id="modalHasta" value="${data.vigenciaHasta}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalRefa" class="form-label">Refactura</label>
+                               <input type="text" class="form-control" id="modalRefa" value="${data.refactura}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalFpago" class="form-label">Forma de Pago</label>
+                               <input type="text" class="form-control" id="modalFpago" value="${data.formaPago}" disabled>
+                           </div>
+                           <div class="col-3 mb-1">
+                               <label for="modalSucursal" class="form-label">Sucursal</label>
+                               <input type="text" class="form-control" id="modalSucursal" value="${data.sucursal}" disabled>
+                           </div>
+                           <div class="col-0 mb-1" style="display: none;">
+                               <label for="modalNotifica" class="form-label">Notificaci√≥n</label>
+                               <input type="text" class="form-control" id="modalNotifica" value="${data.notificacion}" disabled>
+                           </div>
+                           <div class="col-0 mb-1" style="display: none;">
+                               <label for="modalImporte" class="form-label">Importe</label>
+                               <input type="text" class="form-control" id="modalImporte" value="${data.importe}" disabled>
+                           </div>
+                       </div>
+
+                       <h3 style="margin: 0px">Datos del Veh√≠culo</h3>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalMarca" class="form-label">Marca</label>
+                               <input type="text" class="form-control" id="modalMarca" value="${data.marca}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalMotor" class="form-label">Motor</label>
+                               <input type="text" class="form-control" id="modalMotor" value="${data.motor}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalChasis" class="form-label">Chasis</label>
+                               <input type="text" class="form-control" id="modalChasis" value="${data.chasis}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-12 mb-1">
+                               <label for="modalDanios" class="form-label">Da√±os</label>
+                               <input type="text" class="form-control" id="modalDanios" value="${data.danios}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalTipo" class="form-label">Tipo</label>
+                               <input type="text" class="form-control" id="modalTipo" value="${data.tipo}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalAnio" class="form-label">A√±o</label>
+                               <input type="text" class="form-control" id="modalAnio" value="${data.anio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalColor" class="form-label">Color</label>
+                               <input type="text" class="form-control" id="modalColor" value="${data.color}" disabled>
+                           </div>
+                           <div class="col-2 mb-1">
+                               <label for="modalVtv" class="form-label">Vto VTV</label>
+                               <input type="text" class="form-control" id="modalVtv" value="${data.vtv}" disabled>
+                           </div></div>
+                       <div class="row m-0">
+                           <div class="col-4 mb-1">
+                               <label for="modalSumaAsegurada" class="form-label">Suma Asegurada</label>
+                               <input type="text" class="form-control" id="modalSumaAsegurada" value="${data.sumaAsegurada}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalAccesorio" class="form-label">Accesorio</label>
+                               <input type="text" class="form-control" id="modalAccesorio" value="${data.accesorio}" disabled>
+                           </div>
+                           <div class="col-4 mb-1">
+                               <label for="modalValorAccesorio" class="form-label">Valor Accesorio</label>
+                               <input type="text" class="form-control" id="modalValorAccesorio" value="${data.valorAccesorio}" disabled>
+                           </div>
+                           <div class="col-3 mb-1" style="display: none">
+                               <label for="modalComentarios" class="form-label">Comentarios</label>
+                               <textarea class="form-control" id="modalComentarios" rows="3" disabled>${data.comentarios}</textarea>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               
+       <div class="row">
+         <div class="col-8 mb-1">
+         </div>
+         <div class="col-4 mb-1 text-center"> <!-- Agrega 'text-center' para centrar el texto -->
+             <div class="border-bottom border-2 border-dark" style="height: 50px;"></div>
+             <label for="clienteNombre" class="form-label d-block">Firma y Aclaraci√≥n del cliente</label>
+         </div>
+       </div>
+           </body>
+       </html>
+   `);
+   printWindow.document.close();
+   printWindow.focus();
+   printWindow.print();
+}
+
+
+function printTarRec() {
+ event.preventDefault();
+
+
+   let fechaStr = document.getElementById("modalVigencia").value;
+   console.log("fechaStr: " + fechaStr)
+   let parts = fechaStr.split('/')
+   
+   // Crear un objeto Date usando la fecha
+   let fecha0 = new Date(parts[2], parts[1] - 1, parts[0]); // Los meses en Date son base 0
+   let fecha1 = new Date(parts[2], parts[1] - 1, parts[0]); // Los meses en Date son base 0
+   let fecha6 = new Date(parts[2], parts[1] - 1, parts[0]); // Los meses en Date son base 0
+   
+   console.log("fecha1: " + fecha1)
+   console.log("fecha6: " + fecha6)
+
+   // Sumar un mes
+   fecha1.setMonth(fecha1.getMonth() + 1);
+   fecha6.setMonth(fecha6.getMonth() + 6);
+
+   console.log("fecha1: " + fecha1)
+   console.log("fecha6: " + fecha6)
+
+   // Obtener el nuevo d√≠a, mes y a√±o
+   dia0 = fecha0.getDate();
+   mes0 = fecha0.getMonth() + 1;
+   anio0 = fecha0.getFullYear();
+   dia = fecha1.getDate();
+   mes = fecha1.getMonth() + 1;
+   anio = fecha1.getFullYear();
+   dia6 = fecha6.getDate();
+   mes6 = fecha6.getMonth() + 1;
+   anio6 = fecha6.getFullYear();
+   
+   console.log("dia: " + dia)
+   console.log("mes: " + mes)
+   console.log("anio: " + anio)
+   console.log("dia6: " + dia6)
+   console.log("mes6: " + mes6)
+   console.log("anio6: " + anio6)
+
+
+   let diaStr0 = dia0.toString().padStart(2, '0');
+   let mesStr0 = mes0.toString().padStart(2, '0');
+   let anioStr0 = anio0.toString().slice(-2);
+   let diaStr = dia.toString().padStart(2, '0');
+   let mesStr = mes.toString().padStart(2, '0');
+   let anioStr = anio.toString().slice(-2);
+   let mesStr6 = mes6.toString().padStart(2, '0');
+   let anioStr6 = anio6.toString().slice(-2);
+   let diaStr6 = dia6.toString().padStart(2, '0');
+
+   console.log("diaStr: " + diaStr)
+   console.log("mesStr: " + mesStr)
+   console.log("mesStr6: " + mesStr6)
+   console.log("anioStr: " + anioStr)
+   if ((diaStr6 === "29" || diaStr6 === "30" || diaStr6 === "31") && mesStr6 === "02") {
+       diaStr6 = "28";
+   }
+
+   let nuevovto0 = diaStr0 + "/" + mesStr0 + "/" + anioStr0;
+   let nuevovto = diaStr + "/" + mesStr + "/" + anioStr;
+   let nuevovto6 = diaStr6 + "/" + mesStr6 + "/" + anioStr6;
+
+
+var numGrua = "";
+
+switch (document.getElementById("modalCnia").value) {
+ case "AGROSALTA [RC]":
+   numGrua = "NO POSEE";
+   break;
+ case "AGROSALTA [RC-GRUA]":
+   numGrua = "0800 666 1366 (100km)";
+   break;
+ case "AGROSALTA [B1]":
+   numGrua = "0800 666 1366 (100km)";
+   break;
+ case "AGROSALTA [MOTO]":
+   numGrua = "0800 666 1366 (100km)";
+   break;
+ case "RIVADAVIA":
+   numGrua = "0800-666-6789 / Ext: (5411)43286600";
+   break;
+ case "FED PAT":
+   numGrua = "0800-222-0022 0800-800-0022";
+   break;
+ case "PROVIDENCIA":
+   numGrua = "0800-444-4442 / 0800-999-3003";
+   break;
+ case "RIO URUGUAY":
+   numGrua = "0800-444-1441 0810-888-7080";
+   break;
+ case "ATM":
+   numGrua = "0800-999-8208 / Ext:(5411)48149058";
+   break;
+ case "LA CAJA":
+   numGrua = "0800-666-0939";
+   break;
+ case "MAPFRE":
+   numGrua = "0800-999-7424 / Ex:(5411)57772127";
+   break;
+ case "BENEFICIO":
+   numGrua = "NO POSEE";
+   break;
+ case "MERCANTIL":
+   numGrua = "0-800-777-2634";
+   break;
+ case "LIBRA":
+   numGrua = "0800-999-6500";
+   break;
+ case "GRUA":
+   numGrua = "0800 666 1366 (100km)";
+   break;
+ case "EXPERTA":
+   numGrua = "0800 777 7278";
+   break;
+ case "DIGNA":
+   numGrua = "";
+   break;
+ case "EL TRIUNFO":
+   numGrua = "";
+   break;
+ case "BBVA":
+   numGrua = "";
+   break;
+ default:
+   numGrua = "";
+}
+
+
+let data = {
+   dni: document.getElementById("modalDNI").value || '',
+   nombre: document.getElementById("modalCliente").value || '',
+   domicilio: document.getElementById("modalDomicilio").value || '',
+   localidad: document.getElementById("modalLocalidad").value || '',
+   telefono: document.getElementById("modalWpp").value || '',
+   email: document.getElementById("modalMail").value || '',
+   notas: document.getElementById("notascte").value || '', // Suponiendo que no cambi√≥ el ID para notas
+   formaPago: document.getElementById("modalFpago").value || '',
+   sucursal: document.getElementById("modalSucursal").value || '',
+   compania: document.getElementById("modalCnia").value || '',
+   cobertura: document.getElementById("modalCobertura").value || '',
+   importe: document.getElementById("modalImporte").value || '',
+   poliza: document.getElementById("modalPoliza").value || 'E/T',
+   operacion: document.getElementById("modalOperacion").value || '',
+   vigenciaDesde: document.getElementById("modalVigencia").value || '',
+   vigenciaHasta: document.getElementById("modalHasta").value || '',
+   refactura: document.getElementById("modalRefa").value || '',
+   notificacion: document.getElementById("modalNotifica").value || '',
+   patente: document.getElementById("modalPatente").value || '',
+   marca: document.getElementById("modalMarca").value || '',
+   motor: document.getElementById("modalMotor").value || '',
+   chasis: document.getElementById("modalChasis").value || '',
+   danios: document.getElementById("modalDanios").value || '',
+   tipo: document.getElementById("modalTipo").value || '',
+   anio: document.getElementById("modalAnio").value || '',
+   color: document.getElementById("modalColor").value || '',
+   vtv: document.getElementById("modalVTV").value || '',
+   sumaAsegurada: document.getElementById("modalSumaAseg").value || '',
+   accesorio: document.getElementById("modalAcc1").value || '',
+   valorAccesorio: document.getElementById("modalAcc1valor").value || '',
+   comentarios: document.getElementById("notasveh").value || '',
+   nuevovto: nuevovto || '',
+   nuevovto6: nuevovto6 || '',
+   nuevovto0: nuevovto0 || '',
+   numgrua: numGrua || '',
+   recibo: document.getElementById("modalRecibo").value || ''
+
+};
+
+
+let border25Style = data.recibo ? '' : 'display: none;';
+
+   // Crear la ventana de impresi√≥n
+   const printWindow = window.open('', '_blank', 'height=600,width=800');
+   printWindow.document.open();
+   printWindow.document.write(`
+
+       <html>
+           <head>
+               <title>Resumen de P√≥liza</title>
+               <style>
+                   body {
+               font-family: 'Trebuchet MS', Arial, sans-serif;
+                       padding: 20px;
+                   }
+                   .container {
+                       width: 100%;
+                       margin: 0 auto;
+                   }
+                   .form-label {
+                       font-weight: bold;
+                       margin-bottom: 2px;
+                   }
+                   .form-control {
+                       border: 1px solid #ccc;
+                       padding: 5px;
+                       width: 100%;
+                       box-sizing: border-box;
+                       border-radius: 8px; /* Borde redondeado */
+                   }
+                   .row {
+                       display: flex;
+                       flex-wrap: wrap;
+                   }
+                   table {border-collapse: collapse;}
+                   table td {padding: 0px}
+
+/* Estilo para las columnas */
+.col-12 {
+   flex: 0 0 calc(100% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(100% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-8 {
+   flex: 0 0 calc(66.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(66.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+.col-6 {
+   flex: 0 0 calc(50% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(50% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-4 {
+   flex: 0 0 calc(33.3333% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(33.3333% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-3 {
+   flex: 0 0 calc(25% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(25% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-2 {
+   flex: 0 0 calc(20% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(20% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+.col-1 {
+   flex: 0 0 calc(10% - 40px); /* Ajusta el ancho para tener en cuenta el padding */
+   max-width: calc(10% - 40px); /* Ajusta el ancho m√°ximo */
+}
+
+/* Opcional: Ajusta el padding de las columnas si es necesario */
+.col-12, .col-6, .col-4, .col-3, .col-2, .col-1 {
+   padding: 10px; /* Ajusta el padding seg√∫n sea necesario */
+}
+                   .text-center {
+                       text-align: center;
+                   }
+                   
+       .container25 {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   height: 100vh;
+ }
+
+ .border25 {
+   height: 250px;
+   width: 355px;
+   border: 2px solid black;
+   padding: 5px;
+   margin-right: 15px;
+   margin-bottom: 0px;
+ }
+               </style>
+           </head>
+           <body>
+
+
+
+
+
+
+<img style="position:absolute;top:0.71in;left:4.33in;width:3.27in;height:0.46in" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASEAAAApCAYAAAB6OZ/CAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFXSURBVHhe7dihMsRRGMbhnREFlyAIoiAIgksQRVEUBFEQXIAgCKLgAgRB2OACRFEQNwjCBt5vd2ZnGI39f+V5Zn4z59jZ+s5Zox/201W6TTeS9M9dp+O0kb5ZS/dpmsbpty9L0l+7S6/pIx2lhfrwLe3MbgDLs5LOUz16dusPZZIO50eAQTykyzpspc+0WReAgdRr6LEOe6lGaL0uAAM5S0YIaGOEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVkYIaGWEgFZGCGhlhIBWRghoZYSAVosR2k41Qpt1ARjIRZqNUHlPR/MjwCCe0uX8OD9M0tbsBrBcp2maFpuzmsapfpY9p3oiSdIyekm1NTVE36ykg1SvohtJWlInqf4XHaPRF6kaSbVqgSvcAAAAAElFTkSuQmCC'>
+
+<img style="position:absolute;top:0.38in;left:4.25in;width:3.44in;height:2.01in" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAC6CAYAAADGZXrHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAT5SURBVHhe7dwtkFYFHMVhZggEgoFAIBgIBgPBQDAYCAQCwUAgEAwGA4FgMBgMBgLBYCAQCAQCkWAwGAwGo4FgMBAIBAKBIP9zX9jZFWTYL/aemeeZOcx7d5Btv7lfr8f26Pjs49kXs2tmZnvclVk6kp6cmB2q07P80gez57N/zcwOcOnKL7OvZ4nagflodmuWX/Bsdn92dZZ6fjo7NQPYi/Tlk1l6cnl2e/Zklqjdm52d7cs3s6ev9t3s0E/3AEau+v6ZvZh9mx/sVu55pYipYc7CnG0BH1pOmhKwhOzu7OTsveU0LpeOl5YjgKNzYZarwYfL0XtI+RKw88sRwNHLfbN06Yfl6B1yYy2nbnnsCbAmF2fpU55evlWuPx/NflqOANbnx1nelDizHP3H9VmuO/PIE2CNcnP/8ezOcrRNnkbm3Yy8RgGwZrmczGXljrOxz2d5neLccgSwXrn1lUvKvMe65eYs98MAGuTrj/mK0pa/Zm7oAy1ySZl7Y1vy/sWNzUeA1ct3LXMLbJG7/TnIl7oBGuTl13Rr+b9d5I8cpGwADV53a/lmkYgBbXZ0S8SANiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQbUe3Tr46uJQDgAJvnHw9m321+QiweudniVhitng0+37zEWD1Ls8SsRPL0Xg4e7D5CLB6Oen6e/NxI5eSuaTcqhrAiv05+3nzcePMLKdmOUUDWLPXN/UvLEfb/D77dfMRYLVuzXIf//hytM3FWermVQtgrc7OXsyuLEdvkTOxFC7vjgGsSbr02+yP5eh/nJ49nuVp5RunagBH6N7s+eyz5egd8hfyF3PnX8iAo5YO5T5YbnddzQ/ex7VZrjtzeXkqPwA4ArmEzJVhAnY9P9iNPL58OsvlZf5jZ2XAh/TlLC+05h3WPb/+lffH7sxSwdzwvzHL0wGAw5Arv7x8n5v36U6+SbT1/cj9ODe7O3syyz+cX5C45dV/M7P97vYst6/Sl9yTT7zyJe8Dl0vKXGbenOVJQR535nTPzGyvS0fuz3LzPpeNu3jF69ixlybZCPExQ31VAAAAAElFTkSuQmCC'>
+
+<img style="position:absolute;top:0.39in;left:0.81in;width:3.43in;height:2.00in" src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAC6CAYAAADGZXrHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAT5SURBVHhe7dwtkFYFHMVhZggEgoFAIBgIBgPBQDAYCAQCwUAgEAwGA4FgMBgMBgLBYCAQCAQCkWAwGAwGo4FgMBAIBAKBIP9zX9jZFWTYL/aemeeZOcx7d5Btv7lfr8f26Pjs49kXs2tmZnvclVk6kp6cmB2q07P80gez57N/zcwOcOnKL7OvZ4nagflodmuWX/Bsdn92dZZ6fjo7NQPYi/Tlk1l6cnl2e/Zklqjdm52d7cs3s6ev9t3s0E/3AEau+v6ZvZh9mx/sVu55pYipYc7CnG0BH1pOmhKwhOzu7OTsveU0LpeOl5YjgKNzYZarwYfL0XtI+RKw88sRwNHLfbN06Yfl6B1yYy2nbnnsCbAmF2fpU55evlWuPx/NflqOANbnx1nelDizHP3H9VmuO/PIE2CNcnP/8ezOcrRNnkbm3Yy8RgGwZrmczGXljrOxz2d5neLccgSwXrn1lUvKvMe65eYs98MAGuTrj/mK0pa/Zm7oAy1ySZl7Y1vy/sWNzUeA1ct3LXMLbJG7/TnIl7oBGuTl13Rr+b9d5I8cpGwADV53a/lmkYgBbXZ0S8SANiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQTcSAaiIGVBMxoJqIAdVEDKgmYkA1EQOqiRhQbUe3Tr46uJQDgAJvnHw9m321+QiweudniVhitng0+37zEWD1Ls8SsRPL0Xg4e7D5CLB6Oen6e/NxI5eSuaTcqhrAiv05+3nzcePMLKdmOUUDWLPXN/UvLEfb/D77dfMRYLVuzXIf//hytM3FWermVQtgrc7OXsyuLEdvkTOxFC7vjgGsSbr02+yP5eh/nJ49nuVp5RunagBH6N7s+eyz5egd8hfyF3PnX8iAo5YO5T5YbnddzQ/ex7VZrjtzeXkqPwA4ArmEzJVhAnY9P9iNPL58OsvlZf5jZ2XAh/TlLC+05h3WPb/+lffH7sxSwdzwvzHL0wGAw5Arv7x8n5v36U6+SbT1/cj9ODe7O3syyz+cX5C45dV/M7P97vYst6/Sl9yTT7zyJe8Dl0vKXGbenOVJQR535nTPzGyvS0fuz3LzPpeNu3jF69ixlybZCPExQ31VAAAAAElFTkSuQmCC'>
+
+<img style="position:absolute;top:0.20in;left:0.81in;width:3.45in;height:0.36in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAhCAYAAACxxJxHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJoSURBVHhe7d2hc1NBEMfxN4NAVCAQCERFBQJZgUD0D0BUVCIQCCSCPwCBRCARiAokAomoqEAgEPwBiAp6e3d5IUynAtGZpLsvByUzO2nakOQy892Zj8q+i/vN3uW9vOY61e/374q02zH2HonkJwBwXeMcabctV0rELKZijA9CzK+CpO8S8wgA/jfNlyMNtjcivZ3RaHSjxM981YWXpEPvCwFgUWxgCintlii6eml4begi+97iALA0kj6nlO6UaJqt7IIQ01d3QQBYMh2oop2blYiaXl2ASfrhLQQAq6K5dHppkNlBWpD8xVsAAFbNJrKpW8sQ8nvvQgCohQ5aByWyJivk/NC7AABqY/eWlei6KPsFwGsGgNrotvJbia5x5Zy3vEYAqNa/h/w6hb1wmwCgUvYEUYkwtpIA1s/EltJ+tvSaAKBWmltnXYDZvWFeAwDU7vjk5LZuJQeb3ocAULsYf94nxACsL+ntjP/g0PsQAGpnIWblfggAleu2k1bB/k3RaQCAmnUH+12I8d9hANaMDl+/uwCzEonvvCYAqJbkjyXCdBJLaddtAoBKaW49LhHWNMPh8KaOZr+8RgCojebV6d/zsD+lqfbcawaA6kh6WaLroso0xjslAVRNcyoOBoNbJbomy+65sDHNuxAAanDpuyg55AdQLW8b6ZU2PtOJ7MxdBABWIMT0ukTUbGXPJGmYtd5iALAsNlCF2Htaoulqddy29zT9PnkLA8CiaYAdzvzm72llU5mG2QcO/QEsWjd5ST5wX8s2b9ltGLawHa6FmN/ql+0DwLy6Rx81V0TyXoxxo0TODNU05w7CMkjx4fr6AAAAAElFTkSuQmCC">
+
+<img style="position:absolute;top:0.38in;left:0.81in;width:3.45in;height:0.27in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAZCAYAAABZ7RmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABuSURBVHhe7dQBCQAwDMCw+xf6MxW7jkIKsdAjSfnumwUoMjEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPSTAxIMzEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPCZj+9nayowhm6/AAAAABJRU5ErkJggg==">
+
+<img style="position:absolute;top:0.38in;left:4.24in;width:3.45in;height:0.27in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAZCAYAAABZ7RmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABuSURBVHhe7dQBCQAwDMCw+xf6MxW7jkIKsdAjSfnumwUoMjEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPSTAxIMzEgzcSANBMD0kwMSDMxIM3EgDQTA9JMDEgzMSDNxIA0EwPCZj+9nayowhm6/AAAAABJRU5ErkJggg==">
+
+
+<img style="position:absolute;top:0.20in;left:4.24in;width:3.45in;height:0.36in" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATEAAAAhCAYAAACxxJxHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJoSURBVHhe7d2hc1NBEMfxN4NAVCAQCERFBQJZgUD0D0BUVCIQCCSCPwCBRCARiAokAomoqEAgEPwBiAp6e3d5IUynAtGZpLsvByUzO2nakOQy892Zj8q+i/vN3uW9vOY61e/374q02zH2HonkJwBwXeMcabctV0rELKZijA9CzK+CpO8S8wgA/jfNlyMNtjcivZ3RaHSjxM981YWXpEPvCwFgUWxgCintlii6eml4begi+97iALA0kj6nlO6UaJqt7IIQ01d3QQBYMh2oop2blYiaXl2ASfrhLQQAq6K5dHppkNlBWpD8xVsAAFbNJrKpW8sQ8nvvQgCohQ5aByWyJivk/NC7AABqY/eWlei6KPsFwGsGgNrotvJbia5x5Zy3vEYAqNa/h/w6hb1wmwCgUvYEUYkwtpIA1s/EltJ+tvSaAKBWmltnXYDZvWFeAwDU7vjk5LZuJQeb3ocAULsYf94nxACsL+ntjP/g0PsQAGpnIWblfggAleu2k1bB/k3RaQCAmnUH+12I8d9hANaMDl+/uwCzEonvvCYAqJbkjyXCdBJLaddtAoBKaW49LhHWNMPh8KaOZr+8RgCojebV6d/zsD+lqfbcawaA6kh6WaLroso0xjslAVRNcyoOBoNbJbomy+65sDHNuxAAanDpuyg55AdQLW8b6ZU2PtOJ7MxdBABWIMT0ukTUbGXPJGmYtd5iALAsNlCF2Htaoulqddy29zT9PnkLA8CiaYAdzvzm72llU5mG2QcO/QEsWjd5ST5wX8s2b9ltGLawHa6FmN/ql+0DwLy6Rx81V0TyXoxxo0TODNU05w7CMkjx4fr6AAAAAElFTkSuQmCC">
+
+<img style='position:absolute;top:0.23in;left:1.70in;width:1.51in;height:0.39in' alt='LOGO1' src='data:image/png;base64,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' />
+
+
+<img style='position:absolute;top:0.23in;left:5.24in;width:1.51in;height:0.39in'   alt='LOGO2'  src='data:image/png;base64,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'>
+
+
+<img style="position:absolute;top:1.80in;left:7.10in;width:0.52in;height:0.49in" alt='FIRMA' src='data:image/png;base64,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'>
+
+<div style="position:absolute;top:2.21in;left:7.06in;width:0.50in;line-height:0.06in;"><span style="font-style:normal;font-weight:normal;font-size:4pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">Dr. Juan Jorge Olcese</span><br></div>
+<div style="position:absolute;top:2.27in;left:7.18in;width:0.23in;line-height:0.06in;"><span style="font-style:normal;font-weight:normal;font-size:4pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">Presidente</span></div>
+
+<div style="position:absolute;top:1.22in;left:4.40in;width:3.26in;">
+<span style="font-style:normal;font-size:5pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;">
+Nota: La posesi√≥n de este comprobante obligatorio ser√° prueba suficiente de la vigencia del<br>
+seguro obligatorio de automotores exigido por el articulo 68 de la Ley N¬∫ 24.449. Conforme el<br>
+articulo 2¬∫ de la Disposici√≥n N¬∫ 70/2009 de la AGENCIA NACIONAL DE SEGURIDAD VIAL, la falta<br>
+de portaci√≥n del recibo de pago de prima del seguro obligatorio por parte del conductor del<br>
+veh√≠culo, no podr√° ser aducida por la Autoridad de Constataci√≥n para determinar el<br>
+incumplimiento de los requisitos para la circulaci√≥n.<br>
+</span><br><br><br><br><br><br></div>
+
+<img style="position:absolute;top:2.17in;left:6.96in;width:0.68in;height:0.02in"  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAACCAYAAADrTtSRAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAVSURBVChTYwCC/yMMgwE2iWGMGRgAqYR3icki4WoAAAAASUVORK5CYII=">
+
+<div style="position:absolute;top:0.77in;left:0.86in;width:3.40in;line-height:0.16in;">
+
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Asegurado: </span>
+<span class="value" style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.nombre}</span>
+</div>
+<div style="position:absolute;top:0.77in;left:0.86in;width:1.69in;line-height:0.16in;">
+<br><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">P√≥liza: </span>
+<span class="value" style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.poliza}</span>
+
+<br><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;">Vigencia: </span>
+
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.nuevovto0}</span>
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">  al </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.nuevovto6}</span>
+</div>
+<div style="position:absolute;top:1.14in;left:0.86in;width:3.29in;line-height:0.20in;"><div style="position:relative; left:0.16in;"><br></div>
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Marca: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.marca}</span><br>
+
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Tipo: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.tipo}</span>
+
+<br></div>
+<div style="position:absolute;top:0.96in;left:2.69in;width:1.49in;line-height:0.12in;">
+<span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Cobertura: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.cobertura}</span>
+<br></div>
+
+<div style="position:absolute;top:0.84in;left:4.50in;width:2.95in;line-height:0.12in;text-align:center;"><div style="position:relative">
+
+<span style="font-style:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.5pt;line-height:1.5;color:#000000">SEGURO OBLIGATORIO AUTOMOTOR CONFORME DECRETO 1716/08<br></span></div>
+<span style="font-style:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.5pt;line-height:1.5;color:#000000">(Reglamentario de la Ley Nacional de Transito y Seguridad Vial N¬∫ 26363)</span>
+
+
+<br></div>
+
+
+
+
+
+<div style="position:absolute;top:1.62in;left:2.69in;width:1.50in;line-height:0.15in;"><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Dominio:</span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.patente}</span>
+
+<br><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Chasis: </span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.chasis}</span>
+
+<br></div>
+<div style="position:absolute;top:1.62in;left:0.86in;width:1.69in;line-height:0.15in;"><div style="position:relative; left:0.27in;"><br>
+
+</div><span style="font-style:normal;font-weight:normal;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">N¬∫ Motor:</span>
+<span style="font-style:normal;font-weight:bold;font-size:6pt;font-family:Verdana;color:#000000;letter-spacing:-0.3pt;line-height:1.5;color:#000000">${data.motor}</span>
+<br></div>
+<div style="position:absolute;top:1.99in;left:5.12in;width:1.71in;line-height:0.12in;">
+
+<span style="font-style:normal;font-weight:bold;font-size:5pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Agrosalta Cooperativa de Seguros Limitada</span><br><div style="position:relative; left:0.25in;"><span style="font-style:normal;font-weight:normal;font-size:5pt;font-family:Verdana;color:#000000;letter-spacing:-0.2pt;line-height:1.5;color:#000000">Pedernera  237  - (4400) - Salta</span><br></div></div>
+
+
+   <div style="transform: rotate(-5deg); position:absolute; 
+       z-index: 2; top:3.60in; left:6.42in; padding-bottom: 20; width: 142px; height: 40px; border: 3px solid #686868; ${border25Style}">
+       <h3 style="color: #686868; text-align: center; font-size: 1.8rem; margin-top: 15px"><b>PAGADO<b></h3>
+   </div>
+   
+  <div style="position:absolute;top:2.38in;left:4.25in;width:4.71in;line-height:0.12in;" id="downloadButton">
+
+
+   
+   
+   <div class="border25" style="${border25Style}">
+     
+     <div style="display: flex; flex-direction: row; margin: 0,5px; border: 2px solid whiten;">
+       <div class="col-8" style="border: 1px solid white;">
+           <h6 style="font-size: 12px; margin: 0px;"><b>COMPA√ëIA:<b></h6>
+           <h6 style="margin: 6 0px; font-size: 1rem"><b>${data.compania}<b></h6>
+       </div>
+       <div style="text-align: center;border: 1px solid white;">
+           <h6 style="font-size: 12px; margin: 0px;"><b>RECIBO N¬∞:<b></h6>
+           <h6 style="margin: 6 0px; font-size: 1rem"><b>${data.recibo}<b></h6>
+       </div>
+     </div>
+
+<div style="display: flex; flex-direction: row; margin: 0px;">
+   <div style="height: 15px; border: 2px solid white; flex-basis: 20%; flex-grow: 0;">
+       <h6 style="font-size: 10px; font-weight: 700; margin: 0px;">Recibi de:</h6>
+   </div>
+   <div style="height: 15px; background-color: #dcdcdc; border: 1px solid black; flex-basis: 80%; flex-grow: 1;">
+       <h6 style="padding-left: 3px; font-size: 10px; font-weight: 500; margin: 1px;"><b>${data.dni} - ${data.nombre}.-</b></h6>
+   </div>       
+</div>
+
+<div style="display: flex; flex-direction: row; margin: 0px;">
+   <div style="height: 15px; border: 2px solid white; flex-basis: 20%; flex-grow: 0;">
+       <h6 style="font-size: 10px; font-weight: 700; margin:0px;">La suma:</h6>
+   </div>
+   <div style="height: 15px; background-color: #dcdcdc; border: 1px solid black; flex-basis: 80%; flex-grow: 1;">
+       <h6 style="padding-left: 3px; font-size: 10px; font-weight: 500;margin:2px"><b>$${data.importe}.- QUE SE APLICAR√Å A LA POLIZA DE REF.-</b></h6>
+   </div>       
+</div>
+
+
+<div style="display: flex; flex-direction: row; height: 34px; padding: 0; margin: 0px;">
+   <div style="flex-basis: 100%; flex-grow: 1;">
+       <h6 style="font-size: 9px; font-weight: 700; margin: 0px; letter-spacing: -0.4px; line-height: 1.3;">
+           en concepto de seguro y servicio, de acuerdo a lo establecido por la resoluci√≥n
+           N¬∞429/2000 del Ministerio de Econom√≠a de la Naci√≥n, resoluci√≥n N¬∞ 27.627 y
+           aclaratorias de la Superintendencia de Seguros de la Naci√≥n
+       </h6>
+   </div>
+</div>
+
+
+
+   <div class="col-12" style="height:12px; padding: 0px">
+       <h6 style="font-size: 9px;font-weight: 700;margin:3px 0px;text-decoration: underline;">Datos del Vehiculo:</h6>
+</div>
+<div class="col-8" style="height:23px; background-color: #dcdcdc; border: 1px solid black; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+   <h6 style="font-size: 8px; margin: 0px 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><b>PATENTE: ${data.patente} - ${data.marca}<span id="texto"></span></b></h6>
+   <h6 style="font-size: 8px; margin: 0px 0px 1px 1px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"><b>CUOTA N¬∞1 DESDE ${data.vigenciaDesde} HASTA <span id="vto-date">${data.nuevovto}</span></b></h6>
+</div>
+
+<div style="display: flex; flex-direction: row; margin: 0,5px; border-top: 2px solid white;">
+   <div class="col-3" style="height:15px; padding: 0px; border: 2px solid white;">
+       <h6 style="font-size: 7px;font-weight: 700;margin: 0px; width: 80px">Lugar y Fecha:</h6>
+   </div>
+   <div class="col-6" style="height:12px; padding: 0px; background-color: #dcdcdc;border: 1px solid black;">
+       <h6 style="padding-left:3px;font-size: 8px;font-weight: 500;margin: 1px 0px 0px 2px;"><b>Marcos Paz - ${data.vigenciaDesde}</h6>
+   </div>       
+ </div>
+
+<div style="display: flex; flex-direction: row; margin: 0px; border: 2px solid white; width: 100%;">
+   <div style="flex-basis: 50%; border: 1px solid black; padding: 5px;">
+       <h6 style="font-size: 9px; margin: 0px;"><b>Whatsapp de atenci√≥n al cliente:</b></h6>
+       <h4 style="margin: 5px 0px 2px 0px;"><b>11 2185-3948</b></h4>
+   </div>
+   <div style="flex-basis: 50%; text-align: center; border: 1px solid black; padding: 5px;">
+       <h6 style="font-size: 9px; margin: 0px;"><b>Recuerde tener la cuota al d√≠a</b></h6>
+       <h6 style="font-size: 9px; margin: 0px;"><b>para evitar inconvenientes.</b></h6>
+   </div>   
+</div>
+
+
+
+<div style="display: flex; flex-direction: column; width: 100%; box-sizing: border-box;">
+
+ <!-- Fila con dos columnas -->
+ <div style="display: flex; flex-direction: row; width: 100%; box-sizing: border-box;">
+   <div style="flex: 1; height: 15px; padding: 0; box-sizing: border-box;">
+     <h6 style="font-size: 10px; font-weight: 700; margin-top: 2px;">Asistencia 24hs:</h6>
+   </div>
+   <div style="flex: 3; height: 15px; display: flex; align-items: center; justify-content: center; padding: 0; box-sizing: border-box;">
+     <h6 style="font-size: 10px; font-weight: 700; margin: 0px;">${data.numgrua}</h6>
+   </div>
+ </div>
+
+ <!-- Fila con fondo de color -->
+ <div style="text-align: center; padding: 0; margin: 0; width: 100%; border: 2px solid black; box-sizing: border-box;">
+   <h6 style="color: black; font-size: 18px; font-weight: 700; padding: 0 0 0 5px; margin: 4px;">
+     FIN DE COBERTURA: <span id="vto-date2">${data.nuevovto}</span>
+   </h6>
+ </div>
+</div>
+
+
+
+   </div>
+
+ </div>
+
+
+
+<div style="position: absolute; top: 2.38in; left: 0.52in; width: 3.71in; height: 200px; line-height: 0.12in; border: 2px solid black;" id="numAtencion">
+ <div style="width: 100%; text-align: center; padding: 0; margin: 0; height: 30px; border: 1px solid black; box-sizing: border-box;">
+   <h6 style="color: black; font-size: 32px; font-weight: 700; padding: 5px 0 0 5px; margin: 4px;">
+     GIOIA SEGUROS
+   </h6>
+ </div>
+ <div style="width: 100%; text-align: center; padding: 0; margin: 10px 0 0 0; height: 15px; box-sizing: border-box;">
+   <h6 style="color: black; font-size: 18px; font-weight: 700; padding: 0 0 0 5px; margin: 4px;">
+     Horarios de Atenci√≥n:
+   </h6>
+ </div>
+ <div style="width: 100%; text-align: center; padding: 0; margin: 10px 0 0 0; height: 15px; box-sizing: border-box;">
+   <h6 style="color: black; font-size: 15px; font-weight: 700; padding: 0 0 0 5px; margin: 4px;">
+     Lun a Vie 9 a 13hs y 15 a 19hs, Sab 9 a 13hs
+   </h6>
+ </div>
+ <div style="width: 100%; text-align: center; padding: 0; margin: 5px 0 0 0; height: 15px; box-sizing: border-box;">
+   <h6 style="color: black; font-size: 14px; font-weight: 700; padding: 0 0 0 5px; margin: 4px;">
+     <u>Lineas de atenci√≥n online por WHATSAPP:</u>
+   </h6>
+ </div>
+ 
+ <div style="display: flex; width: 100%; height: auto; margin-top: 2px; box-sizing: border-box;">
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 16px; font-weight: 700; padding: 5px; margin:0px;">
+       OFICINA M. PAZ:
+     </h6>
+   </div>
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 21px; font-weight: 700; padding: 5px; margin:0px;">
+       11 2185-3948
+     </h6>
+   </div>
+ </div>
+ 
+ <div style="display: flex; width: 100%; height: auto; margin-top: 2px; box-sizing: border-box;">
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 16px; font-weight: 700; padding: 5px; margin:0px;">
+       OFICINA M. ACOSTA:
+     </h6>
+   </div>
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 21px; font-weight: 700; padding: 5px; margin:0px;">
+       11 2163-0409
+     </h6>
+   </div>
+ </div>
+ <div style="display: flex; width: 100%; height: auto; margin-top: 2px; box-sizing: border-box;">
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 16px; font-weight: 700; padding: 5px; margin:0px;">
+       ACCIDENTES:
+     </h6>
+   </div>
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 21px; font-weight: 700; padding: 5px; margin:0px;">
+       11 2676-0674
+     </h6>
+   </div>
+ </div>
+ <div style="display: flex; width: 100%; height: auto; margin-top: 2px; box-sizing: border-box;">
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 12px; font-weight: 700; padding: 5px; margin:0px;">
+       REMOLQUE / ACARREO / GRUA / ASISTENCIA:
+     </h6>
+   </div>
+   <div style="flex: 1; text-align: center; padding: 0; margin: 0; box-sizing: border-box;">
+     <h6 style="color: black; font-size: 12px; font-weight: 700; padding: 5px; margin:0px;">
+       SE ENCUENTRA EN LA TARJETA PARA CIRCULAR.
+     </h6>
+   </div>
+ </div>
+</div>
+
+           </body>
+       </html>
+   `);
+   
+   printWindow.document.close();
+   printWindow.focus();
+   printWindow.print();
+}
+
+
+//  FUNCION PARA COMPROBAR LISTA NEGRA
 
 function agroGruas(agrocnia) {
  var companiaSeleccionada = document.getElementById("cnia").value;
@@ -2018,14 +4907,14 @@ function agroGruas(agrocnia) {
  divMensajeModelo.style.display = "none";
  divMensajeMoto.style.display = "none";
 
- if ((companiaSeleccionada === "AGROSALTA C/GRUA" || companiaSeleccionada === "AGRO (V) C/GRUA") || 
-      (agrocnia === "AGROSALTA C/GRUA" || agrocnia === "AGRO (V) C/GRUA")) {
+ if ((companiaSeleccionada === "AGROSALTA [RC-GRUA]" || companiaSeleccionada === "AGROSALTA [B1]") || 
+      (agrocnia === "AGROSALTA [RC-GRUA]" || agrocnia === "AGROSALTA [B1]")) {
        
    google.script.run
      .withSuccessHandler(function(result) {
        if (result) {
-         alert("La patente ingresada corresponde a un vehÌculo el cual no se puede asegurar con gr˙a. El motivo es: " + result + ", se proceder· a cambiar la compaÒÌa a AGROSALTA sin gr˙a.");
-         document.getElementById("cnia").value = "AGROSALTA";
+         alert("La patente ingresada corresponde a un veh√≠culo el cual no se puede asegurar con gr√∫a. El motivo es: " + result + ", se proceder√° a cambiar la compa√±√≠a a AGROSALTA sin gr√∫a.");
+         document.getElementById("cnia").value = "AGROSALTA [RC]";
        }
      })
      .searchBlacklist(valorPatente);
@@ -2033,7 +4922,7 @@ function agroGruas(agrocnia) {
    if (valorModelo.toUpperCase().startsWith("MOTO")) {
      divMensajeMoto.style.display = "block";
      
-   } else if (valorModelo.toUpperCase().includes("VEH A—O <= 1994")) {
+   } else if (valorModelo.toUpperCase().includes("VEH A√ëO <= 1994")) {
      divMensajeModelo.style.display = "block";
    } else {
      divMensajeRequerimiento.style.display = "block";
@@ -2048,23 +4937,23 @@ function cleanservice() {
  
  if(document.getElementById("dni").value === "" || document.getElementById("patente_sn").value === "") {
 alert("MAMAAAAAAAA!")
-alert("SAC¡ LA MANO DE AHÕ CARAJO!")
-alert("No, estoy con el pan nada m·s.")
-alert("ACAB¡ DE CORT¡ LA LETRICID¡ PORQUE")
-alert("METISTE UN CUTU-CUCHILLO AHÕ")
-alert("TE POD… QUEDA' ELETRIFICADA, LOCA!")
+alert("SAC√Å LA MANO DE AH√ç CARAJO!")
+alert("No, estoy con el pan nada m√°s.")
+alert("ACAB√Å DE CORT√Å LA LETRICID√Å PORQUE")
+alert("METISTE UN CUTU-CUCHILLO AH√ç")
+alert("TE POD√â QUEDA' ELETRIFICADA, LOCA!")
 alert("Ah bueno, no importa")
 alert("De algo hay que morir.")
 alert("YO NO TE PO' CREER.")
-alert("SaquÈ el pan, Ricardo.")
-alert("MAM¡, CORTASTE TODA LA LOOZ.")
-alert("TOCASTE ALGO QUE HABÕAKJXZ")
-alert("Vos sabÈs que toquÈ ahi")
+alert("Saqu√© el pan, Ricardo.")
+alert("MAM√Å, CORTASTE TODA LA LOOZ.")
+alert("TOCASTE ALGO QUE HAB√çAKJXZ")
+alert("Vos sab√©s que toqu√© ahi")
 alert("Eso tienen que arreglarlo porque no puede ser asi")
 alert("SACALACAI")
 alert("SACAL APAISAL")
 alert("DESANCHUFALO!")
-alert("METISTE UN CUTU-CUCHILLO AHÕ")
+alert("METISTE UN CUTU-CUCHILLO AH√ç")
 return
 }
 
@@ -2172,7 +5061,6 @@ alert('Limpieza completa de sistema');
 
 
 
-
 /////////////////////////////////////////////////////////////////
 //////////////////// SESION DE USUARIOS /////////////////////////
 /////////////////////////////////////////////////////////////////
@@ -2184,12 +5072,12 @@ alert('Limpieza completa de sistema');
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// FunciÛn para realizar el inicio de sesiÛn
+// Funci√≥n para realizar el inicio de sesi√≥n
 // var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 // var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 // var colorAlmacenado = sessionStorage.getItem("magi-color");
 
-// FunciÛn para calcular el tiempo restante en milisegundos
+// Funci√≥n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
  var horaInicio = parseInt(sessionStorage.getItem("magi-horaInicio"));
  var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -2197,7 +5085,7 @@ function calcularTiempoRestante() {
  return tiempoRestante;
 }
 
-// FunciÛn para mostrar el tiempo restante en el div correspondiente
+// Funci√≥n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
  if (tiempoRestante <= 0) {
      sessionStorage.removeItem("magi-usuario");
@@ -2214,7 +5102,7 @@ function mostrarTiempoRestante(tiempoRestante) {
  }
 }
 
-// FunciÛn para iniciar el contador de tiempo
+// Funci√≥n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
  var intervalo = setInterval(function () {
    tiempoRestante -= 1000;
@@ -2311,7 +5199,7 @@ function verificarSesionVencida() {
    var horas = Math.floor(tiempoRestante / (1000 * 60 * 60));
    var minutos = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
    var segundos = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
-   console.log("SesiÛn vigente, quedan: " + horas + " hs, " + minutos + " min, " + segundos + " seg.");
+   console.log("Sesi√≥n vigente, quedan: " + horas + " hs, " + minutos + " min, " + segundos + " seg.");
  }
 }
 
@@ -2351,7 +5239,7 @@ function close_sessionok(event) {
      sessionStorage.removeItem("magi-color");
      tiempoRestanteDiv.textContent = "";    
      document.getElementById("usuario_sp").textContent = "Desconocido";
- // Recargar la p·gina
+ // Recargar la p√°gina
      modal.style.display = "block";
 
 }
@@ -2394,10 +5282,10 @@ function close_sessionok(event) {
 document.getElementById("subir_foto_veh").addEventListener("click", function(event) {
    event.preventDefault();
 
-   // Mostrar spinner de carga en el botÛn
+   // Mostrar spinner de carga en el bot√≥n
    var button = document.getElementById("subir_foto_veh");
    button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo...';
-   button.disabled = true; // Deshabilitar el botÛn mientras se suben las fotos
+   button.disabled = true; // Deshabilitar el bot√≥n mientras se suben las fotos
 
    var files = document.getElementById("fileInput_veh").files;
    var patente = document.getElementById("patente").value;
@@ -2417,7 +5305,7 @@ document.getElementById("subir_foto_veh").addEventListener("click", function(eve
                    });
 
                    if (filesBase64.length === files.length) {
-                       // Cuando todos los archivos estÈn procesados, procede a subir
+                       // Cuando todos los archivos est√©n procesados, procede a subir
                        google.script.run.withSuccessHandler(function() {
                            document.getElementById("fileInput_veh").value = ""; // Limpiar el input de archivos
                            // Mover los elementos de vehiculo_carga a vehiculo_vista
@@ -2425,7 +5313,7 @@ document.getElementById("subir_foto_veh").addEventListener("click", function(eve
                            var vehiculo_carga = document.getElementById("vehiculo_carga");
                            while (vehiculo_carga.firstChild) {
                                var child = vehiculo_carga.firstChild;
-                               // Verifica y elimina el botÛn de eliminar si est· presente
+                               // Verifica y elimina el bot√≥n de eliminar si est√° presente
                                var deleteButton = child.querySelector(".delete-icon");
                                if (deleteButton) {
                                    deleteButton.remove();
@@ -2440,7 +5328,7 @@ document.getElementById("subir_foto_veh").addEventListener("click", function(eve
            });
        });
    } else {
-       alert("Por favor seleccione al menos una foto y especifique la patente del vehÌculo.");
+       alert("Por favor seleccione al menos una foto y especifique la patente del veh√≠culo.");
        button.innerHTML = 'Subir Foto';
        button.disabled = false;
    }
@@ -2452,10 +5340,10 @@ document.getElementById("subir_foto_veh").addEventListener("click", function(eve
 document.getElementById("subir_foto_reg").addEventListener("click", function(event) {
    event.preventDefault();
 
-   // Mostrar spinner de carga en el botÛn
+   // Mostrar spinner de carga en el bot√≥n
    var button = document.getElementById("subir_foto_reg");
    button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Subiendo...';
-   button.disabled = true; // Deshabilitar el botÛn mientras se suben las fotos
+   button.disabled = true; // Deshabilitar el bot√≥n mientras se suben las fotos
 
    var files = document.getElementById("fileInput_reg").files;
    var dni = document.getElementById("dni").value;
@@ -2484,14 +5372,14 @@ document.getElementById("subir_foto_reg").addEventListener("click", function(eve
                            while (registro_carga.firstChild) {
                                // Mueve cada hijo directamente, ya que la referencia se mantiene
                                var child = registro_carga.firstChild;
-                               // Verifica si hay un botÛn de eliminar en el hijo y elimÌnalo si existe
-                               var deleteButton = child.querySelector(".delete-icon"); // Aseg˙rate de que la clase 'delete-icon' sea la correcta
+                               // Verifica si hay un bot√≥n de eliminar en el hijo y elim√≠nalo si existe
+                               var deleteButton = child.querySelector(".delete-icon"); // Aseg√∫rate de que la clase 'delete-icon' sea la correcta
                                if (deleteButton) {
-                                   deleteButton.remove(); // Elimina el botÛn de eliminar
+                                   deleteButton.remove(); // Elimina el bot√≥n de eliminar
                                }
-                               registro_vista.appendChild(child); // Ahora mueve el niÒo
+                               registro_vista.appendChild(child); // Ahora mueve el ni√±o
                            }
-                           // Restaurar el texto y estado original del botÛn
+                           // Restaurar el texto y estado original del bot√≥n
                            button.innerHTML = 'Subir Foto';
                            button.disabled = false;
                        }).uploadRegToDrive('1CyTu6J75Nhdshmt38N79Jf9Ymxq8znYz', filesBase64, dni);
@@ -2501,7 +5389,7 @@ document.getElementById("subir_foto_reg").addEventListener("click", function(eve
        });
    } else {
        alert("Por favor seleccione al menos una foto y especifique el dni del cliente.");
-       // Restaurar el texto y estado original del botÛn
+       // Restaurar el texto y estado original del bot√≥n
        button.innerHTML = 'Subir Foto';
        button.disabled = false;
    }
@@ -2510,9 +5398,268 @@ document.getElementById("subir_foto_reg").addEventListener("click", function(eve
    document.getElementById("div_input_reg").style.display = "none";
 });
 
+document.getElementById('emi2_show_modal').addEventListener('click', function() {
+ event.preventDefault();
+   document.getElementById("emi2_modal_container").style.display = "block";
+
+   /// DATOS DE CLIENTE A INGRESAR
+   let infoDNI =  document.getElementById("dni").value;
+   let infoCliente =  document.getElementById("nombreCompleto").value;
+   let infoDomicilio =  document.getElementById("domicilio").value;
+   let infoLocalidad =  document.getElementById("localidad").value;
+   let infoWpp =  document.getElementById("wpp").value;
+   let infoMail =  document.getElementById("mail").value;
+   let infoNotascte =  document.getElementById("notascte").value;
+
+   /// DATOS DE POLIZA A INGRESAR
+   let infoFpago =  document.getElementById("fpago").value;
+   let infoSucursal =  document.getElementById("sucursal").value;
+   let infoCnia =  document.getElementById("cnia").value;
+   let infoCobertura =  document.getElementById("cobertura").value;
+   let infoImporte =  document.getElementById("importe").value;
+   let infoPoliza =  document.getElementById("poliza").value;
+   let infoOperacion =  document.getElementById("operacion").value;
+   let infoVigencia =  document.getElementById("vigencia").value;
+   let infoHasta =  document.getElementById("hasta").value;
+   let infoRefa =  document.getElementById("refac").value;
+   let infoRefaDesde =  document.getElementById("refa_desde").value;
+   let infoRefaHasta =  document.getElementById("refa_hasta").value;
+   let infoVigTot =  document.getElementById("vigtot").value;
+   let infoNotifica = document.getElementById("notifica").value;
+
+   /// DATOS DE VEHICULO A INGRESAR
+   let ramo =  document.getElementById("ramo_1").value;
+   let ramo_pat =  document.getElementById("patente_sn").value;
+   let infoPatente =  ramo + ramo_pat;
+   let infoMarca =  document.getElementById("marca").value;
+   let infoMotor =  document.getElementById("motor").value;
+   let infoChasis =  document.getElementById("chasis").value;
+   let infoDanios =  document.getElementById("danios").value;
+   let infoTipo =   document.getElementById("tipo").value;
+   let infoAnio =   document.getElementById("modelo").value;
+   let infoColor =   document.getElementById("color").value;
+   let infoVTV =   document.getElementById("vtv").value;
+   let infoSumaAseg =  document.getElementById("suma_aseg").value;
+   let infoAcc1 =  document.getElementById("accesorio1").value;
+   let infoAcc1valor =  document.getElementById("accesorio1_valor").value;
+   let infoNotasVeh =  document.getElementById("notasveh").value;
+
+   // Mostrar datos en el modal solo si hay valores
+   if (infoDNI) document.getElementById("modalDNI").value = infoDNI;
+   if (infoCliente) document.getElementById("modalCliente").value = infoCliente;
+   if (infoDomicilio) document.getElementById("modalDomicilio").value = infoDomicilio;
+   if (infoLocalidad) document.getElementById("modalLocalidad").value = infoLocalidad;
+   if (infoWpp) document.getElementById("modalWpp").value = infoWpp;
+   if (infoMail) document.getElementById("modalMail").value = infoMail;
+   if (infoNotascte) document.getElementById("modalNotascte").value = infoNotascte;
+   if (infoFpago) document.getElementById("modalFpago").value = infoFpago;
+   if (infoSucursal) document.getElementById("modalSucursal").value = infoSucursal;
+   if (infoCnia) document.getElementById("modalCnia").value = infoCnia;
+   if (infoCobertura) document.getElementById("modalCobertura").value = infoCobertura;
+   if (infoImporte) document.getElementById("modalImporte").value = infoImporte;
+   if (infoPoliza) document.getElementById("modalPoliza").value = infoPoliza;
+   if (infoOperacion) document.getElementById("modalOperacion").value = infoOperacion;
+   if (infoVigencia) document.getElementById("modalVigencia").value = infoVigencia;
+   if (infoHasta) document.getElementById("modalHasta").value = infoHasta;
+   if (infoRefa) document.getElementById("modalRefa").value = infoRefa;
+   if (infoRefaDesde) document.getElementById("modalRefaDesde").value = infoRefaDesde;
+   if (infoRefaHasta) document.getElementById("modalRefaHasta").value = infoRefaHasta;
+   if (infoVigTot) document.getElementById("modalVigTot").value = infoVigTot;
+   if (infoNotifica) document.getElementById("modalNotifica").value = infoNotifica;
+   if (infoPatente) document.getElementById("modalPatente").value = infoPatente;
+   if (infoMarca) document.getElementById("modalMarca").value = infoMarca;
+   if (infoMotor) document.getElementById("modalMotor").value = infoMotor;
+   if (infoChasis) document.getElementById("modalChasis").value = infoChasis;
+   if (infoDanios) document.getElementById("modalDanios").value = infoDanios;
+   if (infoTipo) document.getElementById("modalTipo").value = infoTipo;
+   if (infoAnio) document.getElementById("modalAnio").value = infoAnio;
+   if (infoColor) document.getElementById("modalColor").value = infoColor;
+   if (infoVTV) document.getElementById("modalVTV").value = infoVTV;
+   if (infoSumaAseg) document.getElementById("modalSumaAseg").value = infoSumaAseg;
+   if (infoAcc1) document.getElementById("modalAcc1").value = infoAcc1;
+   if (infoAcc1valor) document.getElementById("modalAcc1valor").value = infoAcc1valor;
+
+
+   
+   let labelPagoAgro = document.getElementById("labelPagoAgro");
+
+   labelPagoAgro.textContent = "Ingresar pago de Agrosalta:";
+   
+   document.getElementById('pagoAgro_container').style.display = 'none';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'none';
+
+   document.getElementById('pagRec').style.display = 'block';
+   document.getElementById('genPag').style.display = 'none'; 
+   
+   if(infoCnia === "AGROSALTA [RC]" || infoCnia === "AGROSALTA [MOTO]" || infoCnia === "AGROSALTA [RC-GRUA]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   } else if(infoCnia === "AGROSALTA [B1]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'flex';
+   }   
+
+});
+
+
+function generarPago(event) {
+ event.preventDefault();
+
+ let infoDNI = document.getElementById('modalDNI').value;
+ let infoCliente = document.getElementById('modalCliente').value;
+ let infoWpp = document.getElementById('modalWpp').value;
+ let infoPatente = document.getElementById('modalPatente').value;
+ let infoMarca = document.getElementById('modalMarca').value;
+ let infoPoliza = document.getElementById('modalPoliza').value;
+ let infoCnia = document.getElementById('modalCnia').value;
+ let infoCuota = 1;
+ let infoVigencia = document.getElementById('modalRefa').value;
+ let infoImporte = document.getElementById('modalImporte').value;
+ let infoVence = document.getElementById('modalVigencia').value;
+ let infoColor = document.getElementById('modalColor').value;
+ let infoUsuario = sessionStorage.getItem("magi-usuario");
+ let infoMedio = "EFECTIVO"
+ let infoSucursal = document.getElementById('modalSucursal').value;
+
+   document.getElementById('pagoAgro_container').style.display = 'none';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'none';
+
+ google.script.run.withSuccessHandler(function(reciboNumero) {
+   // Coloca el n√∫mero de recibo en el input con id 'modalRecibo'
+   document.getElementById('modalRecibo').value = reciboNumero;
+
+   let labelPagoAgro = document.getElementById("labelPagoAgro");
+
+   labelPagoAgro.textContent = "N¬∞ de recibo generado:";
+
+   document.getElementById('pagRecA').style.display = 'none';
+   document.getElementById('genPag').style.display = 'block'; 
+   
+   if(infoCnia === "AGROSALTA [RC]" || infoCnia === "AGROSALTA [MOTO]" || infoCnia === "AGROSALTA [RC-GRUA]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   } else if(infoCnia === "AGROSALTA [B1]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'flex';
+   }   
+
+ }).withFailureHandler(function(error) {
+   // Muestra un alert en caso de error
+   alert("Ha ocurrido un error, reintente por favor.");
+   console.error("Error al generar el recibo: " + error);
+ }).pagoNuevo_inv(
+   infoDNI,
+   infoCliente,
+   infoWpp,
+   infoPatente,
+   infoMarca,
+   infoPoliza,
+   infoCnia,
+   infoCuota,
+   infoVigencia,
+   infoImporte,
+   infoVence,
+   infoColor,
+   infoUsuario,
+   infoMedio,
+   infoSucursal
+ );
+}
+
+
+function generarPagoDigital(event) {
+ event.preventDefault();
+
+ let infoDNI = document.getElementById('modalDNI').value;
+ let infoCliente = document.getElementById('modalCliente').value;
+ let infoWpp = document.getElementById('modalWpp').value;
+ let infoPatente = document.getElementById('modalPatente').value;
+ let infoMarca = document.getElementById('modalMarca').value;
+ let infoPoliza = document.getElementById('modalPoliza').value;
+ let infoCnia = document.getElementById('modalCnia').value;
+ let infoCuota = 1;
+ let infoVigencia = document.getElementById('modalRefa').value;
+ let infoImporte = document.getElementById('modalImporte').value;
+ let infoVence = document.getElementById('modalVigencia').value;
+ let infoColor = document.getElementById('modalColor').value;
+ let infoUsuario = sessionStorage.getItem("magi-usuario");
+ let infoMedio = "DIGITAL"
+ let infoSucursal = document.getElementById('modalSucursal').value;
+
+   document.getElementById('pagoAgro_container').style.display = 'none';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'none';
+
+ google.script.run.withSuccessHandler(function(reciboNumero) {
+   // Coloca el n√∫mero de recibo en el input con id 'modalRecibo'
+   document.getElementById('modalRecibo').value = reciboNumero;
+   
+   
+   let labelPagoAgro = document.getElementById("labelPagoAgro");
+
+   labelPagoAgro.textContent = "N¬∞ de recibo generado:";
+
+   document.getElementById('pagRecA').style.display = 'none';
+   document.getElementById('genPag').style.display = 'block'; 
+   
+
+   if(infoCnia === "AGROSALTA [RC]" || infoCnia === "AGROSALTA [MOTO]" || infoCnia === "AGROSALTA [RC-GRUA]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   } else if(infoCnia === "AGROSALTA [B1]") {
+   document.getElementById('pagoAgro_container').style.display = 'flex';
+   document.getElementById('acuerdoAgroB1_container').style.display = 'flex';
+   }   
+
+ }).withFailureHandler(function(error) {
+   // Muestra un alert en caso de error
+   alert("Ha ocurrido un error, reintente por favor.");
+   console.error("Error al generar el recibo: " + error);
+ }).pagoNuevo_inv(
+   infoDNI,
+   infoCliente,
+   infoWpp,
+   infoPatente,
+   infoMarca,
+   infoPoliza,
+   infoCnia,
+   infoCuota,
+   infoVigencia,
+   infoImporte,
+   infoVence,
+   infoColor,
+   infoUsuario,
+   infoMedio,
+   infoSucursal
+ );
+}
+
+
+
+document.getElementById('printAcAB1').addEventListener('click', printAcuerdoAgroB1);
+document.getElementById('printProp').addEventListener('click', printPropuesta);
+document.getElementById('printCertCob').addEventListener('click', printCertCob);
+document.getElementById('genPag').addEventListener('click', printTarRec);
+document.getElementById('pagRec').addEventListener('click', generarPago);
+document.getElementById('pagRecD').addEventListener('click', generarPagoDigital);
+
+document.getElementById('emi2_close').addEventListener('click', function() {
+ document.getElementById('emi2_modal_container').style.display = 'none';
+});
+
+document.getElementById('emi_close').addEventListener('click', function() {
+ document.getElementById('emi_modal_container').style.display = 'none';
+});
+
 document.getElementById("cnia").addEventListener("change", agroGruas);
 document.getElementById("cnia").addEventListener("change", function() {
 buscarRefa()
+});
+document.getElementById("refac").addEventListener("change", function() {
+ 
+document.getElementById("refa_hasta").value =  sumarMeses(document.getElementById("refa_desde").value,document.getElementById("refac").value)
+
+});
+document.getElementById("vigtot").addEventListener("change", function() {
+ 
+document.getElementById("hasta").value =  sumarMeses(document.getElementById("vigencia").value,document.getElementById("vigtot").value)
+
 });
 document.getElementById('bt-capturePhoto').addEventListener('click', capturePhoto);
 document.getElementById('bt-switchCamera').addEventListener('click', switchCamera);

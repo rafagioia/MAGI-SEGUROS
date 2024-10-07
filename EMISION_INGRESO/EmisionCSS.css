@@ -20,6 +20,23 @@ body{
   box-shadow: 0 0 5px rgba(0, 140, 186, 0.5);
 }
 
+  .table-container {
+    max-height: 250px; /* Ancho máximo */
+    overflow-y: auto; /* Habilitar scroll horizontal */
+  }
+  .table-dia {
+    height: 100%; /* Asegura que la tabla use el ancho completo del contenedor */
+    table-layout: fixed; /* Permite controlar el ancho de las columnas */
+  }
+  .table-dia th, .table-dia td {
+
+  }
+  .table-dia th:nth-child(1), .table-dia td:nth-child(1) { width: 13%; } /* Ajusta el ancho según sea necesario */
+  .table-dia th:nth-child(2), .table-dia td:nth-child(2) { width: 19%; }
+  .table-dia th:nth-child(3), .table-dia td:nth-child(3) { width: 13%; }
+  .table-dia th:nth-child(4), .table-dia td:nth-child(4) { width: 20%; }
+  .table-dia th:nth-child(5), .table-dia td:nth-child(5) { width: 20%; }
+  .table-dia th:nth-child(6), .table-dia td:nth-child(6) { width: 15%; }
 
 /* INICIO NUEVO MENU DE NAVEGACION */
 *{
@@ -32,8 +49,8 @@ body{
 min-height: 100vh;
 }
 #sugerencias {
-  /* Agrega estilos personalizados aqu� */
-  /* Por ejemplo, ancho y posici�n */
+  /* Agrega estilos personalizados aquí */
+  /* Por ejemplo, ancho y posición */
   width: 100%;
   position: absolute;
   top: 100%;
@@ -48,7 +65,7 @@ width: 100vw; /* Ancho al 100% del viewport width (vw) */
 height: 4.3rem;
 background: #f8f9fa;
 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-/* z-index: 99; */ /* Puedes quitar esto si no necesitas control de superposici�n */
+/* z-index: 99; */ /* Puedes quitar esto si no necesitas control de superposición */
 }
 nav .navbar{
 height: 100%;
@@ -596,6 +613,64 @@ button#emi_show_modal:hover {
 background: #0056b3;
 }
 
+
+/* FIN DEL NUEVO MENU DE NAVEGACION */
+
+#emi2_modal_container {
+display: none;
+position: fixed;
+z-index: 1050; /* Asegúrate de que esté encima del contenido */
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0,0,0,0.5); /* Fondo oscuro para el modal */
+}
+
+#emi2_modal_content {
+position: relative;
+margin: 6% auto;
+padding: 20px;
+width: 30%;
+background-color: #fff;
+border-radius: 5px;
+}
+
+
+.plan2 {
+margin: 10px;
+padding: 20px 5px;
+background: #f8f8f8;
+border: 1px solid #ddd;
+border-radius: 5px;
+width: 50%; /* 25% del ancho y restando el margen y el padding */
+}
+
+#emi2_close {
+color: #aaa;
+float: right;
+font-size: 24px;
+font-weight: bold;
+cursor: pointer;
+}
+
+#emi2_close:hover,
+#emi2_close:focus {
+color: black;
+}
+
+button#emi2_show_modal {
+background: #007bff;
+color: #fff;
+border: none;
+cursor: pointer;
+}
+
+button#emi2_show_modal:hover {
+background: #0056b3;
+}
+
 /* Estilos para version celular */
 @media only screen and (max-width: 1080px) {
 .container {
@@ -729,6 +804,22 @@ font-size: 1rem;
     background-color: rgba(0, 0, 0, 0.4);
   }
 
+    /* Estilos para el fondo oscurecido */
+  .polizaResumenModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* z-index: 1050; */
+  }
+
+
+
 .thumbnail-container {
   height: 80px;
   overflow: hidden;
@@ -755,3 +846,4 @@ font-size: 1rem;
   position: relative;
   display: inline-block;
 }
+
