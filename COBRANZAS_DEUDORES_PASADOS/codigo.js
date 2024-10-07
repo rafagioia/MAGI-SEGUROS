@@ -48,12 +48,7 @@ function getData(cmonth = new Date().getMonth(), cyear = new Date().getFullYear(
       let vto_day = parseInt(deudoresData[i][8].split("/")[0], 10);
       var vto_month = parseInt(deudoresData[i][8].split("/")[1], 10);
       var vto_year = parseInt(deudoresData[i][8].split("/")[2], 10);
-      // var cuota_div = parseInt(deudoresData[i][7], 10);
 
-      // var valor_cuota = ((currentYear2 - vto_year) * 12 + currentMonth - vto_month + 1) % cuota_div;
-      // if (valor_cuota <= 0) {
-      //   valor_cuota += cuota_div;
-      // }
 
 var cuota_div = parseInt(deudoresData[i][7], 10);
 var valor_cuota;
@@ -112,7 +107,6 @@ for (var j = cobranzasData.length - 1; j >= 1; j--) {
         deudor[14] = cobranzasData[j][9]; // POLIZA
         deudor[11] = parseInt(cobranzasData[j][11].replace("$", "").replace(",", "")); // IMPORTE
     }
-
     }
 
     
@@ -142,6 +136,7 @@ for (var j = cobranzasData.length - 1; j >= 1; j--) {
       sinPendientes.push(deudor);
     }
   }
+
     return sinPendientes;
 }
 
@@ -185,6 +180,53 @@ function alta_nuevadeudor(altaVto, altaID_Deudor, altaVigencia, altaCnia, altaMa
 }
 
 
+///////////////////// ALTA NUEVA DEUDOR /////////////////
+
+function mod_nuevadeudor(modVto, modID_Deudor, modVigencia, modCnia, modMarca, modPatente, modCliente, modDNI, modAnulaPol, modPatente_b) {
+  const sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
+  const lastRow = sheet.getLastRow(); 
+
+  if (modVigencia !== "" || modVto !== "" || modAnulaPol !== "") {
+    for (let i = lastRow; i >= 2; i--) {
+      let patenteCell = sheet.getRange(i, 4).getValue(); 
+      if (patenteCell === modPatente_b) {  // Cambié `patente` por `modPatente`
+        sheet.getRange(i, 10).setValue(modAnulaPol); 
+        break;
+      }
+    }
+
+    var vehVals = [modID_Deudor, modDNI, modCliente, modPatente, modMarca, modCnia, "1", modVigencia, modVto];  // Corrección de array sin valores vacíos
+
+    sheet.appendRow(vehVals);
+  }
+
+
+
+  if (modVigencia === "" && modVto === "" && modAnulaPol === "") {
+
+      for (let i = lastRow; i >= 2; i--) {
+    let patenteCell = sheet.getRange(i, 4).getValue();
+    if (patenteCell === modPatente) {  // Cambié `patente` por `modPatente`
+      sheet.getRange(i, 1).setValue(modID_Deudor); 
+      sheet.getRange(i, 2).setValue(modDNI); 
+      sheet.getRange(i, 3).setValue(modCliente); 
+      sheet.getRange(i, 4).setValue(modPatente); 
+      sheet.getRange(i, 5).setValue(modMarca); 
+      sheet.getRange(i, 6).setValue(modCnia); 
+      break;
+    }
+  }
+
+  }
+
+
+
+
+
+  return modDNI;
+}
+
+
 ///////////////////// BAJA NUEVO DEUDOR /////////////////
 
 function baja_nuevadeudor(bajaVto, bajaPatente) {
@@ -199,6 +241,38 @@ for(let i = 1; i < mantenimientos.length; i++) {
     return bajaPatente;
 
 }
+
+////////////// BUSCAR DEUDOR //////////////
+
+function buscarDeudorPorPatente(patente) {
+  const sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1pVGmD78jabvGE1sF2GnJV_xQ5asNJEjKGiPKWfsqoDM/edit").getSheetByName("DEUDORES VIGENTES");
+  const lastRow = sheet.getLastRow(); // Obtener la última fila con datos
+  const data = sheet.getRange(2, 1, lastRow - 1, 11).getValues(); // Obtener todas las filas y columnas relevantes
+  
+  let resultado = null;
+
+  // Recorrer todas las filas
+  for (let i = 0; i < data.length; i++) {
+    let fila = data[i];
+    let patenteFila = fila[3];
+    
+    if (patenteFila === patente) {
+      resultado = {
+        dni: fila[1], 
+        cliente: fila[2], 
+        patente: fila[3], 
+        marca: fila[4],  
+        compania: fila[5],  
+        id_deudor: fila[0]
+        // vigencia: fila[7]  
+      };
+      break; // Salir del bucle una vez que se encuentre la patente
+    }
+  }
+
+  return resultado; // Devolver los datos al cliente
+}
+
 
 
 //////////////// REIMPRIMIR RECIBOS //////////////////////
@@ -216,7 +290,7 @@ function getValuesFromSheet(numRecibo) {
   }
 
   sourceVals = sourceVals[0];
-console.log(sourceVals)
+
   var template = HtmlService.createTemplateFromFile('Recibo');
   template.sourceVals = sourceVals;
   var content = template.evaluate().getContent();

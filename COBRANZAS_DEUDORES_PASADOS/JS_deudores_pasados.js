@@ -164,6 +164,7 @@ pendientesHtml += "<div style='display: none;' id='_dni" + i + "'>" + result[i][
 
 var idDeudorSelect = document.getElementById("id_deudor_select");
 var idDeudorSelectAlta = document.getElementById("alta_id_deudor");
+var idDeudorSelectMod = document.getElementById("mod_id_deudor");
 var actualizarListaBtn = document.getElementById("bt-actualizar_lista");
 var totalValInput = document.getElementById("total_val");
 var resetFiltroBtn = document.getElementById("bt-reset-filtro");
@@ -210,11 +211,17 @@ for (var j = 0; j < idDeudores.length; j++) {
  option2.value = idDeudores[j];
  option2.text = idDeudores[j];
  idDeudorSelectAlta.appendChild(option2);
+
+ var option3 = document.createElement("option");
+ option3.value = idDeudores[j];
+ option3.text = idDeudores[j];
+ idDeudorSelectMod.appendChild(option3);
 }
 
 ///////// FILTRAR DATOS POR ID DEUDOR //////////////////////
 actualizarListaBtn.addEventListener("click", function() {
 
+ var filtro_cnia = document.getElementById("filtro_cnia").value;
  var seleccionado = idDeudorSelect.value;
 
  // Filtrar los elementos basados en el valor seleccionado
@@ -222,15 +229,25 @@ actualizarListaBtn.addEventListener("click", function() {
  for (var i = 0; i < divs.length; i++) {
    var div = divs[i];
    var deudor = div.querySelector(".text-sm[id^='_deudor']").textContent;
+   var cnia = div.querySelector(".text-sm[id^='_cnia']").textContent;
 
-   if (deudor === seleccionado || seleccionado === "todos") {
+   // Verificar si el filtro_cnia es "todos los agros" y si coincide con los valores relacionados a AGROSALTA
+   var esAgrosalta = (cnia === "AGROSALTA [RC]" || 
+                      cnia === "AGROSALTA [RC-GRUA]" || 
+                      cnia === "AGROSALTA [B1]" || 
+                      cnia === "AGROSALTA [MOTO]");
+   
+   if ((deudor == seleccionado || seleccionado == "todos" || seleccionado == "") && 
+       (cnia == filtro_cnia || filtro_cnia == "" || (filtro_cnia == "todos los agros" && esAgrosalta))) {
      div.style.display = "block"; // Mostrar el elemento
    } else {
      div.style.display = "none"; // Ocultar el elemento
    }
  }
-calcularSuma();
+ 
+ calcularSuma();
 });
+
 
 //////////////////// BOTON DE RESETEAR FILTRO ///////////////////
 
@@ -506,6 +523,68 @@ function downloadPdf(pdfContent, fileName) {
  link.click();
 }
 
+/////////////// BUSCAR DEUDOR 
+     function buscarDeudor() {
+       // Obtener el valor de la patente ingresada
+       const patente = document.getElementById('mod_patente_b').value;
+
+       // Llamar a la función en el servidor y pasar la patente
+       google.script.run.withSuccessHandler(rellenarCampos).buscarDeudorPorPatente(patente);
+     }
+
+     function rellenarCampos(datos) {
+       if (datos) {
+         // Rellenar los campos con los datos obtenidos
+         document.getElementById('mod_patente').value = datos.patente;
+         document.getElementById('mod_marca').value = datos.marca;
+         document.getElementById('mod_dni').value = datos.dni;
+         document.getElementById('mod_cliente').value = datos.cliente;
+         document.getElementById('mod_cnia').value = datos.compania;
+         document.getElementById('mod_id_deudor').value = datos.id_deudor;
+         // document.getElementById('mod_nueva_vigencia').value = datos.vigencia;
+       } else {
+         alert("No se encontraron datos para la patente ingresada.");
+       }
+     }
+
+
+////////////////////// MOD DEUDOR ////////////////////////
+
+document.getElementById("mod_nueva").addEventListener("click", function() {
+   event.preventDefault();
+   
+ document.getElementById("modal5").style.display = "block";
+});
+//// alta_id_deudor
+document.getElementById("mod_deudor").addEventListener("click", function() {
+   event.preventDefault();
+
+ var modPatente_b = document.getElementById("mod_patente_b").value;
+ var modPatente = document.getElementById("mod_patente").value;
+ var modMarca = document.getElementById("mod_marca").value;
+ var modDNI = document.getElementById("mod_dni").value;
+ var modCliente = document.getElementById("mod_cliente").value;
+ var modCnia = document.getElementById("mod_cnia").value;
+ var modID_Deudor = document.getElementById("mod_id_deudor").value;
+ var modVigencia = document.getElementById("mod_nueva_vigencia").value;
+ var modVto = document.getElementById("mod_nuevo_vto").value;
+ var modAnulaPol = document.getElementById("mod_anula_pol_vie").value;
+ google.script.run.mod_nuevadeudor(modVto, modID_Deudor, modVigencia, modCnia, modMarca, modPatente, modCliente, modDNI, modAnulaPol, modPatente_b);
+   modal3.style.display = "none";
+alert('mod de deudor exitosa');
+
+ document.getElementById("mod_dni").value = "";
+ document.getElementById("mod_cliente").value = "";
+ document.getElementById("mod_patente").value = "";
+ document.getElementById("mod_marca").value = "";
+ document.getElementById("mod_cnia").value = "";
+ document.getElementById("mod_id_deudor").value = "";
+ document.getElementById("mod_nueva_vigencia").value = "";
+ document.getElementById("mod_anula_pol_vie").value = "";
+ document.getElementById("mod_nuevo_vto").value = "";
+ mod_id_deudor_manual.style.display = "none";
+});
+
 
 
 ////////////////////// ALTA DEUDOR NUEVO ////////////////////////
@@ -546,6 +625,18 @@ alert('Alta de deudor exitosa');
  alta_id_deudor_manual.style.display = "none";
 });
 
+/////////////////// MODIFICA DEUDOR CON ID NUEVA MANUAL ////////////////////////////
+ document.getElementById("mod_id_deudor").addEventListener("change", function() {
+   var selectedOption = this.options[this.selectedIndex];
+   var inputField = document.getElementById("mod_id_deudor_manual");
+   
+   if (selectedOption.getAttribute("data-input") === "true") {
+     inputField.style.display = "block";
+   } else {
+     inputField.style.display = "none";
+   }
+ });
+
 /////////////////// ALTA DE DEUDOR CON ID NUEVA MANUAL ////////////////////////////
  document.getElementById("alta_id_deudor").addEventListener("change", function() {
    var selectedOption = this.options[this.selectedIndex];
@@ -585,6 +676,7 @@ document.addEventListener('DOMContentLoaded', function() {
  // Obtenemos el modal por su ID
  var modal = document.getElementById('modal3');
  var modal2 = document.getElementById('modal4');
+ var modal3 = document.getElementById('modal5');
 
  // Agregamos un evento para cerrar el modal cuando se hace clic fuera de él
  window.addEventListener('click', function(event) {
@@ -593,6 +685,9 @@ document.addEventListener('DOMContentLoaded', function() {
    }
    if (event.target === modal2) {
      modal2.style.display = 'none';
+   }
+   if (event.target === modal3) {
+     modal3.style.display = 'none';
    }
  });
 });
@@ -811,6 +906,7 @@ function close_sessionok(event) {
            
 /////////////////////// EVENT LISTENERS ////////////////////////////
 
+document.getElementById('bus_deudor').addEventListener('click', buscarDeudor);
 document.getElementById('btn-reimprimirReciboMulti').addEventListener('click', reimprimirReciboMulti);
 // document.getElementById('btn-reimprimirRecibo').addEventListener('click', reimprimirRecibo);
 document.getElementById('bt-desc-multirec').addEventListener('click', descargaReciboM);
