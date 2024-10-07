@@ -43,7 +43,7 @@ for (var i = 1; i < cobranzasData.length; i++) {
       var cnia = cobranzasData[i][10];
       var patente = cobranzasData[i][12];
       var marca = cobranzasData[i][13];
-      var importe = parseInt(cobranzasData[i][11].replace("$", "").replace(",", "")); // Corrección aquí
+      var importe = parseInt(cobranzasData[i][11].replace("$", "").replace(",", "")); // CorrecciÃ³n aquÃ­
       var fpago = cobranzasData[i][6];
 
       deudor.push(idDeudor, cliente, vencimiento, cuota, cuotaHasta, cnia, patente, marca, importe, 0, fpago);
@@ -328,7 +328,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o Contrasea!");
+  return alert("Error de Usuario o Contraseï¿½a!");
 }
 
 ///////////////////////////////  CAMBIAR CLAVE DE USUARIO  ////////////////////////////////////////
@@ -394,7 +394,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de clculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de cï¿½lculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];

@@ -152,19 +152,19 @@ var resetFiltroBtn = document.getElementById("bt-reset-filtro");
 ///////////////////// SUMAR VALORES ////////////////
 
 function calcularSuma() {
- var ultimoSaldo = null; // Variable para almacenar el último saldo
+ var ultimoSaldo = null; // Variable para almacenar el Ãºltimo saldo
  var divs = document.querySelectorAll("#sinPendientes > div");
 
  for (var i = 0; i < divs.length; i++) {
    var div = divs[i];
 
-   // Verificar si el elemento está visible
+   // Verificar si el elemento estÃ¡ visible
    if (div.style.display !== "none") {
      var saldoInput = div.querySelector("input[id^='_saldo']");
      var saldo = parseFloat(saldoInput.value);
 
      if (!isNaN(saldo)) {
-       ultimoSaldo = saldo; // Actualizar el último saldo
+       ultimoSaldo = saldo; // Actualizar el Ãºltimo saldo
      }
    }
  }
@@ -173,7 +173,7 @@ function calcularSuma() {
 }
 
 
-// Llamar a la función inicialmente y cada vez que se cambie un valor
+// Llamar a la funciÃ³n inicialmente y cada vez que se cambie un valor
 calcularSuma();
 
 var impInputs = document.querySelectorAll("input[id^='_imp']");
@@ -219,14 +219,14 @@ resetFiltroBtn.addEventListener("click", function() {
    div.style.display = "block"; // Mostrar todos los elementos
  }
 
- // Restablecer la selección del select
+ // Restablecer la selecciÃ³n del select
  idDeudorSelect.selectedIndex = 0;
 
 });
 
  }
 
- // Llamar a la función getData() del lado del servidor
+ // Llamar a la funciÃ³n getData() del lado del servidor
  google.script.run.withSuccessHandler(updateSinPendientes).getData();
  /////////////////////////////////////////
 
@@ -240,12 +240,12 @@ function obtenerDatosTabla() {
  var tableData = [];
  var total = 0;
  var divs = document.querySelectorAll("#sinPendientes > div");
- var ultimoSaldo = null; // Variable para almacenar el último saldo
+ var ultimoSaldo = null; // Variable para almacenar el Ãºltimo saldo
 
  for (var i = 0; i < divs.length; i++) {
    var div = divs[i];
    if (div.style.display === "none") {
-     continue; // Si el div está oculto, omitirlo y pasar al siguiente
+     continue; // Si el div estÃ¡ oculto, omitirlo y pasar al siguiente
    }
 
    var rowData = [];
@@ -267,7 +267,7 @@ function obtenerDatosTabla() {
    // Actualizar el total sumando el saldo actual
    total += saldo;
 
-   // Actualizar el último saldo
+   // Actualizar el Ãºltimo saldo
    ultimoSaldo = saldo;
 
    tableData.push(rowData);
@@ -297,7 +297,7 @@ function generarPDF(tableData) {
    '<th>VTO:</th>' +
    '<th>CTA:</th>' +
    '<th>DE:</th>' +
-   '<th>COMPAÑIA</th>' +
+   '<th>COMPAÃ‘IA</th>' +
    '<th>PATENTE:</th>' +
    '<th>MARCA:</th>' +
    '<th>DEBE:</th>' +
@@ -306,7 +306,7 @@ function generarPDF(tableData) {
    '</tr></thead>');
  ventanaImpresion.document.write('<tbody>');
 
- var ultimoSaldo = null; // Variable para almacenar el último saldo
+ var ultimoSaldo = null; // Variable para almacenar el Ãºltimo saldo
 
  for (var i = 0; i < tableData.length; i++) {
    ventanaImpresion.document.write('<tr>');
@@ -316,7 +316,7 @@ function generarPDF(tableData) {
      if (j === 10) {
        var saldo = parseFloat(rowData[j]);
        if (!isNaN(saldo)) {
-         ultimoSaldo = saldo; // Actualizar el último saldo
+         ultimoSaldo = saldo; // Actualizar el Ãºltimo saldo
        }
      }
      ventanaImpresion.document.write('<td>' + rowData[j] + '</td>');
@@ -360,7 +360,7 @@ alert('Recibi ingresado correctamente');
 var modal = document.getElementById("myModal");
 var tiempoRestanteDiv = document.getElementById("tiempo-restante");
 
-// Función para realizar el inicio de sesión
+// FunciÃ³n para realizar el inicio de sesiÃ³n
 var usuarioAlmacenado = sessionStorage.getItem("magi-usuario");
 var horaInicioAlmacenada = sessionStorage.getItem("magi-horaInicio");
 var colorAlmacenado = sessionStorage.getItem("magi-color");
@@ -392,19 +392,19 @@ if (usuarioAlmacenado) {
  iniciarContadorTiempo(tiempoRestante);
 } else {
  
- // Función para abrir el modal
+ // FunciÃ³n para abrir el modal
  modal.style.display = "block";
 
- // Función para cerrar el modal
+ // FunciÃ³n para cerrar el modal
  function closeModal() {
    modal.style.display = "none";
  }
 
- // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botón de inicio de sesión
+ // Si no hay un usuario almacenado, abrir el modal al hacer clic en el botÃ³n de inicio de sesiÃ³n
  document.getElementById("inicio-sesion").addEventListener("click", function (event) {
    event.preventDefault();
 
-   // Obtener el usuario y la contraseña del formulario
+   // Obtener el usuario y la contraseÃ±a del formulario
    var usuario = document.getElementById("usuario").value;
    var contrasena = document.getElementById("contrasena").value;
 
@@ -412,7 +412,7 @@ if (usuarioAlmacenado) {
    var colorPicker = document.getElementById("colorPicker");
    var colorSeleccionado = colorPicker.value;
 
-// Hacer una solicitud al servidor para verificar el usuario y la contraseña
+// Hacer una solicitud al servidor para verificar el usuario y la contraseÃ±a
 
 
 google.script.run.withSuccessHandler(function (color) {
@@ -444,7 +444,7 @@ google.script.run.withSuccessHandler(function (color) {
 
 
 
-// Función para calcular el tiempo restante en milisegundos
+// FunciÃ³n para calcular el tiempo restante en milisegundos
 function calcularTiempoRestante() {
  var horaInicio = parseInt(horaInicioAlmacenada);
  var horaExpiracion = horaInicio + (4 * 60 * 60 * 1000); // 4 horas en milisegundos
@@ -453,7 +453,7 @@ function calcularTiempoRestante() {
  return tiempoRestante;
 }
 
-// Función para mostrar el tiempo restante en el div correspondiente
+// FunciÃ³n para mostrar el tiempo restante en el div correspondiente
 function mostrarTiempoRestante(tiempoRestante) {
  if (tiempoRestante <= 0) {
      sessionStorage.removeItem("magi-usuario");
@@ -471,7 +471,7 @@ function mostrarTiempoRestante(tiempoRestante) {
  }
 }
 
-// Función para iniciar el contador de tiempo
+// FunciÃ³n para iniciar el contador de tiempo
 function iniciarContadorTiempo(tiempoRestante) {
  var intervalo = setInterval(function () {
    tiempoRestante -= 1000;
@@ -523,7 +523,7 @@ function close_sessionok(event) {
      sessionStorage.removeItem("magi-horaInicio");
      tiempoRestanteDiv.textContent = "";    
      document.getElementById("usuario_sp").textContent = "Desconocido";
- // Recargar la página
+ // Recargar la pÃ¡gina
      modal.style.display = "block";
 
 }
