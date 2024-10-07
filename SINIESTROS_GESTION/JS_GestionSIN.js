@@ -74,8 +74,10 @@ tipoValorSelect.addEventListener("change", function() {
  } else if (selectedValue === "compania") {
    valorModSelect.style.display = "block";
    valorMod.style.display = "none";
-   addOption(valorModSelect, "AGROSALTA", "AGROSALTA");
-   addOption(valorModSelect, "AGROSALTA C/GRUA", "AGROSALTA C/GRUA");
+   addOption(valorModSelect, "AGROSALTA [RC]", "AGROSALTA [RC]");
+   addOption(valorModSelect, "AGROSALTA [RC-GRUA]", "AGROSALTA [RC-GRUA]");
+   addOption(valorModSelect, "AGROSALTA [B1]", "AGROSALTA [B1]");
+   addOption(valorModSelect, "AGROSALTA [MOTO]", "AGROSALTA [MOTO]");
    addOption(valorModSelect, "RIVADAVIA", "RIVADAVIA");
    addOption(valorModSelect, "FED PAT", "FED PAT");
    addOption(valorModSelect, "PROVIDENCIA", "PROVIDENCIA");
@@ -88,10 +90,7 @@ tipoValorSelect.addEventListener("change", function() {
    addOption(valorModSelect, "MERCANTIL", "MERCANTIL");
    addOption(valorModSelect, "LIBRA", "LIBRA");
    addOption(valorModSelect, "GRUA", "GRUA");
-   addOption(valorModSelect, "AGRO (V)", "AGRO (V)");
    addOption(valorModSelect, "ALLIANZ", "ALLIANZ");
-   addOption(valorModSelect, "AGRO (V) C/GRUA", "AGRO (V) C/GRUA");
-   addOption(valorModSelect, "AGRO MOTO", "AGRO MOTO");
    addOption(valorModSelect, "DIGNA", "DIGNA");
    addOption(valorModSelect, "EXPERTA", "EXPERTA");
    addOption(valorModSelect, "EL TRIUNFO", "EL TRIUNFO");

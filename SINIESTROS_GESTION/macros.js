@@ -91,19 +91,19 @@ function actualizarEstado(estado_sn, tramite_sn, gestion_sn, novedad_sn, usuario
   var modificacionGestion = "";
 
   if (estado_sn !== "") {
-    modificacionEstado = ". SE MODIFIC” EL ESTADO A " + estado_sn + "\n";
+    modificacionEstado = ". SE MODIFIC√ì EL ESTADO A " + estado_sn + "\n";
   }
 
   if (tipotramite_sn !== "") {
-    modificacionTramite = ". SE MODIFIC” EL TR¡MITE A " + tipotramite_sn + "\n";
+    modificacionTramite = ". SE MODIFIC√ì EL TR√ÅMITE A " + tipotramite_sn + "\n";
   }
 
   if (gestion_sn !== "") {
-    modificacionGestion = ". SE MODIFIC” LA GESTI”N AL " + gestion_sn + "\n";
+    modificacionGestion = ". SE MODIFIC√ì LA GESTI√ìN AL " + gestion_sn + "\n";
   }
 
   if (fechaip_sn !== "" || taller_sn !== "") {
-    agregaTaller = "INSPECCI”N PARA EL DIA: " + fechaip_sn + " EN EL TALLER: " + taller_sn + "\n";
+    agregaTaller = "INSPECCI√ìN PARA EL DIA: " + fechaip_sn + " EN EL TALLER: " + taller_sn + "\n";
   }
 
   var dataConcatenada = "[" + fechaActual + ": " + novedad + "]\n" + usuario + ": " + notas + modificacionEstado + modificacionTramite + modificacionGestion + agregaTaller + notas_old + "\n";
@@ -142,13 +142,13 @@ if ((data[i][8] === estado_filter || data[i][8] == "PENDIENTE") &&
     (riesgo_filter === "" || data[i][7] === riesgo_filter || 
     (riesgo_filter === "TOTALES" && (data[i][7] === "DEST. TOTAL" || data[i][7] === "ROBO TOTAL" || data[i][7] === "INCENDIO TOTAL")) || 
     (riesgo_filter === "PARCIALES" && (data[i][7] === "RECLAMO 3ROS" || data[i][7] === "CLEAS" || data[i][7] === "COMERCIO"
- || data[i][7] === "DA—O POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "INTERASEGURADOS"
+ || data[i][7] === "DA√ëO POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "INTERASEGURADOS"
  || data[i][7] === "RESP. CIVIL" || data[i][7] === "ROBO PARCIAL" || data[i][7] === "TODO RIESGO" || data[i][7] === "GRANIZO"
  || data[i][7] === "CRISTALES" || data[i][7] === "CERRADURA" || data[i][7] === "ACC. PERS." || data[i][7] === "GRUA" || data[i][7] === "RILLA"))) &&
     (patente_filter === "" || data[i][0] === patente_filter) && 
     (dni_filter === "" || data[i][3] === dni_filter) && 
     (gestion_filter === "" || data[i][10] === gestion_filter)) {
-    // agrega el cÛdigo para los valores correspondientes a la tabla
+    // agrega el c√≥digo para los valores correspondientes a la tabla
         var sinPend = [];
         sinPend.push(data[i][0]);
         sinPend.push(data[i][1]);
@@ -177,19 +177,18 @@ if ((data[i][8] === estado_filter || data[i][8] == "PENDIENTE") &&
     
   }
 
-  console.log(sinPendientes);
   return sinPendientes;
 }
 
 function mostrarCorreos(numSin) {
-  // Busca los correos electrÛnicos que contienen el n˙mero 820005104 en el asunto
+  // Busca los correos electr√≥nicos que contienen el n√∫mero 820005104 en el asunto
   var query = "subject:" + numSin;
   var threads = GmailApp.search(query);
 
-  // Crea una variable para almacenar el contenido HTML de los correos electrÛnicos
+  // Crea una variable para almacenar el contenido HTML de los correos electr√≥nicos
   var emailsHTML = "";
 
-  // Recorre los primeros diez correos electrÛnicos que contienen el n˙mero 820005104 en el asunto y agrega su contenido HTML a la variable
+  // Recorre los primeros diez correos electr√≥nicos que contienen el n√∫mero 820005104 en el asunto y agrega su contenido HTML a la variable
   for (var i = 0; i < threads.length && i < 10; i++) {
     var thread = threads[i];
     var messages = thread.getMessages();
@@ -207,12 +206,12 @@ function mostrarCorreos(numSin) {
         emailsHTML += "<p class='card-text'>" + body.substring(0, 200) + "...</p>";
         emailsHTML += "</div>";
         emailsHTML += "</div>";
-        break; // Detiene el bucle si se encuentra un correo electrÛnico que contiene el n˙mero 820005104 en el asunto
+        break; // Detiene el bucle si se encuentra un correo electr√≥nico que contiene el n√∫mero 820005104 en el asunto
       }
     }
   }
 
-  // Devuelve el contenido HTML de los correos electrÛnicos que contienen el n˙mero 820005104 en el asunto
+  // Devuelve el contenido HTML de los correos electr√≥nicos que contienen el n√∫mero 820005104 en el asunto
   return "<div class='container'>" + emailsHTML + "</div>";
 }
 
@@ -260,13 +259,13 @@ if ((estado_filter === "" || data[i][8] === estado_filter) &&
     (riesgo_filter === "" || data[i][7] === riesgo_filter || 
     (riesgo_filter === "TOTALES" && (data[i][7] === "DEST. TOTAL" || data[i][7] === "ROBO TOTAL" || data[i][7] === "INCENDIO TOTAL")) || 
     (riesgo_filter === "PARCIALES" && (data[i][7] === "RECLAMO 3ROS" || data[i][7] === "CLEAS" || data[i][7] === "COMERCIO"
- || data[i][7] === "DA—O POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "INTERASEGURADOS"
+ || data[i][7] === "DA√ëO POR ROBO TOTAL" || data[i][7] === "HOGAR" || data[i][7] === "INCENDIO PARCIAL" || data[i][7] === "INTERASEGURADOS"
  || data[i][7] === "RESP. CIVIL" || data[i][7] === "ROBO PARCIAL" || data[i][7] === "TODO RIESGO" || data[i][7] === "GRANIZO"
  || data[i][7] === "CRISTALES" || data[i][7] === "CERRADURA" || data[i][7] === "ACC. PERS." || data[i][7] === "GRUA" || data[i][7] === "RILLA"))) &&
     (patente_filter === "" || data[i][0] === patente_filter) && 
     (dni_filter === "" || data[i][3] === dni_filter) && 
     (gestion_filter === "" || data[i][10] === gestion_filter)) {
-    // agrega el cÛdigo para los valores correspondientes a la tabla
+    // agrega el c√≥digo para los valores correspondientes a la tabla
         var sinPend = [];
         sinPend.push(data[i][0]);
         sinPend.push(data[i][1]);
@@ -295,7 +294,6 @@ if ((estado_filter === "" || data[i][8] === estado_filter) &&
     
   }
 
-  console.log(sinPendientes);
   return sinPendientes;
 }
 ////////////////////////////////////////////////////////////////////
@@ -317,7 +315,7 @@ function verificarCredenciales(usuario, contrasena) {
 
     }
   }
-  return alert("Error de Usuario o ContraseÒa!");
+  return alert("Error de Usuario o Contrase√±a!");
 }
 
 ///////////////////////////////  CAMBIAR CLAVE DE USUARIO  ////////////////////////////////////////
@@ -383,7 +381,7 @@ function buscarColorAlmacenado(usuarioAlmacenado) {
   var sheet = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1R4J4bi5Zb8uZcR0CZ8_VrYIOsxFPOzTJIOdr6f-I0EY/edit").getSheetByName("USERS");
   var dataValues = sheet.getDataRange().getDisplayValues();
   
-  // Buscar el usuario en la hoja de c·lculo y obtener el color almacenado
+  // Buscar el usuario en la hoja de c√°lculo y obtener el color almacenado
   for (var i = 1; i < dataValues.length; i++) {
     var row = dataValues[i];
     var usuarioSheet = row[0];
