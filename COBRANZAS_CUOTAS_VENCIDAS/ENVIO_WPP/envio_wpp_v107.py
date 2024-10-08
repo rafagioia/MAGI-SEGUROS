@@ -7,8 +7,11 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-import pytesseract
+import easyocr
 from PIL import Image
+
+# Crear un lector de EasyOCR (puedes especificar el idioma)
+reader = easyocr.Reader(['es'])
 
 # Función para detectar errores de envío mediante OCR
 def detectar_error():
@@ -16,13 +19,13 @@ def detectar_error():
     screenshot = pyautogui.screenshot()
     screenshot.save("screenshot.png")
 
-    # Procesar la imagen con Tesseract
-    img = Image.open("screenshot.png")
-    text = pytesseract.image_to_string(img)
+    # Procesar la imagen con EasyOCR
+    result = reader.readtext("screenshot.png")
 
     # Buscar el mensaje de error en el texto
-    if "el número de teléfono compartido a traves de la dirección URL no es válido" in text.lower():
-        return True
+    for line in result:
+        if "El número de teléfono compartido a través de la dirección URL no es válido" in line[1].lower():
+            return True
     return False
 
 # Verificar la fecha actual
@@ -50,7 +53,6 @@ Cada pago *SIN EXCEPCIONES* debe enviar por whatsapp su *PATENTE* y su *SEGURO*,
 *EVITE* transferir dinero sin consultar, ya que los pagos se pasan de manera manual con los datos que ustedes envian.
 
 Si no envian datos, el dinero quedará en la cuenta, no se acreditará y se suspenderá la cobertura de la poliza.
-
 """
 
 # Código de país, cámbialo según corresponda
